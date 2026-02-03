@@ -1,0 +1,25 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tonkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100" height="100" fill="#ffffff" rx="16"/>
+  
+  <!-- Left Pillar (Legacy/Stability) -->
+  <path d="M20 25 H40 V75 H20 V25 Z" fill="#3b82f6" />
+  
+  <!-- Right Pillar (Future/Cloud) -->
+  <path d="M60 25 H80 V65 H60 V25 Z" fill="#06b6d4" />
+  
+  <!-- Bridge/Connection -->
+  <rect x="40" y="40" width="20" height="12" fill="url(#tonkGradient)" rx="2"/>
+  
+  <!-- Accent dots -->
+  <circle cx="30" cy="20" r="2.5" fill="#3b82f6" />
+  <circle cx="70" cy="20" r="2.5" fill="#06b6d4" />
+  <circle cx="50" cy="82" r="2.5" fill="#3b82f6" />
+</svg>
