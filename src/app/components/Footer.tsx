@@ -85,14 +85,7 @@ const Footer = () => {
             © {currentYear} Tonk Solutions. Todos los derechos reservados.
           </Text>
           
-          <Flex gap={6}>
-            <Link fontSize="xs" color="gray.500" _hover={{ color: 'primary.300' }}>
-              Términos y condiciones
-            </Link>
-            <Link fontSize="xs" color="gray.500" _hover={{ color: 'primary.300' }}>
-              Política de privacidad
-            </Link>
-          </Flex>
+
         </Flex>
       </Container>
     </Box>
