@@ -44,7 +44,7 @@ const Footer = () => {
             </Box>
 
             <Box>
-              <Text fontWeight="bold" mb={4}>Síguenos</Text>
+              <Text fontWeight="bold" mb={4}>Nuestras redes</Text>
               <Stack direction="row" gap={4}>
                 <Link 
                   href="https://www.linkedin.com/company/tonk-solutions" 
@@ -70,6 +70,8 @@ const Footer = () => {
             </Box>
           </Stack>
         </Flex>
+
+
 
         <Flex 
           borderTopWidth={1} 
