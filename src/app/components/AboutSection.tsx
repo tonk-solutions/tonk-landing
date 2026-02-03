@@ -117,7 +117,7 @@ const AboutSection = () => {
                 Nuestra Misión
               </Heading>
               <Text fontSize="md" color="gray.600" fontStyle="italic" mb={4}>
-                "Resolver desafíos críticos de arquitectura y deuda técnica que frenan el crecimiento del negocio, mediante equipos de ingeniería expertos capaces de intervenir desde el core del sistema hasta arquitecturas de servicios distribuidos."
+                &quot;Resolver desafíos críticos de arquitectura y deuda técnica que frenan el crecimiento del negocio, mediante equipos de ingeniería expertos capaces de intervenir desde el core del sistema hasta arquitecturas de servicios distribuidos.&quot;
               </Text>
             </Box>
           </MotionFlex>
