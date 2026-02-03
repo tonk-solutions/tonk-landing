@@ -5,6 +5,7 @@ import { Box, Container, Flex, Heading, Text, Link, Grid, Icon } from '@chakra-u
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Linkedin } from 'lucide-react';
+import Image from 'next/image';
 
 const MotionBox = motion(Box);
 
@@ -43,22 +44,42 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
       >
         <Flex direction="column" h="100%">
           <Flex justify="center" pt={8} pb={4}>
-            <Box
-              w="80px"
-              h="80px"
-              borderRadius="full"
-              bg="primary.500"
-              color="white"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              border="4px solid"
-              borderColor="gray.100"
-              fontSize="2xl"
-              fontWeight="bold"
-            >
-              {name.charAt(0)}
-            </Box>
+            {avatarUrl ? (
+              <Box
+                w="80px"
+                h="80px"
+                borderRadius="full"
+                overflow="hidden"
+                border="4px solid"
+                borderColor="gray.100"
+                position="relative"
+              >
+                <Image
+                  src={avatarUrl}
+                  alt={name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="80px"
+                />
+              </Box>
+            ) : (
+              <Box
+                w="80px"
+                h="80px"
+                borderRadius="full"
+                bg="primary.500"
+                color="white"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                border="4px solid"
+                borderColor="gray.100"
+                fontSize="2xl"
+                fontWeight="bold"
+              >
+                {name.charAt(0)}
+              </Box>
+            )}
           </Flex>
 
           <Flex direction="column" p={5} gap={2} align="center" flex="1">
@@ -104,28 +125,32 @@ const TeamSection = () => {
       role: "Co-Founder",
       bio: "Especialización en Accenture y Softtek con implementación y soporte de soluciones SAP.",
       linkedin: "https://www.linkedin.com/in/ignacio-sileo/",
-      delay: 0.1
+      delay: 0.1,
+      avatarUrl: "/images/founders/ignacio-sileo.jpeg"
     },
     {
       name: "Matías Castillo",
       role: "Co-Founder",
       bio: "Experiencia en BBVA como App Owner de sistemas financieros críticos y medios de pago.",
       linkedin: "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/",
-      delay: 0.2
+      delay: 0.2,
+      avatarUrl: "/images/founders/agustin-castillo.jpeg"
     },
     {
       name: "Nicolás Gómez",
       role: "Co-Founder",
       bio: "Trayectoria en Santander e ICBC en desarrollo y evolución de productos bancarios core.",
       linkedin: "https://www.linkedin.com/in/nicolas-gomez-467b26141/",
-      delay: 0.3
+      delay: 0.3,
+      avatarUrl: "/images/founders/nicolas-gomez.jpeg"
     },
     {
       name: "Rodrigo Hernandez",
       role: "Co-Founder",
       bio: "Experiencia en Endava, Stori y Rootstrap en desarrollo de soluciones escalables.",
       linkedin: "https://www.linkedin.com/in/rodrigoenzohernandez/",
-      delay: 0.4
+      delay: 0.4,
+      avatarUrl: "/images/founders/rodrigo-hernandez.jpeg"
     },
   ];
 
@@ -167,6 +192,7 @@ const TeamSection = () => {
               bio={member.bio}
               linkedin={member.linkedin}
               delay={member.delay}
+              avatarUrl={member.avatarUrl}
             />
           ))}
         </Grid>
