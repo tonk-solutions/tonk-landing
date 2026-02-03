@@ -91,7 +91,7 @@ const ServicesSection = () => {
               NUESTROS SERVICIOS
             </Text>
             <Heading as="h2" size="xl" mb={4}>
-              Soluciones Integrales para Desafíos de Escala
+              Soluciones integrales para desafíos de escala
             </Heading>
             <Text fontSize="lg" color="gray.600">
               "Sabemos que llegar al Product-Market Fit es solo el primer paso. El verdadero desafío es que la tecnología soporte el crecimiento sin romperse. Ahí es donde entramos nosotros."

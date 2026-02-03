@@ -82,7 +82,7 @@ const AboutSection = () => {
               QUIÉNES SOMOS
             </Text>
             <Heading as="h2" size="xl" mb={6}>
-              Socios Estratégicos en tu Crecimiento
+              Socios estratégicos en tu crecimiento
             </Heading>
             
             <Text fontSize="lg" color="gray.700" mb={5}>
@@ -90,7 +90,7 @@ const AboutSection = () => {
             </Text>
             
             <Text fontSize="lg" color="gray.700" mb={8}>
-              Nuestra tesis es la <strong>Continuidad Sistémica</strong>: garantizamos que la robustez del Core Bancario y los ERPs convivan en armonía con la escalabilidad de la Nube y la eficiencia de la Inteligencia Artificial.
+              Nuestra tesis es la <strong>Continuidad sistémica</strong>: garantizamos que la robustez del Core Bancario y los ERPs convivan en armonía con la escalabilidad de la Nube y la eficiencia de la Inteligencia Artificial.
             </Text>
 
             <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4} mb={8}>
