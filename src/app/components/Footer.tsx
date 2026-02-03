@@ -30,7 +30,7 @@ const Footer = () => {
               <Stack gap={2}>
                 <Text color="gray.400" fontSize="sm">tonksolutions@gmail.com</Text>
                 <Link 
-                  href="https://wa.me/+5491100000000" 
+                  href="https://wa.me/+5491123908349" 
                   target="_blank"
                   rel="noopener noreferrer"
                   display="flex" 
@@ -57,7 +57,7 @@ const Footer = () => {
                   <FaLinkedin />
                 </Link>
                 <Link 
-                  href="https://www.instagram.com/tonksolutions" 
+                  href="https://www.instagram.com/tonk_solutions" 
                   target="_blank"
                   rel="noopener noreferrer"
                   color="gray.400"

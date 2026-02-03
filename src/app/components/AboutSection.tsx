@@ -86,7 +86,7 @@ const AboutSection = () => {
             </Heading>
             
             <Text fontSize="lg" color="gray.700" mb={5}>
-              En Tonk Solutions, no somos una fábrica de software tradicional. Somos un equipo de ingenieros senior que viene de operar las plataformas más exigentes de la región (BBVA, Santander, ICBC, Mercado Libre, Enel).
+              En Tonk Solutions somos un equipo de ingenieros senior que viene de operar las plataformas más exigentes de la región.
             </Text>
             
             <Text fontSize="lg" color="gray.700" mb={8}>
@@ -96,19 +96,19 @@ const AboutSection = () => {
             <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4} mb={8}>
               <Flex align="center" gap={3}>
                 <Icon as={CheckCircle} color="primary.500" boxSize={5} />
-                <Text fontWeight="medium">Experiencia en Sistemas Críticos</Text>
+                <Text fontWeight="medium">Experiencia en sistemas críticos</Text>
               </Flex>
               <Flex align="center" gap={3}>
                 <Icon as={CheckCircle} color="primary.500" boxSize={5} />
-                <Text fontWeight="medium">Modernización Sin Interrupciones</Text>
+                <Text fontWeight="medium">Modernización sin interrupciones</Text>
               </Flex>
               <Flex align="center" gap={3}>
                 <Icon as={CheckCircle} color="primary.500" boxSize={5} />
-                <Text fontWeight="medium">Soluciones a Medida</Text>
+                <Text fontWeight="medium">Soluciones a medida</Text>
               </Flex>
               <Flex align="center" gap={3}>
                 <Icon as={CheckCircle} color="primary.500" boxSize={5} />
-                <Text fontWeight="medium">Enfoque en Resultados</Text>
+                <Text fontWeight="medium">Enfoque en resultados</Text>
               </Flex>
             </Grid>
 
