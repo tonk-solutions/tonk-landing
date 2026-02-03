@@ -32,7 +32,7 @@ const TonkLogo: React.FC<TonkLogoProps> = ({
   return (
     <Flex alignItems="center" gap="3" className={className}>
       {/* Isotype / Icon */}
-      <svg viewBox="0 0 100 100" height={getSize()} width="auto" style={{ flexShrink: 0 }} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 100 100" height={getSize()} style={{ flexShrink: 0, aspectRatio: '1 / 1' }} fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Left Pillar (Legacy/Stability) - Blue */}
         <path d="M20 20 H45 V80 H20 V20 Z" fill={secondaryColor} style={{ opacity: 0.9 }} />
 
