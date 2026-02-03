@@ -150,10 +150,10 @@ const TeamSection = () => {
               NUESTRO EQUIPO
             </Text>
             <Heading as="h2" size="xl" mb={4}>
-              El Seniority Detrás de Tonk
+              El Seniority detrás de Tonk
             </Heading>
             <Text fontSize="lg" color="gray.600" maxW="800px" mx="auto">
-              Nuestra autoridad se sustenta en la trayectoria de nuestros directores en compañías de primer nivel.
+              Nuestra autoridad se sustenta en la trayectoria de nuestros fundadores en compañías de primer nivel.
             </Text>
           </MotionBox>
         </Flex>
