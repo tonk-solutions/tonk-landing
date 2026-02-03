@@ -5,7 +5,6 @@ import { Box, Container, Flex, Heading, Text, Link, Grid, Icon } from '@chakra-u
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Linkedin } from 'lucide-react';
-import Image from 'next/image';
 
 const MotionBox = motion(Box);
 
@@ -54,12 +53,10 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
                 borderColor="gray.100"
                 position="relative"
               >
-                <Image
+                <img
                   src={avatarUrl}
                   alt={name}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  sizes="80px"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </Box>
             ) : (
