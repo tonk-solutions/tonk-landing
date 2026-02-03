@@ -100,33 +100,33 @@ const TeamSection = () => {
 
   const teamMembers = [
     {
-      name: "Rodrigo Hernandez",
+      name: "Ignacio Sileo",
       role: "Co-Founder",
-      bio: "Experiencia en BBVA como App Owner de sistemas financieros críticos y medios de pago.",
-      linkedin: "https://www.linkedin.com/in/rodrigoenzohernandez/",
+      bio: "Especialización en Accenture y Softtek con implementación y soporte de soluciones SAP.",
+      linkedin: "https://www.linkedin.com/in/ignacio-sileo/",
       delay: 0.1
     },
     {
       name: "Matías Castillo",
       role: "Co-Founder",
-      bio: "Trayectoria en Santander e ICBC en desarrollo y evolución de productos bancarios core.",
+      bio: "Experiencia en BBVA como App Owner de sistemas financieros críticos y medios de pago.",
       linkedin: "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/",
       delay: 0.2
     },
     {
-      name: "Ignacio Sileo",
+      name: "Nicolás Gómez",
       role: "Co-Founder",
-      bio: "Experiencia en Rootstrap, Stori y Endava en desarrollo de MVPs y plataformas Fintech.",
-      linkedin: "https://www.linkedin.com/in/ignacio-sileo/",
+      bio: "Trayectoria en Santander e ICBC en desarrollo y evolución de productos bancarios core.",
+      linkedin: "https://www.linkedin.com/in/nicolas-gomez-467b26141/",
       delay: 0.3
     },
     {
-      name: "Nicolás Gómez",
+      name: "Rodrigo Hernandez",
       role: "Co-Founder",
-      bio: "Especialización en Accenture y Softtek con implementación y soporte de soluciones SAP.",
-      linkedin: "https://www.linkedin.com/in/nicolas-gomez-467b26141/",
+      bio: "Experiencia en Endava, Stori y Rootstrap en desarrollo de soluciones escalables.",
+      linkedin: "https://www.linkedin.com/in/rodrigoenzohernandez/",
       delay: 0.4
-    }
+    },
   ];
 
   return (
