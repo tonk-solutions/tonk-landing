@@ -176,6 +176,7 @@ const TeamSection = () => {
       bg="gray.50"
       w="100%"
       overflow="hidden"
+      scrollMarginTop="80px"
     >
       <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex direction="column" gap={6} mb={12} ref={ref}>

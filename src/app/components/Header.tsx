@@ -20,7 +20,7 @@ const NAV_LINKS: ReadonlyArray<{ label: string; href: string }> = [
 ];
 
 const Header = () => {
-  const { open, onToggle } = useDisclosure();
+  const { open, onToggle, onClose } = useDisclosure();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -123,6 +123,7 @@ const Header = () => {
                 fontWeight={500}
                 color="gray.800"
                 _hover={{ color: 'primary.500' }}
+                onClick={onClose}
               >
                 {link.label}
               </Link>
@@ -140,6 +141,7 @@ const Header = () => {
               textAlign="center"
               w="full"
               _hover={{ bg: 'primary.600', textDecoration: 'none' }}
+              onClick={onClose}
             >
               Contáctanos
             </Link>

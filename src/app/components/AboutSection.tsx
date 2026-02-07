@@ -32,13 +32,14 @@ const AboutSection = () => {
       bg="white"
       w="100%"
       overflow="hidden"
+      scrollMarginTop="80px"
     >
       <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex
           direction={{ base: 'column', lg: 'row' }}
           align="center"
           justify="space-between"
-          gap={{ base: 10, lg: 16 }}
+          gap={{ base: 8, lg: 16 }}
           ref={ref}
         >
           <MotionBox
@@ -46,6 +47,7 @@ const AboutSection = () => {
             animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.7 }}
             flex="1"
+            order={{ base: 2, lg: 1 }}
           >
             <Box
               as="aside"
@@ -92,6 +94,7 @@ const AboutSection = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
             flex="1"
             direction="column"
+            order={{ base: 1, lg: 2 }}
           >
             <Text color="primary.500" fontWeight="medium" mb={2}>
               QUIÉNES SOMOS

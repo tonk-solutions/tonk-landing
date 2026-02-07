@@ -68,6 +68,7 @@ const ContactSection = () => {
       position="relative"
       overflow="hidden"
       w="100%"
+      scrollMarginTop="80px"
     >
       <Box
         position="absolute"
