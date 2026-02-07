@@ -3,6 +3,14 @@ import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 const customConfig = defineConfig({
   theme: {
     tokens: {
+      sizes: {
+        container: {
+          sm: { value: "640px" },
+          md: { value: "768px" },
+          lg: { value: "1024px" },
+          xl: { value: "1280px" },
+        },
+      },
       colors: {
         primary: {
           50: { value: "#e6fafc" },

@@ -7,25 +7,25 @@ import {
   Flex,
   IconButton,
   Link,
-  Button,
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
 import { Menu, X } from 'lucide-react';
 import TonkLogo from './TonkLogo';
 
+const NAV_LINKS: ReadonlyArray<{ label: string; href: string }> = [
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Nosotros', href: '#nosotros' },
+  { label: 'Equipo', href: '#equipo' },
+];
+
 const Header = () => {
-  const { open, onToggle } = useDisclosure();
+  const { open, onToggle, onClose } = useDisclosure();
   const [scrolled, setScrolled] = useState(false);
-  
+
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
 
     handleScroll();
@@ -35,7 +35,7 @@ const Header = () => {
 
   return (
     <Box
-      as="nav"
+      as="header"
       position="fixed"
       w="100%"
       maxW="100vw"
@@ -46,13 +46,15 @@ const Header = () => {
       transition="all 0.3s ease"
       overflow="hidden"
     >
-      <Container maxW="container.xl">
+      <Container maxW="1280px" mx="auto">
         <Flex
+          as="nav"
+          aria-label="Navegación principal"
           py={4}
           align="center"
           justify="space-between"
         >
-          <Link href="#hero" _hover={{ textDecoration: 'none' }}>
+          <Link href="#hero" _hover={{ textDecoration: 'none' }} aria-label="Tonk Solutions - Inicio">
             <TonkLogo theme={scrolled ? 'light' : 'dark'} size="sm" />
           </Link>
 
@@ -62,11 +64,19 @@ const Header = () => {
             align="center"
             display={{ base: 'none', md: 'flex' }}
           >
-            <Link href="#servicios" fontWeight={500} color={scrolled ? 'gray.800' : 'white'} _hover={{ color: 'primary.500', textDecoration: 'none' }}>Servicios</Link>
-            <Link href="#nosotros" fontWeight={500} color={scrolled ? 'gray.800' : 'white'} _hover={{ color: 'primary.500', textDecoration: 'none' }}>Nosotros</Link>
-            <Link href="#equipo" fontWeight={500} color={scrolled ? 'gray.800' : 'white'} _hover={{ color: 'primary.500', textDecoration: 'none' }}>Equipo</Link>
-            <Link 
-              href="#contacto" 
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                fontWeight={500}
+                color={scrolled ? 'gray.800' : 'white'}
+                _hover={{ color: 'primary.500', textDecoration: 'none' }}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="#contacto"
               bg="primary.500"
               color="white"
               px={6}
@@ -84,7 +94,7 @@ const Header = () => {
           <IconButton
             display={{ base: 'flex', md: 'none' }}
             onClick={onToggle}
-            aria-label="Toggle Navigation"
+            aria-label="Abrir menú de navegación"
             color={scrolled ? 'gray.800' : 'white'}
             bg="transparent"
             _hover={{ bg: 'transparent' }}
@@ -96,6 +106,8 @@ const Header = () => {
 
       {open && (
         <Box
+          as="nav"
+          aria-label="Navegación móvil"
           bg="white"
           p={4}
           display={{ md: 'none' }}
@@ -104,11 +116,20 @@ const Header = () => {
           overflow="hidden"
         >
           <Stack gap={4}>
-            <Link href="#servicios" fontWeight={500} color="gray.800" _hover={{ color: 'primary.500' }}>Servicios</Link>
-            <Link href="#nosotros" fontWeight={500} color="gray.800" _hover={{ color: 'primary.500' }}>Nosotros</Link>
-            <Link href="#equipo" fontWeight={500} color="gray.800" _hover={{ color: 'primary.500' }}>Equipo</Link>
-            <Link 
-              href="#contacto" 
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                fontWeight={500}
+                color="gray.800"
+                _hover={{ color: 'primary.500' }}
+                onClick={onClose}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="#contacto"
               bg="primary.500"
               color="white"
               px={6}
@@ -120,6 +141,7 @@ const Header = () => {
               textAlign="center"
               w="full"
               _hover={{ bg: 'primary.600', textDecoration: 'none' }}
+              onClick={onClose}
             >
               Contáctanos
             </Link>

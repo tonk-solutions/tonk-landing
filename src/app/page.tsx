@@ -1,5 +1,6 @@
 "use client";
 
+import { Box } from '@chakra-ui/react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import ServicesSection from './components/ServicesSection';
@@ -10,16 +11,16 @@ import Footer from './components/Footer';
 
 export default function Home() {
   return (
-    <div style={{ minHeight: '100vh', width: '100%', overflow: 'hidden' }}>
+    <Box minH="100vh" w="100%" overflow="hidden">
       <Header />
-      <main style={{ width: '100%' }}>
+      <Box as="main" role="main" w="100%">
         <HeroSection />
         <ServicesSection />
         <AboutSection />
         <TeamSection />
         <ContactSection />
-      </main>
+      </Box>
       <Footer />
-    </div>
+    </Box>
   );
 }

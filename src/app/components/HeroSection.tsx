@@ -17,14 +17,15 @@ const HeroSection = () => {
 
   return (
     <Box
+      as="section"
       id="hero"
+      aria-label="Presentación de Tonk Solutions"
       position="relative"
       h="100vh"
       bg="#0f172a"
       color="white"
       overflow="hidden"
     >
-      {/* Background Elements */}
       <Box
         position="absolute"
         top="10%"
@@ -35,6 +36,7 @@ const HeroSection = () => {
         filter="blur(100px)"
         opacity="0.1"
         borderRadius="full"
+        aria-hidden="true"
       />
       <Box
         position="absolute"
@@ -46,10 +48,10 @@ const HeroSection = () => {
         filter="blur(100px)"
         opacity="0.08"
         borderRadius="full"
+        aria-hidden="true"
       />
 
-      {/* Content */}
-      <Container maxW="container.xl" h="full" px={{ base: 4, md: 8 }}>
+      <Container maxW="1280px" mx="auto" h="full" px={{ base: 4, md: 8 }}>
         <Flex
           direction="column"
           align="center"
@@ -58,20 +60,22 @@ const HeroSection = () => {
           h="full"
           pt={{ base: '80px', md: '0' }}
         >
-          <Flex direction="column" gap={6} maxW="800px" align="center"  >
+          <Flex direction="column" gap={6} maxW="800px" align="center">
             <MotionBox
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
               <Text
+                as="span"
                 color="primary.400"
                 fontWeight="medium"
                 letterSpacing="wider"
                 fontSize="lg"
+                display="block"
                 mb={2}
               >
-                Transformación Tecnológica y Talento de Élite
+                Consultoría de Ingeniería de Software para el Sector Financiero
               </Text>
               <Heading
                 as="h1"
@@ -92,9 +96,17 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Text fontSize={{ base: 'lg', md: 'xl' }} color="gray.300" maxW="700px" mx="auto" lineHeight="tall">
-                En un entorno donde la agilidad del mercado choca con la rigidez de los sistemas heredados, 
-                Tonk Solutions surge como el puente de ingeniería necesario para cerrar esa brecha.
+              <Text
+                as="p"
+                fontSize={{ base: 'lg', md: 'xl' }}
+                color="gray.300"
+                maxW="700px"
+                mx="auto"
+                lineHeight="tall"
+              >
+                Cuando la agilidad del mercado choca con la rigidez de los sistemas heredados,
+                Tonk Solutions aporta <strong>continuidad sistémica</strong>: el puente de ingeniería
+                que armoniza Core Banking y ERPs con Cloud-Native, Microservicios e Inteligencia Artificial.
               </Text>
             </MotionBox>
 
@@ -119,13 +131,13 @@ const HeroSection = () => {
         </Flex>
       </Container>
 
-      {/* Scroll Indicator */}
       <Box
         position="absolute"
         bottom="32px"
         left="50%"
         transform="translateX(-50%)"
         textAlign="center"
+        aria-hidden="true"
       >
         <MotionBox
           animate={{ y: [0, 12, 0] }}
