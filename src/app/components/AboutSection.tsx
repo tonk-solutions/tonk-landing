@@ -33,7 +33,7 @@ const AboutSection = () => {
       w="100%"
       overflow="hidden"
     >
-      <Container maxW="container.xl" w="100%" px={0}>
+      <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex
           direction={{ base: 'column', lg: 'row' }}
           align="center"

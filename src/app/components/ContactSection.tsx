@@ -82,7 +82,7 @@ const ContactSection = () => {
         aria-hidden="true"
       />
 
-      <Container maxW="container.xl" position="relative" zIndex="2" w="100%" px={0}>
+      <Container maxW="1280px" mx="auto" position="relative" zIndex="2" w="100%" px={0}>
         <Flex justify="center" ref={ref}>
           <MotionBox
             initial={{ opacity: 0, y: 20 }}

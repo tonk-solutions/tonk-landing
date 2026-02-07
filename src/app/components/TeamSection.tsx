@@ -177,7 +177,7 @@ const TeamSection = () => {
       w="100%"
       overflow="hidden"
     >
-      <Container maxW="container.xl" w="100%" px={0}>
+      <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex direction="column" gap={6} mb={12} ref={ref}>
           <MotionBox
             initial={{ opacity: 0, y: 20 }}

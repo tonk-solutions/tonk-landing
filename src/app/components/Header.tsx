@@ -46,7 +46,7 @@ const Header = () => {
       transition="all 0.3s ease"
       overflow="hidden"
     >
-      <Container maxW="container.xl">
+      <Container maxW="1280px" mx="auto">
         <Flex
           as="nav"
           aria-label="Navegación principal"

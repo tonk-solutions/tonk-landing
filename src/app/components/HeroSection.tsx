@@ -51,7 +51,7 @@ const HeroSection = () => {
         aria-hidden="true"
       />
 
-      <Container maxW="container.xl" h="full" px={{ base: 4, md: 8 }}>
+      <Container maxW="1280px" mx="auto" h="full" px={{ base: 4, md: 8 }}>
         <Flex
           direction="column"
           align="center"

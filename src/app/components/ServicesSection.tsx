@@ -81,7 +81,7 @@ const ServicesSection = () => {
       w="100%"
       overflow="hidden"
     >
-      <Container maxW="container.xl" w="100%" px={0}>
+      <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex direction="column" gap={10} mb={10} ref={ref} align="center">
           <MotionBox
             initial={{ opacity: 0, y: 20 }}

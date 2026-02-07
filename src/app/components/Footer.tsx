@@ -10,7 +10,7 @@ const Footer = () => {
 
   return (
     <Box as="footer" role="contentinfo" bg="dark.800" color="white" py={12} px={{ base: 4, md: 8 }} w="100%" overflow="hidden">
-      <Container maxW="container.xl" w="100%" px={0}>
+      <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex
           direction={{ base: 'column', md: 'row' }}
           justify="space-between"
