@@ -29,6 +29,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, del
       transition={{ duration: 0.6, delay: delay }}
     >
       <Box
+        as="article"
         bg="white"
         borderRadius="xl"
         p={6}
@@ -39,22 +40,23 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, del
         transition="all 0.3s"
         _hover={{ transform: 'translateY(-8px)', boxShadow: 'xl' }}
       >
-        <Flex 
-          w="60px" 
-          h="60px" 
-          bg="primary.50" 
-          color="primary.500" 
-          borderRadius="lg" 
-          justify="center" 
-          align="center" 
+        <Flex
+          w="60px"
+          h="60px"
+          bg="primary.50"
+          color="primary.500"
+          borderRadius="lg"
+          justify="center"
+          align="center"
           mb={4}
+          aria-hidden="true"
         >
           {icon}
         </Flex>
         <Heading as="h3" size="md" mb={3} color="gray.800">
           {title}
         </Heading>
-        <Text color="gray.600">
+        <Text as="p" color="gray.600">
           {description}
         </Text>
       </Box>
@@ -70,7 +72,9 @@ const ServicesSection = () => {
 
   return (
     <Box
+      as="section"
       id="servicios"
+      aria-labelledby="servicios-heading"
       py={{ base: 14, md: 20 }}
       px={{ base: 4, md: 8 }}
       bg="gray.50"
@@ -88,42 +92,45 @@ const ServicesSection = () => {
             w="full"
           >
             <Text color="primary.500" fontWeight="medium" mb={2}>
-              NUESTROS SERVICIOS
+              NUESTROS SERVICIOS DE INGENIERÍA
             </Text>
-            <Heading as="h2" size="xl" mb={4}>
-              Soluciones integrales para desafíos de escala
+            <Heading as="h2" id="servicios-heading" size="xl" mb={4}>
+              Soluciones de software enterprise para desafíos de escala
             </Heading>
-            <Text fontSize="lg" color="gray.600">
-              &quot;Sabemos que llegar al Product-Market Fit es solo el primer paso. El verdadero desafío es que la tecnología soporte el crecimiento sin romperse. Ahí es donde entramos nosotros.&quot;
+            <Text as="p" fontSize="lg" color="gray.600">
+              Sabemos que llegar al Product-Market Fit es solo el primer paso.
+              El verdadero desafío es que la tecnología soporte el crecimiento sin romperse.
+              Nuestra especialización en ingeniería de software financiero y migración de sistemas legacy
+              nos posiciona como socios estratégicos en esa transición.
             </Text>
           </MotionBox>
         </Flex>
-        <Grid 
+        <Grid
           templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
           gap={{ base: 4, md: 8 }}
           w="100%"
         >
           <ServiceCard
             title="Ingeniería de Software Financiero"
-            description="Diseñamos y mantenemos la columna vertebral de operaciones críticas, manejando altos volúmenes transaccionales y garantizando integridad y seguridad financiera."
+            description="Diseñamos y mantenemos plataformas transaccionales críticas de Core Banking y medios de pago, manejando alta volumetría con integridad y seguridad financiera garantizada."
             icon={<Icon as={Code} boxSize={8} />}
             delay={0.1}
           />
           <ServiceCard
-            title="Arquitectura Cloud-Native"
-            description="Transformamos aplicaciones monolíticas en ecosistemas escalables y resilientes, especializándonos en arquitecturas que soportan picos de demanda sin degradar el servicio."
+            title="Arquitectura Cloud-Native y Microservicios"
+            description="Transformamos monolitos en ecosistemas escalables y resilientes mediante migración a microservicios y arquitecturas cloud-native que soportan picos de demanda sin degradación."
             icon={<Icon as={Cloud} boxSize={8} />}
             delay={0.2}
           />
           <ServiceCard
-            title="Soluciones Enterprise & SAP"
-            description="Resolvemos la complejidad operativa de grandes corporaciones, orquestando procesos críticos donde la precisión del dato es innegociable."
+            title="Soluciones Enterprise, SAP & ERP"
+            description="Orquestamos procesos críticos en grandes corporaciones con integración SAP y modernización ERP, donde la precisión del dato y la continuidad sistémica son innegociables."
             icon={<Icon as={FileText} boxSize={8} />}
             delay={0.3}
           />
           <ServiceCard
-            title="IA Aplicada y Automatización"
-            description="Aplicamos ingeniería de IA con respaldo académico y práctico para la gestión del conocimiento y mejora de procesos técnicos en entornos empresariales."
+            title="IA Aplicada y Automatización Enterprise"
+            description="Implementamos inteligencia artificial con respaldo académico y práctico para gestión del conocimiento, automatización de procesos y optimización operativa en entornos empresariales."
             icon={<Icon as={BrainCircuit} boxSize={8} />}
             delay={0.4}
           />
