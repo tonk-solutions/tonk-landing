@@ -4,6 +4,7 @@ import React from 'react';
 import { Box, Container, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { FaLinkedin, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import TonkLogo from './TonkLogo';
+import { CONTACT_EMAIL } from '../constants';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -20,9 +21,8 @@ const Footer = () => {
           <Box maxW={{ base: '100%', md: '380px' }} mb={{ base: 8, md: 0 }}>
             <TonkLogo size="md" theme="dark" />
             <Text as="p" mt={4} color="gray.400" fontSize="sm">
-              Consultoría de ingeniería de software de alta precisión especializada en
-              continuidad sistémica para instituciones financieras, fintechs y corporaciones enterprise.
-              Core Banking, SAP, ERP, Cloud-Native, Microservicios e IA.
+              Consultora start up dedicada al desarrollo de software y soluciones digitales a medida, trabajando especialmente en integraciones y soluciones escalables.
+              Contamos con experiencia en: Core Banking, SAP, ERP, Cloud-Native, Microservicios e Inteligencia Artificial.
             </Text>
           </Box>
 
@@ -31,12 +31,12 @@ const Footer = () => {
               <Text fontWeight="bold" mb={4}>Contacto</Text>
               <Stack gap={2}>
                 <Link
-                  href="mailto:tonksolutions@gmail.com"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   color="gray.400"
                   fontSize="sm"
                   _hover={{ color: 'primary.400' }}
                 >
-                  tonksolutions@gmail.com
+                  {CONTACT_EMAIL}
                 </Link>
                 <Link
                   href="https://wa.me/+5491123908349"

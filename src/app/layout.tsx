@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Script from "next/script";
+import { CONTACT_EMAIL, CONTACT_PHONE } from "./constants";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -111,8 +112,8 @@ const organizationJsonLd = {
   },
   contactPoint: {
     "@type": "ContactPoint",
-    email: "tonksolutions@gmail.com",
-    telephone: "+54-9-11-2390-8349",
+    email: CONTACT_EMAIL,
+    telephone: CONTACT_PHONE,
     contactType: "sales",
     availableLanguage: ["Spanish", "English"],
   },
@@ -214,8 +215,8 @@ const professionalServiceJsonLd = {
     addressLocality: "Buenos Aires",
     addressCountry: "AR",
   },
-  telephone: "+54-9-11-2390-8349",
-  email: "tonksolutions@gmail.com",
+  telephone: CONTACT_PHONE,
+  email: CONTACT_EMAIL,
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Servicios de Consultoría",

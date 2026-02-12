@@ -14,6 +14,7 @@ import {
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { CONTACT_EMAIL } from '../constants';
 
 const MotionBox = motion(Box);
 
@@ -111,8 +112,8 @@ const ContactSection = () => {
                 <ContactItem
                   icon={Mail}
                   label="Correo Electrónico"
-                  value="tonksolutions@gmail.com"
-                  href="mailto:tonksolutions@gmail.com"
+                  value={CONTACT_EMAIL}
+                  href={`mailto:${CONTACT_EMAIL}`}
                 />
                 <ContactItem
                   icon={Phone}

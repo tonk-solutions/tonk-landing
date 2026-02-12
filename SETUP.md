@@ -1,9 +1,11 @@
 # Tonk Solutions Landing Page - Setup Guide
 
 ## Project Overview
+
 Modern, responsive landing page for Tonk Solutions built with Next.js 14 and Chakra UI v3.
 
 ## Tech Stack
+
 - **Framework**: Next.js 14.0.4
 - **UI Library**: Chakra UI v3.1.0
 - **Styling**: Chakra UI (no Tailwind in components)
@@ -12,6 +14,7 @@ Modern, responsive landing page for Tonk Solutions built with Next.js 14 and Cha
 - **Language**: TypeScript
 
 ## Project Structure
+
 ```
 src/
 ├── app/
@@ -32,6 +35,7 @@ src/
 ```
 
 ## Key Features
+
 - ✅ Responsive design (mobile, tablet, desktop)
 - ✅ Smooth scroll animations with Framer Motion
 - ✅ Intersection Observer for scroll-triggered animations
@@ -43,17 +47,21 @@ src/
 ## Installation & Running
 
 ### Install Dependencies
+
 ```bash
 npm install
 ```
 
 ### Development Server
+
 ```bash
 npm run dev
 ```
+
 Server runs on `http://localhost:3000` (or next available port)
 
 ### Build for Production
+
 ```bash
 npm run build
 npm start
@@ -62,6 +70,7 @@ npm start
 ## Important Notes
 
 ### Chakra UI v3 Compatibility
+
 - Uses `createSystem(defaultConfig)` for theme initialization
 - Replaced deprecated props:
   - `spacing` → `gap`
@@ -71,22 +80,26 @@ npm start
   - `variant="primary"` → direct color props
 
 ### Component Reusability
+
 - **TonkLogo**: Configurable size (sm/md/lg) and theme (dark/light)
 - **ServiceCard**: Animated card with icon and description
 - **TeamMember**: Profile card with avatar placeholder
 
 ### Styling Approach
+
 All styling uses Chakra UI components and props. No custom CSS classes in components.
 
 ## Deployment
 
 Ready to deploy to:
+
 - Vercel (recommended for Next.js)
 - Netlify
 - Any Node.js hosting
 
 ## Contact Information
-- Email: tonksolutions@gmail.com
+
+- Email: contact@tonksolutions.com.ar
 - LinkedIn: linkedin.com/company/tonk-solutions
 - Instagram: @tonksolutions
 - WhatsApp: Available via contact form

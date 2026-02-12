@@ -55,6 +55,6 @@ Abrir [http://localhost:3000](http://localhost:3000) en el navegador para ver el
 
 Para más información, contactar a Tonk Solutions en:
 
-- Email: tonksolutions@gmail.com
+- Email: contact@tonksolutions.com.ar
 - LinkedIn: [linkedin.com/company/tonk-solutions](https://linkedin.com/company/tonk-solutions)
 - Instagram: [@tonksolutions](https://instagram.com/tonksolutions)
