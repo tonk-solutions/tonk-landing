@@ -1,26 +1,31 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, Flex, Heading, Text, Grid, Icon } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { CheckCircle } from 'lucide-react';
+import { getContentData, ContentData } from '@/lib/content';
 
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
-
-const VALUE_POINTS: ReadonlyArray<string> = [
-  "Experiencia en sistemas financieros críticos",
-  "Modernización legacy sin interrupciones",
-  "Migración a microservicios y cloud-native",
-  "Continuidad sistémica Core Banking + Cloud",
-];
 
 const AboutSection = () => {
   const [ref, inView] = useInView({
     threshold: 0.2,
     triggerOnce: true,
   });
+  const [content, setContent] = useState<ContentData>({});
+  const [valuePoints, setValuePoints] = useState<string[]>([]);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      const data = await getContentData('about');
+      setContent(data);
+      setValuePoints((data.valuePoints as string[]) || []);
+    };
+    loadContent();
+  }, []);
 
   return (
     <Box
@@ -97,27 +102,22 @@ const AboutSection = () => {
             order={{ base: 1, lg: 2 }}
           >
             <Text color="primary.500" fontWeight="medium" mb={2}>
-              QUIÉNES SOMOS
+              {(content.label as string)}
             </Text>
             <Heading as="h2" id="nosotros-heading" size="xl" mb={6}>
-              Socios estratégicos en ingeniería de software financiero
+              {(content.title as string)}
             </Heading>
 
             <Text as="p" fontSize="lg" color="gray.700" mb={5}>
-              En Tonk Solutions somos un equipo de ingenieros senior que viene de operar
-              las plataformas financieras más exigentes de la región: Core Banking,
-              medios de pago, y sistemas transaccionales de alta criticidad.
+              {(content.description as string)}
             </Text>
 
             <Text as="p" fontSize="lg" color="gray.700" mb={8}>
-              Nuestra propuesta de valor es la <strong>Continuidad Sistémica</strong>:
-              garantizamos que la robustez del Core Bancario y los ERPs (SAP, Oracle)
-              convivan en armonía con la escalabilidad de la Nube, la modularidad de los
-              Microservicios y la eficiencia de la Inteligencia Artificial.
+              <span dangerouslySetInnerHTML={{ __html: (content.valueProposition as string) ? (content.valueProposition as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') : '' }} />
             </Text>
 
             <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4} mb={8}>
-              {VALUE_POINTS.map((point) => (
+              {valuePoints.map((point) => (
                 <Flex key={point} align="center" gap={3}>
                   <Icon as={CheckCircle} color="primary.500" boxSize={5} aria-hidden="true" />
                   <Text fontWeight="medium">{point}</Text>
@@ -130,11 +130,7 @@ const AboutSection = () => {
                 Nuestra Misión
               </Heading>
               <Text as="p" fontSize="md" color="gray.600" fontStyle="italic" mb={4}>
-                Resolver desafíos críticos de arquitectura y deuda técnica que frenan el
-                crecimiento del negocio, mediante equipos de ingeniería expertos capaces de
-                intervenir desde el core del sistema hasta arquitecturas de servicios
-                distribuidos, asegurando la continuidad sistémica en cada fase de la
-                transformación digital.
+                {(content.mission as string)}
               </Text>
             </Box>
           </MotionFlex>

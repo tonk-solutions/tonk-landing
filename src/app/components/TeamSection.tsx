@@ -1,11 +1,12 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, Flex, Heading, Text, Link, Grid, Icon } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Linkedin } from 'lucide-react';
 import Image from 'next/image';
+import { getContentData, ContentData } from '@/lib/content';
 
 const MotionBox = motion(Box);
 
@@ -125,46 +126,26 @@ interface TeamMemberData {
   avatarUrl: string;
 }
 
-const TEAM_MEMBERS: ReadonlyArray<TeamMemberData> = [
-  {
-    name: "Ignacio Sileo",
-    role: "Co-Founder & SAP/Enterprise Lead",
-    bio: "Especialización en Accenture y Softtek liderando implementación y soporte de soluciones SAP para corporaciones enterprise.",
-    linkedin: "https://www.linkedin.com/in/ignacio-sileo/",
-    delay: 0.1,
-    avatarUrl: "/images/founders/ignacio-sileo.jpeg",
-  },
-  {
-    name: "Matías Castillo",
-    role: "Co-Founder & Financial Systems Lead",
-    bio: "Experiencia en BBVA como App Owner de sistemas financieros críticos, Core Banking y medios de pago.",
-    linkedin: "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/",
-    delay: 0.2,
-    avatarUrl: "/images/founders/agustin-castillo.jpeg",
-  },
-  {
-    name: "Nicolás Gómez",
-    role: "Co-Founder & Core Banking Lead",
-    bio: "Trayectoria en Santander e ICBC en desarrollo y evolución de productos bancarios core y sistemas transaccionales.",
-    linkedin: "https://www.linkedin.com/in/nicolas-gomez-467b26141/",
-    delay: 0.3,
-    avatarUrl: "/images/founders/nicolas-gomez.jpeg",
-  },
-  {
-    name: "Rodrigo Hernandez",
-    role: "Co-Founder & Cloud Architecture Lead",
-    bio: "Experiencia en Endava, Stori y Rootstrap en ingeniería de soluciones cloud-native escalables y microservicios.",
-    linkedin: "https://www.linkedin.com/in/rodrigoenzohernandez/",
-    delay: 0.4,
-    avatarUrl: "/images/founders/rodrigo-hernandez.jpeg",
-  },
-];
-
 const TeamSection = () => {
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true,
   });
+  const [content, setContent] = useState<ContentData>({});
+  const [teamMembers, setTeamMembers] = useState<TeamMemberData[]>([]);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      const data = await getContentData('team');
+      setContent(data);
+      const members = (data.members as TeamMemberData[]) || [];
+      setTeamMembers(members.map((member, index) => ({
+        ...member,
+        delay: 0.1 * (index + 1),
+      })));
+    };
+    loadContent();
+  }, []);
 
   return (
     <Box
@@ -187,21 +168,19 @@ const TeamSection = () => {
             textAlign="center"
           >
             <Text color="primary.500" fontWeight="medium" mb={2}>
-              NUESTRO EQUIPO FUNDADOR
+              {(content.label as string)}
             </Text>
             <Heading as="h2" id="equipo-heading" size="xl" mb={4}>
-              Seniority en ingeniería financiera y enterprise
+              {(content.title as string)}
             </Heading>
             <Text as="p" fontSize="lg" color="gray.600" maxW="800px" mx="auto">
-              Nuestra autoridad en continuidad sistémica se sustenta en la trayectoria de
-              nuestros fundadores en instituciones financieras y consultoras de primer nivel:
-              BBVA, Santander, ICBC, Accenture, Softtek, Endava.
+              {(content.description as string)}
             </Text>
           </MotionBox>
         </Flex>
 
         <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }} gap={8}>
-          {TEAM_MEMBERS.map((member) => (
+          {teamMembers.map((member) => (
             <TeamMember
               key={member.name}
               name={member.name}

@@ -1,0 +1,27 @@
+---
+section: team
+label: "NUESTRO EQUIPO FUNDADOR"
+title: "Seniority en ingeniería financiera y enterprise"
+description: "Nuestra autoridad en continuidad sistémica se sustenta en la trayectoria de nuestros fundadores en instituciones financieras y consultoras de primer nivel: BBVA, Santander, ICBC, Accenture, Softtek, Endava."
+members:
+  - name: "Ignacio Sileo"
+    role: "Co-Founder & SAP/Enterprise Lead"
+    bio: "Especialización en Accenture y Softtek liderando implementación y soporte de soluciones SAP para corporaciones enterprise."
+    linkedin: "https://www.linkedin.com/in/ignacio-sileo/"
+    avatarUrl: "/images/founders/ignacio-sileo.jpeg"
+  - name: "Matías Castillo"
+    role: "Co-Founder & Financial Systems Lead"
+    bio: "Experiencia en BBVA como App Owner de sistemas financieros críticos, Core Banking y medios de pago."
+    linkedin: "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/"
+    avatarUrl: "/images/founders/agustin-castillo.jpeg"
+  - name: "Nicolás Gómez"
+    role: "Co-Founder & Core Banking Lead"
+    bio: "Trayectoria en Santander e ICBC en desarrollo y evolución de productos bancarios core y sistemas transaccionales."
+    linkedin: "https://www.linkedin.com/in/nicolas-gomez-467b26141/"
+    avatarUrl: "/images/founders/nicolas-gomez.jpeg"
+  - name: "Rodrigo Hernandez"
+    role: "Co-Founder & Engineering Lead"
+    bio: "Experiencia en Endava, Stori y Rootstrap en ingeniería de soluciones cloud-native escalables y microservicios."
+    linkedin: "https://www.linkedin.com/in/rodrigoenzohernandez/"
+    avatarUrl: "/images/founders/rodrigo-hernandez.jpeg"
+---
