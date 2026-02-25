@@ -1,12 +1,26 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, Grid, Heading, Text, Icon, Flex } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { Code, Cloud, FileText, BrainCircuit } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
+import { getContentData, ContentData } from '@/lib/content';
 
 const MotionBox = motion(Box);
+
+interface Service {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+const iconMap: Record<string, React.ElementType> = {
+  Code,
+  Cloud,
+  FileText,
+  BrainCircuit,
+};
 
 interface ServiceCardProps {
   title: string;
@@ -69,6 +83,21 @@ const ServicesSection = () => {
     threshold: 0.1,
     triggerOnce: true,
   });
+  const [content, setContent] = useState<ContentData>({});
+  const [services, setServices] = useState<Service[]>([]);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      const data = await getContentData('services');
+      setContent(data);
+      setServices((data.services as Service[]) || []);
+    };
+    loadContent();
+  }, []);
+
+  const label = content.label as string;
+  const title = content.title as string;
+  const description = content.description as string;
 
   return (
     <Box
@@ -93,16 +122,13 @@ const ServicesSection = () => {
             w="full"
           >
             <Text color="primary.500" fontWeight="medium" mb={2}>
-              NUESTROS SERVICIOS DE INGENIERÍA
+              {label}
             </Text>
             <Heading as="h2" id="servicios-heading" size="xl" mb={4}>
-              Soluciones de software enterprise para desafíos de escala
+              {title}
             </Heading>
             <Text as="p" fontSize="lg" color="gray.600">
-              Sabemos que llegar al Product-Market Fit es solo el primer paso.
-              El verdadero desafío es que la tecnología soporte el crecimiento sin romperse.
-              Nuestra especialización en ingeniería de software financiero y migración de sistemas legacy
-              nos posiciona como socios estratégicos en esa transición.
+              {description}
             </Text>
           </MotionBox>
         </Flex>
@@ -111,30 +137,15 @@ const ServicesSection = () => {
           gap={{ base: 4, md: 8 }}
           w="100%"
         >
-          <ServiceCard
-            title="Ingeniería de Software Financiero"
-            description="Diseñamos y mantenemos plataformas transaccionales críticas de Core Banking y medios de pago, manejando alta volumetría con integridad y seguridad financiera garantizada."
-            icon={<Icon as={Code} boxSize={8} />}
-            delay={0.1}
-          />
-          <ServiceCard
-            title="Arquitectura Cloud-Native y Microservicios"
-            description="Transformamos monolitos en ecosistemas escalables y resilientes mediante migración a microservicios y arquitecturas cloud-native que soportan picos de demanda sin degradación."
-            icon={<Icon as={Cloud} boxSize={8} />}
-            delay={0.2}
-          />
-          <ServiceCard
-            title="Soluciones Enterprise, SAP & ERP"
-            description="Orquestamos procesos críticos en grandes corporaciones con integración SAP y modernización ERP, donde la precisión del dato y la continuidad sistémica son innegociables."
-            icon={<Icon as={FileText} boxSize={8} />}
-            delay={0.3}
-          />
-          <ServiceCard
-            title="IA Aplicada y Automatización Enterprise"
-            description="Implementamos inteligencia artificial con respaldo académico y práctico para gestión del conocimiento, automatización de procesos y optimización operativa en entornos empresariales."
-            icon={<Icon as={BrainCircuit} boxSize={8} />}
-            delay={0.4}
-          />
+          {services.map((service, index) => (
+            <ServiceCard
+              key={service.title}
+              title={service.title}
+              description={service.description}
+              icon={<Icon as={iconMap[service.icon] || Code} boxSize={8} />}
+              delay={0.1 * (index + 1)}
+            />
+          ))}
         </Grid>
       </Container>
     </Box>

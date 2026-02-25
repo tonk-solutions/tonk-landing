@@ -1,19 +1,36 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Container, Heading, Text, Flex } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
+import { getContentData, ContentData } from '@/lib/content';
 
 const MotionBox = motion(Box);
 
 const HeroSection = () => {
+  const [content, setContent] = useState<ContentData>({});
+
+  useEffect(() => {
+    const loadContent = async () => {
+      const data = await getContentData('hero');
+      setContent(data);
+    };
+    loadContent();
+  }, []);
+
   const handleScrollDown = () => {
     const servicesSection = document.querySelector('#servicios');
     if (servicesSection) {
       servicesSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const subtitle = content.subtitle as string;
+  const title = content.title as string;
+  const titleHighlight = content.titleHighlight as string;
+  const description = content.description as string;
+  const cta = content.cta as string;
 
   return (
     <Box
@@ -75,7 +92,7 @@ const HeroSection = () => {
                 display="block"
                 mb={2}
               >
-                Consultoría de Ingeniería de Software para el Sector Financiero
+                {subtitle}
               </Text>
               <Heading
                 as="h1"
@@ -84,9 +101,9 @@ const HeroSection = () => {
                 lineHeight="shorter"
                 mb={4}
               >
-                Ingeniería de alta precisión para{' '}
+                {title}{' '}
                 <Text as="span" color="primary.400">
-                  desafíos de escala
+                  {titleHighlight}
                 </Text>
               </Heading>
             </MotionBox>
@@ -103,11 +120,8 @@ const HeroSection = () => {
                 maxW="700px"
                 mx="auto"
                 lineHeight="tall"
-              >
-                Cuando la agilidad del mercado choca con la rigidez de los sistemas heredados,
-                Tonk Solutions aporta <strong>continuidad sistémica</strong>: el puente de ingeniería
-                que armoniza Core Banking y ERPs con Cloud-Native, Microservicios e Inteligencia Artificial.
-              </Text>
+                dangerouslySetInnerHTML={{ __html: description ? description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') : '' }}
+              />
             </MotionBox>
 
             <MotionBox
@@ -124,7 +138,7 @@ const HeroSection = () => {
                 onClick={handleScrollDown}
                 _hover={{ bg: 'primary.600' }}
               >
-                Descubre Cómo
+                {cta}
               </Button>
             </MotionBox>
           </Flex>

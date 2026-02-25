@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Container,
@@ -14,9 +14,22 @@ import {
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import { CONTACT_EMAIL } from '../constants';
+import { getContentData, ContentData } from '@/lib/content';
 
 const MotionBox = motion(Box);
+
+interface ContactItemData {
+  icon: string;
+  label: string;
+  value: string;
+  href?: string;
+}
+
+const iconMap: Record<string, React.ElementType> = {
+  Mail,
+  Phone,
+  MapPin,
+};
 
 interface ContactItemProps {
   icon: React.ElementType;
@@ -57,6 +70,21 @@ const ContactSection = () => {
     threshold: 0.1,
     triggerOnce: true,
   });
+  const [content, setContent] = useState<ContentData>({});
+  const [contactItems, setContactItems] = useState<ContactItemData[]>([]);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      const data = await getContentData('contact');
+      setContent(data);
+      setContactItems((data.contactItems as ContactItemData[]) || []);
+    };
+    loadContent();
+  }, []);
+
+  const label = content.label as string;
+  const title = content.title as string;
+  const description = content.description as string;
 
   return (
     <Box
@@ -96,36 +124,26 @@ const ContactSection = () => {
             <Stack align="flex-start" gap={8}>
               <Box>
                 <Text color="primary.500" fontWeight="medium" mb={2}>
-                  CONTACTO
+                  {label}
                 </Text>
                 <Heading as="h2" id="contacto-heading" size="xl" mb={4}>
-                  ¿Listo para escalar tu plataforma?
+                  {title}
                 </Heading>
                 <Text as="p" fontSize="lg" color="gray.600" maxW="500px">
-                  Cuéntanos sobre tu desafío de arquitectura, deuda técnica o migración de
-                  sistemas legacy y te mostraremos cómo la continuidad sistémica puede
-                  transformar tu operación.
+                  {description}
                 </Text>
               </Box>
 
               <Stack gap={6} align="flex-start" w="full">
-                <ContactItem
-                  icon={Mail}
-                  label="Correo Electrónico"
-                  value={CONTACT_EMAIL}
-                  href={`mailto:${CONTACT_EMAIL}`}
-                />
-                <ContactItem
-                  icon={Phone}
-                  label="WhatsApp"
-                  value="+54 9 11 2390-8349"
-                  href="https://wa.me/+5491123908349"
-                />
-                <ContactItem
-                  icon={MapPin}
-                  label="Ubicación"
-                  value="Buenos Aires, Argentina"
-                />
+                {contactItems.map((item) => (
+                  <ContactItem
+                    key={item.label}
+                    icon={iconMap[item.icon] || Mail}
+                    label={item.label}
+                    value={item.value}
+                    href={item.href}
+                  />
+                ))}
               </Stack>
             </Stack>
           </MotionBox>

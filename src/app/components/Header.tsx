@@ -12,16 +12,31 @@ import {
 } from '@chakra-ui/react';
 import { Menu, X } from 'lucide-react';
 import TonkLogo from './TonkLogo';
+import { getContentData, ContentData } from '@/lib/content';
 
-const NAV_LINKS: ReadonlyArray<{ label: string; href: string }> = [
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Equipo', href: '#equipo' },
-];
+interface NavLink {
+  label: string;
+  href: string;
+}
 
 const Header = () => {
   const { open, onToggle, onClose } = useDisclosure();
   const [scrolled, setScrolled] = useState(false);
+  const [content, setContent] = useState<ContentData>({});
+  const [navLinks, setNavLinks] = useState<NavLink[]>([]);
+  const [ctaLabel, setCtaLabel] = useState('');
+  const [ctaHref, setCtaHref] = useState('');
+
+  useEffect(() => {
+    const loadContent = async () => {
+      const data = await getContentData('navigation');
+      setContent(data);
+      setNavLinks((data.links as NavLink[]) || []);
+      setCtaLabel((data.ctaLabel as string) || '');
+      setCtaHref((data.ctaHref as string) || '');
+    };
+    loadContent();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,7 +79,7 @@ const Header = () => {
             align="center"
             display={{ base: 'none', md: 'flex' }}
           >
-            {NAV_LINKS.map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -76,7 +91,7 @@ const Header = () => {
               </Link>
             ))}
             <Link
-              href="#contacto"
+              href={ctaHref}
               bg="primary.500"
               color="white"
               px={6}
@@ -87,7 +102,7 @@ const Header = () => {
               display="inline-block"
               _hover={{ bg: 'primary.600', textDecoration: 'none' }}
             >
-              Contáctanos
+              {ctaLabel}
             </Link>
           </Stack>
 
@@ -116,7 +131,7 @@ const Header = () => {
           overflow="hidden"
         >
           <Stack gap={4}>
-            {NAV_LINKS.map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -129,7 +144,7 @@ const Header = () => {
               </Link>
             ))}
             <Link
-              href="#contacto"
+              href={ctaHref}
               bg="primary.500"
               color="white"
               px={6}
@@ -143,7 +158,7 @@ const Header = () => {
               _hover={{ bg: 'primary.600', textDecoration: 'none' }}
               onClick={onClose}
             >
-              Contáctanos
+              {ctaLabel}
             </Link>
           </Stack>
         </Box>
