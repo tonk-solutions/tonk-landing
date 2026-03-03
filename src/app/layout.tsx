@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./providers";
 import Script from "next/script";
+import { Toaster } from "@/components/ui/toaster";
 import { CONTACT_EMAIL, CONTACT_PHONE } from "./constants";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
 });
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-poppins",
+  display: "swap",
 });
 
 const SITE_URL = "https://tonksolutions.com";
@@ -24,7 +26,8 @@ const SITE_DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Tonk Solutions | Ingeniería de Software Financiero & Continuidad Sistémica",
+    default:
+      "Tonk Solutions | Consultoría de Software · Desarrollo de Productos Digitales · Staff Augmentation",
     template: "%s | Tonk Solutions",
   },
   description: SITE_DESCRIPTION,
@@ -32,20 +35,18 @@ export const metadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
   keywords: [
+    "consultora de software Argentina",
+    "desarrollo de productos digitales",
+    "staff augmentation",
     "ingeniería de software financiero",
     "consultoría tecnológica enterprise",
     "continuidad sistémica",
     "migración a microservicios",
     "arquitectura cloud-native",
-    "modernización legacy systems",
     "core banking engineering",
     "SAP integration",
-    "ERP modernization",
     "fintech infrastructure",
-    "deuda técnica",
-    "sistemas distribuidos",
     "inteligencia artificial enterprise",
-    "consultoría software Argentina",
   ],
   robots: {
     index: true,
@@ -63,20 +64,21 @@ export const metadata: Metadata = {
     locale: "es_AR",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: "Tonk Solutions | Ingeniería de Software Financiero & Continuidad Sistémica",
+    title:
+      "Tonk Solutions | Consultoría de Software · Desarrollo de Productos Digitales",
     description: SITE_DESCRIPTION,
     images: [
       {
         url: `${SITE_URL}/images/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "Tonk Solutions - Ingeniería de Alta Precisión para Desafíos de Escala",
+        alt: "Tonk Solutions — Ingeniería de Alta Precisión para Desafíos de Escala",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tonk Solutions | Ingeniería de Software Financiero",
+    title: "Tonk Solutions | Consultoría de Software Especializada",
     description: SITE_DESCRIPTION,
     images: [`${SITE_URL}/images/og-image.png`],
   },
@@ -121,20 +123,6 @@ const organizationJsonLd = {
     "https://www.linkedin.com/company/tonk-solutions",
     "https://www.instagram.com/tonk_solutions",
   ],
-  knowsAbout: [
-    "Financial Software Engineering",
-    "Systemic Continuity",
-    "Core Banking Systems",
-    "Microservices Migration",
-    "Cloud-Native Architecture",
-    "SAP Integration",
-    "ERP Modernization",
-    "Legacy System Modernization",
-    "Technical Debt Resolution",
-    "Distributed Systems",
-    "Enterprise AI",
-  ],
-  slogan: "Ingeniería de alta precisión para desafíos de escala",
 };
 
 const websiteJsonLd = {
@@ -143,62 +131,9 @@ const websiteJsonLd = {
   "@id": `${SITE_URL}/#website`,
   url: SITE_URL,
   name: "Tonk Solutions",
-  publisher: {
-    "@id": `${SITE_URL}/#organization`,
-  },
+  publisher: { "@id": `${SITE_URL}/#organization` },
   description: SITE_DESCRIPTION,
   inLanguage: "es-AR",
-};
-
-const serviceJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "@id": `${SITE_URL}/#services`,
-  name: "Servicios de Ingeniería de Software",
-  description:
-    "Servicios especializados de consultoría en ingeniería de software para instituciones financieras, fintechs y corporaciones enterprise.",
-  itemListElement: [
-    {
-      "@type": "Service",
-      position: 1,
-      name: "Ingeniería de Software Financiero",
-      description:
-        "Diseño y mantenimiento de plataformas transaccionales críticas con alta volumetría, garantizando integridad y seguridad financiera en Core Banking y medios de pago.",
-      provider: { "@id": `${SITE_URL}/#organization` },
-      serviceType: "Financial Software Engineering",
-      areaServed: "Latin America",
-    },
-    {
-      "@type": "Service",
-      position: 2,
-      name: "Arquitectura Cloud-Native y Migración a Microservicios",
-      description:
-        "Transformación de aplicaciones monolíticas en ecosistemas escalables y resilientes, con arquitecturas que soportan picos de demanda sin degradar el servicio.",
-      provider: { "@id": `${SITE_URL}/#organization` },
-      serviceType: "Cloud Architecture Consulting",
-      areaServed: "Latin America",
-    },
-    {
-      "@type": "Service",
-      position: 3,
-      name: "Soluciones Enterprise, SAP & ERP",
-      description:
-        "Orquestación de procesos críticos en grandes corporaciones donde la precisión del dato es innegociable, con integración SAP y modernización ERP.",
-      provider: { "@id": `${SITE_URL}/#organization` },
-      serviceType: "Enterprise Software Consulting",
-      areaServed: "Latin America",
-    },
-    {
-      "@type": "Service",
-      position: 4,
-      name: "IA Aplicada y Automatización Enterprise",
-      description:
-        "Ingeniería de inteligencia artificial con respaldo académico y práctico para gestión del conocimiento y optimización de procesos en entornos empresariales.",
-      provider: { "@id": `${SITE_URL}/#organization` },
-      serviceType: "AI Consulting",
-      areaServed: "Latin America",
-    },
-  ],
 };
 
 const professionalServiceJsonLd = {
@@ -221,10 +156,34 @@ const professionalServiceJsonLd = {
     "@type": "OfferCatalog",
     name: "Servicios de Consultoría",
     itemListElement: [
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Ingeniería de Software Financiero" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Arquitectura Cloud-Native" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Soluciones Enterprise SAP & ERP" } },
-      { "@type": "Offer", itemOffered: { "@type": "Service", name: "IA Aplicada y Automatización" } },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Desarrollo de Productos Digitales",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Staff Augmentation",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Arquitectura Cloud-Native",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "IA Aplicada y Automatización",
+        },
+      },
     ],
   },
 };
@@ -235,13 +194,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
         <Script
           id="organization-jsonld"
           type="application/ld+json"
           strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd),
+          }}
         />
         <Script
           id="website-jsonld"
@@ -250,22 +211,17 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <Script
-          id="services-jsonld"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
-        />
-        <Script
           id="professional-service-jsonld"
           type="application/ld+json"
           strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(professionalServiceJsonLd),
+          }}
         />
       </head>
-      <body className={`${inter.variable} ${poppins.variable}`}>
-        <Providers>
-          {children}
-        </Providers>
+      <body className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning>
+        {children}
+        <Toaster />
       </body>
     </html>
   );

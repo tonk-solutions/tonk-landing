@@ -1,166 +1,108 @@
-"use client";
+import React from "react";
+import { ArrowDown } from "lucide-react";
+import { getFrontmatterOnly } from "@/lib/mdx-content";
+import { Button } from "@/components/ui/button";
+import type { HeroContent } from "@/types/content";
 
-import React, { useEffect, useState } from 'react';
-import { Box, Button, Container, Heading, Text, Flex } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
-import { getContentData, ContentData } from '@/lib/content';
+function parseMarkdownBold(text: string): React.ReactNode[] {
+  const parts = text.split(/\*\*(.*?)\*\*/g);
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <strong key={i}>{part}</strong> : part,
+  );
+}
 
-const MotionBox = motion(Box);
+const HeroSection = async () => {
+  const raw = await getFrontmatterOnly("hero");
+  const content = (raw || {}) as unknown as HeroContent;
 
-const HeroSection = () => {
-  const [content, setContent] = useState<ContentData>({});
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('hero');
-      setContent(data);
-    };
-    loadContent();
-  }, []);
-
-  const handleScrollDown = () => {
-    const servicesSection = document.querySelector('#servicios');
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const subtitle = content.subtitle as string;
-  const title = content.title as string;
-  const titleHighlight = content.titleHighlight as string;
-  const description = content.description as string;
-  const cta = content.cta as string;
+  const {
+    subtitle = "",
+    title = "",
+    titleHighlight = "",
+    description = "",
+    cta = "Ver servicios",
+  } = content;
 
   return (
-    <Box
-      as="section"
-      id="hero"
-      aria-label="Presentación de Tonk Solutions"
-      position="relative"
-      h="100vh"
-      bg="#0f172a"
-      color="white"
-      overflow="hidden"
+    <section
+      id="inicio"
+      aria-labelledby="hero-heading"
+      className="relative min-h-dvh overflow-hidden bg-brand-navy text-white flex items-center"
     >
-      <Box
-        position="absolute"
-        top="10%"
-        left="5%"
-        w="300px"
-        h="300px"
-        bg="primary.500"
-        filter="blur(100px)"
-        opacity="0.1"
-        borderRadius="full"
+      {/* Decorative blobs */}
+      <div
         aria-hidden="true"
+        className="pointer-events-none absolute left-[5%] top-[10%] size-72 rounded-full bg-brand-blue opacity-10 blur-[100px]"
       />
-      <Box
-        position="absolute"
-        bottom="20%"
-        right="10%"
-        w="250px"
-        h="250px"
-        bg="secondary.500"
-        filter="blur(100px)"
-        opacity="0.08"
-        borderRadius="full"
+      <div
         aria-hidden="true"
+        className="pointer-events-none absolute bottom-[20%] right-[10%] size-64 rounded-full bg-brand-cyan opacity-10 blur-[100px]"
       />
 
-      <Container maxW="1280px" mx="auto" h="full" px={{ base: 4, md: 8 }}>
-        <Flex
-          direction="column"
-          align="center"
-          justify="center"
-          textAlign="center"
-          h="full"
-          pt={{ base: '80px', md: '0' }}
-        >
-          <Flex direction="column" gap={6} maxW="800px" align="center">
-            <MotionBox
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <Text
-                as="span"
-                color="primary.400"
-                fontWeight="medium"
-                letterSpacing="wider"
-                fontSize="lg"
-                display="block"
-                mb={2}
-              >
-                {subtitle}
-              </Text>
-              <Heading
-                as="h1"
-                size={{ base: '2xl', md: '3xl' }}
-                fontWeight="bold"
-                lineHeight="shorter"
-                mb={4}
-              >
-                {title}{' '}
-                <Text as="span" color="primary.400">
-                  {titleHighlight}
-                </Text>
-              </Heading>
-            </MotionBox>
+      <div className="container-content relative z-10 px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
+          {/* Subtitle / badge */}
+          <p
+            className="animate-fade-in font-medium tracking-widest text-brand-cyan"
+            style={{ fontSize: "var(--text-lg)" }}
+          >
+            {subtitle}
+          </p>
 
-            <MotionBox
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <Text
-                as="p"
-                fontSize={{ base: 'lg', md: 'xl' }}
-                color="gray.300"
-                maxW="700px"
-                mx="auto"
-                lineHeight="tall"
-                dangerouslySetInnerHTML={{ __html: description ? description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') : '' }}
-              />
-            </MotionBox>
+          {/* H1 — LCP element */}
+          <h1
+            id="hero-heading"
+            className="animate-fade-up font-bold leading-tight"
+            style={{
+              fontSize: "var(--text-hero)",
+              animationDelay: "0.1s",
+            }}
+          >
+            {title}{" "}
+            <span className="text-gradient-brand">{titleHighlight}</span>
+          </h1>
 
-            <MotionBox
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              pt={6}
-            >
-              <Button
-                bg="primary.500"
-                color="white"
-                size="lg"
-                px={8}
-                onClick={handleScrollDown}
-                _hover={{ bg: 'primary.600' }}
-              >
-                {cta}
-              </Button>
-            </MotionBox>
-          </Flex>
-        </Flex>
-      </Container>
+          {/* Description */}
+          <p
+            className="animate-fade-up max-w-3xl text-gray-300 leading-relaxed"
+            style={{
+              fontSize: "var(--text-lg)",
+              animationDelay: "0.2s",
+            }}
+          >
+            {parseMarkdownBold(description)}
+          </p>
 
-      <Box
-        position="absolute"
-        bottom="32px"
-        left="50%"
-        transform="translateX(-50%)"
-        textAlign="center"
+          {/* CTAs */}
+          <div
+            className="animate-fade-up flex flex-wrap items-center justify-center gap-4 pt-4"
+            role="group"
+            aria-label="Acciones principales"
+            style={{ animationDelay: "0.3s" }}
+          >
+            <Button variant="accent" size="lg" asChild>
+              <a href="#servicios">{cta}</a>
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              asChild
+              className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
+            >
+              <a href="#contacto">Contactanos</a>
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/70"
         aria-hidden="true"
       >
-        <MotionBox
-          animate={{ y: [0, 12, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-        >
-          <ArrowDown size={24} style={{ opacity: 0.7 }} />
-        </MotionBox>
-      </Box>
-    </Box>
+        <ArrowDown size={24} strokeWidth={1.5} />
+      </div>
+    </section>
   );
 };
 
