@@ -1,23 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Button, Container, Heading, Text, Flex } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
-import { getContentData, ContentData } from '@/lib/content';
+import { ContentData } from '@/lib/content';
 
-const MotionBox = motion(Box);
+const MotionBox = m(Box);
 
-const HeroSection = () => {
-  const [content, setContent] = useState<ContentData>({});
+interface HeroSectionProps {
+  initialContent?: ContentData;
+}
 
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('hero');
-      setContent(data);
-    };
-    loadContent();
-  }, []);
+const HeroSection = ({ initialContent = {} }: HeroSectionProps) => {
+  const content = initialContent;
 
   const handleScrollDown = () => {
     const servicesSection = document.querySelector('#servicios');
@@ -152,13 +148,9 @@ const HeroSection = () => {
         transform="translateX(-50%)"
         textAlign="center"
         aria-hidden="true"
+        style={{ animation: 'bounce 1.5s ease-in-out infinite' }}
       >
-        <MotionBox
-          animate={{ y: [0, 12, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-        >
-          <ArrowDown size={24} style={{ opacity: 0.7 }} />
-        </MotionBox>
+        <ArrowDown size={24} style={{ opacity: 0.7 }} />
       </Box>
     </Box>
   );

@@ -1,31 +1,26 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Container, Flex, Heading, Text, Grid, Icon } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { CheckCircle } from 'lucide-react';
-import { getContentData, ContentData } from '@/lib/content';
+import { ContentData } from '@/lib/content';
 
-const MotionBox = motion(Box);
-const MotionFlex = motion(Flex);
+const MotionBox = m(Box);
+const MotionFlex = m(Flex);
 
-const AboutSection = () => {
+interface AboutSectionProps {
+  initialContent?: ContentData;
+}
+
+const AboutSection = ({ initialContent = {} }: AboutSectionProps) => {
   const [ref, inView] = useInView({
     threshold: 0.2,
     triggerOnce: true,
   });
-  const [content, setContent] = useState<ContentData>({});
-  const [valuePoints, setValuePoints] = useState<string[]>([]);
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('about');
-      setContent(data);
-      setValuePoints((data.valuePoints as string[]) || []);
-    };
-    loadContent();
-  }, []);
+  const content = initialContent;
+  const valuePoints = (initialContent.valuePoints as string[]) || [];
 
   return (
     <Box
@@ -38,6 +33,7 @@ const AboutSection = () => {
       w="100%"
       overflow="hidden"
       scrollMarginTop="80px"
+      style={{ contentVisibility: 'auto', containIntrinsicSize: '0 600px' }}
     >
       <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex

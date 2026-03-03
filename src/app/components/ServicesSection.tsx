@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Container, Grid, Heading, Text, Icon, Flex, SegmentGroup } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Code, Cloud, FileText, BrainCircuit, Users, CheckCircle, Sparkles, UserCheck } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
-import { getContentData, ContentData } from '@/lib/content';
+import { ContentData } from '@/lib/content';
 
-const MotionBox = motion(Box);
+const MotionBox = m(Box);
 
 interface Service {
   title: string;
@@ -139,23 +139,18 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
   );
 };
 
-const ServicesSection = () => {
+interface ServicesSectionProps {
+  initialContent?: ContentData;
+}
+
+const ServicesSection = ({ initialContent = {} }: ServicesSectionProps) => {
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true,
   });
-  const [content, setContent] = useState<ContentData>({});
-  const [branches, setBranches] = useState<Branch[]>([]);
-  const [selectedBranch, setSelectedBranch] = useState<string>("Producto");
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('services');
-      setContent(data);
-      setBranches((data.branches as Branch[]) || []);
-    };
-    loadContent();
-  }, []);
+  const content = initialContent;
+  const branches = (initialContent.branches as Branch[]) || [];
+  const [selectedBranch, setSelectedBranch] = useState<string>(branches[0]?.name ?? "Producto");
 
   const label = content.label as string;
   const title = content.title as string;
@@ -172,6 +167,7 @@ const ServicesSection = () => {
       w="100%"
       overflow="hidden"
       scrollMarginTop="80px"
+      style={{ contentVisibility: 'auto', containIntrinsicSize: '0 800px' }}
     >
       <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex direction="column" gap={10} mb={10} ref={ref} align="center">

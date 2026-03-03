@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Box, Container, Flex, Link, Stack, Text } from '@chakra-ui/react';
-import { FaLinkedin, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import { Linkedin, Instagram, Phone } from 'lucide-react';
 import TonkLogo from './TonkLogo';
 import { CONTACT_EMAIL } from '../constants';
 
@@ -44,10 +44,11 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   display="flex"
                   alignItems="center"
+                  gap={2}
                   color="gray.400"
                   _hover={{ color: 'primary.400' }}
                 >
-                  <FaWhatsapp style={{ marginRight: '8px' }} /> WhatsApp
+                  <Phone size={16} /> WhatsApp
                 </Link>
               </Stack>
             </Box>
@@ -61,10 +62,9 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   color="gray.400"
                   _hover={{ color: 'primary.400' }}
-                  fontSize="xl"
                   aria-label="Tonk Solutions en LinkedIn"
                 >
-                  <FaLinkedin />
+                  <Linkedin size={20} />
                 </Link>
                 <Link
                   href="https://www.instagram.com/tonk_solutions"
@@ -72,10 +72,9 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   color="gray.400"
                   _hover={{ color: 'primary.400' }}
-                  fontSize="xl"
                   aria-label="Tonk Solutions en Instagram"
                 >
-                  <FaInstagram />
+                  <Instagram size={20} />
                 </Link>
               </Stack>
             </Box>

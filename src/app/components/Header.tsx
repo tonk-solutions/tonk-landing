@@ -12,31 +12,23 @@ import {
 } from '@chakra-ui/react';
 import { Menu, X } from 'lucide-react';
 import TonkLogo from './TonkLogo';
-import { getContentData, ContentData } from '@/lib/content';
+import { ContentData } from '@/lib/content';
 
 interface NavLink {
   label: string;
   href: string;
 }
 
-const Header = () => {
+interface HeaderProps {
+  initialContent?: ContentData;
+}
+
+const Header = ({ initialContent = {} }: HeaderProps) => {
   const { open, onToggle, onClose } = useDisclosure();
   const [scrolled, setScrolled] = useState(false);
-  const [content, setContent] = useState<ContentData>({});
-  const [navLinks, setNavLinks] = useState<NavLink[]>([]);
-  const [ctaLabel, setCtaLabel] = useState('');
-  const [ctaHref, setCtaHref] = useState('');
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('navigation');
-      setContent(data);
-      setNavLinks((data.links as NavLink[]) || []);
-      setCtaLabel((data.ctaLabel as string) || '');
-      setCtaHref((data.ctaHref as string) || '');
-    };
-    loadContent();
-  }, []);
+  const navLinks = (initialContent.links as NavLink[]) || [];
+  const ctaLabel = (initialContent.ctaLabel as string) || '';
+  const ctaHref = (initialContent.ctaHref as string) || '';
 
   useEffect(() => {
     const handleScroll = () => {

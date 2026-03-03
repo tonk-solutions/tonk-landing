@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Container, Flex, Heading, Text, Link, Grid, Icon } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Linkedin } from 'lucide-react';
 import Image from 'next/image';
-import { getContentData, ContentData } from '@/lib/content';
+import { ContentData } from '@/lib/content';
 
-const MotionBox = motion(Box);
+const MotionBox = m(Box);
 
 interface TeamMemberProps {
   name: string;
@@ -126,26 +126,19 @@ interface TeamMemberData {
   avatarUrl: string;
 }
 
-const TeamSection = () => {
+interface TeamSectionProps {
+  initialContent?: ContentData;
+}
+
+const TeamSection = ({ initialContent = {} }: TeamSectionProps) => {
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true,
   });
-  const [content, setContent] = useState<ContentData>({});
-  const [teamMembers, setTeamMembers] = useState<TeamMemberData[]>([]);
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('team');
-      setContent(data);
-      const members = (data.members as TeamMemberData[]) || [];
-      setTeamMembers(members.map((member, index) => ({
-        ...member,
-        delay: 0.1 * (index + 1),
-      })));
-    };
-    loadContent();
-  }, []);
+  const content = initialContent;
+  const teamMembers: TeamMemberData[] = ((initialContent.members as TeamMemberData[]) || []).map(
+    (member, index) => ({ ...member, delay: 0.1 * (index + 1) })
+  );
 
   return (
     <Box
@@ -158,6 +151,7 @@ const TeamSection = () => {
       w="100%"
       overflow="hidden"
       scrollMarginTop="80px"
+      style={{ contentVisibility: 'auto', containIntrinsicSize: '0 700px' }}
     >
       <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex direction="column" gap={6} mb={12} ref={ref}>

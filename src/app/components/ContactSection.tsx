@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Box,
   Container,
@@ -11,12 +11,12 @@ import {
   Icon,
   Link,
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import { getContentData, ContentData } from '@/lib/content';
+import { ContentData } from '@/lib/content';
 
-const MotionBox = motion(Box);
+const MotionBox = m(Box);
 
 interface ContactItemData {
   icon: string;
@@ -65,22 +65,17 @@ const ContactItem: React.FC<ContactItemProps> = ({ icon, label, value, href }) =
   </Flex>
 );
 
-const ContactSection = () => {
+interface ContactSectionProps {
+  initialContent?: ContentData;
+}
+
+const ContactSection = ({ initialContent = {} }: ContactSectionProps) => {
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true,
   });
-  const [content, setContent] = useState<ContentData>({});
-  const [contactItems, setContactItems] = useState<ContactItemData[]>([]);
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('contact');
-      setContent(data);
-      setContactItems((data.contactItems as ContactItemData[]) || []);
-    };
-    loadContent();
-  }, []);
+  const content = initialContent;
+  const contactItems = (initialContent.contactItems as ContactItemData[]) || [];
 
   const label = content.label as string;
   const title = content.title as string;
@@ -98,6 +93,7 @@ const ContactSection = () => {
       overflow="hidden"
       w="100%"
       scrollMarginTop="80px"
+      style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' }}
     >
       <Box
         position="absolute"
