@@ -1,142 +1,137 @@
-"use client";
+import React from "react";
+import { CheckCircle2, Quote } from "lucide-react";
+import { getFrontmatterOnly } from "@/lib/mdx-content";
+import { Badge } from "@/components/ui/badge";
+import type { AboutContent } from "@/types/content";
 
-import React, { useEffect, useState } from 'react';
-import { Box, Container, Flex, Heading, Text, Grid, Icon } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { CheckCircle } from 'lucide-react';
-import { getContentData, ContentData } from '@/lib/content';
+function parseMarkdownBold(text: string): React.ReactNode[] {
+  const parts = text.split(/\*\*(.*?)\*\*/g);
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <strong key={i}>{part}</strong> : part,
+  );
+}
 
-const MotionBox = motion(Box);
-const MotionFlex = motion(Flex);
+const AboutSection = async () => {
+  const raw = await getFrontmatterOnly("about");
+  const content = (raw || {}) as unknown as AboutContent;
 
-const AboutSection = () => {
-  const [ref, inView] = useInView({
-    threshold: 0.2,
-    triggerOnce: true,
-  });
-  const [content, setContent] = useState<ContentData>({});
-  const [valuePoints, setValuePoints] = useState<string[]>([]);
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('about');
-      setContent(data);
-      setValuePoints((data.valuePoints as string[]) || []);
-    };
-    loadContent();
-  }, []);
+  const {
+    label = "",
+    title = "",
+    description = "",
+    valueProposition = "",
+    valuePoints = [],
+    mission = "",
+    imageTitle = "Continuidad Sistémica",
+    imageSubtitle = "Armonizando Core Banking y ERPs con Cloud, Microservicios e IA",
+  } = content;
 
   return (
-    <Box
-      as="section"
+    <section
       id="nosotros"
-      aria-labelledby="nosotros-heading"
-      py={{ base: 14, md: 20 }}
-      px={{ base: 4, md: 8 }}
-      bg="white"
-      w="100%"
-      overflow="hidden"
-      scrollMarginTop="80px"
+      aria-labelledby="about-heading"
+      className="section-padding bg-white overflow-hidden scroll-mt-20"
     >
-      <Container maxW="1280px" mx="auto" w="100%" px={0}>
-        <Flex
-          direction={{ base: 'column', lg: 'row' }}
-          align="center"
-          justify="space-between"
-          gap={{ base: 8, lg: 16 }}
-          ref={ref}
-        >
-          <MotionBox
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-            transition={{ duration: 0.7 }}
-            flex="1"
-            order={{ base: 2, lg: 1 }}
-          >
-            <Box
-              as="aside"
-              aria-label="Imagen representativa de continuidad sistémica"
-              position="relative"
-              borderRadius="2xl"
-              overflow="hidden"
-              boxShadow="xl"
-            >
-              <Box
-                h={{ base: '300px', md: '400px', lg: '500px' }}
-                w="full"
-                bg="dark.700"
-                position="relative"
-              >
-                <Box
-                  position="absolute"
-                  top="0" left="0" right="0" bottom="0"
-                  bg="linear-gradient(135deg, #0891b2 0%, #2563eb 100%)"
-                  opacity="0.8"
+      <div className="container-content px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-[var(--space-xl)] lg:grid-cols-2 lg:items-center">
+          {/* Left: Visual */}
+          <figure className="order-2 lg:order-1" aria-hidden="true">
+            <div className="relative overflow-hidden rounded-2xl shadow-xl">
+              <div className="relative h-72 w-full bg-brand-navy-700 md:h-96 lg:h-[500px]">
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, oklch(58% 0.19 200) 0%, oklch(56% 0.20 248) 100%)",
+                    opacity: 0.85,
+                  }}
                 />
-                <Flex
-                  position="absolute"
-                  top="0" left="0" right="0" bottom="0"
-                  justify="center"
-                  align="center"
-                  color="white"
-                  p={8}
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-8 text-white text-center">
+                  <h3 className="text-xl font-bold sm:text-2xl">{imageTitle}</h3>
+                  <p className="text-sm opacity-90 sm:text-base">{imageSubtitle}</p>
+                </div>
+              </div>
+            </div>
+          </figure>
+
+          {/* Right: Content */}
+          <div className="order-1 flex flex-col gap-5 lg:order-2">
+            {label && (
+              <Badge variant="accent" className="self-start">
+                {label}
+              </Badge>
+            )}
+
+            <h2
+              id="about-heading"
+              className="font-bold leading-tight text-foreground"
+              style={{ fontSize: "var(--text-3xl)" }}
+            >
+              {title}
+            </h2>
+
+            <p
+              className="text-muted-foreground leading-relaxed"
+              style={{ fontSize: "var(--text-lg)" }}
+            >
+              {description}
+            </p>
+
+            {valueProposition && (
+              <p
+                className="text-muted-foreground leading-relaxed"
+                style={{ fontSize: "var(--text-lg)" }}
+              >
+                {parseMarkdownBold(valueProposition)}
+              </p>
+            )}
+
+            {/* Value points — container query for 2-col layout */}
+            {valuePoints.length > 0 && (
+              <div className="@container">
+                <ul
+                  role="list"
+                  aria-label="Nuestros valores"
+                  className="grid grid-cols-1 gap-3 @sm:grid-cols-2"
                 >
-                  <Flex direction="column" align="center" gap={2}>
-                    <Heading size="lg" textAlign="center">Continuidad Sistémica</Heading>
-                    <Text textAlign="center">
-                      Armonizando Core Banking y ERPs con Cloud, Microservicios e IA
-                    </Text>
-                  </Flex>
-                </Flex>
-              </Box>
-            </Box>
-          </MotionBox>
+                  {valuePoints.map((point) => (
+                    <li key={point} className="flex items-start gap-3">
+                      <CheckCircle2
+                        className="mt-0.5 shrink-0 text-brand-cyan"
+                        size={20}
+                        strokeWidth={1.5}
+                        aria-hidden="true"
+                      />
+                      <span className="text-sm font-medium">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-          <MotionFlex
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            flex="1"
-            direction="column"
-            order={{ base: 1, lg: 2 }}
-          >
-            <Text color="primary.500" fontWeight="medium" mb={2}>
-              {(content.label as string)}
-            </Text>
-            <Heading as="h2" id="nosotros-heading" size="xl" mb={6}>
-              {(content.title as string)}
-            </Heading>
-
-            <Text as="p" fontSize="lg" color="gray.700" mb={5}>
-              {(content.description as string)}
-            </Text>
-
-            <Text as="p" fontSize="lg" color="gray.700" mb={8}>
-              <span dangerouslySetInnerHTML={{ __html: (content.valueProposition as string) ? (content.valueProposition as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') : '' }} />
-            </Text>
-
-            <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4} mb={8}>
-              {valuePoints.map((point) => (
-                <Flex key={point} align="center" gap={3}>
-                  <Icon as={CheckCircle} color="primary.500" boxSize={5} aria-hidden="true" />
-                  <Text fontWeight="medium">{point}</Text>
-                </Flex>
-              ))}
-            </Grid>
-
-            <Box as="blockquote">
-              <Heading as="h3" size="md" mb={4} color="dark.800">
-                Nuestra Misión
-              </Heading>
-              <Text as="p" fontSize="md" color="gray.600" fontStyle="italic" mb={4}>
-                {(content.mission as string)}
-              </Text>
-            </Box>
-          </MotionFlex>
-        </Flex>
-      </Container>
-    </Box>
+            {/* Mission blockquote */}
+            {mission && (
+              <blockquote className="mt-2 rounded-lg border-l-4 border-brand-cyan bg-secondary/50 p-5">
+                <div className="mb-2 flex items-center gap-2">
+                  <Quote
+                    className="text-brand-cyan"
+                    size={16}
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-brand-cyan">
+                    Nuestra Misión
+                  </h3>
+                </div>
+                <p className="italic text-muted-foreground leading-relaxed">
+                  {mission}
+                </p>
+              </blockquote>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
