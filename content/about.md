@@ -9,6 +9,7 @@ valuePoints:
   - "Resolvemos desde arquitecturas complejas hasta productos a medida"
   - "Proceso de trabajo claro, comunicación directa, sin intermediarios"
   - "Te ayudamos a encontrar el recurso ideal para tu proyecto"
+misionTitle: "Nuestra Misión"
 mission: "Ser el equipo de ingeniería que nuestros clientes necesitan, con el criterio para tomar buenas decisiones técnicas, la experiencia para ejecutarlas y la responsabilidad de llevarlas hasta el final."
 imageAlt: "Equipo de ingeniería Tonk Solutions"
 imageTitle: "Ingeniería con criterio"
