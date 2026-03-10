@@ -152,7 +152,11 @@ const ServicesSection = () => {
     const loadContent = async () => {
       const data = await getContentData('services');
       setContent(data);
-      setBranches((data.branches as Branch[]) || []);
+      const loadedBranches = (data.branches as Branch[]) || [];
+      setBranches(loadedBranches);
+      if (loadedBranches.length > 0) {
+        setSelectedBranch(loadedBranches[0].name);
+      }
     };
     loadContent();
   }, []);
