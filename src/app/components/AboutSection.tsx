@@ -83,9 +83,9 @@ const AboutSection = () => {
                   p={8}
                 >
                   <Flex direction="column" align="center" gap={2}>
-                    <Heading size="lg" textAlign="center">Continuidad Sistémica</Heading>
+                    <Heading size="lg" textAlign="center">Ingeniería con criterio</Heading>
                     <Text textAlign="center">
-                      Armonizando Core Banking y ERPs con Cloud, Microservicios e IA
+                      Del problema a la solución.
                     </Text>
                   </Flex>
                 </Flex>
