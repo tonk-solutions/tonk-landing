@@ -20,9 +20,9 @@ const HeroSection = () => {
   }, []);
 
   const handleScrollDown = () => {
-    const servicesSection = document.querySelector('#servicios');
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    const contactSection = document.querySelector('#contacto');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 

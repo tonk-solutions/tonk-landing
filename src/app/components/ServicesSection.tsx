@@ -146,13 +146,17 @@ const ServicesSection = () => {
   });
   const [content, setContent] = useState<ContentData>({});
   const [branches, setBranches] = useState<Branch[]>([]);
-  const [selectedBranch, setSelectedBranch] = useState<string>("Producto");
+  const [selectedBranch, setSelectedBranch] = useState<string>("");
 
   useEffect(() => {
     const loadContent = async () => {
       const data = await getContentData('services');
       setContent(data);
-      setBranches((data.branches as Branch[]) || []);
+      const loadedBranches = (data.branches as Branch[]) || [];
+      setBranches(loadedBranches);
+      if (loadedBranches.length > 0) {
+        setSelectedBranch(loadedBranches[0].name);
+      }
     };
     loadContent();
   }, []);
@@ -197,7 +201,7 @@ const ServicesSection = () => {
         <Box display="flex" justifyContent="center" mb={8} suppressHydrationWarning>
           <SegmentGroup.Root
             value={selectedBranch}
-            onValueChange={(e) => setSelectedBranch(e.value || "Producto")}
+            onValueChange={(e) => setSelectedBranch(e.value || branches[0]?.name || "")}
             size="lg"
             bg="white"
             p={1}

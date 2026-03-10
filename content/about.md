@@ -2,15 +2,16 @@
 section: about
 label: "QUIÉNES SOMOS"
 title: "Socios estratégicos en ingeniería de software"
-description: "En Tonk Solutions somos un equipo de ingenieros senior que viene de operar las plataformas financieras más exigentes de la región: Core Banking, medios de pago, y sistemas transaccionales de alta criticidad."
-valueProposition: "Nuestra propuesta de valor es la **Continuidad Sistémica**: garantizamos que la robustez del Core Bancario y los ERPs (SAP, Oracle) convivan en armonía con la escalabilidad de la Nube, la modularidad de los Microservicios y la eficiencia de la Inteligencia Artificial."
+
+description: "Somos cuatro ingenieros con experiencia en empresas como BBVA, Santander, Accenture, Endava y Rootstrap. Nos juntamos para armar algo propio: una consultora ágil donde el cliente habla directo con quien resuelve el problema."
 valuePoints:
-  - "Experiencia en sistemas financieros críticos"
-  - "Modernización legacy sin interrupciones"
-  - "Migración a microservicios y cloud-native"
-  - "Continuidad sistémica Core Banking + Cloud"
-mission: "Resolver desafíos críticos de arquitectura y deuda técnica que frenan el crecimiento del negocio, mediante equipos de ingeniería expertos capaces de intervenir desde el core del sistema hasta arquitecturas de servicios distribuidos, asegurando la continuidad sistémica en cada fase de la transformación digital."
-imageAlt: "Imagen representativa de continuidad sistémica"
-imageTitle: "Continuidad Sistémica"
-imageSubtitle: "Armonizando Core Banking y ERPs con Cloud, Microservicios e IA"
+  - "Seniority real: venimos de operar sistemas críticos en producción"
+  - "Resolvemos desde arquitecturas complejas hasta productos a medida"
+  - "Proceso de trabajo claro, comunicación directa, sin intermediarios"
+  - "Te ayudamos a encontrar el recurso ideal para tu proyecto"
+misionTitle: "Nuestra Misión"
+mission: "Ser el equipo de ingeniería que nuestros clientes necesitan, con el criterio para tomar buenas decisiones técnicas, la experiencia para ejecutarlas y la responsabilidad de llevarlas hasta el final."
+imageAlt: "Equipo de ingeniería Tonk Solutions"
+imageTitle: "Ingeniería con criterio"
+imageSubtitle: "Del problema a la solución."
 ---

@@ -83,9 +83,9 @@ const AboutSection = () => {
                   p={8}
                 >
                   <Flex direction="column" align="center" gap={2}>
-                    <Heading size="lg" textAlign="center">Continuidad Sistémica</Heading>
+                    <Heading size="lg" textAlign="center">{(content.imageTitle as string)}</Heading>
                     <Text textAlign="center">
-                      Armonizando Core Banking y ERPs con Cloud, Microservicios e IA
+                      {(content.imageSubtitle as string)}
                     </Text>
                   </Flex>
                 </Flex>
@@ -112,9 +112,11 @@ const AboutSection = () => {
               {(content.description as string)}
             </Text>
 
-            <Text as="p" fontSize="lg" color="gray.700" mb={8}>
-              <span dangerouslySetInnerHTML={{ __html: (content.valueProposition as string) ? (content.valueProposition as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') : '' }} />
-            </Text>
+            {(content.valueProposition as string) && (
+              <Text as="p" fontSize="lg" color="gray.700" mb={8}>
+                <span dangerouslySetInnerHTML={{ __html: (content.valueProposition as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+              </Text>
+            )}
 
             <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4} mb={8}>
               {valuePoints.map((point) => (
@@ -127,7 +129,7 @@ const AboutSection = () => {
 
             <Box as="blockquote">
               <Heading as="h3" size="md" mb={4} color="dark.800">
-                Nuestra Misión
+                {(content.misionTitle as string)}
               </Heading>
               <Text as="p" fontSize="md" color="gray.600" fontStyle="italic" mb={4}>
                 {(content.mission as string)}

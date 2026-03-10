@@ -1,8 +1,8 @@
 ---
 section: contact
 label: "CONTACTO"
-title: "¿Listo para escalar tu plataforma?"
-description: "Cuéntanos sobre tu desafío de arquitectura, deuda técnica o migración de sistemas legacy y te mostraremos cómo la continuidad sistémica puede transformar tu operación."
+title: "¿Tenés un proyecto en mente?"
+description: "Ya sea que tengas algo concreto para presupuestar o estés explorando opciones, contanos de qué se trata."
 contactItems:
   - icon: "Mail"
     label: "Correo Electrónico"

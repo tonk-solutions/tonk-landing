@@ -7,6 +7,6 @@ links:
     href: "#nosotros"
   - label: "Equipo"
     href: "#equipo"
-ctaLabel: "Contáctanos"
+ctaLabel: "Hablemos"
 ctaHref: "#contacto"
 ---

@@ -1,8 +1,8 @@
 ---
 section: hero
 subtitle: "Consultoría de Ingeniería de Software"
-title: "Ingeniería de alta precisión para"
-titleHighlight: "desafíos de escala"
-description: "Cuando la agilidad del mercado choca con la rigidez de los sistemas heredados, Tonk Solutions aporta **continuidad sistémica**: el puente de ingeniería que armoniza Core Banking y ERPs con Cloud-Native, Microservicios e Inteligencia Artificial."
-cta: "Descubre Cómo"
+title: "Ingeniería senior para"
+titleHighlight: "proyectos que importan"
+description: "Somos un equipo de ingenieros y líderes senior con trayectoria en las plataformas más exigentes de la región. Resolvemos desafíos de software complejos — desde arquitecturas enterprise hasta productos digitales a medida — con el mismo nivel de precisión y compromiso."
+cta: "Hablemos de tu proyecto"
 ---
