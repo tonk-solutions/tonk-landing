@@ -31,14 +31,15 @@ const Footer = () => {
     loadContent();
   }, []);
 
-  const getIcon = (iconName: string) => {
+  const getIcon = (iconName: string | undefined) => {
+    if (!iconName || typeof iconName !== 'string') return null;
     switch (iconName.toLowerCase()) {
       case 'linkedin':
-        return <FaLinkedin />;
+        return <FaLinkedin aria-hidden="true" focusable={false} />;
       case 'instagram':
-        return <FaInstagram />;
+        return <FaInstagram aria-hidden="true" focusable={false} />;
       case 'whatsapp':
-        return <FaWhatsapp style={{ marginRight: '8px' }} />;
+        return <FaWhatsapp aria-hidden="true" focusable={false} style={{ marginRight: '8px' }} />;
       default:
         return null;
     }
@@ -71,9 +72,9 @@ const Footer = () => {
             <Box as="nav" aria-label="Información de contacto">
               <Text fontWeight="bold" mb={4}>{contactLabel}</Text>
               <Stack gap={2}>
-                {contactLinks.map((link, index) => (
+                {contactLinks.map((link) => (
                   <Link
-                    key={index}
+                    key={link.href}
                     href={link.href}
                     target={link.href.startsWith('mailto:') ? undefined : '_blank'}
                     rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
@@ -93,9 +94,9 @@ const Footer = () => {
             <Box as="nav" aria-label="Redes sociales">
               <Text fontWeight="bold" mb={4}>{socialLabel}</Text>
               <Stack direction="row" gap={4}>
-                {socialLinks.map((link, index) => (
+                {socialLinks.map((link) => (
                   <Link
-                    key={index}
+                    key={link.href}
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
