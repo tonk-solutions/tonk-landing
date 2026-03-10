@@ -146,7 +146,7 @@ const ServicesSection = () => {
   });
   const [content, setContent] = useState<ContentData>({});
   const [branches, setBranches] = useState<Branch[]>([]);
-  const [selectedBranch, setSelectedBranch] = useState<string>("Producto");
+  const [selectedBranch, setSelectedBranch] = useState<string>("");
 
   useEffect(() => {
     const loadContent = async () => {
