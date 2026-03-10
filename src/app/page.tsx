@@ -1,44 +1,26 @@
-import { getFrontmatterOnly } from "@/lib/mdx-content";
-import Header from "./components/Header";
-import HeroSection from "./components/HeroSection";
-import ServicesSection from "./components/ServicesSection";
-import AboutSection from "./components/AboutSection";
-import TeamSection from "./components/TeamSection";
-import ContactSection from "./components/ContactSection";
-import Footer from "./components/Footer";
-import type {
-  NavigationContent,
-  ServicesContent,
-  ContactContent,
-} from "@/types/content";
+"use client";
 
-export default async function Home() {
-  // Load content for interactive (client) sections at build time
-  const [navRaw, servicesRaw, contactRaw] = await Promise.all([
-    getFrontmatterOnly("navigation"),
-    getFrontmatterOnly("services"),
-    getFrontmatterOnly("contact"),
-  ]);
+import { Box } from '@chakra-ui/react';
+import Header from './components/Header';
+import HeroSection from './components/HeroSection';
+import ServicesSection from './components/ServicesSection';
+import AboutSection from './components/AboutSection';
+import TeamSection from './components/TeamSection';
+import ContactSection from './components/ContactSection';
+import Footer from './components/Footer';
 
-  const navContent = (navRaw ?? {}) as unknown as NavigationContent;
-  const servicesContent = (servicesRaw ?? {}) as unknown as ServicesContent;
-  const contactContent = (contactRaw ?? {}) as unknown as ContactContent;
-
+export default function Home() {
   return (
-    <div className="min-h-dvh w-full overflow-x-hidden">
-      <Header
-        navLinks={navContent.links ?? []}
-        ctaLabel={navContent.ctaLabel ?? "Contactanos"}
-        ctaHref={navContent.ctaHref ?? "#contacto"}
-      />
-      <main role="main" className="w-full">
+    <Box minH="100vh" w="100%" overflow="hidden">
+      <Header />
+      <Box as="main" role="main" w="100%">
         <HeroSection />
-        <ServicesSection content={servicesContent} />
+        <ServicesSection />
         <AboutSection />
         <TeamSection />
-        <ContactSection content={contactContent} />
-      </main>
+        <ContactSection />
+      </Box>
       <Footer />
-    </div>
+    </Box>
   );
 }
