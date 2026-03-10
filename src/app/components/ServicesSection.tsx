@@ -201,7 +201,7 @@ const ServicesSection = () => {
         <Box display="flex" justifyContent="center" mb={8} suppressHydrationWarning>
           <SegmentGroup.Root
             value={selectedBranch}
-            onValueChange={(e) => setSelectedBranch(e.value || "Producto")}
+            onValueChange={(e) => setSelectedBranch(e.value || branches[0]?.name || "")}
             size="lg"
             bg="white"
             p={1}

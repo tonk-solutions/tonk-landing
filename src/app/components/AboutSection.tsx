@@ -83,9 +83,9 @@ const AboutSection = () => {
                   p={8}
                 >
                   <Flex direction="column" align="center" gap={2}>
-                    <Heading size="lg" textAlign="center">Ingeniería con criterio</Heading>
+                    <Heading size="lg" textAlign="center">{(content.imageTitle as string)}</Heading>
                     <Text textAlign="center">
-                      Del problema a la solución.
+                      {(content.imageSubtitle as string)}
                     </Text>
                   </Flex>
                 </Flex>
@@ -127,7 +127,7 @@ const AboutSection = () => {
 
             <Box as="blockquote">
               <Heading as="h3" size="md" mb={4} color="dark.800">
-                Nuestra Misión
+                {(content.misionTitle as string)}
               </Heading>
               <Text as="p" fontSize="md" color="gray.600" fontStyle="italic" mb={4}>
                 {(content.mission as string)}
