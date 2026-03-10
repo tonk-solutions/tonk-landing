@@ -112,9 +112,11 @@ const AboutSection = () => {
               {(content.description as string)}
             </Text>
 
-            <Text as="p" fontSize="lg" color="gray.700" mb={8}>
-              <span dangerouslySetInnerHTML={{ __html: (content.valueProposition as string) ? (content.valueProposition as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') : '' }} />
-            </Text>
+            {(content.valueProposition as string) && (
+              <Text as="p" fontSize="lg" color="gray.700" mb={8}>
+                <span dangerouslySetInnerHTML={{ __html: (content.valueProposition as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+              </Text>
+            )}
 
             <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4} mb={8}>
               {valuePoints.map((point) => (
