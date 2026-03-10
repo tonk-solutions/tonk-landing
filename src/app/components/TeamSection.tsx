@@ -1,140 +1,199 @@
-import React from "react";
-import Image from "next/image";
-import { Linkedin } from "lucide-react";
-import { getFrontmatterOnly } from "@/lib/mdx-content";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import type { TeamContent, TeamMember } from "@/types/content";
+"use client";
 
-interface TeamMemberCardProps {
-  member: TeamMember;
-  index: number;
+import React, { useEffect, useState } from 'react';
+import { Box, Container, Flex, Heading, Text, Link, Grid, Icon } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Linkedin } from 'lucide-react';
+import Image from 'next/image';
+import { getContentData, ContentData } from '@/lib/content';
+
+const MotionBox = motion(Box);
+
+interface TeamMemberProps {
+  name: string;
+  role: string;
+  bio: string;
+  linkedin: string;
+  delay: number;
+  avatarUrl?: string;
 }
 
-const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member, index }) => {
-  const memberId = `member-${index}-name`;
+const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, delay, avatarUrl }) => {
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
 
   return (
-    <li>
-      <Card
-        variant="elevated"
-        className="h-full overflow-hidden"
-        aria-labelledby={memberId}
-        role="article"
+    <MotionBox
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6, delay }}
+    >
+      <Box
+        as="article"
+        bg="white"
+        borderRadius="xl"
+        overflow="hidden"
+        boxShadow="md"
+        borderWidth="1px"
+        borderColor="gray.100"
+        height="100%"
+        transition="all 0.3s ease"
+        _hover={{ boxShadow: 'lg', transform: 'translateY(-5px)' }}
       >
-        <CardContent className="flex flex-col items-center gap-4 p-6 text-center h-full">
-          {/* Avatar */}
-          <div className="relative size-20 shrink-0">
-            {member.avatarUrl ? (
-              <div className="size-20 overflow-hidden rounded-full border-4 border-border shadow-sm">
+        <Flex direction="column" h="100%">
+          <Flex justify="center" pt={8} pb={4}>
+            {avatarUrl ? (
+              <Box
+                w="80px"
+                h="80px"
+                borderRadius="full"
+                overflow="hidden"
+                border="4px solid"
+                borderColor="gray.100"
+                position="relative"
+              >
                 <Image
-                  src={member.avatarUrl}
-                  alt={`${member.name}, ${member.role} en Tonk Solutions`}
+                  src={avatarUrl}
+                  alt={`${name} - ${role} en Tonk Solutions`}
                   width={80}
                   height={80}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                  sizes="80px"
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                 />
-              </div>
+              </Box>
             ) : (
-              <div
-                className="flex size-20 items-center justify-center rounded-full border-4 border-border bg-brand-blue text-2xl font-bold text-white"
+              <Box
+                w="80px"
+                h="80px"
+                borderRadius="full"
+                bg="primary.500"
+                color="white"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                border="4px solid"
+                borderColor="gray.100"
+                fontSize="2xl"
+                fontWeight="bold"
                 aria-hidden="true"
               >
-                {member.name.charAt(0)}
-              </div>
+                {name.charAt(0)}
+              </Box>
             )}
-          </div>
+          </Flex>
 
-          {/* Info */}
-          <div className="flex flex-1 flex-col gap-2">
-            <h3
-              id={memberId}
-              className="font-semibold text-foreground"
-              style={{ fontSize: "var(--text-lg)" }}
-            >
-              {member.name}
-            </h3>
-            <p className="text-sm font-medium text-brand-cyan">{member.role}</p>
-            <p className="mt-1 text-sm text-muted-foreground leading-relaxed line-clamp-4">
-              {member.bio}
-            </p>
-          </div>
+          <Flex direction="column" p={5} gap={2} align="center" flex="1">
+            <Heading as="h3" size="md">
+              {name}
+            </Heading>
+            <Text color="primary.500" fontWeight="medium" fontSize="sm">
+              {role}
+            </Text>
+            <Text as="p" textAlign="center" color="gray.600" fontSize="sm" mt={2}>
+              {bio}
+            </Text>
+          </Flex>
 
-          {/* LinkedIn */}
-          <div className="w-full border-t border-border pt-4">
-            <a
-              href={member.linkedin}
+          <Flex justify="center" borderTop="1px solid" borderColor="gray.100" p={4}>
+            <Link
+              href={linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              aria-label={`Perfil de LinkedIn de ${member.name}`}
+              display="flex"
+              alignItems="center"
+              color="secondary.600"
+              _hover={{ color: 'secondary.500' }}
+              aria-label={`Perfil de LinkedIn de ${name}`}
             >
-              <Linkedin size={16} strokeWidth={1.5} aria-hidden="true" />
-              LinkedIn
-            </a>
-          </div>
-        </CardContent>
-      </Card>
-    </li>
+              <Icon as={Linkedin} mr={2} /> LinkedIn
+            </Link>
+          </Flex>
+        </Flex>
+      </Box>
+    </MotionBox>
   );
 };
 
-const TeamSection = async () => {
-  const raw = await getFrontmatterOnly("team");
-  const content = (raw || {}) as unknown as TeamContent;
+interface TeamMemberData {
+  name: string;
+  role: string;
+  bio: string;
+  linkedin: string;
+  delay: number;
+  avatarUrl: string;
+}
 
-  const {
-    label = "",
-    title = "",
-    description = "",
-    members = [],
-  } = content;
+const TeamSection = () => {
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
+  const [content, setContent] = useState<ContentData>({});
+  const [teamMembers, setTeamMembers] = useState<TeamMemberData[]>([]);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      const data = await getContentData('team');
+      setContent(data);
+      const members = (data.members as TeamMemberData[]) || [];
+      setTeamMembers(members.map((member, index) => ({
+        ...member,
+        delay: 0.1 * (index + 1),
+      })));
+    };
+    loadContent();
+  }, []);
 
   return (
-    <section
+    <Box
+      as="section"
       id="equipo"
-      aria-labelledby="team-heading"
-      className="section-padding bg-muted/30 overflow-hidden scroll-mt-20"
+      aria-labelledby="equipo-heading"
+      py={{ base: 14, md: 20 }}
+      px={{ base: 4, md: 8 }}
+      bg="gray.50"
+      w="100%"
+      overflow="hidden"
+      scrollMarginTop="80px"
     >
-      <div className="container-content px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <header className="mb-[var(--space-xl)] text-center">
-          {label && (
-            <Badge variant="accent" className="mb-4">
-              {label}
-            </Badge>
-          )}
-          <h2
-            id="team-heading"
-            className="font-bold text-foreground"
-            style={{ fontSize: "var(--text-3xl)" }}
+      <Container maxW="1280px" mx="auto" w="100%" px={0}>
+        <Flex direction="column" gap={6} mb={12} ref={ref}>
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
+            textAlign="center"
           >
-            {title}
-          </h2>
-          {description && (
-            <p
-              className="mx-auto mt-4 max-w-2xl text-muted-foreground"
-              style={{ fontSize: "var(--text-lg)" }}
-            >
-              {description}
-            </p>
-          )}
-        </header>
+            <Text color="primary.500" fontWeight="medium" mb={2}>
+              {(content.label as string)}
+            </Text>
+            <Heading as="h2" id="equipo-heading" size="xl" mb={4}>
+              {(content.title as string)}
+            </Heading>
+            <Text as="p" fontSize="lg" color="gray.600" maxW="800px" mx="auto">
+              {(content.description as string)}
+            </Text>
+          </MotionBox>
+        </Flex>
 
-        {/* Team grid */}
-        <ul
-          role="list"
-          aria-label="Miembros del equipo"
-          className="grid grid-cols-1 gap-[var(--space-lg)] sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {members.map((member, index) => (
-            <TeamMemberCard key={member.name} member={member} index={index} />
+        <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }} gap={8}>
+          {teamMembers.map((member) => (
+            <TeamMember
+              key={member.name}
+              name={member.name}
+              role={member.role}
+              bio={member.bio}
+              linkedin={member.linkedin}
+              delay={member.delay}
+              avatarUrl={member.avatarUrl}
+            />
           ))}
-        </ul>
-      </div>
-    </section>
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

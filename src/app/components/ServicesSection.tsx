@@ -1,276 +1,267 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
-import {
-  Code,
-  Cloud,
-  FileText,
-  BrainCircuit,
-  Users,
-  CheckCircle2,
-  Sparkles,
-  UserCheck,
-  type LucideIcon,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import type { ServicesContent, Branch, Service } from "@/types/content";
+import React, { useEffect, useState } from 'react';
+import { Box, Container, Grid, Heading, Text, Icon, Flex, SegmentGroup } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+import { Code, Cloud, FileText, BrainCircuit, Users, CheckCircle, Sparkles, UserCheck } from 'lucide-react';
+import { useInView } from 'react-intersection-observer';
+import { getContentData, ContentData } from '@/lib/content';
 
-const iconMap: Record<string, LucideIcon> = {
-  Code,
-  Cloud,
-  FileText,
-  BrainCircuit,
-  Users,
-  CheckCircle: CheckCircle2,
-  CheckCircle2,
-  Sparkles,
-  UserCheck,
-};
+const MotionBox = motion(Box);
 
-interface ServiceDetailProps {
-  service: Service;
+interface Service {
+  title: string;
+  description: string;
+  icon: string;
 }
 
-const ServiceDetail: React.FC<ServiceDetailProps> = ({ service }) => {
-  const Icon = iconMap[service.icon] || Code;
+interface Branch {
+  name: string;
+  subtitle: string;
+  services: Service[];
+}
 
-  return (
-    <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-4">
-        <div className="flex size-16 shrink-0 items-center justify-center rounded-xl bg-brand-blue/10">
-          <Icon
-            className="text-brand-blue"
-            size={32}
-            strokeWidth={1.5}
-            aria-hidden="true"
-          />
-        </div>
-        <h3
-          className="font-semibold text-foreground"
-          style={{ fontSize: "var(--text-xl)" }}
-        >
-          {service.title}
-        </h3>
-      </div>
-
-      <div className="h-px w-16 bg-brand-cyan" aria-hidden="true" />
-
-      <p
-        className="leading-relaxed text-muted-foreground"
-        style={{ fontSize: "var(--text-base)" }}
-      >
-        {service.description}
-      </p>
-    </div>
-  );
+const iconMap: Record<string, React.ElementType> = {
+  Code,
+  Cloud,
+  FileText,
+  BrainCircuit,
+  Users,
+  CheckCircle,
+  Sparkles,
+  UserCheck,
 };
 
-interface BranchPanelProps {
+interface BranchServicesGridProps {
   branch: Branch;
-  panelId: string;
-  tabId: string;
 }
 
-const BranchPanel: React.FC<BranchPanelProps> = ({ branch, panelId, tabId }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const selectedService = branch.services[selectedIndex];
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setSelectedIndex((prev) => (prev + 1) % branch.services.length);
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setSelectedIndex((prev) =>
-        prev === 0 ? branch.services.length - 1 : prev - 1,
-      );
-    }
-  };
+const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
+  const [selectedServiceIndex, setSelectedServiceIndex] = useState(0);
+  const selectedService = branch.services[selectedServiceIndex];
 
   return (
-    <div
-      id={panelId}
-      role="tabpanel"
-      aria-labelledby={tabId}
-      className="@container rounded-xl border border-border bg-card p-6 shadow-sm lg:p-8"
+    <Grid
+      templateColumns={{ base: "1fr", lg: "300px 1fr" }}
+      gap={{ base: 6, lg: 12 }}
+      w="100%"
+      bg="white"
+      rounded="lg"
+      p={{ base: 6, lg: 8 }}
+      boxShadow="sm"
     >
-      <p className="mb-6 text-sm text-muted-foreground">{branch.subtitle}</p>
+      <Box>
+        <Text
+          fontSize="xs"
+          fontWeight="bold"
+          color="gray.500"
+          textTransform="uppercase"
+          letterSpacing="wide"
+          mb={6}
+        >
+          {branch.name === "Producto" ? "Nuestras Especialidades" : "Nuestros Servicios"}
+        </Text>
+        <Flex direction="column" gap={3}>
+          {branch.services.map((service, index) => (
+            <Box
+              key={service.title}
+              p={4}
+              rounded="lg"
+              bg={selectedServiceIndex === index ? "primary.50" : "white"}
+              border="2px solid"
+              borderColor={selectedServiceIndex === index ? "primary.500" : "gray.200"}
+              cursor="pointer"
+              onClick={() => setSelectedServiceIndex(index)}
+              transition="all 0.2s"
+              _hover={{
+                borderColor: "primary.300",
+                bg: "primary.50",
+              }}
+            >
+              <Flex align="center" gap={3}>
+                <Icon
+                  as={iconMap[service.icon] || Code}
+                  boxSize={6}
+                  color={selectedServiceIndex === index ? "primary.500" : "gray.400"}
+                />
+                <Text
+                  fontSize="sm"
+                  fontWeight="semibold"
+                  color={selectedServiceIndex === index ? "gray.900" : "gray.700"}
+                >
+                  {service.title}
+                </Text>
+              </Flex>
+            </Box>
+          ))}
+        </Flex>
+      </Box>
 
-      <div className="grid grid-cols-1 gap-6 @lg:grid-cols-[280px_1fr]">
-        {/* Service list */}
-        <div>
-          <p className="mb-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-            {branch.name === "Producto"
-              ? "Nuestras Especialidades"
-              : "Nuestros Servicios"}
-          </p>
-          <ul role="list" className="flex flex-col gap-2" onKeyDown={handleKeyDown}>
-            {branch.services.map((service, index) => {
-              const Icon = iconMap[service.icon] || Code;
-              const isSelected = selectedIndex === index;
-              return (
-                <li key={service.title}>
-                  <button
-                    onClick={() => setSelectedIndex(index)}
-                    aria-pressed={isSelected}
-                    className={cn(
-                      "w-full rounded-lg border-2 p-3 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                      isSelected
-                        ? "border-brand-blue bg-brand-blue/5"
-                        : "border-border bg-transparent hover:border-brand-blue/30 hover:bg-brand-blue/5",
-                    )}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Icon
-                        size={20}
-                        strokeWidth={1.5}
-                        aria-hidden="true"
-                        className={cn(
-                          "shrink-0 transition-colors",
-                          isSelected ? "text-brand-blue" : "text-muted-foreground",
-                        )}
-                      />
-                      <span
-                        className={cn(
-                          "text-sm font-semibold transition-colors",
-                          isSelected ? "text-foreground" : "text-muted-foreground",
-                        )}
-                      >
-                        {service.title}
-                      </span>
-                    </div>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+      <Box>
+        <MotionBox
+          key={selectedService.title}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Flex align="center" gap={4} mb={6}>
+            <Flex
+              w="80px"
+              h="80px"
+              bg="primary.50"
+              color="primary.500"
+              borderRadius="lg"
+              justify="center"
+              align="center"
+            >
+              <Icon as={iconMap[selectedService.icon] || Code} boxSize={10} />
+            </Flex>
+            <Heading as="h3" size="lg" color="gray.900">
+              {selectedService.title}
+            </Heading>
+          </Flex>
 
-        {/* Detail — desktop only via @container */}
-        <div className="hidden @lg:block">
-          {selectedService && <ServiceDetail service={selectedService} />}
-        </div>
-      </div>
+          <Box
+            w="60px"
+            h="1px"
+            bg="primary.500"
+            mb={6}
+          />
 
-      {/* Detail — mobile fallback */}
-      <div className="mt-6 @lg:hidden">
-        {selectedService && (
-          <div className="rounded-lg border border-border bg-muted/30 p-4">
-            <ServiceDetail service={selectedService} />
-          </div>
-        )}
-      </div>
-    </div>
+          <Text fontSize="md" color="gray.600" lineHeight="1.8" mb={8}>
+            {selectedService.description}
+          </Text>
+
+
+        </MotionBox>
+      </Box>
+    </Grid>
   );
 };
 
-interface ServicesSectionProps {
-  content: ServicesContent;
-}
+const ServicesSection = () => {
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
+  const [content, setContent] = useState<ContentData>({});
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const [selectedBranch, setSelectedBranch] = useState<string>("Producto");
 
-const ServicesSection: React.FC<ServicesSectionProps> = ({ content }) => {
-  const [selectedBranch, setSelectedBranch] = useState(0);
-  const branches = content?.branches ?? [];
+  useEffect(() => {
+    const loadContent = async () => {
+      const data = await getContentData('services');
+      setContent(data);
+      setBranches((data.branches as Branch[]) || []);
+    };
+    loadContent();
+  }, []);
 
-  const handleTabKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        setSelectedBranch((prev) => (prev + 1) % branches.length);
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        setSelectedBranch((prev) =>
-          prev === 0 ? branches.length - 1 : prev - 1,
-        );
-      }
-    },
-    [branches.length],
-  );
+  const label = content.label as string;
+  const title = content.title as string;
+  const description = content.description as string;
 
   return (
-    <section
+    <Box
+      as="section"
       id="servicios"
-      aria-labelledby="services-heading"
-      className="section-padding bg-muted/30 overflow-hidden scroll-mt-20"
+      aria-labelledby="servicios-heading"
+      py={{ base: 14, md: 20 }}
+      px={{ base: 4, md: 8 }}
+      bg="gray.50"
+      w="100%"
+      overflow="hidden"
+      scrollMarginTop="80px"
     >
-      <div className="container-content px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <header className="mb-[var(--space-xl)] text-center">
-          {content?.label && (
-            <Badge variant="accent" className="mb-4">
-              {content.label}
-            </Badge>
-          )}
-          <h2
-            id="services-heading"
-            className="font-bold text-foreground"
-            style={{ fontSize: "var(--text-3xl)" }}
+      <Container maxW="1280px" mx="auto" w="100%" px={0}>
+        <Flex direction="column" gap={10} mb={10} ref={ref} align="center">
+          <MotionBox
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6 }}
+            textAlign="center"
+            maxW="800px"
+            w="full"
           >
-            {content?.title}
-          </h2>
-          {content?.description && (
-            <p
-              className="mx-auto mt-4 max-w-2xl text-muted-foreground"
-              style={{ fontSize: "var(--text-lg)" }}
-            >
-              {content.description}
-            </p>
-          )}
-        </header>
-
-        {/* Branch tabs */}
-        {branches.length > 1 && (
-          <div
-            role="tablist"
-            aria-label="Tipo de servicio"
-            className="mb-8 flex justify-center"
-            onKeyDown={handleTabKeyDown}
+            <Text color="primary.500" fontWeight="medium" mb={2}>
+              {label}
+            </Text>
+            <Heading as="h2" id="servicios-heading" size="xl" mb={4}>
+              {title}
+            </Heading>
+            <Text as="p" fontSize="lg" color="gray.600">
+              {description}
+            </Text>
+          </MotionBox>
+        </Flex>
+        <Box display="flex" justifyContent="center" mb={8} suppressHydrationWarning>
+          <SegmentGroup.Root
+            value={selectedBranch}
+            onValueChange={(e) => setSelectedBranch(e.value || "Producto")}
+            size="lg"
+            bg="white"
+            p={1}
+            rounded="full"
+            border="2px solid"
+            borderColor="gray.200"
+            css={{
+              "--segment-indicator-bg": "var(--chakra-colors-primary-500)",
+              "--segment-indicator-shadow": "none",
+            }}
+            suppressHydrationWarning
           >
-            <div className="flex rounded-full border-2 border-border bg-card p-1">
-              {branches.map((branch, index) => {
-                const isSelected = selectedBranch === index;
-                const tabId = `tab-${branch.name.toLowerCase()}`;
-                const panelId = `panel-${branch.name.toLowerCase()}`;
-                return (
-                  <button
-                    key={branch.name}
-                    id={tabId}
-                    role="tab"
-                    aria-selected={isSelected}
-                    aria-controls={panelId}
-                    tabIndex={isSelected ? 0 : -1}
-                    onClick={() => setSelectedBranch(index)}
-                    className={cn(
-                      "rounded-full px-8 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-                      isSelected
-                        ? "bg-brand-blue text-white shadow-sm"
-                        : "text-muted-foreground hover:text-foreground",
-                    )}
-                  >
-                    {branch.name}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
+            <SegmentGroup.Indicator rounded="full" />
+            {branches.map((branch) => (
+              <SegmentGroup.Item 
+                key={branch.name} 
+                value={branch.name}
+                px={8}
+                py={3}
+                rounded="full"
+                _checked={{
+                  bg: "primary.500",
+                }}
+                bg="white"
+              >
+                <SegmentGroup.ItemText 
+                  fontWeight="semibold"
+                  color="gray.700"
+                  _checked={{
+                    color: "white",
+                  }}
+                >
+                  {branch.name}
+                </SegmentGroup.ItemText>
+                <SegmentGroup.ItemHiddenInput />
+              </SegmentGroup.Item>
+            ))}
+          </SegmentGroup.Root>
+        </Box>
 
-        {/* Branch panels */}
-        {branches.map((branch, index) => {
-          const tabId = `tab-${branch.name.toLowerCase()}`;
-          const panelId = `panel-${branch.name.toLowerCase()}`;
-          return (
-            <div
+        {branches.map((branch) => (
+          selectedBranch === branch.name && (
+            <MotionBox
               key={branch.name}
-              className={cn(selectedBranch === index ? "block" : "hidden")}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              mb={8}
+              textAlign="center"
             >
-              <BranchPanel branch={branch} panelId={panelId} tabId={tabId} />
-            </div>
-          );
-        })}
-      </div>
-    </section>
+              <Text as="p" fontSize="lg" color="gray.600" maxW="600px" mx="auto">
+                {branch.subtitle}
+              </Text>
+            </MotionBox>
+          )
+        ))}
+
+        {branches.map((branch) => (
+          selectedBranch === branch.name && (
+            <BranchServicesGrid key={branch.name} branch={branch} />
+          )
+        ))}
+      </Container>
+    </Box>
   );
 };
 
