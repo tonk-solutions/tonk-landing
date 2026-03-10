@@ -15,7 +15,7 @@ contactLinks:
     href: "mailto:contact@tonksolutions.com.ar"
     value: "contact@tonksolutions.com.ar"
   - label: "WhatsApp"
-    href: "https://wa.me/+5491123908349"
+    href: "https://wa.me/5491123908349"
     value: "+54 9 11 2390-8349"
     icon: "whatsapp"
 copyright: "© {year} Tonk Solutions. Todos los derechos reservados."
