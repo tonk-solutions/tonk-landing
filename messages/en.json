@@ -1,0 +1,171 @@
+{
+  "nav": {
+    "services": "Services",
+    "about": "About Us",
+    "team": "Team",
+    "contact": "Contact"
+  },
+  "hero": {
+    "subtitle": "Software Engineering Consulting",
+    "title": "Senior engineering for",
+    "titleHighlight": "projects that matter",
+    "description": "We are a team of senior engineers and leaders with experience in the most demanding platforms in the region. We solve complex software challenges — from enterprise architectures to custom digital products — with the same level of precision and commitment.",
+    "cta": "Let's talk about your project"
+  },
+  "about": {
+    "label": "WHO WE ARE",
+    "title": "Strategic partners in software engineering",
+    "description": "We are four engineers with experience at companies like BBVA, Santander, Accenture, Endava, and Rootstrap. We came together to build something of our own: an agile consultancy where clients talk directly to those who solve the problem.",
+    "valuePoints": [
+      "Real seniority: we come from operating critical systems in production",
+      "We solve everything from complex architectures to custom products",
+      "Clear work process, direct communication, no intermediaries",
+      "We help you find the ideal resource for your project"
+    ],
+    "missionTitle": "Our Mission",
+    "mission": "To be the engineering team our clients need, with the judgment to make good technical decisions, the experience to execute them, and the responsibility to see them through to the end.",
+    "imageAlt": "Tonk Solutions engineering team",
+    "imageTitle": "Engineering with judgment",
+    "imageSubtitle": "From problem to solution."
+  },
+  "services": {
+    "label": "OUR SERVICES",
+    "title": "What we do, we do well",
+    "description": "Whether you need to build something new, modernize what you have, or add engineers to your team, we work with the same level of rigor.",
+    "craft": {
+      "name": "Craft",
+      "subtitle": "We develop software, leading projects until delivering the final product.",
+      "services": [
+        {
+          "title": "Digital Product Development",
+          "description": "We build platforms, applications, and custom digital products — from an e-commerce with custom integrations to complex internal systems. We adapt to the stack and project context.",
+          "icon": "Code"
+        },
+        {
+          "title": "Architecture and Distributed Systems",
+          "description": "We design architectures that scale: microservices, cloud-native, monolith migrations. Especially useful when the current system is becoming a bottleneck.",
+          "icon": "Cloud"
+        },
+        {
+          "title": "Integrations and Enterprise Systems",
+          "description": "We connect systems that don't talk to each other: SAP, ERPs, third-party APIs, payment gateways, tax authorities. If it has integration complexity, it's our terrain.",
+          "icon": "FileText"
+        },
+        {
+          "title": "Applied AI",
+          "description": "We incorporate artificial intelligence where it makes real sense: process automation, data analysis, internal assistants, operational optimization, with concrete results.",
+          "icon": "BrainCircuit"
+        }
+      ]
+    },
+    "talent": {
+      "name": "Talent",
+      "subtitle": "We are engineers hiring engineers. We know exactly what to look for and how to evaluate it.",
+      "services": [
+        {
+          "title": "Technical Search and Selection",
+          "description": "We identify engineers who truly fit your team — technically and culturally. We evaluate ourselves because we know what it means to work in production with those profiles.",
+          "icon": "Users"
+        },
+        {
+          "title": "AI-Powered Process",
+          "description": "We use artificial intelligence to accelerate the search, analyze profiles, and predict technical and cultural compatibility. We reach the right candidates faster without lowering the evaluation standard.",
+          "icon": "Sparkles"
+        },
+        {
+          "title": "Onboarding and Integration",
+          "description": "We accompany the engineer's first months on your team. We follow up, resolve friction, and ensure the incorporation is successful.",
+          "icon": "UserCheck"
+        }
+      ]
+    }
+  },
+  "team": {
+    "label": "OUR FOUNDING TEAM",
+    "title": "Four engineers, real experience",
+    "description": "We come from working on some of the most demanding platforms in the region — BBVA, Santander, ICBC, Accenture, Endava — and decided to build something of our own. That gives us a key perspective: we know what it costs when a system fails in production.",
+    "members": [
+      {
+        "name": "Ignacio Sileo",
+        "role": "Co-Founder · SAP & Enterprise Systems",
+        "bio": "SAP FI-CA specialist with experience leading implementations in high-complexity enterprise companies. Knows business processes from the inside and how to translate them into technical solutions that work.",
+        "linkedin": "https://www.linkedin.com/in/ignacio-sileo/",
+        "avatarUrl": "/images/founders/ignacio-sileo.jpeg"
+      },
+      {
+        "name": "Matías Castillo",
+        "role": "Co-Founder · Financial Systems Lead",
+        "bio": "App Owner at BBVA, in charge of critical financial systems with millions of daily transactions. Understands what real technical responsibility means in environments where there's no margin for error.",
+        "linkedin": "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/",
+        "avatarUrl": "/images/founders/agustin-castillo.jpeg"
+      },
+      {
+        "name": "Nicolás Gómez",
+        "role": "Co-Founder · Core Banking",
+        "bio": "Background at Santander and ICBC developing and evolving core banking products and high-criticality transactional systems. Specialist in architectures that cannot fail.",
+        "linkedin": "https://www.linkedin.com/in/nicolas-gomez-467b26141/",
+        "avatarUrl": "/images/founders/nicolas-gomez.jpeg"
+      },
+      {
+        "name": "Rodrigo Hernandez",
+        "role": "Co-Founder · Platform Engineering",
+        "bio": "Experience building scalable cloud-native platforms. Reference in microservices architectures and distributed solutions.",
+        "linkedin": "https://www.linkedin.com/in/rodrigoenzohernandez/",
+        "avatarUrl": "/images/founders/rodrigo-hernandez.jpeg"
+      }
+    ]
+  },
+  "contact": {
+    "label": "CONTACT",
+    "title": "Do you have a project in mind?",
+    "description": "Whether you have something concrete to quote or are exploring options, tell us what it's about.",
+    "items": [
+      {
+        "icon": "Mail",
+        "label": "Email",
+        "value": "contact@tonksolutions.com.ar",
+        "href": "mailto:contact@tonksolutions.com.ar"
+      },
+      {
+        "icon": "Phone",
+        "label": "WhatsApp",
+        "value": "+54 9 11 2390-8349",
+        "href": "https://wa.me/+5491123908349"
+      },
+      {
+        "icon": "MapPin",
+        "label": "Location",
+        "value": "Buenos Aires, Argentina"
+      }
+    ]
+  },
+  "footer": {
+    "description": "We are a senior software engineering team with experience on the most demanding platforms in the region. We solve complex technical challenges with judgment, experience, and accountability.",
+    "contactLabel": "Contact",
+    "socialLabel": "Follow us",
+    "copyright": " Tonk Solutions. All rights reserved."
+  },
+  "seo": {
+    "description": "Senior software engineering consultancy specializing in custom development, integrations, and technical team building. We work with companies that need solutions that work, scale, and endure.",
+    "titleDefault": "Tonk Solutions | Senior Software Engineering & Technical Recruitment",
+    "keywords": [
+      "software engineering consulting",
+      "custom software development",
+      "digital product development",
+      "systems architecture",
+      "enterprise integrations",
+      "senior engineers",
+      "technical recruitment",
+      "IT recruiting",
+      "tech staffing",
+      "cloud-native architecture",
+      "microservices",
+      "applied AI",
+      "software consulting Argentina",
+      "software engineering Buenos Aires"
+    ],
+    "ogTitle": "Tonk Solutions | Senior Software Engineering & Technical Recruitment",
+    "ogImageAlt": "Tonk Solutions - Senior engineering for projects that matter",
+    "twitterTitle": "Tonk Solutions | Senior Software Engineering"
+  }
+}
