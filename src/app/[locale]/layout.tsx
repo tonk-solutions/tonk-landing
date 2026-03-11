@@ -22,6 +22,11 @@ const poppins = Poppins({
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
+  
+  if (!routing.locales.includes(locale as 'es' | 'en')) {
+    notFound();
+  }
+  
   const t = await getTranslations({ locale, namespace: 'seo' });
 
   const siteUrl = "https://tonksolutions.com";
@@ -64,7 +69,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       type: "website",
       locale: ogLocale,
-      url: siteUrl,
+      url: `${siteUrl}/${locale}`,
       siteName,
       title: ogTitle,
       description,
@@ -84,7 +89,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       images: [`${siteUrl}/images/og-image.png`],
     },
     alternates: {
-      canonical: siteUrl,
+      canonical: `${siteUrl}/${locale}`,
       languages: {
         'es': `${siteUrl}/es`,
         'en': `${siteUrl}/en`,
