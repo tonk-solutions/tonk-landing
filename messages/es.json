@@ -130,7 +130,7 @@
         "icon": "Phone",
         "label": "WhatsApp",
         "value": "+54 9 11 2390-8349",
-        "href": "https://wa.me/+5491123908349"
+        "href": "https://wa.me/5491123908349"
       },
       {
         "icon": "MapPin",
@@ -143,7 +143,7 @@
     "description": "Somos un equipo de ingeniería de software senior con experiencia en las plataformas más exigentes de la región. Resolvemos desafíos técnicos complejos con criterio, experiencia y responsabilidad.",
     "contactLabel": "Contacto",
     "socialLabel": "Síguenos",
-    "copyright": " Tonk Solutions. Todos los derechos reservados."
+    "copyright": "© {year} Tonk Solutions. Todos los derechos reservados."
   },
   "seo": {
     "description": "Consultora de ingeniería de software senior especializada en desarrollo a medida, integraciones y armado de equipos técnicos. Trabajamos con empresas que necesitan soluciones que funcionen, escalen y perduren.",
