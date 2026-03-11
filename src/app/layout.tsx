@@ -17,8 +17,12 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
+async function getSeoData() {
+  return (await getFrontmatterOnly("seo")) || {};
+}
+
 export async function generateMetadata(): Promise<Metadata> {
-  const seo = (await getFrontmatterOnly("seo")) || {};
+  const seo = await getSeoData();
 
   const siteUrl = (seo.siteUrl as string) || "https://tonksolutions.com";
   const siteName = (seo.siteName as string) || "Tonk Solutions";
@@ -88,7 +92,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const seo = (await getFrontmatterOnly("seo")) || {};
+  const seo = await getSeoData();
 
   const siteUrl = (seo.siteUrl as string) || "https://tonksolutions.com";
   const siteName = (seo.siteName as string) || "Tonk Solutions";

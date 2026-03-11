@@ -38,6 +38,9 @@ interface BranchServicesGridProps {
 
 const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
   const [selectedServiceIndex, setSelectedServiceIndex] = useState(0);
+
+  if (branch.services.length === 0) return null;
+
   const selectedService = branch.services[selectedServiceIndex];
 
   return (

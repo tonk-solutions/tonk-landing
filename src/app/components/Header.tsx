@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { Menu, X } from 'lucide-react';
 import TonkLogo from './TonkLogo';
-import { getContentData, ContentData } from '@/lib/content';
+import { getContentData } from '@/lib/content';
 
 interface NavLink {
   label: string;
@@ -22,7 +22,6 @@ interface NavLink {
 const Header = () => {
   const { open, onToggle, onClose } = useDisclosure();
   const [scrolled, setScrolled] = useState(false);
-  const [content, setContent] = useState<ContentData>({});
   const [navLinks, setNavLinks] = useState<NavLink[]>([]);
   const [ctaLabel, setCtaLabel] = useState('');
   const [ctaHref, setCtaHref] = useState('');
@@ -30,7 +29,6 @@ const Header = () => {
   useEffect(() => {
     const loadContent = async () => {
       const data = await getContentData('navigation');
-      setContent(data);
       setNavLinks((data.links as NavLink[]) || []);
       setCtaLabel((data.ctaLabel as string) || '');
       setCtaHref((data.ctaHref as string) || '');
