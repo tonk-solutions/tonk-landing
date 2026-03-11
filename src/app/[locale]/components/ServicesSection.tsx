@@ -148,20 +148,21 @@ const ServicesSection = () => {
     triggerOnce: true,
   });
   const t = useTranslations('services');
-  const [selectedBranch, setSelectedBranch] = useState<string>("Craft");
-
+  
   const branches: Branch[] = [
     {
-      name: t.raw('craft.name'),
-      subtitle: t.raw('craft.subtitle'),
-      services: t.raw('craft.services')
+      name: t('craft.name'),
+      subtitle: t('craft.subtitle'),
+      services: t.raw('craft.services') as Service[]
     },
     {
-      name: t.raw('talent.name'),
-      subtitle: t.raw('talent.subtitle'),
-      services: t.raw('talent.services')
+      name: t('talent.name'),
+      subtitle: t('talent.subtitle'),
+      services: t.raw('talent.services') as Service[]
     }
   ];
+  
+  const [selectedBranch, setSelectedBranch] = useState(branches[0].name);
 
   return (
     <Box
