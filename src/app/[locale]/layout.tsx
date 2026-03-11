@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { Providers } from "./providers";
 import Script from "next/script";
-import { CONTACT_EMAIL, CONTACT_PHONE } from "./constants";
-import { getFrontmatterOnly } from "@/lib/mdx-content";
+import { CONTACT_EMAIL, CONTACT_PHONE } from "../constants";
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, getTranslations } from 'next-intl/server';
+import { routing } from '@/i18n/routing';
+import { notFound } from 'next/navigation';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,23 +20,29 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
-async function getSeoData() {
-  return (await getFrontmatterOnly("seo")) || {};
-}
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  
+  if (!routing.locales.includes(locale as 'es' | 'en')) {
+    notFound();
+  }
+  
+  const t = await getTranslations({ locale, namespace: 'seo' });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const seo = await getSeoData();
-
-  const siteUrl = (seo.siteUrl as string) || "https://tonksolutions.com";
-  const siteName = (seo.siteName as string) || "Tonk Solutions";
-  const description = (seo.description as string) || "";
-  const titleDefault = (seo.titleDefault as string) || siteName;
-  const titleTemplate = (seo.titleTemplate as string) || `%s | ${siteName}`;
-  const keywords = (seo.keywords as string[]) || [];
-  const ogTitle = (seo.ogTitle as string) || titleDefault;
-  const ogImageAlt = (seo.ogImageAlt as string) || siteName;
-  const twitterTitle = (seo.twitterTitle as string) || titleDefault;
-  const locale = (seo.locale as string) || "es_AR";
+  const siteUrl = "https://tonksolutions.com";
+  const siteName = "Tonk Solutions";
+  const description = t('description');
+  const titleDefault = t('titleDefault');
+  const titleTemplate = `%s | ${siteName}`;
+  const keywords = t.raw('keywords') as string[];
+  const ogTitle = t('ogTitle');
+  const ogImageAlt = t('ogImageAlt');
+  const twitterTitle = t('twitterTitle');
+  const localeMap: Record<string, string> = {
+    es: "es_AR",
+    en: "en_US"
+  };
+  const ogLocale = localeMap[locale] || "es_AR";
 
   return {
     metadataBase: new URL(siteUrl),
@@ -59,8 +68,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       type: "website",
-      locale,
-      url: siteUrl,
+      locale: ogLocale,
+      url: `${siteUrl}/${locale}`,
       siteName,
       title: ogTitle,
       description,
@@ -80,30 +89,47 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [`${siteUrl}/images/og-image.png`],
     },
     alternates: {
-      canonical: siteUrl,
+      canonical: `${siteUrl}/${locale}`,
+      languages: {
+        'es': `${siteUrl}/es`,
+        'en': `${siteUrl}/en`,
+      },
     },
     category: "technology",
   };
 }
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
-export default async function RootLayout({
+export default async function LocaleLayout({
   children,
+  params
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
-  const seo = await getSeoData();
+  const { locale } = await params;
 
-  const siteUrl = (seo.siteUrl as string) || "https://tonksolutions.com";
-  const siteName = (seo.siteName as string) || "Tonk Solutions";
-  const description = (seo.description as string) || "";
-  const orgDescription = (seo.orgDescription as string) || description;
-  const slogan = (seo.slogan as string) || "";
-  const foundingDate = (seo.foundingDate as string) || "";
-  const addressLocality = (seo.addressLocality as string) || "Buenos Aires";
-  const addressCountry = (seo.addressCountry as string) || "AR";
-  const linkedinUrl = (seo.linkedinUrl as string) || "";
-  const instagramUrl = (seo.instagramUrl as string) || "";
+  if (!routing.locales.includes(locale as 'es' | 'en')) {
+    notFound();
+  }
+
+  const messages = await getMessages();
+  const tSeo = await getTranslations({ locale, namespace: 'seo' });
+  const tSchema = await getTranslations({ locale, namespace: 'schema' });
+
+  const siteUrl = "https://tonksolutions.com";
+  const siteName = "Tonk Solutions";
+  const description = tSeo('description');
+  const orgDescription = description;
+  const slogan = tSchema('slogan');
+  const foundingDate = "2026";
+  const addressLocality = "Buenos Aires";
+  const addressCountry = "AR";
+  const linkedinUrl = "https://www.linkedin.com/company/tonk-solutions";
+  const instagramUrl = "https://www.instagram.com/tonk_solutions";
 
   const organizationJsonLd = {
     "@context": "https://schema.org",
@@ -162,23 +188,21 @@ export default async function RootLayout({
       "@id": `${siteUrl}/#organization`,
     },
     description,
-    inLanguage: "es-AR",
+    inLanguage: tSchema('inLanguage'),
   };
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "@id": `${siteUrl}/#services`,
-    name: "Servicios de Ingeniería de Software",
-    description:
-      "Servicios especializados de consultoría en ingeniería de software para instituciones financieras, fintechs y corporaciones enterprise.",
+    name: tSchema('servicesListName'),
+    description: tSchema('servicesListDescription'),
     itemListElement: [
       {
         "@type": "Service",
         position: 1,
-        name: "Ingeniería de Software Financiero",
-        description:
-          "Diseño y mantenimiento de plataformas transaccionales críticas con alta volumetría, garantizando integridad y seguridad financiera en Core Banking y medios de pago.",
+        name: tSchema('services.financial.name'),
+        description: tSchema('services.financial.description'),
         provider: { "@id": `${siteUrl}/#organization` },
         serviceType: "Financial Software Engineering",
         areaServed: "Latin America",
@@ -186,9 +210,8 @@ export default async function RootLayout({
       {
         "@type": "Service",
         position: 2,
-        name: "Arquitectura Cloud-Native y Migración a Microservicios",
-        description:
-          "Transformación de aplicaciones monolíticas en ecosistemas escalables y resilientes, con arquitecturas que soportan picos de demanda sin degradar el servicio.",
+        name: tSchema('services.cloudNative.name'),
+        description: tSchema('services.cloudNative.description'),
         provider: { "@id": `${siteUrl}/#organization` },
         serviceType: "Cloud Architecture Consulting",
         areaServed: "Latin America",
@@ -196,9 +219,8 @@ export default async function RootLayout({
       {
         "@type": "Service",
         position: 3,
-        name: "Soluciones Enterprise, SAP & ERP",
-        description:
-          "Orquestación de procesos críticos en grandes corporaciones donde la precisión del dato es innegociable, con integración SAP y modernización ERP.",
+        name: tSchema('services.enterprise.name'),
+        description: tSchema('services.enterprise.description'),
         provider: { "@id": `${siteUrl}/#organization` },
         serviceType: "Enterprise Software Consulting",
         areaServed: "Latin America",
@@ -206,9 +228,8 @@ export default async function RootLayout({
       {
         "@type": "Service",
         position: 4,
-        name: "IA Aplicada y Automatización Enterprise",
-        description:
-          "Ingeniería de inteligencia artificial con respaldo académico y práctico para gestión del conocimiento y optimización de procesos en entornos empresariales.",
+        name: tSchema('services.ai.name'),
+        description: tSchema('services.ai.description'),
         provider: { "@id": `${siteUrl}/#organization` },
         serviceType: "AI Consulting",
         areaServed: "Latin America",
@@ -222,8 +243,7 @@ export default async function RootLayout({
     "@id": `${siteUrl}/#professionalservice`,
     name: siteName,
     url: siteUrl,
-    description:
-      "Consultoría de ingeniería de software especializada en continuidad sistémica entre sistemas legacy (Core Banking, SAP, ERP) y tecnologías modernas (Cloud-Native, Microservicios, IA).",
+    description: tSchema('professionalServiceDescription'),
     priceRange: "$$$$",
     address: {
       "@type": "PostalAddress",
@@ -234,18 +254,21 @@ export default async function RootLayout({
     email: CONTACT_EMAIL,
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Servicios de Consultoría",
+      name: tSchema('offerCatalogName'),
       itemListElement: [
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Ingeniería de Software Financiero" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Arquitectura Cloud-Native" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Soluciones Enterprise SAP & ERP" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "IA Aplicada y Automatización" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: tSchema('offers.financial') } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: tSchema('offers.cloudNative') } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: tSchema('offers.enterprise') } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: tSchema('offers.ai') } },
       ],
     },
   };
 
   return (
-    <html lang="es">
+    <html 
+      lang={locale} 
+      data-scroll-behavior="smooth"
+    >
       <head>
         <Script
           id="organization-jsonld"
@@ -273,9 +296,11 @@ export default async function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${poppins.variable}`}>
-        <Providers>
-          {children}
-        </Providers>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>
+            {children}
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

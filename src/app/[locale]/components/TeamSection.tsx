@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Container, Flex, Heading, Text, Link, Grid, Icon } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Linkedin } from 'lucide-react';
 import Image from 'next/image';
-import { getContentData, ContentData } from '@/lib/content';
+import { useTranslations } from 'next-intl';
 
 const MotionBox = motion(Box);
 
@@ -131,21 +131,14 @@ const TeamSection = () => {
     threshold: 0.1,
     triggerOnce: true,
   });
-  const [content, setContent] = useState<ContentData>({});
-  const [teamMembers, setTeamMembers] = useState<TeamMemberData[]>([]);
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('team');
-      setContent(data);
-      const members = (data.members as TeamMemberData[]) || [];
-      setTeamMembers(members.map((member, index) => ({
-        ...member,
-        delay: 0.1 * (index + 1),
-      })));
-    };
-    loadContent();
-  }, []);
+  const t = useTranslations('team');
+  
+  type RawMember = Omit<TeamMemberData, 'delay'>;
+  const rawMembers = t.raw('members') as RawMember[];
+  const teamMembers: TeamMemberData[] = rawMembers.map((member, index) => ({
+    ...member,
+    delay: 0.1 * (index + 1),
+  }));
 
   return (
     <Box
@@ -168,13 +161,13 @@ const TeamSection = () => {
             textAlign="center"
           >
             <Text color="primary.500" fontWeight="medium" mb={2}>
-              {(content.label as string)}
+              {t('label')}
             </Text>
             <Heading as="h2" id="equipo-heading" size="xl" mb={4}>
-              {(content.title as string)}
+              {t('title')}
             </Heading>
             <Text as="p" fontSize="lg" color="gray.600" maxW="800px" mx="auto">
-              {(content.description as string)}
+              {t('description')}
             </Text>
           </MotionBox>
         </Flex>

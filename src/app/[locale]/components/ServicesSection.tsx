@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Container, Grid, Heading, Text, Icon, Flex, SegmentGroup } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { Code, Cloud, FileText, BrainCircuit, Users, CheckCircle, Sparkles, UserCheck } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
-import { getContentData, ContentData } from '@/lib/content';
+import { useTranslations } from 'next-intl';
 
 const MotionBox = motion(Box);
 
@@ -147,26 +147,22 @@ const ServicesSection = () => {
     threshold: 0.1,
     triggerOnce: true,
   });
-  const [content, setContent] = useState<ContentData>({});
-  const [branches, setBranches] = useState<Branch[]>([]);
-  const [selectedBranch, setSelectedBranch] = useState<string>("");
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('services');
-      setContent(data);
-      const loadedBranches = (data.branches as Branch[]) || [];
-      setBranches(loadedBranches);
-      if (loadedBranches.length > 0) {
-        setSelectedBranch(loadedBranches[0].name);
-      }
-    };
-    loadContent();
-  }, []);
-
-  const label = content.label as string;
-  const title = content.title as string;
-  const description = content.description as string;
+  const t = useTranslations('services');
+  
+  const branches: Branch[] = [
+    {
+      name: t('craft.name'),
+      subtitle: t('craft.subtitle'),
+      services: t.raw('craft.services') as Service[]
+    },
+    {
+      name: t('talent.name'),
+      subtitle: t('talent.subtitle'),
+      services: t.raw('talent.services') as Service[]
+    }
+  ];
+  
+  const [selectedBranch, setSelectedBranch] = useState(branches[0].name);
 
   return (
     <Box
@@ -191,13 +187,13 @@ const ServicesSection = () => {
             w="full"
           >
             <Text color="primary.500" fontWeight="medium" mb={2}>
-              {label}
+              {t('label')}
             </Text>
             <Heading as="h2" id="servicios-heading" size="xl" mb={4}>
-              {title}
+              {t('title')}
             </Heading>
             <Text as="p" fontSize="lg" color="gray.600">
-              {description}
+              {t('description')}
             </Text>
           </MotionBox>
         </Flex>

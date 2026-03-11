@@ -12,29 +12,20 @@ import {
 } from '@chakra-ui/react';
 import { Menu, X } from 'lucide-react';
 import TonkLogo from './TonkLogo';
-import { getContentData } from '@/lib/content';
-
-interface NavLink {
-  label: string;
-  href: string;
-}
+import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslations } from 'next-intl';
 
 const Header = () => {
   const { open, onToggle, onClose } = useDisclosure();
   const [scrolled, setScrolled] = useState(false);
-  const [navLinks, setNavLinks] = useState<NavLink[]>([]);
-  const [ctaLabel, setCtaLabel] = useState('');
-  const [ctaHref, setCtaHref] = useState('');
+  const t = useTranslations('nav');
 
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('navigation');
-      setNavLinks((data.links as NavLink[]) || []);
-      setCtaLabel((data.ctaLabel as string) || '');
-      setCtaHref((data.ctaHref as string) || '');
-    };
-    loadContent();
-  }, []);
+  const navLinks = [
+    { label: t('services'), href: '#servicios' },
+    { label: t('about'), href: '#nosotros' },
+    { label: t('team'), href: '#equipo' },
+    { label: t('contact'), href: '#contacto' }
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,8 +79,9 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
+            <LanguageSwitcher />
             <Link
-              href={ctaHref}
+              href="#contacto"
               bg="primary.500"
               color="white"
               px={6}
@@ -100,7 +92,7 @@ const Header = () => {
               display="inline-block"
               _hover={{ bg: 'primary.600', textDecoration: 'none' }}
             >
-              {ctaLabel}
+              {t('contact')}
             </Link>
           </Stack>
 
@@ -141,8 +133,11 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
+            <Box display="flex" justifyContent="center">
+              <LanguageSwitcher />
+            </Box>
             <Link
-              href={ctaHref}
+              href="#contacto"
               bg="primary.500"
               color="white"
               px={6}
@@ -156,7 +151,7 @@ const Header = () => {
               _hover={{ bg: 'primary.600', textDecoration: 'none' }}
               onClick={onClose}
             >
-              {ctaLabel}
+              {t('contact')}
             </Link>
           </Stack>
         </Box>

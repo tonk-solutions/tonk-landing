@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Container, Flex, Heading, Text, Grid, Icon } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { CheckCircle } from 'lucide-react';
-import { getContentData, ContentData } from '@/lib/content';
+import { useTranslations } from 'next-intl';
 
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
@@ -15,17 +15,7 @@ const AboutSection = () => {
     threshold: 0.2,
     triggerOnce: true,
   });
-  const [content, setContent] = useState<ContentData>({});
-  const [valuePoints, setValuePoints] = useState<string[]>([]);
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('about');
-      setContent(data);
-      setValuePoints((data.valuePoints as string[]) || []);
-    };
-    loadContent();
-  }, []);
+  const t = useTranslations('about');
 
   return (
     <Box
@@ -83,9 +73,9 @@ const AboutSection = () => {
                   p={8}
                 >
                   <Flex direction="column" align="center" gap={2}>
-                    <Heading size="lg" textAlign="center">{(content.imageTitle as string)}</Heading>
+                    <Heading size="lg" textAlign="center">{t('imageTitle')}</Heading>
                     <Text textAlign="center">
-                      {(content.imageSubtitle as string)}
+                      {t('imageSubtitle')}
                     </Text>
                   </Flex>
                 </Flex>
@@ -102,24 +92,18 @@ const AboutSection = () => {
             order={{ base: 1, lg: 2 }}
           >
             <Text color="primary.500" fontWeight="medium" mb={2}>
-              {(content.label as string)}
+              {t('label')}
             </Text>
             <Heading as="h2" id="nosotros-heading" size="xl" mb={6}>
-              {(content.title as string)}
+              {t('title')}
             </Heading>
 
             <Text as="p" fontSize="lg" color="gray.700" mb={5}>
-              {(content.description as string)}
+              {t('description')}
             </Text>
 
-            {(content.valueProposition as string) && (
-              <Text as="p" fontSize="lg" color="gray.700" mb={8}>
-                <span dangerouslySetInnerHTML={{ __html: (content.valueProposition as string).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
-              </Text>
-            )}
-
             <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4} mb={8}>
-              {valuePoints.map((point, index) => (
+              {t.raw('valuePoints').map((point: string, index: number) => (
                 <Flex key={index} align="center" gap={3}>
                   <Icon as={CheckCircle} color="primary.500" boxSize={5} aria-hidden="true" />
                   <Text fontWeight="medium">{point}</Text>
@@ -129,10 +113,10 @@ const AboutSection = () => {
 
             <Box as="blockquote">
               <Heading as="h3" size="md" mb={4} color="dark.800">
-                {(content.misionTitle as string)}
+                {t('missionTitle')}
               </Heading>
               <Text as="p" fontSize="md" color="gray.600" fontStyle="italic" mb={4}>
-                {(content.mission as string)}
+                {t('mission')}
               </Text>
             </Box>
           </MotionFlex>
