@@ -167,5 +167,37 @@
     "ogTitle": "Tonk Solutions | Senior Software Engineering & Technical Recruitment",
     "ogImageAlt": "Tonk Solutions - Senior engineering for projects that matter",
     "twitterTitle": "Tonk Solutions | Senior Software Engineering"
+  },
+  "schema": {
+    "slogan": "Senior engineering for projects that matter",
+    "inLanguage": "en-US",
+    "servicesListName": "Software Engineering Services",
+    "servicesListDescription": "Specialized software engineering consulting services for financial institutions, fintechs, and enterprise corporations.",
+    "professionalServiceDescription": "Software engineering consulting specialized in systemic continuity between legacy systems (Core Banking, SAP, ERP) and modern technologies (Cloud-Native, Microservices, AI).",
+    "offerCatalogName": "Consulting Services",
+    "services": {
+      "financial": {
+        "name": "Financial Software Engineering",
+        "description": "Design and maintenance of critical transactional platforms with high volume, ensuring financial integrity and security in Core Banking and payment methods."
+      },
+      "cloudNative": {
+        "name": "Cloud-Native Architecture and Microservices Migration",
+        "description": "Transformation of monolithic applications into scalable and resilient ecosystems, with architectures that support demand peaks without degrading service."
+      },
+      "enterprise": {
+        "name": "Enterprise Solutions, SAP & ERP",
+        "description": "Orchestration of critical processes in large corporations where data precision is non-negotiable, with SAP integration and ERP modernization."
+      },
+      "ai": {
+        "name": "Applied AI and Enterprise Automation",
+        "description": "Artificial intelligence engineering with academic and practical support for knowledge management and process optimization in business environments."
+      }
+    },
+    "offers": {
+      "financial": "Financial Software Engineering",
+      "cloudNative": "Cloud-Native Architecture",
+      "enterprise": "Enterprise Solutions SAP & ERP",
+      "ai": "Applied AI and Automation"
+    }
   }
 }

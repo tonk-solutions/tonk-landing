@@ -112,13 +112,14 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
-  const t = await getTranslations({ locale, namespace: 'seo' });
+  const tSeo = await getTranslations({ locale, namespace: 'seo' });
+  const tSchema = await getTranslations({ locale, namespace: 'schema' });
 
   const siteUrl = "https://tonksolutions.com";
   const siteName = "Tonk Solutions";
-  const description = t('description');
+  const description = tSeo('description');
   const orgDescription = description;
-  const slogan = locale === 'es' ? "Ingeniería senior para proyectos que importan" : "Senior engineering for projects that matter";
+  const slogan = tSchema('slogan');
   const foundingDate = "2026";
   const addressLocality = "Buenos Aires";
   const addressCountry = "AR";
@@ -182,25 +183,21 @@ export default async function LocaleLayout({
       "@id": `${siteUrl}/#organization`,
     },
     description,
-    inLanguage: locale === 'es' ? 'es-AR' : 'en-US',
+    inLanguage: tSchema('inLanguage'),
   };
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "@id": `${siteUrl}/#services`,
-    name: locale === 'es' ? "Servicios de Ingeniería de Software" : "Software Engineering Services",
-    description: locale === 'es'
-      ? "Servicios especializados de consultoría en ingeniería de software para instituciones financieras, fintechs y corporaciones enterprise."
-      : "Specialized software engineering consulting services for financial institutions, fintechs, and enterprise corporations.",
+    name: tSchema('servicesListName'),
+    description: tSchema('servicesListDescription'),
     itemListElement: [
       {
         "@type": "Service",
         position: 1,
-        name: locale === 'es' ? "Ingeniería de Software Financiero" : "Financial Software Engineering",
-        description: locale === 'es'
-          ? "Diseño y mantenimiento de plataformas transaccionales críticas con alta volumetría, garantizando integridad y seguridad financiera en Core Banking y medios de pago."
-          : "Design and maintenance of critical transactional platforms with high volume, ensuring financial integrity and security in Core Banking and payment methods.",
+        name: tSchema('services.financial.name'),
+        description: tSchema('services.financial.description'),
         provider: { "@id": `${siteUrl}/#organization` },
         serviceType: "Financial Software Engineering",
         areaServed: "Latin America",
@@ -208,10 +205,8 @@ export default async function LocaleLayout({
       {
         "@type": "Service",
         position: 2,
-        name: locale === 'es' ? "Arquitectura Cloud-Native y Migración a Microservicios" : "Cloud-Native Architecture and Microservices Migration",
-        description: locale === 'es'
-          ? "Transformación de aplicaciones monolíticas en ecosistemas escalables y resilientes, con arquitecturas que soportan picos de demanda sin degradar el servicio."
-          : "Transformation of monolithic applications into scalable and resilient ecosystems, with architectures that support demand peaks without degrading service.",
+        name: tSchema('services.cloudNative.name'),
+        description: tSchema('services.cloudNative.description'),
         provider: { "@id": `${siteUrl}/#organization` },
         serviceType: "Cloud Architecture Consulting",
         areaServed: "Latin America",
@@ -219,10 +214,8 @@ export default async function LocaleLayout({
       {
         "@type": "Service",
         position: 3,
-        name: locale === 'es' ? "Soluciones Enterprise, SAP & ERP" : "Enterprise Solutions, SAP & ERP",
-        description: locale === 'es'
-          ? "Orquestación de procesos críticos en grandes corporaciones donde la precisión del dato es innegociable, con integración SAP y modernización ERP."
-          : "Orchestration of critical processes in large corporations where data precision is non-negotiable, with SAP integration and ERP modernization.",
+        name: tSchema('services.enterprise.name'),
+        description: tSchema('services.enterprise.description'),
         provider: { "@id": `${siteUrl}/#organization` },
         serviceType: "Enterprise Software Consulting",
         areaServed: "Latin America",
@@ -230,10 +223,8 @@ export default async function LocaleLayout({
       {
         "@type": "Service",
         position: 4,
-        name: locale === 'es' ? "IA Aplicada y Automatización Enterprise" : "Applied AI and Enterprise Automation",
-        description: locale === 'es'
-          ? "Ingeniería de inteligencia artificial con respaldo académico y práctico para gestión del conocimiento y optimización de procesos en entornos empresariales."
-          : "Artificial intelligence engineering with academic and practical support for knowledge management and process optimization in business environments.",
+        name: tSchema('services.ai.name'),
+        description: tSchema('services.ai.description'),
         provider: { "@id": `${siteUrl}/#organization` },
         serviceType: "AI Consulting",
         areaServed: "Latin America",
@@ -247,9 +238,7 @@ export default async function LocaleLayout({
     "@id": `${siteUrl}/#professionalservice`,
     name: siteName,
     url: siteUrl,
-    description: locale === 'es'
-      ? "Consultoría de ingeniería de software especializada en continuidad sistémica entre sistemas legacy (Core Banking, SAP, ERP) y tecnologías modernas (Cloud-Native, Microservicios, IA)."
-      : "Software engineering consulting specialized in systemic continuity between legacy systems (Core Banking, SAP, ERP) and modern technologies (Cloud-Native, Microservices, AI).",
+    description: tSchema('professionalServiceDescription'),
     priceRange: "$$$$",
     address: {
       "@type": "PostalAddress",
@@ -260,12 +249,12 @@ export default async function LocaleLayout({
     email: CONTACT_EMAIL,
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: locale === 'es' ? "Servicios de Consultoría" : "Consulting Services",
+      name: tSchema('offerCatalogName'),
       itemListElement: [
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: locale === 'es' ? "Ingeniería de Software Financiero" : "Financial Software Engineering" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: locale === 'es' ? "Arquitectura Cloud-Native" : "Cloud-Native Architecture" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: locale === 'es' ? "Soluciones Enterprise SAP & ERP" : "Enterprise Solutions SAP & ERP" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: locale === 'es' ? "IA Aplicada y Automatización" : "Applied AI and Automation" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: tSchema('offers.financial') } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: tSchema('offers.cloudNative') } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: tSchema('offers.enterprise') } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: tSchema('offers.ai') } },
       ],
     },
   };

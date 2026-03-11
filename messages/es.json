@@ -167,5 +167,37 @@
     "ogTitle": "Tonk Solutions | Ingeniería de Software Senior & Selección Técnica",
     "ogImageAlt": "Tonk Solutions - Ingeniería senior para proyectos que importan",
     "twitterTitle": "Tonk Solutions | Ingeniería de Software Senior"
+  },
+  "schema": {
+    "slogan": "Ingeniería senior para proyectos que importan",
+    "inLanguage": "es-AR",
+    "servicesListName": "Servicios de Ingeniería de Software",
+    "servicesListDescription": "Servicios especializados de consultoría en ingeniería de software para instituciones financieras, fintechs y corporaciones enterprise.",
+    "professionalServiceDescription": "Consultoría de ingeniería de software especializada en continuidad sistémica entre sistemas legacy (Core Banking, SAP, ERP) y tecnologías modernas (Cloud-Native, Microservicios, IA).",
+    "offerCatalogName": "Servicios de Consultoría",
+    "services": {
+      "financial": {
+        "name": "Ingeniería de Software Financiero",
+        "description": "Diseño y mantenimiento de plataformas transaccionales críticas con alta volumetría, garantizando integridad y seguridad financiera en Core Banking y medios de pago."
+      },
+      "cloudNative": {
+        "name": "Arquitectura Cloud-Native y Migración a Microservicios",
+        "description": "Transformación de aplicaciones monolíticas en ecosistemas escalables y resilientes, con arquitecturas que soportan picos de demanda sin degradar el servicio."
+      },
+      "enterprise": {
+        "name": "Soluciones Enterprise, SAP & ERP",
+        "description": "Orquestación de procesos críticos en grandes corporaciones donde la precisión del dato es innegociable, con integración SAP y modernización ERP."
+      },
+      "ai": {
+        "name": "IA Aplicada y Automatización Enterprise",
+        "description": "Ingeniería de inteligencia artificial con respaldo académico y práctico para gestión del conocimiento y optimización de procesos en entornos empresariales."
+      }
+    },
+    "offers": {
+      "financial": "Ingeniería de Software Financiero",
+      "cloudNative": "Arquitectura Cloud-Native",
+      "enterprise": "Soluciones Enterprise SAP & ERP",
+      "ai": "IA Aplicada y Automatización"
+    }
   }
 }
