@@ -1,35 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Container, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { FaLinkedin, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import TonkLogo from './TonkLogo';
-import { getContentData, ContentData } from '@/lib/content';
-
-interface SocialLink {
-  icon: string;
-  href: string;
-  ariaLabel: string;
-}
-
-interface ContactLink {
-  label: string;
-  href: string;
-  value: string;
-  icon?: string;
-}
+import { useTranslations } from 'next-intl';
 
 const Footer = () => {
-  const [content, setContent] = useState<ContentData>({});
+  const t = useTranslations('footer');
   const currentYear = new Date().getFullYear();
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('footer');
-      setContent(data);
-    };
-    loadContent();
-  }, []);
 
   const getIcon = (iconName: string | undefined) => {
     if (!iconName || typeof iconName !== 'string') return null;
@@ -45,12 +24,15 @@ const Footer = () => {
     }
   };
 
-  const description = content.description as string;
-  const contactLabel = content.contactLabel as string;
-  const socialLabel = content.socialLabel as string;
-  const contactLinks = (content.contactLinks as ContactLink[]) || [];
-  const socialLinks = (content.socialLinks as SocialLink[]) || [];
-  const copyright = (content.copyright as string) || '';
+  const socialLinks = [
+    { icon: "linkedin", href: "https://www.linkedin.com/company/tonk-solutions", ariaLabel: "Tonk Solutions en LinkedIn" },
+    { icon: "instagram", href: "https://www.instagram.com/tonk_solutions", ariaLabel: "Tonk Solutions en Instagram" }
+  ];
+
+  const contactLinks = [
+    { label: "Email", href: "mailto:contact@tonksolutions.com.ar", value: "contact@tonksolutions.com.ar" },
+    { label: "WhatsApp", href: "https://wa.me/5491123908349", value: "+54 9 11 2390-8349", icon: "whatsapp" }
+  ];
 
   return (
     <Box as="footer" role="contentinfo" bg="dark.800" color="white" py={12} px={{ base: 4, md: 8 }} w="100%" overflow="hidden">
@@ -64,13 +46,13 @@ const Footer = () => {
           <Box maxW={{ base: '100%', md: '380px' }} mb={{ base: 8, md: 0 }}>
             <TonkLogo size="md" theme="dark" />
             <Text as="p" mt={4} color="gray.400" fontSize="sm">
-              {description}
+              {t('description')}
             </Text>
           </Box>
 
           <Stack direction={{ base: 'column', md: 'row' }} gap={12}>
             <Box as="nav" aria-label="Información de contacto">
-              <Text fontWeight="bold" mb={4}>{contactLabel}</Text>
+              <Text fontWeight="bold" mb={4}>{t('contactLabel')}</Text>
               <Stack gap={2}>
                 {contactLinks.map((link) => (
                   <Link
@@ -92,7 +74,7 @@ const Footer = () => {
             </Box>
 
             <Box as="nav" aria-label="Redes sociales">
-              <Text fontWeight="bold" mb={4}>{socialLabel}</Text>
+              <Text fontWeight="bold" mb={4}>{t('socialLabel')}</Text>
               <Stack direction="row" gap={4}>
                 {socialLinks.map((link) => (
                   <Link
@@ -124,7 +106,7 @@ const Footer = () => {
           gap={4}
         >
           <Text fontSize="sm" color="gray.500">
-            {copyright.replace('{year}', currentYear.toString())}
+            {t('copyright', { year: currentYear })}
           </Text>
         </Flex>
       </Container>

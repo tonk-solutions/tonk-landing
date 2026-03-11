@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Box,
   Container,
@@ -14,7 +14,7 @@ import {
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import { getContentData, ContentData } from '@/lib/content';
+import { useTranslations } from 'next-intl';
 
 const MotionBox = motion(Box);
 
@@ -70,21 +70,8 @@ const ContactSection = () => {
     threshold: 0.1,
     triggerOnce: true,
   });
-  const [content, setContent] = useState<ContentData>({});
-  const [contactItems, setContactItems] = useState<ContactItemData[]>([]);
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('contact');
-      setContent(data);
-      setContactItems((data.contactItems as ContactItemData[]) || []);
-    };
-    loadContent();
-  }, []);
-
-  const label = content.label as string;
-  const title = content.title as string;
-  const description = content.description as string;
+  const t = useTranslations('contact');
+  const contactItems: ContactItemData[] = t.raw('items');
 
   return (
     <Box
@@ -124,13 +111,13 @@ const ContactSection = () => {
             <Stack align="flex-start" gap={8}>
               <Box>
                 <Text color="primary.500" fontWeight="medium" mb={2}>
-                  {label}
+                  {t('label')}
                 </Text>
                 <Heading as="h2" id="contacto-heading" size="xl" mb={4}>
-                  {title}
+                  {t('title')}
                 </Heading>
                 <Text as="p" fontSize="lg" color="gray.600" maxW="500px">
-                  {description}
+                  {t('description')}
                 </Text>
               </Box>
 

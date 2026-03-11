@@ -1,23 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, Button, Container, Heading, Text, Flex } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
-import { getContentData, ContentData } from '@/lib/content';
+import { useTranslations } from 'next-intl';
 
 const MotionBox = motion(Box);
 
 const HeroSection = () => {
-  const [content, setContent] = useState<ContentData>({});
-
-  useEffect(() => {
-    const loadContent = async () => {
-      const data = await getContentData('hero');
-      setContent(data);
-    };
-    loadContent();
-  }, []);
+  const t = useTranslations('hero');
 
   const handleScrollDown = () => {
     const contactSection = document.querySelector('#contacto');
@@ -25,12 +17,6 @@ const HeroSection = () => {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const subtitle = content.subtitle as string;
-  const title = content.title as string;
-  const titleHighlight = content.titleHighlight as string;
-  const description = content.description as string;
-  const cta = content.cta as string;
 
   return (
     <Box
@@ -92,7 +78,7 @@ const HeroSection = () => {
                 display="block"
                 mb={2}
               >
-                {subtitle}
+                {t('subtitle')}
               </Text>
               <Heading
                 as="h1"
@@ -101,9 +87,9 @@ const HeroSection = () => {
                 lineHeight="shorter"
                 mb={4}
               >
-                {title}{' '}
+                {t('title')}{' '}
                 <Text as="span" color="primary.400">
-                  {titleHighlight}
+                  {t('titleHighlight')}
                 </Text>
               </Heading>
             </MotionBox>
@@ -120,8 +106,9 @@ const HeroSection = () => {
                 maxW="700px"
                 mx="auto"
                 lineHeight="tall"
-                dangerouslySetInnerHTML={{ __html: description ? description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') : '' }}
-              />
+              >
+                {t('description')}
+              </Text>
             </MotionBox>
 
             <MotionBox
@@ -138,7 +125,7 @@ const HeroSection = () => {
                 onClick={handleScrollDown}
                 _hover={{ bg: 'primary.600' }}
               >
-                {cta}
+                {t('cta')}
               </Button>
             </MotionBox>
           </Flex>
