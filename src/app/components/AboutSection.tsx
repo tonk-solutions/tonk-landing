@@ -119,8 +119,8 @@ const AboutSection = () => {
             )}
 
             <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={4} mb={8}>
-              {valuePoints.map((point) => (
-                <Flex key={point} align="center" gap={3}>
+              {valuePoints.map((point, index) => (
+                <Flex key={index} align="center" gap={3}>
                   <Icon as={CheckCircle} color="primary.500" boxSize={5} aria-hidden="true" />
                   <Text fontWeight="medium">{point}</Text>
                 </Flex>
