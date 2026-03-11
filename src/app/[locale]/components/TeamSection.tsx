@@ -133,7 +133,9 @@ const TeamSection = () => {
   });
   const t = useTranslations('team');
   
-  const teamMembers: TeamMemberData[] = t.raw('members').map((member: any, index: number) => ({
+  type RawMember = Omit<TeamMemberData, 'delay'>;
+  const rawMembers = t.raw('members') as RawMember[];
+  const teamMembers: TeamMemberData[] = rawMembers.map((member, index) => ({
     ...member,
     delay: 0.1 * (index + 1),
   }));
