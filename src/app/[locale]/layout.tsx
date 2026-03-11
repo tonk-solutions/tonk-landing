@@ -9,8 +9,6 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 
-export const dynamic = 'force-static';
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",

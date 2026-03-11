@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale } from 'next-intl';
-import { useRouter, usePathname } from '@/i18n/routing';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button, MenuRoot, MenuTrigger, MenuContent, MenuItem } from '@chakra-ui/react';
 
 const languages = [
@@ -17,7 +17,8 @@ export default function LanguageSwitcher() {
   const currentLanguage = languages.find(lang => lang.code === locale);
 
   const handleLanguageChange = (newLocale: string) => {
-    router.replace(pathname, { locale: newLocale });
+    const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
+    router.push(newPathname);
   };
 
   return (
