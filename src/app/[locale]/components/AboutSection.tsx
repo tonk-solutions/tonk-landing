@@ -4,21 +4,21 @@ import React from 'react';
 import { Box, Container, Flex, Heading, Text, Grid, Icon } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { CheckCircle, TrendingUp, Building2, Cpu, Calendar } from 'lucide-react';
+import { CheckCircle, Cloud, Building2, Database, BrainCircuit } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
 
-interface StatItemProps {
-  number: string;
-  label: string;
+interface PillarItemProps {
+  title: string;
+  description: string;
   icon: React.ElementType;
   delay: number;
   inView: boolean;
 }
 
-const StatItem: React.FC<StatItemProps> = ({ number, label, icon: IconComponent, delay, inView }) => (
+const PillarItem: React.FC<PillarItemProps> = ({ title, description, icon: IconComponent, delay, inView }) => (
   <MotionBox
     initial={{ opacity: 0, y: 20 }}
     animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -39,27 +39,21 @@ const StatItem: React.FC<StatItemProps> = ({ number, label, icon: IconComponent,
         <IconComponent size={22} color="#06b6d4" />
       </Flex>
       <Text
-        fontSize="clamp(1.5rem, 4vw + 0.5rem, 2.5rem)"
-        fontWeight="800"
-        lineHeight="1"
-        css={{
-          background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
-        }}
-      >
-        {number}
-      </Text>
-      <Text
-        fontSize="sm"
-        color="dark.400"
-        fontWeight="medium"
-        textTransform="uppercase"
-        letterSpacing="0.1em"
+        fontSize="md"
+        fontWeight="700"
+        lineHeight="1.2"
+        color="white"
         textAlign="center"
       >
-        {label}
+        {title}
+      </Text>
+      <Text
+        fontSize="xs"
+        color="dark.400"
+        textAlign="center"
+        lineHeight="1.4"
+      >
+        {description}
       </Text>
     </Flex>
   </MotionBox>
@@ -72,11 +66,11 @@ const AboutSection = () => {
   });
   const t = useTranslations('about');
 
-  const stats = [
-    { number: "10+", label: "Años", icon: Calendar },
-    { number: "50+", label: "Proyectos", icon: TrendingUp },
-    { number: "20+", label: "Clientes", icon: Building2 },
-    { number: "30+", label: "Tecnologías", icon: Cpu },
+  const pillars = [
+    { title: "Cloud Native", description: "Arquitecturas escalables y elásticas", icon: Cloud },
+    { title: "Core Banking", description: "Sistemas críticos transaccionales", icon: Building2 },
+    { title: "SAP & Enterprise", description: "Integración de procesos core", icon: Database },
+    { title: "IA Aplicada", description: "Optimización y conocimiento", icon: BrainCircuit },
   ];
 
   return (
@@ -177,12 +171,12 @@ const AboutSection = () => {
                     "& > *:nth-of-type(3)": { borderRight: "1px solid rgba(148, 163, 184, 0.15)" },
                   }}
                 >
-                  {stats.map((stat, index) => (
-                    <StatItem
-                      key={stat.label}
-                      number={stat.number}
-                      label={stat.label}
-                      icon={stat.icon}
+                  {pillars.map((pillar, index) => (
+                    <PillarItem
+                      key={pillar.title}
+                      title={pillar.title}
+                      description={pillar.description}
+                      icon={pillar.icon}
                       delay={0.1 * (index + 1)}
                       inView={inView}
                     />
