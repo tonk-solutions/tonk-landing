@@ -57,9 +57,6 @@ export default function LanguageSwitcher({ isLightMode = false }: LanguageSwitch
               bg: isLightMode ? 'blackAlpha.50' : 'whiteAlpha.100'
             } : {}}
             transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-            css={{
-              "& .chakra-button__icon": { display: "none" }
-            }}
           >
             {lang.short}
           </Button>

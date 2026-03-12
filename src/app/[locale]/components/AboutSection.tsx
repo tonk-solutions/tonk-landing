@@ -16,15 +16,19 @@ interface PillarItemProps {
   icon: React.ElementType;
   delay: number;
   inView: boolean;
+  borderRight?: string;
+  borderBottom?: string;
 }
 
-const PillarItem: React.FC<PillarItemProps> = ({ title, description, icon: IconComponent, delay, inView }) => (
+const PillarItem: React.FC<PillarItemProps> = ({ title, description, icon: IconComponent, delay, inView, borderRight, borderBottom }) => (
   <MotionBox
     initial={{ opacity: 0, y: 20 }}
     animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
     transition={{ duration: 0.5, delay }}
     p={6}
     position="relative"
+    borderRight={borderRight}
+    borderBottom={borderBottom}
   >
     <Flex direction="column" align="center" gap={3}>
       <Flex
@@ -66,12 +70,12 @@ const AboutSection = () => {
   });
   const t = useTranslations('about');
 
-  const pillars = [
-    { title: "Cloud Native", description: "Arquitecturas escalables y elásticas", icon: Cloud },
-    { title: "Core Banking", description: "Sistemas críticos transaccionales", icon: Building2 },
-    { title: "SAP & Enterprise", description: "Integración de procesos core", icon: Database },
-    { title: "IA Aplicada", description: "Optimización y conocimiento", icon: BrainCircuit },
-  ];
+  const icons = [Cloud, Building2, Database, BrainCircuit];
+  const translatedPillars = t.raw('pillars') as Array<{ title: string; description: string }>;
+  const pillars = translatedPillars.map((pillar, index) => ({
+    ...pillar,
+    icon: icons[index]
+  }));
 
   return (
     <Box
@@ -118,15 +122,10 @@ const AboutSection = () => {
                 {/* Dot pattern */}
                 <Box
                   position="absolute"
-                  top="0"
-                  left="0"
-                  right="0"
-                  bottom="0"
+                  inset="0"
                   aria-hidden="true"
-                  css={{
-                    backgroundImage: "radial-gradient(circle, rgba(6, 182, 212, 0.08) 1px, transparent 1px)",
-                    backgroundSize: "24px 24px",
-                  }}
+                  bgImage="radial-gradient(circle, rgba(6, 182, 212, 0.08) 1px, transparent 1px)"
+                  bgSize="24px 24px"
                 />
 
                 {/* Corner accent */}
@@ -165,22 +164,23 @@ const AboutSection = () => {
                   gap={0}
                   position="relative"
                   zIndex={1}
-                  css={{
-                    "& > *:nth-of-type(1)": { borderRight: "1px solid rgba(148, 163, 184, 0.15)", borderBottom: "1px solid rgba(148, 163, 184, 0.15)" },
-                    "& > *:nth-of-type(2)": { borderBottom: "1px solid rgba(148, 163, 184, 0.15)" },
-                    "& > *:nth-of-type(3)": { borderRight: "1px solid rgba(148, 163, 184, 0.15)" },
-                  }}
                 >
-                  {pillars.map((pillar, index) => (
-                    <PillarItem
-                      key={pillar.title}
-                      title={pillar.title}
-                      description={pillar.description}
-                      icon={pillar.icon}
-                      delay={0.1 * (index + 1)}
-                      inView={inView}
-                    />
-                  ))}
+                  {pillars.map((pillar, index) => {
+                    const isFirstCol = index % 2 === 0;
+                    const isFirstRow = index < 2;
+                    return (
+                      <PillarItem
+                        key={pillar.title}
+                        title={pillar.title}
+                        description={pillar.description}
+                        icon={pillar.icon}
+                        delay={0.1 * (index + 1)}
+                        inView={inView}
+                        borderRight={isFirstCol ? "1px solid rgba(148, 163, 184, 0.15)" : undefined}
+                        borderBottom={isFirstRow ? "1px solid rgba(148, 163, 184, 0.15)" : undefined}
+                      />
+                    );
+                  })}
                 </Grid>
               </Box>
             </Box>

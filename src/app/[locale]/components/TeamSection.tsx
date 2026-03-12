@@ -59,11 +59,9 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
                 position="relative"
                 p="3px"
                 transition="all 0.35s ease"
-                css={{
-                  background: "linear-gradient(135deg, rgba(203, 213, 225, 0.5), rgba(203, 213, 225, 0.5))",
-                  "&:hover": {
-                    background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
-                  },
+                background="linear-gradient(135deg, rgba(203, 213, 225, 0.5), rgba(203, 213, 225, 0.5))"
+                _hover={{
+                  background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
                 }}
               >
                 <Box
@@ -90,11 +88,9 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
                 position="relative"
                 p="3px"
                 transition="all 0.35s ease"
-                css={{
-                  background: "linear-gradient(135deg, rgba(203, 213, 225, 0.5), rgba(203, 213, 225, 0.5))",
-                  "&:hover": {
-                    background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
-                  },
+                background="linear-gradient(135deg, rgba(203, 213, 225, 0.5), rgba(203, 213, 225, 0.5))"
+                _hover={{
+                  background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
                 }}
               >
                 <Box
@@ -135,9 +131,7 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
                 h="2px"
                 mx="auto"
                 mt={1}
-                css={{
-                  background: "linear-gradient(90deg, #06b6d4, transparent)",
-                }}
+                background="linear-gradient(90deg, #06b6d4, transparent)"
               />
             </Box>
             <Text as="p" textAlign="center" color="dark.500" fontSize="sm" mt={2}>

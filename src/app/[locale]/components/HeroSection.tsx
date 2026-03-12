@@ -37,10 +37,8 @@ const HeroSection = () => {
         right="0"
         bottom="0"
         aria-hidden="true"
-        css={{
-          backgroundImage: "radial-gradient(circle, rgba(6, 182, 212, 0.15) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
+        bgImage="radial-gradient(circle, rgba(6, 182, 212, 0.15) 1px, transparent 1px)"
+        bgSize="32px 32px"
       />
 
       {/* Noise texture overlay */}
@@ -52,11 +50,9 @@ const HeroSection = () => {
         bottom="0"
         opacity={0.03}
         aria-hidden="true"
-        css={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "128px 128px",
-        }}
+        bgImage={`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}
+        bgRepeat="repeat"
+        bgSize="128px 128px"
       />
 
       {/* Geometric accent lines */}
@@ -111,9 +107,7 @@ const HeroSection = () => {
         w="400px"
         h="400px"
         aria-hidden="true"
-        css={{
-          background: "radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%)",
-        }}
+        background="radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%)"
       />
       <Box
         position="absolute"
@@ -122,9 +116,7 @@ const HeroSection = () => {
         w="350px"
         h="350px"
         aria-hidden="true"
-        css={{
-          background: "radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%)",
-        }}
+        background="radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%)"
       />
 
       <Container maxW="1280px" mx="auto" h="full" px={{ base: 4, md: 8 }} position="relative" zIndex={2}>
@@ -165,12 +157,9 @@ const HeroSection = () => {
                 {t('title')}{' '}
                 <Text
                   as="span"
-                  css={{
-                    background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
+                  background="linear-gradient(135deg, #06b6d4, #3b82f6)"
+                  backgroundClip="text"
+                  color="transparent"
                 >
                   {t('titleHighlight')}
                 </Text>
@@ -249,9 +238,7 @@ const HeroSection = () => {
             align="center"
             justify="center"
             opacity={0.6}
-            css={{
-              boxShadow: "0 0 15px rgba(6, 182, 212, 0.15)",
-            }}
+            boxShadow="0 0 15px rgba(6, 182, 212, 0.15)"
           >
             <ArrowDown size={18} />
           </Flex>

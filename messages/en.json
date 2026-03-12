@@ -26,7 +26,25 @@
     "mission": "To be the engineering team our clients need, with the judgment to make good technical decisions, the experience to execute them, and the responsibility to see them through to the end.",
     "imageAlt": "Tonk Solutions engineering team",
     "imageTitle": "Engineering with judgment",
-    "imageSubtitle": "From problem to solution."
+    "imageSubtitle": "From problem to solution.",
+    "pillars": [
+      {
+        "title": "Cloud Native",
+        "description": "Scalable and elastic architectures"
+      },
+      {
+        "title": "Core Banking",
+        "description": "Critical transactional systems"
+      },
+      {
+        "title": "SAP & Enterprise",
+        "description": "Core process integration"
+      },
+      {
+        "title": "Applied AI",
+        "description": "Optimization and knowledge"
+      }
+    ]
   },
   "services": {
     "label": "OUR SERVICES",

@@ -86,9 +86,7 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
                 borderColor: selectedServiceIndex === index ? "dark.700" : "primary.300",
                 bg: selectedServiceIndex === index ? "dark.900" : "gray.50",
               }}
-              css={selectedServiceIndex === index ? {
-                boxShadow: "0 4px 20px rgba(6, 182, 212, 0.1)",
-              } : undefined}
+              boxShadow={selectedServiceIndex === index ? "0 4px 20px rgba(6, 182, 212, 0.1)" : undefined}
             >
               <Flex align="center" gap={3}>
                 <Flex
@@ -133,9 +131,7 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
               borderRadius="xl"
               justify="center"
               align="center"
-              css={{
-                background: "linear-gradient(135deg, #06b6d4, #2563eb)",
-              }}
+              background="linear-gradient(135deg, #06b6d4, #2563eb)"
             >
               <Icon as={iconMap[selectedService.icon] || Code} boxSize={10} color="white" />
             </Flex>
@@ -147,9 +143,7 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
                 w="40px"
                 h="2px"
                 mt={2}
-                css={{
-                  background: "linear-gradient(90deg, #06b6d4, transparent)",
-                }}
+                background="linear-gradient(90deg, #06b6d4, transparent)"
               />
             </Box>
           </Flex>

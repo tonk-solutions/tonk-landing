@@ -59,13 +59,11 @@ const ContactItem: React.FC<ContactItemProps> = ({ icon, label, value, href, ind
       overflow="hidden"
       role="group"
       cursor={href ? "pointer" : "default"}
-      css={{
-        transition: "border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease",
-        "&:hover": {
-          borderColor: "var(--chakra-colors-primary-500, #06b6d4)",
-          transform: "translateY(-2px)",
-          boxShadow: "0 8px 32px rgba(6, 182, 212, 0.12)",
-        },
+      css={{ transition: "border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease" }}
+      _hover={{
+        borderColor: "var(--chakra-colors-primary-500, #06b6d4)",
+        transform: "translateY(-2px)",
+        boxShadow: "0 8px 32px rgba(6, 182, 212, 0.12)",
       }}
     >
       {/* Subtle gradient shine on hover */}
@@ -77,10 +75,8 @@ const ContactItem: React.FC<ContactItemProps> = ({ icon, label, value, href, ind
         bottom="0"
         opacity={0}
         _groupHover={{ opacity: 0.04 }}
-        css={{
-          background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
-          transition: "opacity 0.3s ease",
-        }}
+        background="linear-gradient(135deg, #06b6d4, #3b82f6)"
+        transition="opacity 0.3s ease"
         aria-hidden="true"
       />
 
@@ -92,9 +88,7 @@ const ContactItem: React.FC<ContactItemProps> = ({ icon, label, value, href, ind
         align="center"
         flexShrink={0}
         position="relative"
-        css={{
-          background: "linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.1))",
-        }}
+        background="linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.1))"
       >
         <Icon as={icon} boxSize={5} color="primary.400" />
       </Flex>
@@ -115,7 +109,7 @@ const ContactItem: React.FC<ContactItemProps> = ({ icon, label, value, href, ind
           color="dark.200"
           fontWeight="medium"
           _groupHover={{ color: 'primary.300' }}
-          css={{ transition: "color 0.3s ease" }}
+          transition="color 0.3s ease"
           wordBreak="break-word"
         >
           {value}
@@ -132,7 +126,7 @@ const ContactItem: React.FC<ContactItemProps> = ({ icon, label, value, href, ind
             justify="center"
             align="center"
             _groupHover={{ bg: 'primary.500' }}
-            css={{ transition: "background 0.3s ease" }}
+            transition="background 0.3s ease"
           >
             <ArrowRight size={14} color="currentColor" />
           </Flex>
@@ -187,10 +181,8 @@ const ContactSection = () => {
         right="0"
         bottom="0"
         aria-hidden="true"
-        css={{
-          backgroundImage: "radial-gradient(circle, rgba(6, 182, 212, 0.08) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
+        bgImage="radial-gradient(circle, rgba(6, 182, 212, 0.08) 1px, transparent 1px)"
+        bgSize="32px 32px"
       />
 
       {/* Noise texture overlay */}
@@ -202,11 +194,9 @@ const ContactSection = () => {
         bottom="0"
         opacity={0.02}
         aria-hidden="true"
-        css={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "128px 128px",
-        }}
+        bgImage={`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}
+        bgRepeat="repeat"
+        bgSize="128px 128px"
       />
 
       {/* Gradient glow accents */}
@@ -217,9 +207,7 @@ const ContactSection = () => {
         w="450px"
         h="450px"
         aria-hidden="true"
-        css={{
-          background: "radial-gradient(circle, rgba(6, 182, 212, 0.07) 0%, transparent 70%)",
-        }}
+        background="radial-gradient(circle, rgba(6, 182, 212, 0.07) 0%, transparent 70%)"
       />
       <Box
         position="absolute"
@@ -228,9 +216,7 @@ const ContactSection = () => {
         w="400px"
         h="400px"
         aria-hidden="true"
-        css={{
-          background: "radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%)",
-        }}
+        background="radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%)"
       />
 
       {/* Geometric accent lines */}
@@ -270,9 +256,7 @@ const ContactSection = () => {
         left="0"
         right="0"
         h="1px"
-        css={{
-          background: "linear-gradient(90deg, transparent, #06b6d4, #3b82f6, transparent)",
-        }}
+        background="linear-gradient(90deg, transparent, #06b6d4, #3b82f6, transparent)"
         aria-hidden="true"
       />
 
@@ -392,9 +376,7 @@ const ContactSection = () => {
             >
               <Box
                 h="1px"
-                css={{
-                  background: "linear-gradient(90deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.15), transparent)",
-                }}
+                  background="linear-gradient(90deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.15), transparent)"
               />
             </MotionBox>
           </Box>

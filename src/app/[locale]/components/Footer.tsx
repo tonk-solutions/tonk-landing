@@ -41,9 +41,7 @@ const Footer = () => {
         w="100%"
         h="1px"
         mb={12}
-        css={{
-          background: "linear-gradient(90deg, transparent, #06b6d4, #3b82f6, transparent)",
-        }}
+        background="linear-gradient(90deg, transparent, #06b6d4, #3b82f6, transparent)"
         aria-hidden="true"
       />
 
