@@ -50,7 +50,7 @@ const Header = () => {
     };
   }, [open]);
 
-  const isLightMode = scrolled || open;
+  const isLightMode = scrolled && !open;
 
   // Animation variants
   const menuVariants = {
@@ -79,10 +79,10 @@ const Header = () => {
       left="0"
       w="100%"
       zIndex={999}
-      bg={scrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent'}
-      backdropFilter={scrolled ? 'blur(10px)' : 'none'}
+      bg={(scrolled && !open) ? 'rgba(255, 255, 255, 0.95)' : 'transparent'}
+      backdropFilter={(scrolled && !open) ? 'blur(10px)' : 'none'}
       color={isLightMode ? 'gray.800' : 'white'}
-      boxShadow={scrolled ? 'sm' : 'none'}
+      boxShadow={(scrolled && !open) ? 'sm' : 'none'}
       transition="background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease"
     >
       <Container maxW="1280px" mx="auto" px={{ base: 5, md: 8 }} position="relative" zIndex={1000}>
@@ -157,7 +157,7 @@ const Header = () => {
             left="0"
             w="100vw"
             h="100dvh"
-            bg="rgba(255, 255, 255, 0.98)"
+            bg="rgba(15, 23, 42, 0.98)"
             backdropFilter="blur(20px)"
             display={{ base: 'flex', md: 'none' }}
             flexDirection="column"
@@ -179,7 +179,7 @@ const Header = () => {
                             href={link.href}
                             fontSize="2xl"
                             fontWeight={600}
-                            color="gray.800"
+                            color="white"
                             letterSpacing="tight"
                             _hover={{ color: 'primary.500', textDecoration: 'none' }}
                             onClick={onClose}
@@ -194,7 +194,7 @@ const Header = () => {
                   <Stack gap={8} align="center" w="full">
                     <Box asChild>
                       <motion.div variants={itemVariants}>
-                        <LanguageSwitcher isLightMode={true} />
+                        <LanguageSwitcher isLightMode={false} />
                       </motion.div>
                     </Box>
                     
