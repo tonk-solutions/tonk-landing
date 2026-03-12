@@ -2,81 +2,66 @@
 
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
-import { Button, MenuRoot, MenuTrigger, MenuContent, MenuItem } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 
 const languages = [
-  { code: 'es', label: 'Español', flag: '🇦🇷' },
-  { code: 'en', label: 'English', flag: '🇺🇸' }
+  { code: 'es', label: 'Español', short: 'ES' },
+  { code: 'en', label: 'English', short: 'EN' }
 ];
 
-export default function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  isLightMode?: boolean;
+}
+
+export default function LanguageSwitcher({ isLightMode = false }: LanguageSwitcherProps) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
-  const currentLanguage = languages.find(lang => lang.code === locale);
-
   const handleLanguageChange = (newLocale: string) => {
+    if (newLocale === locale) return;
     const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
     router.push(newPathname);
   };
 
   return (
-    <MenuRoot>
-      <MenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-          px={3}
-          py={2}
-          minW="80px"
-          bg="whiteAlpha.100"
-          borderRadius="md"
-          border="1px solid"
-          borderColor="whiteAlpha.200"
-          _hover={{ bg: 'whiteAlpha.200', borderColor: 'whiteAlpha.300' }}
-          color="white"
-          fontSize="sm"
-          fontWeight="medium"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          gap={2}
-        >
-          <span style={{ fontSize: '18px' }}>{currentLanguage?.flag}</span>
-        </Button>
-      </MenuTrigger>
-      <MenuContent 
-        bg="gray.900" 
-        borderColor="gray.700"
-        borderWidth="1px"
-        borderRadius="md"
-        boxShadow="lg"
-        minW="140px"
-        p={1}
-      >
-        {languages.map((lang) => (
-          <MenuItem
+    <Flex
+      bg={isLightMode ? 'blackAlpha.50' : 'whiteAlpha.50'}
+      p="1"
+      borderRadius="full"
+      alignItems="center"
+      display="inline-flex"
+      border="1px solid"
+      borderColor={isLightMode ? 'blackAlpha.100' : 'whiteAlpha.100'}
+      boxShadow="inset 0 1px 2px rgba(0,0,0,0.1)"
+    >
+      {languages.map((lang) => {
+        const isActive = locale === lang.code;
+        return (
+          <Button
             key={lang.code}
-            value={lang.code}
-            onClick={() => handleLanguageChange(lang.code)}
-            bg={locale === lang.code ? 'gray.700' : 'transparent'}
-            _hover={{ bg: 'gray.700' }}
-            color="white"
-            borderRadius="sm"
-            px={3}
-            py={2}
+            variant="ghost"
+            size="sm"
+            px={4}
+            py={1}
+            h="28px"
+            minW="50px"
+            bg={isActive ? 'primary.600' : 'transparent'}
+            color={isActive ? 'white' : (isLightMode ? 'gray.600' : 'whiteAlpha.500')}
+            borderRadius="full"
             fontSize="sm"
-            cursor="pointer"
-            display="flex"
-            alignItems="center"
-            gap={2}
+            fontWeight={isActive ? "bold" : "semibold"}
+            onClick={() => handleLanguageChange(lang.code)}
+            _hover={!isActive ? {
+              color: isLightMode ? 'gray.900' : 'whiteAlpha.800',
+              bg: isLightMode ? 'blackAlpha.50' : 'whiteAlpha.100'
+            } : {}}
+            transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
           >
-            <span style={{ fontSize: '18px' }}>{lang.flag}</span>
-            <span>{lang.label}</span>
-          </MenuItem>
-        ))}
-      </MenuContent>
-    </MenuRoot>
+            {lang.short}
+          </Button>
+        );
+      })}
+    </Flex>
   );
 }

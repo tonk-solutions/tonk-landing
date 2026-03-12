@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Syne, DM_Sans } from "next/font/google";
 import "../globals.css";
 import { Providers } from "./providers";
 import Script from "next/script";
@@ -9,15 +9,16 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 
-const inter = Inter({
+const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-heading",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700"],
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-poppins",
+  variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
 });
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -295,7 +296,7 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceJsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} ${poppins.variable}`}>
+      <body className={`${syne.variable} ${dmSans.variable}`}>
         <NextIntlClientProvider messages={messages}>
           <Providers>
             {children}

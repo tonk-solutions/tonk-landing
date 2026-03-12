@@ -26,7 +26,25 @@
     "mission": "Ser el equipo de ingeniería que nuestros clientes necesitan, con el criterio para tomar buenas decisiones técnicas, la experiencia para ejecutarlas y la responsabilidad de llevarlas hasta el final.",
     "imageAlt": "Equipo de ingeniería Tonk Solutions",
     "imageTitle": "Ingeniería con criterio",
-    "imageSubtitle": "Del problema a la solución."
+    "imageSubtitle": "Del problema a la solución.",
+    "pillars": [
+      {
+        "title": "Cloud Native",
+        "description": "Arquitecturas escalables y elásticas"
+      },
+      {
+        "title": "Core Banking",
+        "description": "Sistemas críticos transaccionales"
+      },
+      {
+        "title": "SAP & Enterprise",
+        "description": "Integración de procesos core"
+      },
+      {
+        "title": "IA Aplicada",
+        "description": "Optimización y conocimiento"
+      }
+    ]
   },
   "services": {
     "label": "NUESTROS SERVICIOS",

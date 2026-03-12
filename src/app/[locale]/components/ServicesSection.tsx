@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Box, Container, Grid, Heading, Text, Icon, Flex, SegmentGroup } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { Code, Cloud, FileText, BrainCircuit, Users, CheckCircle, Sparkles, UserCheck } from 'lucide-react';
+import { Code, Cloud, FileText, BrainCircuit, Users, CheckCircle, Sparkles, UserCheck, Hammer, UsersRound } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useTranslations } from 'next-intl';
 
@@ -49,48 +49,65 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
       gap={{ base: 6, lg: 12 }}
       w="100%"
       bg="white"
-      rounded="lg"
+      rounded="xl"
       p={{ base: 6, lg: 8 }}
       boxShadow="sm"
+      border="1px solid"
+      borderColor="gray.100"
     >
       <Box>
         <Text
           fontSize="xs"
           fontWeight="bold"
-          color="gray.500"
+          color="dark.500"
           textTransform="uppercase"
-          letterSpacing="wide"
+          letterSpacing="0.15em"
           mb={6}
         >
           {branch.name === "Producto" ? "Nuestras Especialidades" : "Nuestros Servicios"}
         </Text>
-        <Flex direction="column" gap={3}>
+        <Flex direction="column" gap={2}>
           {branch.services.map((service, index) => (
             <Box
               key={service.title}
               p={4}
               rounded="lg"
-              bg={selectedServiceIndex === index ? "primary.50" : "white"}
-              border="2px solid"
-              borderColor={selectedServiceIndex === index ? "primary.500" : "gray.200"}
               cursor="pointer"
               onClick={() => setSelectedServiceIndex(index)}
-              transition="all 0.2s"
+              onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedServiceIndex(index); } }}
+              role="button"
+              tabIndex={0}
+              transition="background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease"
+              position="relative"
+              bg={selectedServiceIndex === index ? "dark.900" : "white"}
+              border="1px solid"
+              borderColor={selectedServiceIndex === index ? "dark.700" : "gray.200"}
               _hover={{
-                borderColor: "primary.300",
-                bg: "primary.50",
+                borderColor: selectedServiceIndex === index ? "dark.700" : "primary.300",
+                bg: selectedServiceIndex === index ? "dark.900" : "gray.50",
               }}
+              boxShadow={selectedServiceIndex === index ? "0 4px 20px rgba(6, 182, 212, 0.1)" : undefined}
             >
               <Flex align="center" gap={3}>
-                <Icon
-                  as={iconMap[service.icon] || Code}
-                  boxSize={6}
-                  color={selectedServiceIndex === index ? "primary.500" : "gray.400"}
-                />
+                <Flex
+                  w="36px"
+                  h="36px"
+                  borderRadius="md"
+                  bg={selectedServiceIndex === index ? "primary.500" : "gray.100"}
+                  justify="center"
+                  align="center"
+                  transition="background 0.25s ease"
+                >
+                  <Icon
+                    as={iconMap[service.icon] || Code}
+                    boxSize={4}
+                    color={selectedServiceIndex === index ? "white" : "dark.500"}
+                  />
+                </Flex>
                 <Text
                   fontSize="sm"
                   fontWeight="semibold"
-                  color={selectedServiceIndex === index ? "gray.900" : "gray.700"}
+                  color={selectedServiceIndex === index ? "white" : "dark.700"}
                 >
                   {service.title}
                 </Text>
@@ -100,41 +117,40 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
         </Flex>
       </Box>
 
-      <Box>
+      <Box display="flex" alignItems="center">
         <MotionBox
           key={selectedService.title}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <Flex align="center" gap={4} mb={6}>
+          <Flex align="center" gap={5} mb={6}>
             <Flex
               w="80px"
               h="80px"
-              bg="primary.50"
-              color="primary.500"
-              borderRadius="lg"
+              borderRadius="xl"
               justify="center"
               align="center"
+              background="linear-gradient(135deg, #06b6d4, #2563eb)"
             >
-              <Icon as={iconMap[selectedService.icon] || Code} boxSize={10} />
+              <Icon as={iconMap[selectedService.icon] || Code} boxSize={10} color="white" />
             </Flex>
-            <Heading as="h3" size="lg" color="gray.900">
-              {selectedService.title}
-            </Heading>
+            <Box>
+              <Heading as="h3" fontSize="clamp(1.5rem, 3vw + 0.5rem, 2rem)" color="dark.900" lineHeight="1.3">
+                {selectedService.title}
+              </Heading>
+              <Box
+                w="40px"
+                h="2px"
+                mt={2}
+                background="linear-gradient(90deg, #06b6d4, transparent)"
+              />
+            </Box>
           </Flex>
 
-          <Box
-            w="60px"
-            h="1px"
-            bg="primary.500"
-            mb={6}
-          />
-
-          <Text fontSize="md" color="gray.600" lineHeight="1.8" mb={8}>
+          <Text fontSize="clamp(0.875rem, 1vw + 0.5rem, 1rem)" color="dark.600" lineHeight="1.8" mb={8}>
             {selectedService.description}
           </Text>
-
 
         </MotionBox>
       </Box>
@@ -164,6 +180,11 @@ const ServicesSection = () => {
   
   const [selectedBranch, setSelectedBranch] = useState(branches[0].name);
 
+  const branchIcons: Record<string, React.ElementType> = {
+    [branches[0].name]: Hammer,
+    [branches[1].name]: UsersRound,
+  };
+
   return (
     <Box
       as="section"
@@ -186,13 +207,20 @@ const ServicesSection = () => {
             maxW="800px"
             w="full"
           >
-            <Text color="primary.500" fontWeight="medium" mb={2}>
+            <Text
+              color="primary.500"
+              fontWeight="semibold"
+              mb={2}
+              fontSize="sm"
+              textTransform="uppercase"
+              letterSpacing="0.15em"
+            >
               {t('label')}
             </Text>
-            <Heading as="h2" id="servicios-heading" size="xl" mb={4}>
+            <Heading as="h2" id="servicios-heading" fontSize="clamp(1.8rem, 4vw + 1rem, 2.5rem)" lineHeight="1.2" mb={4}>
               {t('title')}
             </Heading>
-            <Text as="p" fontSize="lg" color="gray.600">
+            <Text as="p" fontSize="clamp(1rem, 1.5vw + 0.5rem, 1.125rem)" color="dark.500">
               {t('description')}
             </Text>
           </MotionBox>
@@ -205,10 +233,10 @@ const ServicesSection = () => {
             bg="white"
             p={1}
             rounded="full"
-            border="2px solid"
+            border="1px solid"
             borderColor="gray.200"
             css={{
-              "--segment-indicator-bg": "var(--chakra-colors-primary-500)",
+              "--segment-indicator-bg": "var(--chakra-colors-dark-900, #0f172a)",
               "--segment-indicator-shadow": "none",
             }}
             suppressHydrationWarning
@@ -222,19 +250,27 @@ const ServicesSection = () => {
                 py={3}
                 rounded="full"
                 _checked={{
-                  bg: "primary.500",
+                  bg: "dark.900",
                 }}
                 bg="white"
               >
-                <SegmentGroup.ItemText 
-                  fontWeight="semibold"
-                  color="gray.700"
-                  _checked={{
-                    color: "white",
-                  }}
-                >
-                  {branch.name}
-                </SegmentGroup.ItemText>
+                <Flex align="center" gap={2}>
+                  <Icon
+                    as={branchIcons[branch.name] || Hammer}
+                    boxSize={4}
+                    _checked={{ color: "white" }}
+                  />
+                  <SegmentGroup.ItemText 
+                    fontWeight="semibold"
+                    color="dark.600"
+                    _checked={{
+                      color: "white",
+                    }}
+                    fontSize="sm"
+                  >
+                    {branch.name}
+                  </SegmentGroup.ItemText>
+                </Flex>
                 <SegmentGroup.ItemHiddenInput />
               </SegmentGroup.Item>
             ))}
@@ -251,7 +287,7 @@ const ServicesSection = () => {
               mb={8}
               textAlign="center"
             >
-              <Text as="p" fontSize="lg" color="gray.600" maxW="600px" mx="auto">
+              <Text as="p" fontSize="lg" color="dark.500" maxW="600px" mx="auto">
                 {branch.subtitle}
               </Text>
             </MotionBox>

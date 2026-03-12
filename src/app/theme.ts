@@ -3,6 +3,10 @@ import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
 const customConfig = defineConfig({
   theme: {
     tokens: {
+      fonts: {
+        heading: { value: "var(--font-heading), system-ui, sans-serif" },
+        body: { value: "var(--font-body), system-ui, sans-serif" },
+      },
       sizes: {
         container: {
           sm: { value: "640px" },
@@ -47,6 +51,37 @@ const customConfig = defineConfig({
           700: { value: "#334155" },
           800: { value: "#1e293b" },
           900: { value: "#0f172a" },
+        },
+      },
+    },
+    semanticTokens: {
+      colors: {
+        primary: {
+          solid: { value: "{colors.primary.500}" },
+          contrast: { value: "white" },
+          fg: { value: "{colors.primary.600}" },
+          muted: { value: "{colors.primary.100}" },
+          subtle: { value: "{colors.primary.50}" },
+          emphasized: { value: "{colors.primary.500}" },
+          focusRing: { value: "{colors.primary.500}" },
+        },
+        secondary: {
+          solid: { value: "{colors.secondary.500}" },
+          contrast: { value: "white" },
+          fg: { value: "{colors.secondary.600}" },
+          muted: { value: "{colors.secondary.100}" },
+          subtle: { value: "{colors.secondary.50}" },
+          emphasized: { value: "{colors.secondary.500}" },
+          focusRing: { value: "{colors.secondary.500}" },
+        },
+        dark: {
+          solid: { value: "{colors.dark.800}" },
+          contrast: { value: "white" },
+          fg: { value: "{colors.dark.700}" },
+          muted: { value: "{colors.dark.200}" },
+          subtle: { value: "{colors.dark.50}" },
+          emphasized: { value: "{colors.dark.800}" },
+          focusRing: { value: "{colors.dark.700}" },
         },
       },
     },
