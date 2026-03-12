@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Box, Container, Flex, Heading, Text, Link, Grid, Icon } from '@chakra-ui/react';
+import { Box, Container, Flex, Heading, Text, Link, Grid } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Linkedin } from 'lucide-react';
@@ -37,50 +37,81 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
         bg="white"
         borderRadius="xl"
         overflow="hidden"
-        boxShadow="md"
+        boxShadow="sm"
         borderWidth="1px"
         borderColor="gray.100"
         height="100%"
-        transition="all 0.3s ease"
-        _hover={{ boxShadow: 'lg', transform: 'translateY(-5px)' }}
+        transition="transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease"
+        _hover={{
+          boxShadow: 'md',
+          transform: 'scale(1.02)',
+          borderColor: 'primary.300',
+        }}
       >
         <Flex direction="column" h="100%">
           <Flex justify="center" pt={8} pb={4}>
             {avatarUrl ? (
               <Box
-                w="80px"
-                h="80px"
+                w="88px"
+                h="88px"
                 borderRadius="full"
                 overflow="hidden"
-                border="4px solid"
-                borderColor="gray.100"
                 position="relative"
+                p="3px"
+                transition="all 0.35s ease"
+                css={{
+                  background: "linear-gradient(135deg, rgba(203, 213, 225, 0.5), rgba(203, 213, 225, 0.5))",
+                  "&:hover": {
+                    background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
+                  },
+                }}
               >
-                <Image
-                  src={avatarUrl}
-                  alt={`${name} - ${role} en Tonk Solutions`}
-                  width={80}
-                  height={80}
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                />
+                <Box
+                  w="100%"
+                  h="100%"
+                  borderRadius="full"
+                  overflow="hidden"
+                  position="relative"
+                >
+                  <Image
+                    src={avatarUrl}
+                    alt={`${name} - ${role} en Tonk Solutions`}
+                    width={88}
+                    height={88}
+                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  />
+                </Box>
               </Box>
             ) : (
               <Box
-                w="80px"
-                h="80px"
+                w="88px"
+                h="88px"
                 borderRadius="full"
-                bg="primary.500"
-                color="white"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                border="4px solid"
-                borderColor="gray.100"
-                fontSize="2xl"
-                fontWeight="bold"
-                aria-hidden="true"
+                position="relative"
+                p="3px"
+                transition="all 0.35s ease"
+                css={{
+                  background: "linear-gradient(135deg, rgba(203, 213, 225, 0.5), rgba(203, 213, 225, 0.5))",
+                  "&:hover": {
+                    background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
+                  },
+                }}
               >
-                {name.charAt(0)}
+                <Box
+                  w="100%"
+                  h="100%"
+                  borderRadius="full"
+                  bg="dark.900"
+                  color="white"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  fontSize="2xl"
+                  fontWeight="bold"
+                  aria-hidden="true"
+                >
+                  {name.charAt(0)}
+                </Box>
               </Box>
             )}
           </Flex>
@@ -89,10 +120,27 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
             <Heading as="h3" size="md">
               {name}
             </Heading>
-            <Text color="primary.500" fontWeight="medium" fontSize="sm">
-              {role}
-            </Text>
-            <Text as="p" textAlign="center" color="gray.600" fontSize="sm" mt={2}>
+            <Box>
+              <Text
+                color="primary.600"
+                fontWeight="semibold"
+                fontSize="sm"
+                textTransform="uppercase"
+                letterSpacing="0.08em"
+              >
+                {role}
+              </Text>
+              <Box
+                w="24px"
+                h="2px"
+                mx="auto"
+                mt={1}
+                css={{
+                  background: "linear-gradient(90deg, #06b6d4, transparent)",
+                }}
+              />
+            </Box>
+            <Text as="p" textAlign="center" color="dark.500" fontSize="sm" mt={2}>
               {bio}
             </Text>
           </Flex>
@@ -104,11 +152,15 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
               rel="noopener noreferrer"
               display="flex"
               alignItems="center"
-              color="secondary.600"
-              _hover={{ color: 'secondary.500' }}
+              gap={2}
+              color="dark.500"
+              fontSize="sm"
+              fontWeight="medium"
+              _hover={{ color: 'primary.500' }}
               aria-label={`Perfil de LinkedIn de ${name}`}
+              transition="color 0.2s ease"
             >
-              <Icon as={Linkedin} mr={2} /> LinkedIn
+              <Linkedin size={16} /> LinkedIn
             </Link>
           </Flex>
         </Flex>
@@ -160,13 +212,20 @@ const TeamSection = () => {
             transition={{ duration: 0.5 }}
             textAlign="center"
           >
-            <Text color="primary.500" fontWeight="medium" mb={2}>
+            <Text
+              color="primary.500"
+              fontWeight="semibold"
+              mb={2}
+              fontSize="sm"
+              textTransform="uppercase"
+              letterSpacing="0.15em"
+            >
               {t('label')}
             </Text>
             <Heading as="h2" id="equipo-heading" size="xl" mb={4}>
               {t('title')}
             </Heading>
-            <Text as="p" fontSize="lg" color="gray.600" maxW="800px" mx="auto">
+            <Text as="p" fontSize="lg" color="dark.500" maxW="800px" mx="auto">
               {t('description')}
             </Text>
           </MotionBox>

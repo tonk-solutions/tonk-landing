@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Box, Container, Flex, Link, Stack, Text } from '@chakra-ui/react';
-import { FaLinkedin, FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import { Linkedin, Instagram, MessageCircle } from 'lucide-react';
 import TonkLogo from './TonkLogo';
 import { useTranslations } from 'next-intl';
 
@@ -14,11 +14,11 @@ const Footer = () => {
     if (!iconName || typeof iconName !== 'string') return null;
     switch (iconName.toLowerCase()) {
       case 'linkedin':
-        return <FaLinkedin aria-hidden="true" focusable={false} />;
+        return <Linkedin size={18} aria-hidden="true" />;
       case 'instagram':
-        return <FaInstagram aria-hidden="true" focusable={false} />;
+        return <Instagram size={18} aria-hidden="true" />;
       case 'whatsapp':
-        return <FaWhatsapp aria-hidden="true" focusable={false} style={{ marginRight: '8px' }} />;
+        return <MessageCircle size={16} aria-hidden="true" style={{ marginRight: '6px' }} />;
       default:
         return null;
     }
@@ -35,7 +35,18 @@ const Footer = () => {
   ];
 
   return (
-    <Box as="footer" role="contentinfo" bg="dark.800" color="white" py={12} px={{ base: 4, md: 8 }} w="100%" overflow="hidden">
+    <Box as="footer" role="contentinfo" position="relative" bg="dark.900" color="white" pt={0} pb={10} px={{ base: 4, md: 8 }} w="100%" overflow="hidden">
+      {/* Gradient separator */}
+      <Box
+        w="100%"
+        h="1px"
+        mb={12}
+        css={{
+          background: "linear-gradient(90deg, transparent, #06b6d4, #3b82f6, transparent)",
+        }}
+        aria-hidden="true"
+      />
+
       <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex
           direction={{ base: 'column', md: 'row' }}
@@ -45,15 +56,24 @@ const Footer = () => {
         >
           <Box maxW={{ base: '100%', md: '380px' }} mb={{ base: 8, md: 0 }}>
             <TonkLogo size="md" theme="dark" />
-            <Text as="p" mt={4} color="gray.400" fontSize="sm">
+            <Text as="p" mt={4} color="dark.400" fontSize="sm" lineHeight="tall">
               {t('description')}
             </Text>
           </Box>
 
           <Stack direction={{ base: 'column', md: 'row' }} gap={12}>
             <Box as="nav" aria-label="Información de contacto">
-              <Text fontWeight="bold" mb={4}>{t('contactLabel')}</Text>
-              <Stack gap={2}>
+              <Text
+                fontWeight="bold"
+                mb={4}
+                fontSize="xs"
+                textTransform="uppercase"
+                letterSpacing="0.15em"
+                color="dark.300"
+              >
+                {t('contactLabel')}
+              </Text>
+              <Stack gap={3}>
                 {contactLinks.map((link) => (
                   <Link
                     key={link.href}
@@ -62,9 +82,10 @@ const Footer = () => {
                     rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
                     display="flex"
                     alignItems="center"
-                    color="gray.400"
+                    color="dark.400"
                     fontSize="sm"
                     _hover={{ color: 'primary.400' }}
+                    transition="color 0.2s ease"
                   >
                     {link.icon && getIcon(link.icon)}
                     {link.value}
@@ -74,17 +95,36 @@ const Footer = () => {
             </Box>
 
             <Box as="nav" aria-label="Redes sociales">
-              <Text fontWeight="bold" mb={4}>{t('socialLabel')}</Text>
-              <Stack direction="row" gap={4}>
+              <Text
+                fontWeight="bold"
+                mb={4}
+                fontSize="xs"
+                textTransform="uppercase"
+                letterSpacing="0.15em"
+                color="dark.300"
+              >
+                {t('socialLabel')}
+              </Text>
+              <Stack direction="row" gap={3}>
                 {socialLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    color="gray.400"
-                    _hover={{ color: 'primary.400' }}
-                    fontSize="xl"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    w="36px"
+                    h="36px"
+                    borderRadius="md"
+                    color="dark.400"
+                    bg="dark.800"
+                    _hover={{
+                      color: 'primary.400',
+                      bg: 'dark.700',
+                    }}
+                    transition="color 0.2s ease, background 0.2s ease"
                     aria-label={link.ariaLabel}
                   >
                     {getIcon(link.icon)}
@@ -97,7 +137,7 @@ const Footer = () => {
 
         <Flex
           borderTopWidth={1}
-          borderTopColor="gray.700"
+          borderTopColor="dark.800"
           mt={10}
           pt={6}
           justify="space-between"
@@ -105,7 +145,7 @@ const Footer = () => {
           align="center"
           gap={4}
         >
-          <Text fontSize="sm" color="gray.500">
+          <Text fontSize="xs" color="dark.600">
             {t('copyright', { year: currentYear })}
           </Text>
         </Flex>
