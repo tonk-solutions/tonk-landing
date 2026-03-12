@@ -117,7 +117,7 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
           </Flex>
 
           <Flex direction="column" p={5} gap={2} align="center" flex="1">
-            <Heading as="h3" size="md">
+            <Heading as="h3" fontSize="clamp(1.125rem, 2vw + 0.5rem, 1.3rem)">
               {name}
             </Heading>
             <Box>
@@ -222,10 +222,10 @@ const TeamSection = () => {
             >
               {t('label')}
             </Text>
-            <Heading as="h2" id="equipo-heading" size="xl" mb={4}>
+            <Heading as="h2" id="equipo-heading" fontSize="clamp(1.8rem, 4vw + 1rem, 2.5rem)" lineHeight="1.2" mb={4}>
               {t('title')}
             </Heading>
-            <Text as="p" fontSize="lg" color="dark.500" maxW="800px" mx="auto">
+            <Text as="p" fontSize="clamp(1rem, 1.5vw + 0.5rem, 1.125rem)" color="dark.500" maxW="800px" mx="auto">
               {t('description')}
             </Text>
           </MotionBox>

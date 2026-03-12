@@ -50,7 +50,7 @@ const Header = () => {
       transition="all 0.3s ease"
       overflow="hidden"
     >
-      <Container maxW="1280px" mx="auto">
+      <Container maxW="1280px" mx="auto" px={{ base: 5, md: 8 }}>
         <Flex
           as="nav"
           aria-label="Navegación principal"

@@ -119,7 +119,7 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
         </Flex>
       </Box>
 
-      <Box>
+      <Box display="flex" alignItems="center">
         <MotionBox
           key={selectedService.title}
           initial={{ opacity: 0, y: 10 }}
@@ -140,7 +140,7 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
               <Icon as={iconMap[selectedService.icon] || Code} boxSize={10} color="white" />
             </Flex>
             <Box>
-              <Heading as="h3" size="lg" color="dark.900">
+              <Heading as="h3" fontSize="clamp(1.5rem, 3vw + 0.5rem, 2rem)" color="dark.900" lineHeight="1.3">
                 {selectedService.title}
               </Heading>
               <Box
@@ -154,7 +154,7 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
             </Box>
           </Flex>
 
-          <Text fontSize="md" color="dark.600" lineHeight="1.8" mb={8}>
+          <Text fontSize="clamp(0.875rem, 1vw + 0.5rem, 1rem)" color="dark.600" lineHeight="1.8" mb={8}>
             {selectedService.description}
           </Text>
 
@@ -223,10 +223,10 @@ const ServicesSection = () => {
             >
               {t('label')}
             </Text>
-            <Heading as="h2" id="servicios-heading" size="xl" mb={4}>
+            <Heading as="h2" id="servicios-heading" fontSize="clamp(1.8rem, 4vw + 1rem, 2.5rem)" lineHeight="1.2" mb={4}>
               {t('title')}
             </Heading>
-            <Text as="p" fontSize="lg" color="dark.500">
+            <Text as="p" fontSize="clamp(1rem, 1.5vw + 0.5rem, 1.125rem)" color="dark.500">
               {t('description')}
             </Text>
           </MotionBox>

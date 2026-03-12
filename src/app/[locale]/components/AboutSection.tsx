@@ -39,7 +39,7 @@ const StatItem: React.FC<StatItemProps> = ({ number, label, icon: IconComponent,
         <IconComponent size={22} color="#06b6d4" />
       </Flex>
       <Text
-        fontSize="3xl"
+        fontSize="clamp(1.5rem, 4vw + 0.5rem, 2.5rem)"
         fontWeight="800"
         lineHeight="1"
         css={{
@@ -210,11 +210,11 @@ const AboutSection = () => {
             >
               {t('label')}
             </Text>
-            <Heading as="h2" id="nosotros-heading" size="xl" mb={6}>
+            <Heading as="h2" id="nosotros-heading" fontSize="clamp(1.8rem, 4vw + 1rem, 2.5rem)" lineHeight="1.2" mb={6}>
               {t('title')}
             </Heading>
 
-            <Text as="p" fontSize="lg" color="dark.600" mb={5}>
+            <Text as="p" fontSize="clamp(1rem, 1.5vw + 0.5rem, 1.125rem)" color="dark.600" mb={5}>
               {t('description')}
             </Text>
 
@@ -228,7 +228,7 @@ const AboutSection = () => {
             </Grid>
 
             <Box as="blockquote" pl={4} borderLeft="2px solid" borderColor="primary.500">
-              <Heading as="h3" size="md" mb={4} color="dark.800">
+              <Heading as="h3" fontSize="clamp(1.125rem, 2vw + 0.5rem, 1.3rem)" mb={4} color="dark.800">
                 {t('missionTitle')}
               </Heading>
               <Text as="p" fontSize="md" color="dark.500" fontStyle="italic" mb={4}>

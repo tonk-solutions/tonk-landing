@@ -156,9 +156,9 @@ const HeroSection = () => {
               </Text>
               <Heading
                 as="h1"
-                size={{ base: '2xl', md: '3xl' }}
+                fontSize="clamp(2rem, 5vw + 1rem, 3.5rem)"
                 fontWeight="bold"
-                lineHeight="shorter"
+                lineHeight="1.1"
                 mb={4}
                 letterSpacing="tight"
               >
@@ -184,11 +184,11 @@ const HeroSection = () => {
             >
               <Text
                 as="p"
-                fontSize={{ base: 'lg', md: 'xl' }}
+                fontSize="clamp(1.125rem, 2vw + 0.5rem, 1.25rem)"
                 color="dark.400"
                 maxW="700px"
                 mx="auto"
-                lineHeight="tall"
+                lineHeight="1.6"
               >
                 {t('description')}
               </Text>
