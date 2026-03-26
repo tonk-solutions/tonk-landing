@@ -1,4 +1,7 @@
 {
+  "ui": {
+    "sectionLoading": "Loading section…"
+  },
   "nav": {
     "services": "Services",
     "about": "About Us",

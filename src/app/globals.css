@@ -56,3 +56,81 @@ body {
     transform: translateY(0);
   }
 }
+
+/* Hero LCP: CSS animations instead of Framer Motion for initial paint */
+.hero-fade-block-1 {
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+.hero-fade-block-2 {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.hero-fade-block-3 {
+  animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+@keyframes hero-arrow-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(12px);
+  }
+}
+
+.hero-arrow-bounce {
+  animation: hero-arrow-bounce 2s ease-in-out infinite;
+}
+
+/* Screen-reader-only helper */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Branded placeholder for dynamic section loading */
+.section-loading-fallback {
+  width: 100%;
+  min-height: clamp(120px, 25vh, 280px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(
+    180deg,
+    rgba(248, 250, 252, 0.98) 0%,
+    rgba(241, 245, 249, 0.95) 100%
+  );
+}
+
+.section-loading-fallback__pulse {
+  width: min(320px, 80%);
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 182, 212, 0.15) 0%,
+    rgba(6, 182, 212, 0.45) 50%,
+    rgba(59, 130, 246, 0.2) 100%
+  );
+  background-size: 200% 100%;
+  animation: section-loading-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes section-loading-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}

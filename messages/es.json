@@ -1,4 +1,7 @@
 {
+  "ui": {
+    "sectionLoading": "Cargando sección…"
+  },
   "nav": {
     "services": "Servicios",
     "about": "Quiénes Somos",

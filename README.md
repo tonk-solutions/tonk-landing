@@ -51,6 +51,10 @@ Abrir [http://localhost:3000](http://localhost:3000) en el navegador para ver el
 └── package.json          # Dependencias y scripts
 ```
 
+## Rendimiento e imágenes
+
+El build usa el optimizador de `next/image` (Sharp) para avatares y assets locales. Si despliegas en un entorno sin runtime de Node para optimización (p. ej. export estático puro), puede ser necesario volver a `images: { unoptimized: true }` en `next.config.js` o servir tamaños fijos vía CDN.
+
 ## Contacto
 
 Para más información, contactar a Tonk Solutions en:
