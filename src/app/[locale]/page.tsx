@@ -1,26 +1,34 @@
-"use client";
+import dynamic from "next/dynamic";
+import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
+import ServicesSection from "./components/ServicesSection";
+import AboutSection from "./components/AboutSection";
+import { SectionLoadingFallback } from "./components/SectionLoadingFallback";
 
-import { Box } from '@chakra-ui/react';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection';
-import ServicesSection from './components/ServicesSection';
-import AboutSection from './components/AboutSection';
-import TeamSection from './components/TeamSection';
-import ContactSection from './components/ContactSection';
-import Footer from './components/Footer';
+const TeamSection = dynamic(() => import("./components/TeamSection"), {
+  loading: () => <SectionLoadingFallback />,
+});
+
+const ContactSection = dynamic(() => import("./components/ContactSection"), {
+  loading: () => <SectionLoadingFallback />,
+});
+
+const Footer = dynamic(() => import("./components/Footer"), {
+  loading: () => <SectionLoadingFallback />,
+});
 
 export default function Home() {
   return (
-    <Box minH="100vh" w="100%" overflow="hidden">
+    <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
       <Header />
-      <Box as="main" role="main" w="100%">
+      <main role="main" style={{ width: "100%" }}>
         <HeroSection />
         <ServicesSection />
         <AboutSection />
         <TeamSection />
         <ContactSection />
-      </Box>
+      </main>
       <Footer />
-    </Box>
+    </div>
   );
 }

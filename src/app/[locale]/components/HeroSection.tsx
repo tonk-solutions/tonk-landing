@@ -1,20 +1,17 @@
 "use client";
 
-import React from 'react';
-import { Box, Button, Container, Heading, Text, Flex } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-
-const MotionBox = motion(Box);
+import React from "react";
+import { Box, Button, Container, Heading, Text, Flex } from "@chakra-ui/react";
+import { ArrowDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const HeroSection = () => {
-  const t = useTranslations('hero');
+  const t = useTranslations("hero");
 
   const handleScrollDown = () => {
-    const contactSection = document.querySelector('#contacto');
+    const contactSection = document.querySelector("#contacto");
     if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+      contactSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -72,14 +69,12 @@ const HeroSection = () => {
           preserveAspectRatio="xMidYMid slice"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
         >
-          {/* Diagonal accent lines */}
           <line x1="0" y1="900" x2="600" y2="0" stroke="rgba(6, 182, 212, 0.06)" strokeWidth="1" />
           <line x1="200" y1="900" x2="800" y2="0" stroke="rgba(59, 130, 246, 0.04)" strokeWidth="1" />
           <line x1="900" y1="900" x2="1440" y2="200" stroke="rgba(6, 182, 212, 0.05)" strokeWidth="1" />
 
-          {/* Corner frame elements */}
           <rect x="60" y="60" width="120" height="1" fill="rgba(6, 182, 212, 0.2)" />
           <rect x="60" y="60" width="1" height="80" fill="rgba(6, 182, 212, 0.2)" />
           <rect x="1260" y="60" width="120" height="1" fill="rgba(6, 182, 212, 0.2)" />
@@ -87,7 +82,6 @@ const HeroSection = () => {
           <rect x="60" y="839" width="120" height="1" fill="rgba(6, 182, 212, 0.12)" />
           <rect x="60" y="760" width="1" height="80" fill="rgba(6, 182, 212, 0.12)" />
 
-          {/* Small cross marks */}
           <g opacity="0.15">
             <line x1="1300" y1="700" x2="1320" y2="700" stroke="#06b6d4" strokeWidth="1" />
             <line x1="1310" y1="690" x2="1310" y2="710" stroke="#06b6d4" strokeWidth="1" />
@@ -99,7 +93,6 @@ const HeroSection = () => {
         </svg>
       </Box>
 
-      {/* Gradient glow accents (replacing blobs) */}
       <Box
         position="absolute"
         top="15%"
@@ -126,14 +119,10 @@ const HeroSection = () => {
           justify="center"
           textAlign="center"
           h="full"
-          pt={{ base: '80px', md: '0' }}
+          pt={{ base: "80px", md: "0" }}
         >
           <Flex direction="column" gap={6} maxW="800px" align="center">
-            <MotionBox
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+            <Box className="hero-fade-block-1">
               <Text
                 as="span"
                 color="primary.400"
@@ -144,7 +133,7 @@ const HeroSection = () => {
                 display="block"
                 mb={3}
               >
-                {t('subtitle')}
+                {t("subtitle")}
               </Text>
               <Heading
                 as="h1"
@@ -154,23 +143,19 @@ const HeroSection = () => {
                 mb={4}
                 letterSpacing="tight"
               >
-                {t('title')}{' '}
+                {t("title")}{" "}
                 <Text
                   as="span"
                   background="linear-gradient(135deg, #06b6d4, #3b82f6)"
                   backgroundClip="text"
                   color="transparent"
                 >
-                  {t('titleHighlight')}
+                  {t("titleHighlight")}
                 </Text>
               </Heading>
-            </MotionBox>
+            </Box>
 
-            <MotionBox
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
+            <Box className="hero-fade-block-2">
               <Text
                 as="p"
                 fontSize="clamp(1.125rem, 2vw + 0.5rem, 1.25rem)"
@@ -179,16 +164,11 @@ const HeroSection = () => {
                 mx="auto"
                 lineHeight="1.6"
               >
-                {t('description')}
+                {t("description")}
               </Text>
-            </MotionBox>
+            </Box>
 
-            <MotionBox
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              pt={6}
-            >
+            <Box className="hero-fade-block-3" pt={6}>
               <Button
                 size="lg"
                 px={10}
@@ -203,20 +183,19 @@ const HeroSection = () => {
                 border="1px solid"
                 borderColor="primary.500"
                 _hover={{
-                  bg: 'primary.500',
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
+                  bg: "primary.500",
+                  transform: "scale(1.05)",
+                  boxShadow: "0 0 30px rgba(6, 182, 212, 0.3)",
                 }}
                 transition="background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease"
               >
-                {t('cta')}
+                {t("cta")}
               </Button>
-            </MotionBox>
+            </Box>
           </Flex>
         </Flex>
       </Container>
 
-      {/* Arrow down with glow ring */}
       <Box
         position="absolute"
         bottom="32px"
@@ -225,10 +204,7 @@ const HeroSection = () => {
         textAlign="center"
         aria-hidden="true"
       >
-        <MotionBox
-          animate={{ y: [0, 12, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-        >
+        <Box className="hero-arrow-bounce">
           <Flex
             w="40px"
             h="40px"
@@ -242,7 +218,7 @@ const HeroSection = () => {
           >
             <ArrowDown size={18} />
           </Flex>
-        </MotionBox>
+        </Box>
       </Box>
     </Box>
   );

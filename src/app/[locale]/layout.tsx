@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import "../globals.css";
 import { Providers } from "./providers";
-import Script from "next/script";
 import { CONTACT_EMAIL, CONTACT_PHONE } from "../constants";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
@@ -12,7 +11,7 @@ import { notFound } from 'next/navigation';
 const syne = Syne({
   subsets: ["latin"],
   variable: "--font-heading",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700", "800"],
 });
 
 const dmSans = DM_Sans({
@@ -270,33 +269,27 @@ export default async function LocaleLayout({
       lang={locale} 
       data-scroll-behavior="smooth"
     >
-      <head>
-        <Script
+      <body className={`${syne.variable} ${dmSans.variable}`}>
+        <script
           id="organization-jsonld"
           type="application/ld+json"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        <Script
+        <script
           id="website-jsonld"
           type="application/ld+json"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <Script
+        <script
           id="services-jsonld"
           type="application/ld+json"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
         />
-        <Script
+        <script
           id="professional-service-jsonld"
           type="application/ld+json"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceJsonLd) }}
         />
-      </head>
-      <body className={`${syne.variable} ${dmSans.variable}`}>
         <NextIntlClientProvider messages={messages}>
           <Providers>
             {children}
