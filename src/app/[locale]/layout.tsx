@@ -185,9 +185,7 @@ export default async function LocaleLayout({
     "@id": `${siteUrl}/#website`,
     url: siteUrl,
     name: siteName,
-    publisher: {
-      "@id": `${siteUrl}/#organization`,
-    },
+    publisher: { "@id": `${siteUrl}/#organization` },
     description,
     inLanguage: tSchema('inLanguage'),
   };
@@ -199,42 +197,10 @@ export default async function LocaleLayout({
     name: tSchema('servicesListName'),
     description: tSchema('servicesListDescription'),
     itemListElement: [
-      {
-        "@type": "Service",
-        position: 1,
-        name: tSchema('services.financial.name'),
-        description: tSchema('services.financial.description'),
-        provider: { "@id": `${siteUrl}/#organization` },
-        serviceType: "Financial Software Engineering",
-        areaServed: "Latin America",
-      },
-      {
-        "@type": "Service",
-        position: 2,
-        name: tSchema('services.cloudNative.name'),
-        description: tSchema('services.cloudNative.description'),
-        provider: { "@id": `${siteUrl}/#organization` },
-        serviceType: "Cloud Architecture Consulting",
-        areaServed: "Latin America",
-      },
-      {
-        "@type": "Service",
-        position: 3,
-        name: tSchema('services.enterprise.name'),
-        description: tSchema('services.enterprise.description'),
-        provider: { "@id": `${siteUrl}/#organization` },
-        serviceType: "Enterprise Software Consulting",
-        areaServed: "Latin America",
-      },
-      {
-        "@type": "Service",
-        position: 4,
-        name: tSchema('services.ai.name'),
-        description: tSchema('services.ai.description'),
-        provider: { "@id": `${siteUrl}/#organization` },
-        serviceType: "AI Consulting",
-        areaServed: "Latin America",
-      },
+      { "@type": "Service", position: 1, name: tSchema('services.financial.name'), description: tSchema('services.financial.description'), provider: { "@id": `${siteUrl}/#organization` }, serviceType: "Financial Software Engineering", areaServed: "Latin America" },
+      { "@type": "Service", position: 2, name: tSchema('services.cloudNative.name'), description: tSchema('services.cloudNative.description'), provider: { "@id": `${siteUrl}/#organization` }, serviceType: "Cloud Architecture Consulting", areaServed: "Latin America" },
+      { "@type": "Service", position: 3, name: tSchema('services.enterprise.name'), description: tSchema('services.enterprise.description'), provider: { "@id": `${siteUrl}/#organization` }, serviceType: "Enterprise Software Consulting", areaServed: "Latin America" },
+      { "@type": "Service", position: 4, name: tSchema('services.ai.name'), description: tSchema('services.ai.description'), provider: { "@id": `${siteUrl}/#organization` }, serviceType: "AI Consulting", areaServed: "Latin America" },
     ],
   };
 
@@ -246,11 +212,7 @@ export default async function LocaleLayout({
     url: siteUrl,
     description: tSchema('professionalServiceDescription'),
     priceRange: "$$$$",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality,
-      addressCountry,
-    },
+    address: { "@type": "PostalAddress", addressLocality, addressCountry },
     telephone: CONTACT_PHONE,
     email: CONTACT_EMAIL,
     hasOfferCatalog: {
@@ -265,6 +227,11 @@ export default async function LocaleLayout({
     },
   };
 
+  const jsonLdGraph = {
+    "@context": "https://schema.org",
+    "@graph": [organizationJsonLd, websiteJsonLd, serviceJsonLd, professionalServiceJsonLd],
+  };
+
   return (
     <html 
       lang={locale} 
@@ -272,28 +239,10 @@ export default async function LocaleLayout({
     >
       <head>
         <Script
-          id="organization-jsonld"
+          id="jsonld-graph"
           type="application/ld+json"
           strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <Script
-          id="website-jsonld"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
-        <Script
-          id="services-jsonld"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
-        />
-        <Script
-          id="professional-service-jsonld"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGraph) }}
         />
       </head>
       <body className={`${syne.variable} ${dmSans.variable}`}>
