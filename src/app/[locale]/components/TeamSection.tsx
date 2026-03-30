@@ -226,9 +226,9 @@ const TeamSection = () => {
         </Flex>
 
         <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }} gap={8}>
-          {teamMembers.map((member, index) => (
+          {teamMembers.map((member) => (
             <TeamMember
-              key={index}
+              key={member.name}
               name={member.name}
               role={member.role}
               bio={member.bio}

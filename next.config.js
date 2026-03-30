@@ -7,6 +7,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    optimizePackageImports: ['@chakra-ui/react', 'lucide-react', 'framer-motion', 'react-icons'],
+  },
 };
 
 export default withNextIntl(nextConfig);
