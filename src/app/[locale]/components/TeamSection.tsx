@@ -76,6 +76,7 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
                     alt={`${name} - ${role} en Tonk Solutions`}
                     width={88}
                     height={88}
+                    priority
                     style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                   />
                 </Box>
