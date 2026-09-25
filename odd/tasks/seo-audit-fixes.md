@@ -26,7 +26,7 @@ Fix every finding of the SEO audit of tonksolutions.com.ar so the live site is i
 - [x] T1 — Centralize `SITE_URL = https://tonksolutions.com.ar` and use it for metadataBase, canonical, alternates/hreflang, og:url and JSON-LD; fix `WHATSAPP_URL` and reuse it in Footer/ContactSection.
 - [x] T2 — Provide a real OG image (1200×630) and a real logo asset for JSON-LD.
 - [x] T3 — Add `src/app/robots.ts` and `src/app/sitemap.ts` (with es/en alternates).
-- [ ] T4 — Consolidate JSON-LD into Organization + WebSite + a single ItemList of services; remove `priceRange`.
+- [x] T4 — Consolidate JSON-LD into Organization + WebSite + a single ItemList of services; remove `priceRange`.
 - [ ] T5 — Render all services in the initial HTML (visible content, no JS required to read the offer).
 - [ ] T6 — Indexable per-service pages `/[locale]/services/[slug]` with own H1, title, description, canonical and hreflang; link them from the services section and include them in the sitemap.
 
@@ -47,5 +47,7 @@ Fix every finding of the SEO audit of tonksolutions.com.ar so the live site is i
 
 - T3 (commit pending): Added `src/app/services/catalog.ts`, a typed catalog of the 7 services (stable English `slug`, `branch`, icon, and the index into `messages.services.<branch>.services`) that will be the single source T4/T5/T6 read from. Added `src/app/robots.ts` (allow all, points to `${SITE_URL}/sitemap.xml`) and `src/app/sitemap.ts` (lists `/es`, `/en` and, from the catalog, `/es/services/<slug>` and `/en/services/<slug>` for all 7 services, each with `alternates.languages`). Confirmed `src/proxy.ts`'s middleware matcher (`['/', '/(es|en)/:path*']`) does not intercept `/robots.txt` or `/sitemap.xml` — no change needed there. `npm run lint`: no errors. `npm run build`: success, `/robots.txt` and `/sitemap.xml` prerendered as static routes. Note: the sitemap's `/services/<slug>` URLs 404 until T6 lands the actual pages later in this branch.
 
+- T4 (commit pending): Added `src/app/seo/structuredData.ts`, a pure `buildStructuredDataGraph()` helper (no next-intl/React dependency) producing one `@graph` with Organization, WebSite (publisher → Organization `@id`) and a single ItemList of 7 Service nodes built from `SERVICES_CATALOG` (`provider` → Organization `@id`, `url` → the real service page). Removed the `ProfessionalService` node and its invented `priceRange: "$$$$"`, and the duplicate 4-item Service/Offer lists. `layout.tsx` now renders exactly one `<script type="application/ld+json">` instead of four. Deleted the now-unused `schema.services`, `schema.offers`, `schema.offerCatalogName`, `schema.professionalServiceDescription` keys from `messages/es.json` and `messages/en.json` (kept `slogan`, `inLanguage`, `servicesListName`, `servicesListDescription`, still used). `npm run lint`: no errors. `npm run build`: success.
+
 ## Next step
-T4.
+T5.
