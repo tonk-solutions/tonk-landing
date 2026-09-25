@@ -25,7 +25,7 @@ Fix every finding of the SEO audit of tonksolutions.com.ar so the live site is i
 ## Tasks
 - [x] T1 — Centralize `SITE_URL = https://tonksolutions.com.ar` and use it for metadataBase, canonical, alternates/hreflang, og:url and JSON-LD; fix `WHATSAPP_URL` and reuse it in Footer/ContactSection.
 - [x] T2 — Provide a real OG image (1200×630) and a real logo asset for JSON-LD.
-- [ ] T3 — Add `src/app/robots.ts` and `src/app/sitemap.ts` (with es/en alternates).
+- [x] T3 — Add `src/app/robots.ts` and `src/app/sitemap.ts` (with es/en alternates).
 - [ ] T4 — Consolidate JSON-LD into Organization + WebSite + a single ItemList of services; remove `priceRange`.
 - [ ] T5 — Render all services in the initial HTML (visible content, no JS required to read the offer).
 - [ ] T6 — Indexable per-service pages `/[locale]/services/[slug]` with own H1, title, description, canonical and hreflang; link them from the services section and include them in the sitemap.
@@ -45,5 +45,7 @@ Fix every finding of the SEO audit of tonksolutions.com.ar so the live site is i
 
 - T2 (commit pending): Added `src/app/[locale]/opengraph-image.tsx` (next/og `ImageResponse`, 1200x630, localized tagline from `schema.slogan`, brand colors from `theme.ts`, static per-locale via `generateStaticParams`) and removed the manual broken `openGraph.images`/`twitter.images` entries in `layout.tsx` so Next wires the file-convention image automatically. Generated `public/images/logo.png` (512x512 PNG rasterized from the `TonkLogo` isotype SVG with `sharp`) via a one-off script run from the project root and not committed. Verified with `next start`: `/es/opengraph-image` → 200 `image/png` 1200x630, `/images/logo.png` → 200 `image/png`. `npm run lint`: no errors. `npm run build`: success, `/[locale]/opengraph-image` prerendered for `es`/`en`.
 
+- T3 (commit pending): Added `src/app/services/catalog.ts`, a typed catalog of the 7 services (stable English `slug`, `branch`, icon, and the index into `messages.services.<branch>.services`) that will be the single source T4/T5/T6 read from. Added `src/app/robots.ts` (allow all, points to `${SITE_URL}/sitemap.xml`) and `src/app/sitemap.ts` (lists `/es`, `/en` and, from the catalog, `/es/services/<slug>` and `/en/services/<slug>` for all 7 services, each with `alternates.languages`). Confirmed `src/proxy.ts`'s middleware matcher (`['/', '/(es|en)/:path*']`) does not intercept `/robots.txt` or `/sitemap.xml` — no change needed there. `npm run lint`: no errors. `npm run build`: success, `/robots.txt` and `/sitemap.xml` prerendered as static routes. Note: the sitemap's `/services/<slug>` URLs 404 until T6 lands the actual pages later in this branch.
+
 ## Next step
-T3.
+T4.
