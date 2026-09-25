@@ -43,5 +43,11 @@
   },
   "keywords": [],
   "author": "Tonk Solutions",
-  "license": "ISC"
+  "license": "ISC",
+  "allowScripts": {
+    "sharp@0.34.5": true,
+    "@parcel/watcher@2.5.6": true,
+    "@swc/core@1.15.18": true,
+    "unrs-resolver@1.11.1": true
+  }
 }

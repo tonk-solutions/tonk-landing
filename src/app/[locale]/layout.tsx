@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import "../globals.css";
 import { Providers } from "./providers";
-import { CONTACT_EMAIL, CONTACT_PHONE } from "../constants";
+import { CONTACT_EMAIL, CONTACT_PHONE, SITE_NAME, SITE_URL } from "../constants";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   
   const t = await getTranslations({ locale, namespace: 'seo' });
 
-  const siteUrl = "https://tonksolutions.com";
-  const siteName = "Tonk Solutions";
+  const siteUrl = SITE_URL;
+  const siteName = SITE_NAME;
   const description = t('description');
   const titleDefault = t('titleDefault');
   const titleTemplate = `%s | ${siteName}`;
@@ -120,8 +120,8 @@ export default async function LocaleLayout({
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
   const tSchema = await getTranslations({ locale, namespace: 'schema' });
 
-  const siteUrl = "https://tonksolutions.com";
-  const siteName = "Tonk Solutions";
+  const siteUrl = SITE_URL;
+  const siteName = SITE_NAME;
   const description = tSeo('description');
   const orgDescription = description;
   const slogan = tSchema('slogan');
