@@ -36,7 +36,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const titleTemplate = `%s | ${siteName}`;
   const keywords = t.raw('keywords') as string[];
   const ogTitle = t('ogTitle');
-  const ogImageAlt = t('ogImageAlt');
   const twitterTitle = t('twitterTitle');
   const localeMap: Record<string, string> = {
     es: "es_AR",
@@ -73,20 +72,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       siteName,
       title: ogTitle,
       description,
-      images: [
-        {
-          url: `${siteUrl}/images/og-image.png`,
-          width: 1200,
-          height: 630,
-          alt: ogImageAlt,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: twitterTitle,
       description,
-      images: [`${siteUrl}/images/og-image.png`],
     },
     alternates: {
       canonical: `${siteUrl}/${locale}`,

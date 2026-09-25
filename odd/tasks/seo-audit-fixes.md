@@ -24,7 +24,7 @@ Fix every finding of the SEO audit of tonksolutions.com.ar so the live site is i
 
 ## Tasks
 - [x] T1 — Centralize `SITE_URL = https://tonksolutions.com.ar` and use it for metadataBase, canonical, alternates/hreflang, og:url and JSON-LD; fix `WHATSAPP_URL` and reuse it in Footer/ContactSection.
-- [ ] T2 — Provide a real OG image (1200×630) and a real logo asset for JSON-LD.
+- [x] T2 — Provide a real OG image (1200×630) and a real logo asset for JSON-LD.
 - [ ] T3 — Add `src/app/robots.ts` and `src/app/sitemap.ts` (with es/en alternates).
 - [ ] T4 — Consolidate JSON-LD into Organization + WebSite + a single ItemList of services; remove `priceRange`.
 - [ ] T5 — Render all services in the initial HTML (visible content, no JS required to read the offer).
@@ -43,5 +43,7 @@ Fix every finding of the SEO audit of tonksolutions.com.ar so the live site is i
 ## Progress / evidence
 - T1 (commit d8bbfd7): Added `SITE_URL`/`SITE_NAME` to `src/app/constants.ts`, replaced hardcoded `https://tonksolutions.com` in `src/app/[locale]/layout.tsx` (metadataBase, canonical, alternates, og:url, JSON-LD `@id`/`url`) with the constant. Unmasked `WHATSAPP_URL` (`https://wa.me/5491123908349`) and switched `Footer.tsx` / `ContactSection.tsx` to import it instead of a hardcoded link. `npm install` was required first (node_modules was absent) and native postinstall scripts (sharp, swc, parcel watcher, unrs-resolver) were approved via `npm install-scripts approve` — recorded in `package.json.allowScripts`. `npm run lint`: no errors. `npm run build`: success (Turbopack, static + `/[locale]` dynamic route).
 
+- T2 (commit pending): Added `src/app/[locale]/opengraph-image.tsx` (next/og `ImageResponse`, 1200x630, localized tagline from `schema.slogan`, brand colors from `theme.ts`, static per-locale via `generateStaticParams`) and removed the manual broken `openGraph.images`/`twitter.images` entries in `layout.tsx` so Next wires the file-convention image automatically. Generated `public/images/logo.png` (512x512 PNG rasterized from the `TonkLogo` isotype SVG with `sharp`) via a one-off script run from the project root and not committed. Verified with `next start`: `/es/opengraph-image` → 200 `image/png` 1200x630, `/images/logo.png` → 200 `image/png`. `npm run lint`: no errors. `npm run build`: success, `/[locale]/opengraph-image` prerendered for `es`/`en`.
+
 ## Next step
-T2.
+T3.
