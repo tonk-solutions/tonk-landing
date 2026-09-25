@@ -27,7 +27,7 @@ Fix every finding of the SEO audit of tonksolutions.com.ar so the live site is i
 - [x] T2 — Provide a real OG image (1200×630) and a real logo asset for JSON-LD.
 - [x] T3 — Add `src/app/robots.ts` and `src/app/sitemap.ts` (with es/en alternates).
 - [x] T4 — Consolidate JSON-LD into Organization + WebSite + a single ItemList of services; remove `priceRange`.
-- [ ] T5 — Render all services in the initial HTML (visible content, no JS required to read the offer).
+- [x] T5 — Render all services in the initial HTML (visible content, no JS required to read the offer).
 - [ ] T6 — Indexable per-service pages `/[locale]/services/[slug]` with own H1, title, description, canonical and hreflang; link them from the services section and include them in the sitemap.
 
 ## Acceptance criteria
@@ -49,5 +49,7 @@ Fix every finding of the SEO audit of tonksolutions.com.ar so the live site is i
 
 - T4 (commit pending): Added `src/app/seo/structuredData.ts`, a pure `buildStructuredDataGraph()` helper (no next-intl/React dependency) producing one `@graph` with Organization, WebSite (publisher → Organization `@id`) and a single ItemList of 7 Service nodes built from `SERVICES_CATALOG` (`provider` → Organization `@id`, `url` → the real service page). Removed the `ProfessionalService` node and its invented `priceRange: "$$$$"`, and the duplicate 4-item Service/Offer lists. `layout.tsx` now renders exactly one `<script type="application/ld+json">` instead of four. Deleted the now-unused `schema.services`, `schema.offers`, `schema.offerCatalogName`, `schema.professionalServiceDescription` keys from `messages/es.json` and `messages/en.json` (kept `slogan`, `inLanguage`, `servicesListName`, `servicesListDescription`, still used). `npm run lint`: no errors. `npm run build`: success.
 
+- T5 (commit pending): Reworked `ServicesSection.tsx` so both branches (Craft/Talent) and every service's detail panel are always rendered server-side; only the inactive branch/service is hidden with `display: none` (CSS), replacing the previous `selectedBranch === branch.name && (...)` / single-`selectedService` conditional rendering that removed the other branches/services from the DOM entirely. Verified with `next start` that `/es`'s server-rendered HTML contains every one of the 7 service titles and descriptions (both branches), e.g. the Talent-branch "Onboarding e Integración" description is present even though Craft is the default selected tab. Also added a "view full page" link (`services.viewDetails` message key, added to both locale files) on each service panel pointing at its future `/services/<slug>` page via the catalog, ready for T6. `npm run lint`: no errors. `npm run build`: success.
+
 ## Next step
-T5.
+T6.

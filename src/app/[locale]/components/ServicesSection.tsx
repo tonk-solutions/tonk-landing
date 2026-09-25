@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import { Box, Container, Grid, Heading, Text, Icon, Flex, SegmentGroup } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { Code, Cloud, FileText, BrainCircuit, Users, CheckCircle, Sparkles, UserCheck, Hammer, UsersRound } from 'lucide-react';
+import { Code, Cloud, FileText, BrainCircuit, Users, CheckCircle, Sparkles, UserCheck, Hammer, UsersRound, ArrowRight } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useTranslations } from 'next-intl';
+import { Link as LocaleLink } from '@/i18n/routing';
+import { SERVICES_CATALOG, type ServiceBranch } from '@/app/services/catalog';
 
 const MotionBox = motion(Box);
 
@@ -16,6 +18,7 @@ interface Service {
 }
 
 interface Branch {
+  key: ServiceBranch;
   name: string;
   subtitle: string;
   services: Service[];
@@ -34,17 +37,18 @@ const iconMap: Record<string, React.ElementType> = {
 
 interface BranchServicesGridProps {
   branch: Branch;
+  isActive: boolean;
 }
 
-const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
+const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch, isActive }) => {
   const [selectedServiceIndex, setSelectedServiceIndex] = useState(0);
+  const t = useTranslations('services');
 
   if (branch.services.length === 0) return null;
 
-  const selectedService = branch.services[selectedServiceIndex];
-
   return (
     <Grid
+      display={isActive ? "grid" : "none"}
       templateColumns={{ base: "1fr", lg: "300px 1fr" }}
       gap={{ base: 6, lg: 12 }}
       w="100%"
@@ -117,42 +121,66 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch }) => {
         </Flex>
       </Box>
 
-      <Box display="flex" alignItems="center">
-        <MotionBox
-          key={selectedService.title}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Flex align="center" gap={5} mb={6}>
-            <Flex
-              w="80px"
-              h="80px"
-              borderRadius="xl"
-              justify="center"
-              align="center"
-              background="linear-gradient(135deg, #06b6d4, #2563eb)"
+      <Box>
+        {branch.services.map((service, index) => {
+          const isSelected = selectedServiceIndex === index;
+          const catalogEntry = SERVICES_CATALOG.find(
+            (entry) => entry.branch === branch.key && entry.messageIndex === index
+          );
+
+          return (
+            <MotionBox
+              key={service.title}
+              display={isSelected ? "flex" : "none"}
+              alignItems="center"
+              initial={false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
             >
-              <Icon as={iconMap[selectedService.icon] || Code} boxSize={10} color="white" />
-            </Flex>
-            <Box>
-              <Heading as="h3" fontSize="clamp(1.5rem, 3vw + 0.5rem, 2rem)" color="dark.900" lineHeight="1.3">
-                {selectedService.title}
-              </Heading>
-              <Box
-                w="40px"
-                h="2px"
-                mt={2}
-                background="linear-gradient(90deg, #06b6d4, transparent)"
-              />
-            </Box>
-          </Flex>
+              <Box>
+                <Flex align="center" gap={5} mb={6}>
+                  <Flex
+                    w="80px"
+                    h="80px"
+                    borderRadius="xl"
+                    justify="center"
+                    align="center"
+                    background="linear-gradient(135deg, #06b6d4, #2563eb)"
+                  >
+                    <Icon as={iconMap[service.icon] || Code} boxSize={10} color="white" />
+                  </Flex>
+                  <Box>
+                    <Heading as="h3" fontSize="clamp(1.5rem, 3vw + 0.5rem, 2rem)" color="dark.900" lineHeight="1.3">
+                      {service.title}
+                    </Heading>
+                    <Box
+                      w="40px"
+                      h="2px"
+                      mt={2}
+                      background="linear-gradient(90deg, #06b6d4, transparent)"
+                    />
+                  </Box>
+                </Flex>
 
-          <Text fontSize="clamp(0.875rem, 1vw + 0.5rem, 1rem)" color="dark.600" lineHeight="1.8" mb={8}>
-            {selectedService.description}
-          </Text>
+                <Text fontSize="clamp(0.875rem, 1vw + 0.5rem, 1rem)" color="dark.600" lineHeight="1.8" mb={6}>
+                  {service.description}
+                </Text>
 
-        </MotionBox>
+                {catalogEntry && (
+                  <LocaleLink
+                    href={`/services/${catalogEntry.slug}`}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                  >
+                    <Text as="span" fontSize="sm" fontWeight="semibold" color="primary.600">
+                      {t('viewDetails')}
+                    </Text>
+                    <Icon as={ArrowRight} boxSize={4} color="primary.600" />
+                  </LocaleLink>
+                )}
+              </Box>
+            </MotionBox>
+          );
+        })}
       </Box>
     </Grid>
   );
@@ -164,20 +192,22 @@ const ServicesSection = () => {
     triggerOnce: true,
   });
   const t = useTranslations('services');
-  
+
   const branches: Branch[] = [
     {
+      key: 'craft',
       name: t('craft.name'),
       subtitle: t('craft.subtitle'),
       services: t.raw('craft.services') as Service[]
     },
     {
+      key: 'talent',
       name: t('talent.name'),
       subtitle: t('talent.subtitle'),
       services: t.raw('talent.services') as Service[]
     }
   ];
-  
+
   const [selectedBranch, setSelectedBranch] = useState(branches[0].name);
 
   const branchIcons: Record<string, React.ElementType> = {
@@ -243,8 +273,8 @@ const ServicesSection = () => {
           >
             <SegmentGroup.Indicator rounded="full" />
             {branches.map((branch) => (
-              <SegmentGroup.Item 
-                key={branch.name} 
+              <SegmentGroup.Item
+                key={branch.name}
                 value={branch.name}
                 px={8}
                 py={3}
@@ -260,7 +290,7 @@ const ServicesSection = () => {
                     boxSize={4}
                     _checked={{ color: "white" }}
                   />
-                  <SegmentGroup.ItemText 
+                  <SegmentGroup.ItemText
                     fontWeight="semibold"
                     color="dark.600"
                     _checked={{
@@ -278,26 +308,19 @@ const ServicesSection = () => {
         </Box>
 
         {branches.map((branch) => (
-          selectedBranch === branch.name && (
-            <MotionBox
-              key={branch.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              mb={8}
-              textAlign="center"
-            >
-              <Text as="p" fontSize="lg" color="dark.500" maxW="600px" mx="auto">
-                {branch.subtitle}
-              </Text>
-            </MotionBox>
-          )
+          <Box key={branch.name} display={selectedBranch === branch.name ? "block" : "none"} mb={8} textAlign="center">
+            <Text as="p" fontSize="lg" color="dark.500" maxW="600px" mx="auto">
+              {branch.subtitle}
+            </Text>
+          </Box>
         ))}
 
         {branches.map((branch) => (
-          selectedBranch === branch.name && (
-            <BranchServicesGrid key={branch.name} branch={branch} />
-          )
+          <BranchServicesGrid
+            key={branch.name}
+            branch={branch}
+            isActive={selectedBranch === branch.name}
+          />
         ))}
       </Container>
     </Box>

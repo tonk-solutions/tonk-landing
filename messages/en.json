@@ -99,7 +99,8 @@
           "icon": "UserCheck"
         }
       ]
-    }
+    },
+    "viewDetails": "View full page"
   },
   "team": {
     "label": "OUR FOUNDING TEAM",
