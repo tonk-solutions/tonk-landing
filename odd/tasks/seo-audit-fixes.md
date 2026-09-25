@@ -61,3 +61,12 @@ None — all tasks (T1-T6) complete. Remaining follow-ups for the user: review/m
 - `npm run lint`: no errors. `npm run build`: success.
 - Open item: `/[locale]` and `/[locale]/services/[slug]` are reported as dynamic (ƒ), not SSG, despite `generateStaticParams`. Pages are server-rendered so crawlers get full HTML; the "builds statically" acceptance criterion is not met yet.
 - `package.json` gained an `allowScripts` block from `npm install-scripts approve` during T1.
+
+## Review (RDD)
+- Assessed: medium (slice_budget_reached, ~1030 lines). Consent: granted. Lens: review-reliability. Outcome: approved, acknowledged (lineage review-40ce5ecd0e7effb6).
+- Non-blocking findings (follow-ups):
+  - WARNING: `setRequestLocale` missing in the service page, its `generateMetadata` and the locale layout → the routes render dynamically instead of SSG.
+  - WARNING: `pickServiceContent` indexes messages by position without bounds checks → a reorder or missing entry silently mismatches content or returns 500.
+  - WARNING: no unit tests for catalog, structured data, sitemap and robots (no test runner configured).
+  - SUGGESTION: validate the locale in `generateMetadata` using a shared guard.
+  - SUGGESTION: the Footer hardcodes the displayed phone number instead of reading it from `CONTACT_PHONE`.
