@@ -100,7 +100,13 @@
         }
       ]
     },
-    "viewDetails": "Ver página completa"
+    "viewDetails": "Ver página completa",
+    "detail": {
+      "backToServices": "Volver a servicios",
+      "ctaTitle": "¿Te interesa este servicio?",
+      "ctaDescription": "Contanos sobre tu proyecto y armamos una propuesta a medida.",
+      "ctaButton": "Hablemos por WhatsApp"
+    }
   },
   "team": {
     "label": "NUESTRO EQUIPO FUNDADOR",

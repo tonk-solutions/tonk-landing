@@ -100,7 +100,13 @@
         }
       ]
     },
-    "viewDetails": "View full page"
+    "viewDetails": "View full page",
+    "detail": {
+      "backToServices": "Back to services",
+      "ctaTitle": "Interested in this service?",
+      "ctaDescription": "Tell us about your project and we'll put together a proposal tailored to it.",
+      "ctaButton": "Chat with us on WhatsApp"
+    }
   },
   "team": {
     "label": "OUR FOUNDING TEAM",

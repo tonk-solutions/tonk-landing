@@ -28,7 +28,7 @@ Fix every finding of the SEO audit of tonksolutions.com.ar so the live site is i
 - [x] T3 — Add `src/app/robots.ts` and `src/app/sitemap.ts` (with es/en alternates).
 - [x] T4 — Consolidate JSON-LD into Organization + WebSite + a single ItemList of services; remove `priceRange`.
 - [x] T5 — Render all services in the initial HTML (visible content, no JS required to read the offer).
-- [ ] T6 — Indexable per-service pages `/[locale]/services/[slug]` with own H1, title, description, canonical and hreflang; link them from the services section and include them in the sitemap.
+- [x] T6 — Indexable per-service pages `/[locale]/services/[slug]` with own H1, title, description, canonical and hreflang; link them from the services section and include them in the sitemap.
 
 ## Acceptance criteria
 - No reference to `tonksolutions.com"` / `https://tonksolutions.com/` remains in `src`.
@@ -51,5 +51,8 @@ Fix every finding of the SEO audit of tonksolutions.com.ar so the live site is i
 
 - T5 (commit pending): Reworked `ServicesSection.tsx` so both branches (Craft/Talent) and every service's detail panel are always rendered server-side; only the inactive branch/service is hidden with `display: none` (CSS), replacing the previous `selectedBranch === branch.name && (...)` / single-`selectedService` conditional rendering that removed the other branches/services from the DOM entirely. Verified with `next start` that `/es`'s server-rendered HTML contains every one of the 7 service titles and descriptions (both branches), e.g. the Talent-branch "Onboarding e Integración" description is present even though Craft is the default selected tab. Also added a "view full page" link (`services.viewDetails` message key, added to both locale files) on each service panel pointing at its future `/services/<slug>` page via the catalog, ready for T6. `npm run lint`: no errors. `npm run build`: success.
 
+- T6 (commit pending): Added `src/app/[locale]/services/[slug]/page.tsx` (`generateStaticParams` over all locales x the 7 catalog slugs, `generateMetadata` with localized title/description, canonical, es/en/x-default hreflang and openGraph, `notFound()` for an unknown slug), reusing Header/Footer and the shared `pickServiceContent`/`getServiceEntry` helpers from the catalog so content stays DRY with `ServicesSection` and the JSON-LD ItemList. Added `services.detail.*` message keys (backToServices, ctaTitle, ctaDescription, ctaButton) in both locale files for the page's CTA back to WhatsApp contact. Fixed a Server/Client Component boundary bug found during verification: passing a lucide icon component as Chakra's `Icon as={...}` prop from a Server Component crashed with "Functions cannot be passed directly to Client Components" (500) — replaced with rendering the lucide icon directly as a JSX element (no Chakra `Icon` wrapper) for the two icons on this page.
+  Final full verification (`next build` then `next start -p 3123`): `/robots.txt` 200; `/sitemap.xml` 200, contains `tonksolutions.com.ar` (48 occurrences); `/es` HTML canonical is `https://tonksolutions.com.ar/es` and contains all 7 service names/descriptions; `/images/logo.png` 200 `image/png`; og:image URL from `/es` HTML (`/es/opengraph-image?...`) resolves 200 `image/png`; `/es/services/digital-product-development` 200, `/en/services/onboarding-integration` 200, unknown slug 404. `grep -rn 'tonksolutions\.com"'` and `'tonksolutions\.com/'` over `src`: no matches. `npm run lint`: no errors. `npm run build`: success.
+
 ## Next step
-T6.
+None — all tasks (T1-T6) complete. Remaining follow-ups for the user: review/merge the branch; consider running `npm audit` (16 pre-existing vulnerabilities reported by `npm install`, unrelated to this change) at their discretion.
