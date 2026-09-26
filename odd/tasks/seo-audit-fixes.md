@@ -70,3 +70,9 @@ None — all tasks (T1-T6) complete. Remaining follow-ups for the user: review/m
   - WARNING: no unit tests for catalog, structured data, sitemap and robots (no test runner configured).
   - SUGGESTION: validate the locale in `generateMetadata` using a shared guard.
   - SUGGESTION: the Footer hardcodes the displayed phone number instead of reading it from `CONTACT_PHONE`.
+
+## Follow-up fixes (post-review)
+- [x] F1 (commit 8340ca5) — Added server-only `resolveRequestLocale` in `src/i18n/requestLocale.ts` (`hasLocale` guard + `setRequestLocale`), used by the locale layout, its `generateMetadata`, the home page, and the service page and its `generateMetadata`. `/[locale]` and `/[locale]/services/[slug]` now build as SSG (14 service paths). It also covers the locale guard that was missing in the service `generateMetadata`.
+- [x] F2 — `pickServiceContent` now throws `ServiceContentMissingError` when a branch list is missing, the index is out of range, or the title/description is empty. A drift between the catalog and the messages now fails the build instead of returning a 500 at runtime. A reorder inside the messages is still undetected: it would need slug-keyed messages.
+- Checks: `npm run lint` no errors; `npm run build` success, all routes ● SSG. Smoke test (`next start`): /es, /en, /es/services/applied-ai, /en/services/onboarding-integration 200; unknown slug and /xx 404; robots and sitemap 200; /es canonical is https://tonksolutions.com.ar/es.
+- Remaining suggestions not addressed: unit tests (no runner configured), hreflang in the service page hardcoded instead of using `routing.locales`, displayed phone hardcoded in the Footer, silent missing link in ServicesSection.
