@@ -76,3 +76,15 @@ None — all tasks (T1-T6) complete. Remaining follow-ups for the user: review/m
 - [x] F2 — `pickServiceContent` now throws `ServiceContentMissingError` when a branch list is missing, the index is out of range, or the title/description is empty. A drift between the catalog and the messages now fails the build instead of returning a 500 at runtime. A reorder inside the messages is still undetected: it would need slug-keyed messages.
 - Checks: `npm run lint` no errors; `npm run build` success, all routes ● SSG. Smoke test (`next start`): /es, /en, /es/services/applied-ai, /en/services/onboarding-integration 200; unknown slug and /xx 404; robots and sitemap 200; /es canonical is https://tonksolutions.com.ar/es.
 - Remaining suggestions not addressed: unit tests (no runner configured), hreflang in the service page hardcoded instead of using `routing.locales`, displayed phone hardcoded in the Footer, silent missing link in ServicesSection.
+
+## Delivery slices (stacked-to-main)
+Authored lines exclude `package-lock.json` and `public/images/logo.png`.
+
+| PR | Branch | Base | Commits | Authored lines |
+|----|--------|------|---------|----------------|
+| 1 | `fix/seo-1-domain-assets-sitemap` | `main` | d8bbfd7, 6468a94, 5416bc1, f360dc2 | ~297 |
+| 2 | `fix/seo-2-jsonld` | PR 1 | 180bb1c | ~377 |
+| 3 | `fix/seo-3-services-pages` | PR 2 | 823ec94, e4cabb3 | ~366 |
+| 4 | `fix/seo-4-static-locale` | PR 3 | d86df28 → tip | ~130 |
+
+- Known partial state: if PR 1 lands alone, the sitemap lists `/services/<slug>` URLs that return 404 until PR 3 merges.
