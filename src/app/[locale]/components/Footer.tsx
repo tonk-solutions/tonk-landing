@@ -5,6 +5,7 @@ import { Box, Container, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { Linkedin, Instagram, MessageCircle } from 'lucide-react';
 import TonkLogo from './TonkLogo';
 import { useTranslations } from 'next-intl';
+import { CONTACT_EMAIL, WHATSAPP_URL } from '@/app/constants';
 
 const Footer = () => {
   const t = useTranslations('footer');
@@ -30,8 +31,8 @@ const Footer = () => {
   ];
 
   const contactLinks = [
-    { label: "Email", href: "mailto:contact@tonksolutions.com.ar", value: "contact@tonksolutions.com.ar" },
-    { label: "WhatsApp", href: "https://wa.me/5491123908349", value: "+54 9 11 2390-8349", icon: "whatsapp" }
+    { label: "Email", href: `mailto:${CONTACT_EMAIL}`, value: CONTACT_EMAIL },
+    { label: "WhatsApp", href: WHATSAPP_URL, value: "+54 9 11 2390-8349", icon: "whatsapp" }
   ];
 
   return (

@@ -16,6 +16,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, ArrowRight, MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { WHATSAPP_URL } from '@/app/constants';
 
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
@@ -318,7 +319,7 @@ const ContactSection = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <Link
-                href="https://wa.me/5491123908349"
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 _hover={{ textDecoration: 'none' }}
