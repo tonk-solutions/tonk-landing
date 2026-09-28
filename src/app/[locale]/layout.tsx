@@ -6,7 +6,7 @@ import { SITE_NAME, SITE_URL } from "../constants";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
-import { notFound } from 'next/navigation';
+import { resolveRequestLocale } from '@/i18n/requestLocale';
 import { buildStructuredDataGraph } from '../seo/structuredData';
 import type { ServiceContent } from '../services/catalog';
 
@@ -23,12 +23,8 @@ const dmSans = DM_Sans({
 });
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params;
-  
-  if (!routing.locales.includes(locale as 'es' | 'en')) {
-    notFound();
-  }
-  
+  const locale = resolveRequestLocale((await params).locale);
+
   const t = await getTranslations({ locale, namespace: 'seo' });
 
   const siteUrl = SITE_URL;
@@ -102,11 +98,7 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
-  const { locale } = await params;
-
-  if (!routing.locales.includes(locale as 'es' | 'en')) {
-    notFound();
-  }
+  const locale = resolveRequestLocale((await params).locale);
 
   const messages = await getMessages();
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
