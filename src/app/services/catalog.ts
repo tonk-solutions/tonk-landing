@@ -45,14 +45,41 @@ export function getServiceSlugs(): string[] {
   return SERVICES_CATALOG.map((entry) => entry.slug);
 }
 
+/** Raised when the messages for a locale do not match the catalog. */
+export class ServiceContentMissingError extends Error {
+  constructor(entry: ServiceCatalogEntry, reason: string) {
+    super(
+      `Missing content for service "${entry.slug}" at services.${entry.branch}.services[${entry.messageIndex}]: ${reason}`
+    );
+    this.name = "ServiceContentMissingError";
+  }
+}
+
 /**
  * Resolves the translated content for a catalog entry given the raw
  * `services.<branch>.services` arrays for one locale (e.g. from
  * `t.raw('craft.services')` / `t.raw('talent.services')`).
+ *
+ * Throws `ServiceContentMissingError` when the entry is absent or has an
+ * empty title/description, so a catalog/messages drift fails loudly at
+ * build time instead of rendering broken pages.
  */
 export function pickServiceContent(
   servicesByBranch: Record<ServiceBranch, ServiceContent[]>,
   entry: ServiceCatalogEntry
 ): ServiceContent {
-  return servicesByBranch[entry.branch][entry.messageIndex];
+  const branchServices = servicesByBranch[entry.branch];
+  if (!Array.isArray(branchServices)) {
+    throw new ServiceContentMissingError(entry, "branch list is not an array");
+  }
+
+  const content = branchServices[entry.messageIndex];
+  if (!content) {
+    throw new ServiceContentMissingError(entry, "index out of range");
+  }
+  if (!content.title?.trim() || !content.description?.trim()) {
+    throw new ServiceContentMissingError(entry, "empty title or description");
+  }
+
+  return content;
 }

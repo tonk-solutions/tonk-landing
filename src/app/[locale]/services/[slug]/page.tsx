@@ -6,6 +6,7 @@ import { ArrowLeft, MessageCircle, Code, Cloud, FileText, BrainCircuit, Users, S
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { Link as LocaleLink, routing } from "@/i18n/routing";
+import { resolveRequestLocale } from "@/i18n/requestLocale";
 import { SITE_NAME, SITE_URL, WHATSAPP_URL } from "@/app/constants";
 import {
   getServiceEntry,
@@ -55,7 +56,8 @@ export async function generateMetadata({
 }: {
   params: Promise<ServicePageParams>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { locale: rawLocale, slug } = await params;
+  const locale = resolveRequestLocale(rawLocale);
   const resolved = await resolveServiceContent(locale, slug);
 
   if (!resolved) {
@@ -91,11 +93,8 @@ export default async function ServicePage({
 }: {
   params: Promise<ServicePageParams>;
 }) {
-  const { locale, slug } = await params;
-
-  if (!routing.locales.includes(locale as "es" | "en")) {
-    notFound();
-  }
+  const { locale: rawLocale, slug } = await params;
+  const locale = resolveRequestLocale(rawLocale);
 
   const resolved = await resolveServiceContent(locale, slug);
 
