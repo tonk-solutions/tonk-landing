@@ -4,6 +4,7 @@ import HeroSection from "./components/HeroSection";
 import ServicesSection from "./components/ServicesSection";
 import AboutSection from "./components/AboutSection";
 import { SectionLoadingFallback } from "./components/SectionLoadingFallback";
+import { resolveRequestLocale } from "@/i18n/requestLocale";
 
 const TeamSection = dynamic(() => import("./components/TeamSection"), {
   loading: () => <SectionLoadingFallback />,
@@ -17,7 +18,13 @@ const Footer = dynamic(() => import("./components/Footer"), {
   loading: () => <SectionLoadingFallback />,
 });
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  resolveRequestLocale((await params).locale);
+
   return (
     <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
       <Header />
