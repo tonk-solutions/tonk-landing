@@ -42,6 +42,7 @@ Ship the repo-buildable parts of Jira epic TL-1: turn `/[locale]/services/enterp
 
 ## Delivery
 - Branch: `feature/pilar-1-marca-y-evidencia`. Strategy: **stacked-to-main** (user decision, 2026-10-16). T1 ships as a single PR to main with an accepted `size:exception` (733 authored changed lines; one honest slicing pass found no cohesive split under 400 — the component and copy are atomic and the cases scaffold only removes ~60 lines). T2/T3/T4 ship as independent PRs to main when unblocked. Push and PR creation remain user decisions.
+- PRs (2026-10-16): **#24** `feature/pilar-1-landing` → `main` — landing + docs (`size:exception` accepted; native review approved and burned). **#25** `feature/pilar-1-marca-y-evidencia` → `feature/pilar-1-landing` — home re-focus (T2); retarget to `main` after #24 merges. Merge remains a human decision.
 - Reviewed boundary: `4341687` (T1 landing; native review approved and burned) → advanced past passive docs to `931513c`. T2 (`feb678d`) assessed **medium / `under_budget`** (86 of ≈400 lines): no review due yet — it stays pending in the slice until a later commit reaches the delivery budget.
 
 ## Progress / evidence
