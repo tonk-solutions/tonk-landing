@@ -11,6 +11,7 @@ Ship the repo-buildable parts of Jira epic TL-1: turn `/[locale]/services/enterp
 
 ## Decisions
 - **Route (user decision, 2026-10-16):** the landing lives at the existing `/[locale]/services/enterprise-integrations` URL. No new `/integraciones-enterprise` route (avoids SEO cannibalization and keeps sitemap/JSON-LD/hreflang wiring). A pretty-alias redirect is deferred until explicitly requested.
+- **TL-10 phrase (user decision, 2026-10-16):** the one-line niche phrase is «Integraciones enterprise complejas, sin intermediarios.» (chosen without "en LatAm", based on §11.1). Applies to the home and the proposals template; the §12 landing copy stays compatible. Unblocks T2.
 - Cases data model follows §13 template fields so TL-6 is additive.
 - No fabricated cases/testimonials: the landing's cases section renders only when `CASE_STUDIES` is non-empty.
 
@@ -28,7 +29,8 @@ Ship the repo-buildable parts of Jira epic TL-1: turn `/[locale]/services/enterp
 ## Tasks
 - [x] T1 — TL-9a: Enterprise-integrations landing (DONE, commit 166f397). Sections: hero → problem → what we do → why us → how we work → expected results → conditional cases → final CTA ("Solicitar diagnóstico de integración" → WhatsApp with prefilled text). New `landing.enterpriseIntegrations` namespace in both messages; landing metadata (title/description) per locale. New `src/app/cases/catalog.ts` (typed, empty) driving the cases section.
   - Route: delegated direct — one bounded writer (2+ non-trivial files: page, component, catalog, messages ×2). Trigger: writer rule.
-- [ ] T2 — TL-9b: Home re-focused to the niche (BLOCKED on TL-10 one-line phrase approval).
+- [ ] T2 — TL-9b: Home re-focused to the niche (UNBLOCKED 2026-10-16 by the TL-10 phrase). Hero uses the phrase (title + highlight), niche description and CTA; services section reframed with enterprise integrations first (craft message arrays reordered + `catalog.ts` `messageIndex` remapped); SEO metadata and `schema.slogan` aligned in both locales.
+  - Route: delegated direct — one bounded writer (messages ×2 + `catalog.ts`; components expected unchanged). Trigger: writer rule (2+ non-trivial files).
 - [ ] T3 — TL-6: `/es/casos` page + fill `CASE_STUDIES` with 3 real projects (BLOCKED on founder content).
 - [ ] T4 — TL-7: Testimonials on home + contact (BLOCKED on authorized testimonials).
 - TL-8 (LinkedIn): non-repo work; founders only.
