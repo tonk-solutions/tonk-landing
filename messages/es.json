@@ -9,11 +9,11 @@
     "contact": "Contacto"
   },
   "hero": {
-    "subtitle": "Consultoría de Ingeniería de Software",
-    "title": "Ingeniería senior para",
-    "titleHighlight": "proyectos que importan",
-    "description": "Somos un equipo de ingenieros y líderes senior con trayectoria en las plataformas más exigentes de la región. Resolvemos desafíos de software complejos — desde arquitecturas enterprise hasta productos digitales a medida — con el mismo nivel de precisión y compromiso.",
-    "cta": "Hablemos de tu proyecto"
+    "subtitle": "Ingeniería de software senior",
+    "title": "Integraciones enterprise complejas,",
+    "titleHighlight": "sin intermediarios.",
+    "description": "Conectamos los sistemas críticos de tu operación: SAP, ERPs, APIs de terceros, pasarelas de pago y organismos fiscales como AFIP y DGI. Hablás directo con quien diseña y resuelve la integración, con ingenieros senior de principio a fin.",
+    "cta": "Hablemos de tu integración"
   },
   "about": {
     "label": "QUIÉNES SOMOS",
@@ -51,12 +51,17 @@
   },
   "services": {
     "label": "NUESTROS SERVICIOS",
-    "title": "Lo que hacemos, lo hacemos bien",
-    "description": "Ya sea que necesites construir algo nuevo, modernizar lo que tenés o sumar ingenieros a tu equipo, trabajamos con el mismo nivel de exigencia.",
+    "title": "Nuestro foco: las integraciones enterprise",
+    "description": "Conectamos sistemas que no hablan entre sí — SAP, ERPs, APIs, pasarelas de pago y organismos fiscales. Alrededor de ese foco, también desarrollamos producto, diseñamos arquitectura y sumamos los ingenieros que tu equipo necesite.",
     "craft": {
       "name": "Craft",
-      "subtitle": "Desarrollamos software, liderando los proyectos hasta entregar el producto final.",
+      "subtitle": "Especialidad: integraciones enterprise. También desarrollamos producto y arquitectura de punta a punta.",
       "services": [
+        {
+          "title": "Integraciones y Sistemas Enterprise",
+          "description": "Conectamos sistemas que no hablan entre sí: SAP, ERPs, APIs de terceros, pasarelas de pago, organismos fiscales. Si tiene complejidad de integración, es nuestro terreno.",
+          "icon": "FileText"
+        },
         {
           "title": "Desarrollo de Productos Digitales",
           "description": "Construimos plataformas, aplicaciones y productos digitales a medida — desde un ecommerce con integraciones custom hasta sistemas internos complejos. Nos adaptamos al stack y al contexto del proyecto.",
@@ -66,11 +71,6 @@
           "title": "Arquitectura y Sistemas Distribuidos",
           "description": "Diseñamos arquitecturas que escalan: microservicios, cloud-native, migraciones de monolitos. Especialmente útil cuando el sistema actual se está convirtiendo en un cuello de botella.",
           "icon": "Cloud"
-        },
-        {
-          "title": "Integraciones y Sistemas Enterprise",
-          "description": "Conectamos sistemas que no hablan entre sí: SAP, ERPs, APIs de terceros, pasarelas de pago, organismos fiscales. Si tiene complejidad de integración, es nuestro terreno.",
-          "icon": "FileText"
         },
         {
           "title": "IA Aplicada",
@@ -174,14 +174,16 @@
     "copyright": "© {year} Tonk Solutions. Todos los derechos reservados."
   },
   "seo": {
-    "description": "Consultora de ingeniería de software senior especializada en desarrollo a medida, integraciones y armado de equipos técnicos. Trabajamos con empresas que necesitan soluciones que funcionen, escalen y perduren.",
-    "titleDefault": "Tonk Solutions | Ingeniería de Software Senior & Selección Técnica",
+    "description": "Conectamos los sistemas críticos de tu operación: SAP, ERPs, APIs, pasarelas de pago y organismos fiscales. Ingeniería senior, trato directo y sin intermediarios.",
+    "titleDefault": "Tonk Solutions | Integraciones Enterprise, sin Intermediarios",
     "keywords": [
       "consultoría de ingeniería de software",
       "desarrollo de software a medida",
       "desarrollo de productos digitales",
       "arquitectura de sistemas",
       "integraciones enterprise",
+      "integraciones SAP",
+      "integraciones AFIP",
       "ingenieros senior",
       "selección técnica de ingenieros",
       "reclutamiento IT",
@@ -192,12 +194,12 @@
       "consultoría software Argentina",
       "ingeniería de software Buenos Aires"
     ],
-    "ogTitle": "Tonk Solutions | Ingeniería de Software Senior & Selección Técnica",
-    "ogImageAlt": "Tonk Solutions - Ingeniería senior para proyectos que importan",
-    "twitterTitle": "Tonk Solutions | Ingeniería de Software Senior"
+    "ogTitle": "Tonk Solutions | Integraciones Enterprise",
+    "ogImageAlt": "Tonk Solutions — Integraciones enterprise complejas, sin intermediarios",
+    "twitterTitle": "Tonk Solutions | Integraciones Enterprise"
   },
   "schema": {
-    "slogan": "Ingeniería senior para proyectos que importan",
+    "slogan": "Integraciones enterprise complejas, sin intermediarios.",
     "inLanguage": "es-AR",
     "servicesListName": "Servicios de Ingeniería de Software",
     "servicesListDescription": "Servicios especializados de consultoría en ingeniería de software para instituciones financieras, fintechs y corporaciones enterprise."
