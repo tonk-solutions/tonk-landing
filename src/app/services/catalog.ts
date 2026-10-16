@@ -28,9 +28,9 @@ export interface ServiceContent {
 export const SERVICE_BRANCHES: ServiceBranch[] = ["craft", "talent"];
 
 export const SERVICES_CATALOG: ServiceCatalogEntry[] = [
-  { slug: "digital-product-development", branch: "craft", icon: "Code", messageIndex: 0 },
-  { slug: "distributed-systems-architecture", branch: "craft", icon: "Cloud", messageIndex: 1 },
-  { slug: "enterprise-integrations", branch: "craft", icon: "FileText", messageIndex: 2 },
+  { slug: "enterprise-integrations", branch: "craft", icon: "FileText", messageIndex: 0 },
+  { slug: "digital-product-development", branch: "craft", icon: "Code", messageIndex: 1 },
+  { slug: "distributed-systems-architecture", branch: "craft", icon: "Cloud", messageIndex: 2 },
   { slug: "applied-ai", branch: "craft", icon: "BrainCircuit", messageIndex: 3 },
   { slug: "technical-recruitment", branch: "talent", icon: "Users", messageIndex: 0 },
   { slug: "ai-assisted-hiring", branch: "talent", icon: "Sparkles", messageIndex: 1 },

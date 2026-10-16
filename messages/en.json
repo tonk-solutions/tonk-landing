@@ -9,11 +9,11 @@
     "contact": "Contact"
   },
   "hero": {
-    "subtitle": "Software Engineering Consulting",
-    "title": "Senior engineering for",
-    "titleHighlight": "projects that matter",
-    "description": "We are a team of senior engineers and leaders with experience in the most demanding platforms in the region. We solve complex software challenges — from enterprise architectures to custom digital products — with the same level of precision and commitment.",
-    "cta": "Let's talk about your project"
+    "subtitle": "Senior software engineering",
+    "title": "Complex enterprise integrations,",
+    "titleHighlight": "no intermediaries.",
+    "description": "We connect the critical systems of your operation: SAP, ERPs, third-party APIs, payment gateways and tax authorities such as AFIP and DGI. You talk directly to the engineer who designs and delivers the integration, alongside senior engineers end to end.",
+    "cta": "Let's talk about your integration"
   },
   "about": {
     "label": "WHO WE ARE",
@@ -51,12 +51,17 @@
   },
   "services": {
     "label": "OUR SERVICES",
-    "title": "What we do, we do well",
-    "description": "Whether you need to build something new, modernize what you have, or add engineers to your team, we work with the same level of rigor.",
+    "title": "Our focus: enterprise integrations",
+    "description": "We connect systems that don't talk to each other — SAP, ERPs, APIs, payment gateways and tax authorities. Around that focus, we also build product, design architecture and add the engineers your team needs.",
     "craft": {
       "name": "Craft",
-      "subtitle": "We develop software, leading projects until delivering the final product.",
+      "subtitle": "Specialty: enterprise integrations. We also deliver product and architecture end to end.",
       "services": [
+        {
+          "title": "Integrations and Enterprise Systems",
+          "description": "We connect systems that don't talk to each other: SAP, ERPs, third-party APIs, payment gateways, tax authorities. If it has integration complexity, it's our terrain.",
+          "icon": "FileText"
+        },
         {
           "title": "Digital Product Development",
           "description": "We build platforms, applications, and custom digital products — from an e-commerce with custom integrations to complex internal systems. We adapt to the stack and project context.",
@@ -66,11 +71,6 @@
           "title": "Architecture and Distributed Systems",
           "description": "We design architectures that scale: microservices, cloud-native, monolith migrations. Especially useful when the current system is becoming a bottleneck.",
           "icon": "Cloud"
-        },
-        {
-          "title": "Integrations and Enterprise Systems",
-          "description": "We connect systems that don't talk to each other: SAP, ERPs, third-party APIs, payment gateways, tax authorities. If it has integration complexity, it's our terrain.",
-          "icon": "FileText"
         },
         {
           "title": "Applied AI",
@@ -174,14 +174,16 @@
     "copyright": "© {year} Tonk Solutions. All rights reserved."
   },
   "seo": {
-    "description": "Senior software engineering consultancy specializing in custom development, integrations, and technical team building. We work with companies that need solutions that work, scale, and endure.",
-    "titleDefault": "Tonk Solutions | Senior Software Engineering & Technical Recruitment",
+    "description": "We connect the critical systems of your operation: SAP, ERPs, APIs, payment gateways and tax authorities. Senior engineering, direct contact, no intermediaries.",
+    "titleDefault": "Tonk Solutions | Enterprise Integrations, No Intermediaries",
     "keywords": [
       "software engineering consulting",
       "custom software development",
       "digital product development",
       "systems architecture",
       "enterprise integrations",
+      "SAP integrations",
+      "AFIP integrations",
       "senior engineers",
       "technical recruitment",
       "IT recruiting",
@@ -192,12 +194,12 @@
       "software consulting Argentina",
       "software engineering Buenos Aires"
     ],
-    "ogTitle": "Tonk Solutions | Senior Software Engineering & Technical Recruitment",
-    "ogImageAlt": "Tonk Solutions - Senior engineering for projects that matter",
-    "twitterTitle": "Tonk Solutions | Senior Software Engineering"
+    "ogTitle": "Tonk Solutions | Enterprise Integrations",
+    "ogImageAlt": "Tonk Solutions — Complex enterprise integrations, no intermediaries",
+    "twitterTitle": "Tonk Solutions | Enterprise Integrations"
   },
   "schema": {
-    "slogan": "Senior engineering for projects that matter",
+    "slogan": "Complex enterprise integrations, no intermediaries.",
     "inLanguage": "en-US",
     "servicesListName": "Software Engineering Services",
     "servicesListDescription": "Specialized software engineering consulting services for financial institutions, fintechs, and enterprise corporations."
