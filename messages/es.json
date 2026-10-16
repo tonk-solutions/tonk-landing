@@ -201,5 +201,116 @@
     "inLanguage": "es-AR",
     "servicesListName": "Servicios de Ingeniería de Software",
     "servicesListDescription": "Servicios especializados de consultoría en ingeniería de software para instituciones financieras, fintechs y corporaciones enterprise."
+  },
+  "landing": {
+    "enterpriseIntegrations": {
+      "meta": {
+        "title": "Integraciones Enterprise en LatAm",
+        "description": "Integraciones enterprise complejas para empresas en Argentina y la región: SAP, ERPs, APIs de terceros, pasarelas de pago y organismos fiscales."
+      },
+      "hero": {
+        "title": "Conectamos sistemas que no hablan entre sí",
+        "description": "Integraciones enterprise complejas para empresas en Argentina y la región. SAP, ERPs, APIs de terceros, pasarelas de pago y organismos fiscales. Hablas directo con quien resuelve el problema.",
+        "cta": "Hablemos de tu integración",
+        "whatsappText": "Hola, quiero hablar sobre una integración entre sistemas."
+      },
+      "problem": {
+        "title": "El problema",
+        "intro": "Tu empresa ya tiene los sistemas, pero no se comunican.",
+        "bullets": [
+          "El ERP no sincroniza con el ecommerce ni con la pasarela de pago.",
+          "Cada mes, alguien pasa datos a mano de una plataforma a otra.",
+          "Las integraciones existentes se rompen tras una actualización y nadie sabe por qué.",
+          "Necesitas conectarte con AFIP, DGI u otros organismos fiscales y no encuentras quién se haga cargo."
+        ],
+        "closing": "Esto genera errores, retrasos y costos ocultos que no aparecen en el presupuesto de TI."
+      },
+      "whatWeDo": {
+        "title": "Lo que hacemos",
+        "intro": "Diseñamos e implementamos conexiones entre los sistemas críticos de tu operación, con foco en estabilidad y mantenibilidad.",
+        "items": [
+          {
+            "title": "SAP y ERPs",
+            "description": "Conectamos tu gestión central con el resto del ecosistema."
+          },
+          {
+            "title": "APIs de terceros",
+            "description": "Integramos proveedores, logística, marketing y canales de venta."
+          },
+          {
+            "title": "Pasarelas de pago",
+            "description": "Unificamos flujos de cobro y conciliación."
+          },
+          {
+            "title": "Organismos fiscales",
+            "description": "Integración con AFIP, DGI y entidades reguladoras de la región."
+          },
+          {
+            "title": "Migraciones y sincronización",
+            "description": "Pases de datos entre plataformas sin perder consistencia."
+          }
+        ]
+      },
+      "whyUs": {
+        "title": "Por qué trabajar con nosotros",
+        "items": [
+          {
+            "title": "Ingenieros senior, sin intermediarios",
+            "description": "Hablas directamente con quien diseña y ejecuta la integración. No hay account managers ni capas de aprobación que diluyan el mensaje técnico."
+          },
+          {
+            "title": "Experiencia en producción real",
+            "description": "Nuestro equipo viene de operar sistemas críticos en BBVA, Santander, Accenture, Endava y Rootstrap."
+          },
+          {
+            "title": "Enfoque en LatAm",
+            "description": "Conocemos las particularidades de los sistemas fiscales, bancarios y logísticos de Argentina y la región."
+          },
+          {
+            "title": "Arquitectura antes que parche",
+            "description": "No conectamos por conectar. Diseñamos para que la integración siga funcionando después del lanzamiento."
+          }
+        ]
+      },
+      "howWeWork": {
+        "title": "Cómo trabajamos",
+        "steps": [
+          {
+            "title": "Diagnóstico",
+            "description": "Revisamos cómo se comunican (o no se comunican) tus sistemas actuales."
+          },
+          {
+            "title": "Arquitectura",
+            "description": "Definimos el modelo de integración, los flujos de datos y los puntos de falla."
+          },
+          {
+            "title": "Implementación",
+            "description": "Desarrollamos, probamos y desplegamos la conexión en entornos de staging y producción."
+          },
+          {
+            "title": "Soporte",
+            "description": "Monitoreo inicial y documentación para que tu equipo pueda operar de forma autónoma."
+          }
+        ]
+      },
+      "results": {
+        "title": "Resultados esperados",
+        "bullets": [
+          "Menos intervención manual en procesos de datos.",
+          "Disponibilidad de la integración en entornos de producción.",
+          "Tiempos de respuesta definidos y medibles.",
+          "Documentación técnica para mantenimiento futuro."
+        ]
+      },
+      "cases": {
+        "title": "Casos de éxito"
+      },
+      "cta": {
+        "title": "¿Tu empresa necesita integrar sistemas críticos?",
+        "description": "Cuéntanos sobre tu proyecto y armamos una propuesta a medida.",
+        "button": "Solicitar diagnóstico de integración",
+        "whatsappText": "Hola, quiero solicitar un diagnóstico de integración."
+      }
+    }
   }
 }

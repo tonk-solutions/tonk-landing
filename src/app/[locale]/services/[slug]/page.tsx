@@ -5,6 +5,7 @@ import { Box, Container, Flex, Heading, Text, Link as ChakraLink, Button } from 
 import { ArrowLeft, MessageCircle, Code, Cloud, FileText, BrainCircuit, Users, Sparkles, UserCheck } from "lucide-react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import EnterpriseIntegrationsLanding from "./EnterpriseIntegrationsLanding";
 import { Link as LocaleLink, routing } from "@/i18n/routing";
 import { resolveRequestLocale } from "@/i18n/requestLocale";
 import { SITE_NAME, SITE_URL, WHATSAPP_URL } from "@/app/constants";
@@ -29,6 +30,9 @@ interface ServicePageParams {
   locale: string;
   slug: string;
 }
+
+/** Slug whose page renders the dedicated conversion landing instead of the minimal layout. */
+const ENTERPRISE_INTEGRATIONS_SLUG = "enterprise-integrations";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -67,9 +71,21 @@ export async function generateMetadata({
   const { content } = resolved;
   const canonical = `${SITE_URL}/${locale}/services/${slug}`;
 
+  let title = content.title;
+  let description = content.description;
+
+  if (slug === ENTERPRISE_INTEGRATIONS_SLUG) {
+    const tLandingMeta = await getTranslations({
+      locale,
+      namespace: "landing.enterpriseIntegrations.meta",
+    });
+    title = tLandingMeta("title");
+    description = tLandingMeta("description");
+  }
+
   return {
-    title: content.title,
-    description: content.description,
+    title,
+    description,
     alternates: {
       canonical,
       languages: {
@@ -82,8 +98,8 @@ export async function generateMetadata({
       type: "website",
       url: canonical,
       siteName: SITE_NAME,
-      title: content.title,
-      description: content.description,
+      title,
+      description,
     },
   };
 }
@@ -100,6 +116,18 @@ export default async function ServicePage({
 
   if (!resolved) {
     notFound();
+  }
+
+  if (slug === ENTERPRISE_INTEGRATIONS_SLUG) {
+    return (
+      <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
+        <Header />
+        <main role="main" style={{ width: "100%" }}>
+          <EnterpriseIntegrationsLanding locale={locale} />
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   const { content } = resolved;

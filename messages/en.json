@@ -201,5 +201,116 @@
     "inLanguage": "en-US",
     "servicesListName": "Software Engineering Services",
     "servicesListDescription": "Specialized software engineering consulting services for financial institutions, fintechs, and enterprise corporations."
+  },
+  "landing": {
+    "enterpriseIntegrations": {
+      "meta": {
+        "title": "Enterprise Integrations in LatAm",
+        "description": "Complex enterprise integrations for companies in Argentina and the region: SAP, ERPs, third-party APIs, payment gateways, and tax authorities."
+      },
+      "hero": {
+        "title": "We connect systems that don't talk to each other",
+        "description": "Complex enterprise integrations for companies in Argentina and the region. SAP, ERPs, third-party APIs, payment gateways, and tax authorities. You talk directly to the person who solves the problem.",
+        "cta": "Let's talk about your integration",
+        "whatsappText": "Hi, I'd like to talk about an integration between systems."
+      },
+      "problem": {
+        "title": "The problem",
+        "intro": "Your company already has the systems, but they don't communicate.",
+        "bullets": [
+          "The ERP doesn't sync with the ecommerce platform or the payment gateway.",
+          "Every month, someone moves data by hand from one platform to another.",
+          "Existing integrations break after an update and nobody knows why.",
+          "You need to connect with AFIP, DGI, or other tax authorities and can't find anyone to take it on."
+        ],
+        "closing": "This creates errors, delays, and hidden costs that never show up in the IT budget."
+      },
+      "whatWeDo": {
+        "title": "What we do",
+        "intro": "We design and implement connections between your operation's critical systems, with a focus on stability and maintainability.",
+        "items": [
+          {
+            "title": "SAP and ERPs",
+            "description": "We connect your core management system with the rest of the ecosystem."
+          },
+          {
+            "title": "Third-party APIs",
+            "description": "We integrate providers, logistics, marketing, and sales channels."
+          },
+          {
+            "title": "Payment gateways",
+            "description": "We unify collection and reconciliation flows."
+          },
+          {
+            "title": "Tax authorities",
+            "description": "Integration with AFIP, DGI, and regulatory bodies across the region."
+          },
+          {
+            "title": "Migrations and synchronization",
+            "description": "Data transfers between platforms without losing consistency."
+          }
+        ]
+      },
+      "whyUs": {
+        "title": "Why work with us",
+        "items": [
+          {
+            "title": "Senior engineers, no intermediaries",
+            "description": "You talk directly to the person who designs and executes the integration. No account managers or approval layers that dilute the technical message."
+          },
+          {
+            "title": "Real production experience",
+            "description": "Our team comes from operating critical systems at BBVA, Santander, Accenture, Endava, and Rootstrap."
+          },
+          {
+            "title": "LatAm focus",
+            "description": "We know the particularities of the tax, banking, and logistics systems in Argentina and the region."
+          },
+          {
+            "title": "Architecture before patches",
+            "description": "We don't connect for the sake of connecting. We design so the integration keeps working after launch."
+          }
+        ]
+      },
+      "howWeWork": {
+        "title": "How we work",
+        "steps": [
+          {
+            "title": "Assessment",
+            "description": "We review how your current systems communicate (or don't)."
+          },
+          {
+            "title": "Architecture",
+            "description": "We define the integration model, data flows, and failure points."
+          },
+          {
+            "title": "Implementation",
+            "description": "We develop, test, and deploy the connection in staging and production environments."
+          },
+          {
+            "title": "Support",
+            "description": "Initial monitoring and documentation so your team can operate autonomously."
+          }
+        ]
+      },
+      "results": {
+        "title": "Expected results",
+        "bullets": [
+          "Less manual intervention in data processes.",
+          "Integration availability in production environments.",
+          "Defined and measurable response times.",
+          "Technical documentation for future maintenance."
+        ]
+      },
+      "cases": {
+        "title": "Case studies"
+      },
+      "cta": {
+        "title": "Does your company need to integrate critical systems?",
+        "description": "Tell us about your project and we'll put together a tailored proposal.",
+        "button": "Request an integration assessment",
+        "whatsappText": "Hi, I'd like to request an integration assessment."
+      }
+    }
   }
 }
