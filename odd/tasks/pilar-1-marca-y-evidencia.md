@@ -7,7 +7,7 @@ Ship the repo-buildable parts of Jira epic TL-1: turn `/[locale]/services/enterp
 - TL-1 children: TL-9 (landing `/es/integraciones-enterprise`), TL-6 (3 casos de éxito), TL-7 (3 testimonios), TL-8 (LinkedIn, non-repo).
 - The current service page for `enterprise-integrations` is minimal (icon + description + generic WhatsApp CTA). The full landing copy is already written in `analisis-competencia-y-plan-de-accion.md` §12.
 - TL-6 and TL-7 are blocked on real content (3 real projects with metrics, 3 authorized testimonials). Publishing invented cases or testimonials would defeat the epic's purpose (credibility).
-- TL-9's "home reenfocada al nicho" acceptance item is gated on TL-10 (one-line niche phrase approved by the 4 founders).
+- TL-9's "home reenfocada al nicho" acceptance item is gated on TL-10 (one-line niche phrase approved by the founders).
 
 ## Decisions
 - **Route (user decision, 2026-10-16):** the landing lives at the existing `/[locale]/services/enterprise-integrations` URL. No new `/integraciones-enterprise` route (avoids SEO cannibalization and keeps sitemap/JSON-LD/hreflang wiring). A pretty-alias redirect is deferred until explicitly requested.

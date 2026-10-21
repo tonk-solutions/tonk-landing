@@ -2,14 +2,14 @@
 
 **Fecha:** 16 de octubre de 2026  
 **Autor:** Equipo interno (asistente de arquitectura)  
-**Estado:** Borrador para revisión de los 4 fundadores  
+**Estado:** Borrador para revisión de los fundadores  
 **Alcance:** Sitio web de Tonk (https://tonksolutions.com.ar/es) y 10 competidores identificados por el usuario.
 
 ---
 
 ## 1. Contexto y alcance
 
-Tonk es una consultora boutique de ingeniería de software fundada en 2026, con base en Guernica / Buenos Aires, Argentina. Está integrada por 4 ingenieros fundadores con trayectoria previa en BBVA, Santander, Accenture, Endava y Rootstrap.
+Tonk es una consultora boutique de ingeniería de software fundada en 2026, con base en Guernica / Buenos Aires, Argentina. Está integrada por 3 ingenieros fundadores con trayectoria previa en BBVA, Santander, Accenture, Endava y Rootstrap.
 
 El usuario solicitó:
 1. Análisis del sitio propio (Tonk).
@@ -29,14 +29,14 @@ Este documento consolida todo lo anterior en un solo artefacto.
 - **Servicios:**
   1. Desarrollo de Productos Digitales (plataformas, apps, ecommerce, sistemas internos).
   2. Arquitectura y Sistemas Distribuidos (microservicios, cloud-native, migraciones de monolitos).
-  3. Integraciones y Sistemas Enterprise (SAP, ERPs, APIs de terceros, pasarelas de pago, organismos fiscales).
+  3. Integraciones y Sistemas Enterprise (ERPs, APIs de terceros, pasarelas de pago, organismos fiscales).
   4. IA Aplicada (automatización, análisis de datos, asistentes internos, optimización operativa).
   5. Búsqueda y Selección Técnica (ingenieros que encajan técnica y culturalmente).
   6. Proceso Apoyado en IA (aceleración de búsqueda, análisis de perfiles, predicción de compatibilidad).
   7. Onboarding e Integración (acompañamiento los primeros meses del ingeniero).
-- **Verticales mencionadas:** Cloud Native, Core Banking, SAP & Enterprise, IA Aplicada.
+- **Verticales mencionadas:** Cloud Native, Core Banking, Integraciones Enterprise, IA Aplicada.
 - **Diferencial declarado:** "Somos ingenieros contratando ingenieros", cliente habla directo con quien resuelve, sin intermediarios, sin juniors liderando proyectos.
-- **Fundadores:** Cuatro ingenieros con experiencia en BBVA, Santander, Accenture, Endava y Rootstrap.
+- **Fundadores:** Tres ingenieros con experiencia en BBVA, Santander, Accenture, Endava y Rootstrap.
 
 ### 2.2 Datos externos disponibles (Clutch, Tracxn, LinkedIn)
 
@@ -44,7 +44,7 @@ Este documento consolida todo lo anterior en un solo artefacto.
 |-------|-------|
 | Fundación | 2026 |
 | Sede | Guernica, Buenos Aires, Argentina |
-| Tamaño | 2–9 empleados (4 fundadores) |
+| Tamaño | 2–9 empleados (3 fundadores) |
 | Tarifa horaria | Menor a u$s 25 |
 | Mínimo de proyecto | u$s 1.000+ |
 | Idiomas | Inglés, español |
@@ -152,7 +152,7 @@ Este documento consolida todo lo anterior en un solo artefacto.
 
 ## 4. Puntos débiles de Tonk frente a la competencia
 
-1. **Escala y capacidad de entrega.** Somos 4 personas frente a equipos de miles (Perficient, Ciklum, Stefanini) o cientos (Blend360, Leega, AgilityIO, Alexander Thamm). No podemos competir en proyectos masivos ni en cuentas que exijan grandes equipos dedicados o cobertura 24×7.
+1. **Escala y capacidad de entrega.** Somos 3 personas frente a equipos de miles (Perficient, Ciklum, Stefanini) o cientos (Blend360, Leega, AgilityIO, Alexander Thamm). No podemos competir en proyectos masivos ni en cuentas que exijan grandes equipos dedicados o cobertura 24×7.
 
 2. **Trayectoria y marca.** Fundados en 2026 (menos de un año) frente a competidores con 10, 20 o casi 40 años de historia. Falta de casos de éxito consolidados, referencias de clientes conocidos y reconocimiento de marca. Solo 27 seguidores en LinkedIn; ellos muestran docenas de casos, premios y certificaciones.
 
@@ -164,7 +164,7 @@ Este documento consolida todo lo anterior en un solo artefacto.
 
 6. **Posicionamiento de precios.** Tarifa menor a u$s 25/h puede leerse como "económico = menor calidad" frente a competidores que facturan u$s 50–99/h (SPACE44) o tarifas enterprise. Además, el mínimo de proyecto de u$s 1.000 atrae clientes pequeños, no accounts enterprise.
 
-7. **Riesgo de continuidad del equipo.** Con 4 fundadores, la salida o indisponibilidad de uno tiene un impacto desproporcionado. Los competidores tienen bancada profunda y procesos de sustitución que dan tranquilidad al cliente.
+7. **Riesgo de continuidad del equipo.** Con 3 fundadores, la salida o indisponibilidad de uno tiene un impacto desproporcionado. Los competidores tienen bancada profunda y procesos de sustitución que dan tranquilidad al cliente.
 
 8. **Menos diversificación de servicios.** No tenemos práctica visible de ciberseguridad, manufactura 4.0, digital workplace, plataformas bancarias (tipo Topaz de Stefanini), ni verticales reguladas como salud o finanzas (donde Ciklum y Perficient son fuertes).
 
@@ -179,7 +179,7 @@ No todo son debilidades. Estos activos deben conservarse y comunicarse:
 - **Seniority real de los fundadores:** ex-BBVA, Santander, Accenture, Endava, Rootstrap. Experiencia operando sistemas críticos en producción.
 - **Contacto directo sin intermediarios:** el cliente habla con quien resuelve el problema. Los grandes consultoras no pueden ofrecer esto fácilmente.
 - **Tarifa competitiva:** menor a u$s 25/h es atractiva para clientes que no quieren pagar precios de gran consultora.
-- **Integraciones enterprise en LatAm:** SAP, ERPs, APIs de terceros, pasarelas de pago, organismos fiscales. Es un nicho valioso en Argentina y la región donde hay mucha complejidad y pocos proveedores serios con seniority real.
+- **Integraciones enterprise en LatAm:** ERPs, APIs de terceros, pasarelas de pago, organismos fiscales. Es un nicho valioso en Argentina y la región donde hay mucha complejidad y pocos proveedores serios con seniority real.
 - **Selección técnica hecha por ingenieros:** no por reclutadores generales. Esto genera confianza en clientes que necesitan contratar bien.
 - **Toma de decisiones rápida:** sin estructura corporativa pesada.
 
@@ -191,14 +191,14 @@ Está dividido en 5 pilares. Cada acción incluye responsable sugerido, plazo y 
 
 ### Pilar 1 — Marca y evidencia
 
-Objetivo: pasar de "somos 4 ingenieros con buena historia" a "tenemos casos probados que un cliente puede leer y validar".
+Objetivo: pasar de "somos un equipo chico de ingenieros con buena historia" a "tenemos casos probados que un cliente puede leer y validar".
 
 | # | Acción | Qué hacer exactamente | Responsable | Plazo | Métrica de éxito |
 |---|--------|----------------------|-------------|-------|------------------|
-| 1.1 | Publicar 3 casos de éxito reales | Tomar 3 proyectos ya hechos (idealmente integraciones SAP/ERP, APIs de organismos fiscales o pasarelas de pago) y escribirlos como caso: problema, solución, stack, resultado medible (tiempo ahorrado, errores reducidos, etc.). Publicar en `/es/casos` y enlazar desde el home. | Fundador con más contacto con clientes | 30 días | 3 casos publicados con métrica concreta cada uno |
+| 1.1 | Publicar 3 casos de éxito reales | Tomar 3 proyectos ya hechos (idealmente integraciones ERP, APIs de organismos fiscales o pasarelas de pago) y escribirlos como caso: problema, solución, stack, resultado medible (tiempo ahorrado, errores reducidos, etc.). Publicar en `/es/casos` y enlazar desde el home. | Fundador con más contacto con clientes | 30 días | 3 casos publicados con métrica concreta cada uno |
 | 1.2 | Conseguir 3 testimonios por escrito | Pedir a clientes actuales o ex-jefes (BBVA, Santander, etc. si hay relación) un testimonio corto en texto o video de 30 segundos. Colocarlos en la home y en la página de contacto. | Todos | 30 días | 3 testimonios publicados |
-| 1.3 | Activar LinkedIn de los 4 fundadores | Cada fundador publica 1 vez por semana: una lección técnica, un error que evitaron en un proyecto, o una opinión sobre arquitectura enterprise. No vender, enseñar. | Cada fundador en su perfil | 60 días | 1 publicación/semana por fundador; 200+ seguidores combinados en 3 meses |
-| 1.4 | Página de servicios enfocada | Crear `/es/integraciones-enterprise` como landing principal. Mensaje: "Conectamos sistemas que no hablan entre sí en LatAm: SAP, ERPs, APIs fiscales, pasarelas de pago." Dejar las otras 4 como secundarias. | Uno de los fundadores + quien escriba bien | 15 días | Landing online con CTA claro |
+| 1.3 | Activar LinkedIn de los fundadores | Cada fundador publica 1 vez por semana: una lección técnica, un error que evitaron en un proyecto, o una opinión sobre arquitectura enterprise. No vender, enseñar. | Cada fundador en su perfil | 60 días | 1 publicación/semana por fundador; 200+ seguidores combinados en 3 meses |
+| 1.4 | Página de servicios enfocada | Crear `/es/integraciones-enterprise` como landing principal. Mensaje: "Conectamos sistemas que no hablan entre sí en LatAm: ERPs, APIs fiscales, pasarelas de pago." Dejar las otras 4 como secundarias. | Uno de los fundadores + quien escriba bien | 15 días | Landing online con CTA claro |
 
 ### Pilar 2 — Nicho y posicionamiento
 
@@ -206,7 +206,7 @@ Objetivo: ser la consultora de referencia para integraciones complejas en LatAm,
 
 | # | Acción | Qué hacer exactamente | Responsable | Plazo | Métrica de éxito |
 |---|--------|----------------------|-------------|-------|------------------|
-| 2.1 | Definir el "enemigo" y la propuesta | Dejar de decir "hacemos de todo". Decir: "Arreglamos la integración entre tu ERP, tu ecommerce y AFIP/DGI sin que se rompa cada dos meses." Diferencia de Accenture/Endava (demasiado grandes y caros) y de freelancers (sin rigor de arquitectura). | Los 4 en sesión de 2 horas | 15 días | Frase de una línea aprobada por los 4 |
+| 2.1 | Definir el "enemigo" y la propuesta | Dejar de decir "hacemos de todo". Decir: "Arreglamos la integración entre tu ERP, tu ecommerce y AFIP/DGI sin que se rompa cada dos meses." Diferencia de Accenture/Endava (demasiado grandes y caros) y de freelancers (sin rigor de arquitectura). | Los fundadores en sesión de 2 horas | 15 días | Frase de una línea aprobada por los fundadores |
 | 2.2 | Elegir 2 verticales objetivo | Por ejemplo: retail con operaciones transfronterizas (Argentina–Brasil) y fintech/prestamistas que necesitan integración con bancos y reguladores. Rechazar proyectos que no encajen. | Todos | 30 días | 2 verticales definidas; filtro de leads activo |
 | 2.3 | Crear un "paquete de diagnóstico de integración" | Ofertar una auditoría de 2 semanas a precio fijo (u$s 2.500–3.500) que revise cómo hablan (o no hablan) los sistemas del cliente. Entregable: mapa de integraciones, riesgos, hoja de ruta. Abre la puerta a proyectos más grandes. | Uno de los fundadores | 45 días | 2 diagnósticos vendidos en el primer trimestre |
 
@@ -222,7 +222,7 @@ Objetivo: dejar de atraer solo proyectos de u$s 1.000 y empezar a trabajar con r
 
 ### Pilar 4 — Equipo y continuidad
 
-Objetivo: que no dependa todo de que los 4 fundadores estén disponibles.
+Objetivo: que no dependa todo de que los fundadores estén disponibles.
 
 | # | Acción | Qué hacer exactamente | Responsable | Plazo | Métrica de éxito |
 |---|--------|----------------------|-------------|-------|------------------|
@@ -236,9 +236,9 @@ Objetivo: tener sellos que digan que no somos amateurs.
 
 | # | Acción | Qué hacer exactamente | Responsable | Plazo | Métrica de éxito |
 |---|--------|----------------------|-------------|-------|------------------|
-| 5.1 | Elegir 1 alianza tecnológica | No intentar ser partner de todo. Elegir AWS o Azure (o SAP si hay relación) y comenzar el camino de partner. Empezar por el nivel más bajo (Registered / Select). | Uno de los fundadores con más affinidad cloud | 90 días | Solicitud de partner enviada |
+| 5.1 | Elegir 1 alianza tecnológica | No intentar ser partner de todo. Elegir AWS o Azure y comenzar el camino de partner. Empezar por el nivel más bajo (Registered / Select). | Uno de los fundadores con más affinidad cloud | 90 días | Solicitud de partner enviada |
 | 5.2 | Buscar 1 canal de referidos | Contactar a 5 estudios de contadores o asesores fiscales en Argentina/Brasil que atiendan empresas con problemas de integración con AFIP/DGI. Ofrecerles comisión o referencia mutua. | Uno de los fundadores | 60 días | 2 acuerdos de referidos activos |
-| 5.3 | Certificación mínima de seguridad | Evaluar si necesitan SOC 2 o ISO 27001. Probablemente no ahora. Lo que sí: tener una política de seguridad básica (acceso, backups, NDAs) firmada por los 4. | Uno de los fundadores | 45 días | Política interna firmada |
+| 5.3 | Certificación mínima de seguridad | Evaluar si necesitan SOC 2 o ISO 27001. Probablemente no ahora. Lo que sí: tener una política de seguridad básica (acceso, backups, NDAs) firmada por los fundadores. | Uno de los fundadores | 45 días | Política interna firmada |
 
 ---
 
@@ -267,7 +267,7 @@ Todo lo demás puede esperar.
 
 ## 9. Próximo paso inmediato
 
-Esta semana: reunirse los 4, elegir los 3 proyectos para los casos, definir la frase de una línea del nicho, y asignar quién escribe cada caso.
+Esta semana: reunirse los fundadores, elegir los 3 proyectos para los casos, definir la frase de una línea del nicho, y asignar quién escribe cada caso.
 
 ---
 
@@ -299,7 +299,7 @@ Los fundadores vienen de BBVA, Santander, Accenture, Endava y Rootstrap. En una 
 **Cómo comunicarlo:** en la web, en cada propuesta, en la primera reunión. “Tú hablas con el ingeniero, no con un cuenta.”
 
 **B. Integraciones enterprise en LatAm (el nicho geográfico)**  
-SAP, ERPs, APIs de terceros, pasarelas de pago, organismos fiscales (AFIP, DGI, etc.). Eso es un dolor específico de empresas argentinas y latinoamericanas que operan transfronterizo. Perficient y Ciklum no se van a meter en un proyecto de integración con AFIP por u$s 10.000. Ustedes sí, y lo hacen bien.
+ERPs, APIs de terceros, pasarelas de pago, organismos fiscales (AFIP, DGI, etc.). Eso es un dolor específico de empresas argentinas y latinoamericanas que operan transfronterizo. Perficient y Ciklum no se van a meter en un proyecto de integración con AFIP por u$s 10.000. Ustedes sí, y lo hacen bien.
 
 **Cómo comunicarlo:** caso de éxito público mostrando “antes” y “después” de una integración con un organismo fiscal o un ERP. Métrica: tiempo de caída del sistema, errores reducidos, etc.
 
@@ -319,14 +319,14 @@ No vendan “IA” por vender. Venden automatización de procesos, análisis de 
 **Cómo comunicarlo:** caso de uso real: “automatizamos X, ahorramos Y horas por semana.”
 
 **F. Velocidad de decisión**  
-Cuatro fundadores toman una decisión en una reunión. Una gran consultora necesita comités, legal, compras, aprobaciones de tres niveles. Eso es una ventaja competitiva para clientes que necesitan moverse rápido.
+Tres fundadores toman una decisión en una reunión. Una gran consultora necesita comités, legal, compras, aprobaciones de tres niveles. Eso es una ventaja competitiva para clientes que necesitan moverse rápido.
 
 ### 11.3 Mapa frente a los competidores
 
 | Competidor | Qué hacen bien | Dónde fallan frente a Tonk | Oportunidad de Tonk |
 |------------|----------------|---------------------------|---------------------|
 | Perficient / Ciklum / Stefanini | Escala global, certificaciones, marcas enterprise | Demasiado caros y lentos para proyectos medianos; el cliente no habla con el ingeniero | Proyectos u$s 5k–30k en LatAm con trato directo |
-| Blend360 | Data, IA, Fortune 500 | Enfoque en data/analytics, no en integraciones enterprise | Integraciones SAP/ERP/fiscales donde Blend360 no tiene presencia |
+| Blend360 | Data, IA, Fortune 500 | Enfoque en data/analytics, no en integraciones enterprise | Integraciones ERP/fiscales donde Blend360 no tiene presencia |
 | AgilityIO | Producto digital, UX, SOC 2 | Enfoque en startups y productos nuevos, no en modernizar legados enterprise | Modernización de integraciones de sistemas viejos en empresas tradicionales |
 | SPACE44 | Staffing nearshore para Europa | Tarifa u$s 50–99/h; foco en staff augmentation, no en entrega de proyectos | Proyectos cerrados con entregable, no solo “cabezas” |
 | Leega | Datos, cloud, bodyshop en Brasil | Enfoque en outsourcing masivo y fábrica de software | Selección técnica premium y arquitectura, no solo cuerpos |
@@ -349,18 +349,18 @@ Cuatro fundadores toman una decisión en una reunión. Una gran consultora neces
 | Semana | Acción | Por qué diferencia |
 |--------|--------|-------------------|
 | 1–2 | Definir la frase de una línea: “Integraciones enterprise complejas en LatAm, sin intermediarios.” | Posicionamiento claro en web y propuestas |
-| 3–4 | Publicar 3 casos de éxito reales con métricas (SAP, ERPs, APIs fiscales) | Evidencia de que saben hacer lo que dicen |
+| 3–4 | Publicar 3 casos de éxito reales con métricas (ERPs, APIs fiscales) | Evidencia de que saben hacer lo que dicen |
 | 5–6 | Crear landing `/es/integraciones-enterprise` y quitar el “hacemos de todo” del home | Enfoque, no generalismo |
 | 7–8 | Documentar el proceso de selección técnica (challenge, arquitectura, código real) | Diferencia de recruiters y bodyshops |
 | 9–10 | Diseñar 3 paquetes mensuales (mantenimiento de integraciones, evolución cloud-native, selección técnica) | Precio predecible, no proyectos uno a uno |
-| 11–12 | Activar LinkedIn de los 4 fundadores: 1 publicación/semana cada uno, enseñando no vendiendo | Marca personal de los fundadores = marca de la consultora |
+| 11–12 | Activar LinkedIn de los fundadores: 1 publicación/semana cada uno, enseñando no vendiendo | Marca personal de los fundadores = marca de la consultora |
 
 ### 11.6 Cómo saber si está funcionando (métricas simples)
 
 - Cantidad de leads que mencionan “queríamos hablar directo con un ingeniero” o “nos cotizaron muy caro en X consultora grande”.
 - Tasa de cierre en proyectos de u$s 5.000–20.000.
 - Número de casos publicados con métrica concreta.
-- Seguidores combinados en LinkedIn de los 4 fundadores (meta: 200+ en 3 meses).
+- Seguidores combinados en LinkedIn de los fundadores (meta: 200+ en 3 meses).
 - Tiempo desde el primer contacto hasta la primera reunión con un fundador (meta: < 5 días hábiles).
 
 ---
@@ -371,7 +371,7 @@ Cuatro fundadores toman una decisión en una reunión. Una gran consultora neces
 
 **Conectamos sistemas que no hablan entre sí**
 
-Integraciones enterprise complejas para empresas en Argentina y la región. SAP, ERPs, APIs de terceros, pasarelas de pago y organismos fiscales. Hablas directo con quien resuelve el problema.
+Integraciones enterprise complejas para empresas en Argentina y la región. ERPs, APIs de terceros, pasarelas de pago y organismos fiscales. Hablas directo con quien resuelve el problema.
 
 [Hablemos de tu integración]
 
@@ -396,7 +396,7 @@ Esto genera errores, retrasos y costos ocultos que no aparecen en el presupuesto
 
 Diseñamos e implementamos conexiones entre los sistemas críticos de tu operación, con foco en estabilidad y mantenibilidad.
 
-- **SAP y ERPs:** conectamos tu gestión central con el resto del ecosistema.
+- **ERPs y sistemas de gestión:** conectamos tu gestión central con el resto del ecosistema.
 - **APIs de terceros:** integramos proveedores, logística, marketing y canales de venta.
 - **Pasarelas de pago:** unificamos flujos de cobro y conciliación.
 - **Organismos fiscales:** integración con AFIP, DGI y entidades reguladoras de la región.
@@ -476,10 +476,10 @@ Este es el template que deben usar para cada caso. Los campos entre corchetes `[
 [2-3 oraciones sobre qué problema tenía el cliente. Ejemplo: "Los datos de ventas del ecommerce no llegaban al ERP, generando retrasos en la facturación y errores de inventario."]
 
 ## Solución
-[Descripción técnica breve de lo que se implementó. Ejemplo: "Desarrollamos una capa de integración basada en APIs REST que sincroniza pedidos, clientes e inventario entre la plataforma de comercio electrónico y el SAP del cliente, con colas de reintentos y monitoreo de errores."]
+[Descripción técnica breve de lo que se implementó. Ejemplo: "Desarrollamos una capa de integración basada en APIs REST que sincroniza pedidos, clientes e inventario entre la plataforma de comercio electrónico y el ERP del cliente, con colas de reintentos y monitoreo de errores."]
 
 ## Stack
-[Tecnologías utilizadas. Ejemplo: Node.js, Python, SAP API, PostgreSQL, AWS Lambda, etc.]
+[Tecnologías utilizadas. Ejemplo: Node.js, Python, APIs REST, PostgreSQL, AWS Lambda, etc.]
 
 ## Resultado
 [Métrica concreta. Ejemplos:
@@ -518,7 +518,7 @@ Los pedidos del ecommerce no fluían automáticamente al ERP de gestión. El equ
 Implementamos una capa de integración que sincroniza pedidos, clientes y niveles de inventario entre la plataforma de comercio electrónico y el ERP del cliente, con manejo de colas, reintentos automáticos y alertas de error.
 
 ## Stack
-Node.js, Python, SAP Business One API, PostgreSQL, AWS Lambda, SQS
+Node.js, Python, API del ERP, PostgreSQL, AWS Lambda, SQS
 
 ## Resultado
 - Reducción del 70 % en la carga manual de pedidos.
@@ -539,7 +539,7 @@ Arquitecto de integraciones, Ingeniero backend
 
 ## 14. Próximos pasos sugeridos para trabajar este archivo
 
-1. Reunirse los 4 fundadores y validar la frase de una línea del nicho (sección 11.1).
+1. Reunirse los fundadores y validar la frase de una línea del nicho (sección 11.1).
 2. Elegir los 3 proyectos reales para los casos de éxito y rellenar el template (sección 13).
 3. Copiar la copia de la landing (sección 12) al sitio web en `/es/integraciones-enterprise`.
 4. Asignar responsables y fechas para cada acción del plan de acción (sección 6).

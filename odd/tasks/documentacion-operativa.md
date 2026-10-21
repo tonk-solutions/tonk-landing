@@ -20,7 +20,7 @@ Produce the documentation deliverables of three TL tickets in a private team rep
 ## Tasks
 - [x] D1 — TL-12: `comercial/diagnostico-de-integracion.md`.
 - [x] D2 — TL-16: `procesos/01-estimacion-de-proyectos.md`, `02-code-review.md`, `03-documentar-integraciones.md`, `04-handoff-al-cliente.md`.
-- [x] D3 — TL-21: `seguridad/politica-de-seguridad.md` (+ signature block for the 4 founders).
+- [x] D3 — TL-21: `seguridad/politica-de-seguridad.md` (+ signature block for the founders).
 - [x] D4 — Publish repo, update Jira (TL-12/16/21), update this doc + Engram mirror.
 - Route: direct inline (parent) — the content is a synthesis of parent-held context (analysis §6, brand voice, decisions); delegating would require transferring the full content spec. No code involved.
 
