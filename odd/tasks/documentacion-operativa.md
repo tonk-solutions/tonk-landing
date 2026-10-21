@@ -6,7 +6,7 @@ Produce the documentation deliverables of three TL tickets in a private team rep
 ## Problem / why
 - TL-12: the diagnostic package must be defined and sellable (scope, price, deliverables, process) before offering it; the landing already funnels to a "Solicitar diagnóstico de integración" CTA.
 - TL-16: processes currently live in the founders' heads; the ticket asks for a private repo (~10 pages max) so any founder can pick up another's project.
-- TL-21: a basic access/backup/NDA policy signed by the 4; no SOC 2/ISO pursuit at this stage.
+- TL-21: a basic access/backup/NDA policy signed by the founders; no SOC 2/ISO pursuit at this stage.
 - Operational content lives in the private handbook repo; **this doc tracks only status and references** (tonk-landing became private on 2026-10-16).
 
 ## Scope / constraints
