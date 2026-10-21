@@ -1,8 +1,8 @@
 /**
  * Case studies catalog.
  *
- * Currently empty: TL-6 fills it with real, authorized projects following the
- * §13 template fields (see `analisis-competencia-y-plan-de-accion.md`).
+ * Currently empty: fill it with real, authorized projects using the
+ * `CaseStudy` fields below.
  * Pages that surface cases render nothing while this list is empty, so
  * publishing is content-only. Never add fabricated cases.
  */
