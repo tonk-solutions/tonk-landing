@@ -43,7 +43,6 @@ const KNOWS_ABOUT = [
   "Core Banking Systems",
   "Microservices Migration",
   "Cloud-Native Architecture",
-  "SAP Integration",
   "ERP Modernization",
   "Legacy System Modernization",
   "Technical Debt Resolution",

@@ -225,7 +225,7 @@ const TeamSection = () => {
           </MotionBox>
         </Flex>
 
-        <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }} gap={8}>
+        <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} gap={8}>
           {teamMembers.map((member, index) => (
             <TeamMember
               key={index}
