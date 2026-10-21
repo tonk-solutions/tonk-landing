@@ -12,13 +12,13 @@
     "subtitle": "Senior software engineering",
     "title": "Complex enterprise integrations,",
     "titleHighlight": "no intermediaries.",
-    "description": "We connect the critical systems of your operation: SAP, ERPs, third-party APIs, payment gateways and tax authorities such as AFIP and DGI. You talk directly to the engineer who designs and delivers the integration, alongside senior engineers end to end.",
+    "description": "We connect the critical systems of your operation: ERPs, third-party APIs, payment gateways and tax authorities such as AFIP and DGI. You talk directly to the engineer who designs and delivers the integration, alongside senior engineers end to end.",
     "cta": "Let's talk about your integration"
   },
   "about": {
     "label": "WHO WE ARE",
     "title": "Strategic partners in software engineering",
-    "description": "We are four engineers with experience at companies like BBVA, Santander, Accenture, Endava, and Rootstrap. We came together to build something of our own: an agile consultancy where clients talk directly to those who solve the problem.",
+    "description": "We are senior engineers with experience at companies like BBVA, Santander, Accenture, Endava, and Rootstrap. We came together to build something of our own: an agile consultancy where clients talk directly to those who solve the problem.",
     "valuePoints": [
       "Real seniority: we come from operating critical systems in production",
       "We solve everything from complex architectures to custom products",
@@ -40,7 +40,7 @@
         "description": "Critical transactional systems"
       },
       {
-        "title": "SAP & Enterprise",
+        "title": "Enterprise Integrations",
         "description": "Core process integration"
       },
       {
@@ -52,14 +52,14 @@
   "services": {
     "label": "OUR SERVICES",
     "title": "Our focus: enterprise integrations",
-    "description": "We connect systems that don't talk to each other — SAP, ERPs, APIs, payment gateways and tax authorities. Around that focus, we also build product, design architecture and add the engineers your team needs.",
+    "description": "We connect systems that don't talk to each other — ERPs, APIs, payment gateways and tax authorities. Around that focus, we also build product, design architecture and add the engineers your team needs.",
     "craft": {
       "name": "Craft",
       "subtitle": "Specialty: enterprise integrations. We also deliver product and architecture end to end.",
       "services": [
         {
           "title": "Integrations and Enterprise Systems",
-          "description": "We connect systems that don't talk to each other: SAP, ERPs, third-party APIs, payment gateways, tax authorities. If it has integration complexity, it's our terrain.",
+          "description": "We connect systems that don't talk to each other: ERPs, third-party APIs, payment gateways, tax authorities. If it has integration complexity, it's our terrain.",
           "icon": "FileText"
         },
         {
@@ -110,16 +110,9 @@
   },
   "team": {
     "label": "OUR FOUNDING TEAM",
-    "title": "Four engineers, real experience",
+    "title": "Senior engineers, real experience",
     "description": "We come from working on some of the most demanding platforms in the region — BBVA, Santander, ICBC, Accenture, Endava — and decided to build something of our own. That gives us a key perspective: we know what it costs when a system fails in production.",
     "members": [
-      {
-        "name": "Ignacio Sileo",
-        "role": "Co-Founder · SAP & Enterprise Systems",
-        "bio": "SAP FI-CA specialist with experience leading implementations in high-complexity enterprise companies. Knows business processes from the inside and how to translate them into technical solutions that work.",
-        "linkedin": "https://www.linkedin.com/in/ignacio-sileo/",
-        "avatarUrl": "/images/founders/ignacio-sileo.jpeg"
-      },
       {
         "name": "Matías Castillo",
         "role": "Co-Founder · Financial Systems Lead",
@@ -174,7 +167,7 @@
     "copyright": "© {year} Tonk Solutions. All rights reserved."
   },
   "seo": {
-    "description": "We connect the critical systems of your operation: SAP, ERPs, APIs, payment gateways and tax authorities. Senior engineering, direct contact, no intermediaries.",
+    "description": "We connect the critical systems of your operation: ERPs, APIs, payment gateways and tax authorities. Senior engineering, direct contact, no intermediaries.",
     "titleDefault": "Tonk Solutions | Enterprise Integrations, No Intermediaries",
     "keywords": [
       "software engineering consulting",
@@ -182,7 +175,7 @@
       "digital product development",
       "systems architecture",
       "enterprise integrations",
-      "SAP integrations",
+      "ERP integrations",
       "AFIP integrations",
       "senior engineers",
       "technical recruitment",
@@ -208,11 +201,11 @@
     "enterpriseIntegrations": {
       "meta": {
         "title": "Enterprise Integrations in LatAm",
-        "description": "Complex enterprise integrations for companies in Argentina and the region: SAP, ERPs, third-party APIs, payment gateways, and tax authorities."
+        "description": "Complex enterprise integrations for companies in Argentina and the region: ERPs, third-party APIs, payment gateways, and tax authorities."
       },
       "hero": {
         "title": "We connect systems that don't talk to each other",
-        "description": "Complex enterprise integrations for companies in Argentina and the region. SAP, ERPs, third-party APIs, payment gateways, and tax authorities. You talk directly to the person who solves the problem.",
+        "description": "Complex enterprise integrations for companies in Argentina and the region. ERPs, third-party APIs, payment gateways, and tax authorities. You talk directly to the person who solves the problem.",
         "cta": "Let's talk about your integration",
         "whatsappText": "Hi, I'd like to talk about an integration between systems."
       },
@@ -232,7 +225,7 @@
         "intro": "We design and implement connections between your operation's critical systems, with a focus on stability and maintainability.",
         "items": [
           {
-            "title": "SAP and ERPs",
+            "title": "ERPs and management systems",
             "description": "We connect your core management system with the rest of the ecosystem."
           },
           {
