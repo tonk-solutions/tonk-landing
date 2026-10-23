@@ -55,6 +55,7 @@
     "description": "Conectamos sistemas que no hablan entre sí — ERPs, APIs, pasarelas de pago y organismos fiscales. Alrededor de ese foco, también desarrollamos producto, diseñamos arquitectura y sumamos los ingenieros que tu equipo necesite.",
     "craft": {
       "name": "Craft",
+      "label": "Desarrollo de software",
       "subtitle": "Especialidad: integraciones enterprise. También desarrollamos producto y arquitectura de punta a punta.",
       "services": [
         {
@@ -81,6 +82,7 @@
     },
     "talent": {
       "name": "Talent",
+      "label": "Talento IT",
       "subtitle": "Somos ingenieros contratando ingenieros. Sabemos exactamente qué buscar y cómo evaluarlo.",
       "services": [
         {
@@ -100,6 +102,7 @@
         }
       ]
     },
+    "panelTitle": "Nuestros Servicios",
     "viewDetails": "Ver página completa",
     "detail": {
       "backToServices": "Volver a servicios",
@@ -163,7 +166,7 @@
   "footer": {
     "description": "Somos un equipo de ingeniería de software senior con experiencia en las plataformas más exigentes de la región. Resolvemos desafíos técnicos complejos con criterio, experiencia y responsabilidad.",
     "contactLabel": "Contacto",
-    "socialLabel": "Síguenos",
+    "socialLabel": "Seguinos",
     "copyright": "© {year} Tonk Solutions. Todos los derechos reservados."
   },
   "seo": {
@@ -205,7 +208,7 @@
       },
       "hero": {
         "title": "Conectamos sistemas que no hablan entre sí",
-        "description": "Integraciones enterprise complejas para empresas en Argentina y la región. ERPs, APIs de terceros, pasarelas de pago y organismos fiscales. Hablas directo con quien resuelve el problema.",
+        "description": "Integraciones enterprise complejas para empresas en Argentina y la región. ERPs, APIs de terceros, pasarelas de pago y organismos fiscales. Hablás directo con quien resuelve el problema.",
         "cta": "Hablemos de tu integración",
         "whatsappText": "Hola, quiero hablar sobre una integración entre sistemas."
       },
@@ -216,7 +219,7 @@
           "El ERP no sincroniza con el ecommerce ni con la pasarela de pago.",
           "Cada mes, alguien pasa datos a mano de una plataforma a otra.",
           "Las integraciones existentes se rompen tras una actualización y nadie sabe por qué.",
-          "Necesitas conectarte con AFIP, DGI u otros organismos fiscales y no encuentras quién se haga cargo."
+          "Necesitás conectarte con AFIP, DGI u otros organismos fiscales y no encontrás quién se haga cargo."
         ],
         "closing": "Esto genera errores, retrasos y costos ocultos que no aparecen en el presupuesto de TI."
       },
@@ -251,7 +254,7 @@
         "items": [
           {
             "title": "Ingenieros senior, sin intermediarios",
-            "description": "Hablas directamente con quien diseña y ejecuta la integración. No hay account managers ni capas de aprobación que diluyan el mensaje técnico."
+            "description": "Hablás directamente con quien diseña y ejecuta la integración. No hay account managers ni capas de aprobación que diluyan el mensaje técnico."
           },
           {
             "title": "Experiencia en producción real",
@@ -302,7 +305,7 @@
       },
       "cta": {
         "title": "¿Tu empresa necesita integrar sistemas críticos?",
-        "description": "Cuéntanos sobre tu proyecto y armamos una propuesta a medida.",
+        "description": "Contanos sobre tu proyecto y armamos una propuesta a medida.",
         "button": "Solicitar diagnóstico de integración",
         "whatsappText": "Hola, quiero solicitar un diagnóstico de integración."
       }
