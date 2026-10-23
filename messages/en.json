@@ -55,6 +55,7 @@
     "description": "We connect systems that don't talk to each other — ERPs, APIs, payment gateways and tax authorities. Around that focus, we also build product, design architecture and add the engineers your team needs.",
     "craft": {
       "name": "Craft",
+      "label": "Software development",
       "subtitle": "Specialty: enterprise integrations. We also deliver product and architecture end to end.",
       "services": [
         {
@@ -81,6 +82,7 @@
     },
     "talent": {
       "name": "Talent",
+      "label": "Tech talent",
       "subtitle": "We are engineers hiring engineers. We know exactly what to look for and how to evaluate it.",
       "services": [
         {
@@ -100,6 +102,7 @@
         }
       ]
     },
+    "panelTitle": "Our Services",
     "viewDetails": "View full page",
     "detail": {
       "backToServices": "Back to services",

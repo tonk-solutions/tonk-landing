@@ -20,6 +20,7 @@ interface Service {
 interface Branch {
   key: ServiceBranch;
   name: string;
+  label: string;
   subtitle: string;
   services: Service[];
 }
@@ -68,7 +69,7 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch, isActiv
           letterSpacing="0.15em"
           mb={6}
         >
-          {branch.name === "Producto" ? "Nuestras Especialidades" : "Nuestros Servicios"}
+          {t('panelTitle')}
         </Text>
         <Flex direction="column" gap={2}>
           {branch.services.map((service, index) => (
@@ -197,22 +198,24 @@ const ServicesSection = () => {
     {
       key: 'craft',
       name: t('craft.name'),
+      label: t('craft.label'),
       subtitle: t('craft.subtitle'),
       services: t.raw('craft.services') as Service[]
     },
     {
       key: 'talent',
       name: t('talent.name'),
+      label: t('talent.label'),
       subtitle: t('talent.subtitle'),
       services: t.raw('talent.services') as Service[]
     }
   ];
 
-  const [selectedBranch, setSelectedBranch] = useState(branches[0].name);
+  const [selectedBranch, setSelectedBranch] = useState<ServiceBranch>(branches[0].key);
 
-  const branchIcons: Record<string, React.ElementType> = {
-    [branches[0].name]: Hammer,
-    [branches[1].name]: UsersRound,
+  const branchIcons: Record<ServiceBranch, React.ElementType> = {
+    craft: Hammer,
+    talent: UsersRound,
   };
 
   return (
@@ -258,7 +261,7 @@ const ServicesSection = () => {
         <Box display="flex" justifyContent="center" mb={8} suppressHydrationWarning>
           <SegmentGroup.Root
             value={selectedBranch}
-            onValueChange={(e) => setSelectedBranch(e.value || branches[0]?.name || "")}
+            onValueChange={(e) => setSelectedBranch((e.value as ServiceBranch) || branches[0].key)}
             size="lg"
             bg="white"
             p={1}
@@ -274,8 +277,8 @@ const ServicesSection = () => {
             <SegmentGroup.Indicator rounded="full" />
             {branches.map((branch) => (
               <SegmentGroup.Item
-                key={branch.name}
-                value={branch.name}
+                key={branch.key}
+                value={branch.key}
                 px={8}
                 py={3}
                 rounded="full"
@@ -286,20 +289,30 @@ const ServicesSection = () => {
               >
                 <Flex align="center" gap={2}>
                   <Icon
-                    as={branchIcons[branch.name] || Hammer}
+                    as={branchIcons[branch.key]}
                     boxSize={4}
                     _checked={{ color: "white" }}
                   />
-                  <SegmentGroup.ItemText
-                    fontWeight="semibold"
-                    color="dark.600"
-                    _checked={{
-                      color: "white",
-                    }}
-                    fontSize="sm"
-                  >
-                    {branch.name}
-                  </SegmentGroup.ItemText>
+                  <Flex direction="column" align="flex-start" lineHeight="1.1">
+                    <SegmentGroup.ItemText
+                      fontWeight="semibold"
+                      color="dark.600"
+                      _checked={{
+                        color: "white",
+                      }}
+                      fontSize="sm"
+                    >
+                      {branch.name}
+                    </SegmentGroup.ItemText>
+                    <Text
+                      as="span"
+                      fontSize="2xs"
+                      color="dark.500"
+                      css={{ "[data-part=item][data-state=checked] &": { color: "whiteAlpha.700" } }}
+                    >
+                      {branch.label}
+                    </Text>
+                  </Flex>
                 </Flex>
                 <SegmentGroup.ItemHiddenInput />
               </SegmentGroup.Item>
@@ -308,7 +321,7 @@ const ServicesSection = () => {
         </Box>
 
         {branches.map((branch) => (
-          <Box key={branch.name} display={selectedBranch === branch.name ? "block" : "none"} mb={8} textAlign="center">
+          <Box key={branch.key} display={selectedBranch === branch.key ? "block" : "none"} mb={8} textAlign="center">
             <Text as="p" fontSize="lg" color="dark.500" maxW="600px" mx="auto">
               {branch.subtitle}
             </Text>
@@ -317,9 +330,9 @@ const ServicesSection = () => {
 
         {branches.map((branch) => (
           <BranchServicesGrid
-            key={branch.name}
+            key={branch.key}
             branch={branch}
-            isActive={selectedBranch === branch.name}
+            isActive={selectedBranch === branch.key}
           />
         ))}
       </Container>
