@@ -77,6 +77,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       languages: {
         'es': `${siteUrl}/es`,
         'en': `${siteUrl}/en`,
+        'x-default': `${siteUrl}/es`,
       },
     },
     category: "technology",

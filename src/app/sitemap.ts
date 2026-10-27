@@ -3,10 +3,14 @@ import { SITE_URL } from "./constants";
 import { routing } from "@/i18n/routing";
 import { getServiceSlugs } from "./services/catalog";
 
+/** Language alternates for one path; `x-default` points at the Spanish default locale. */
 function buildLanguageAlternates(path: string): Record<string, string> {
-  return Object.fromEntries(
-    routing.locales.map((locale) => [locale, `${SITE_URL}/${locale}${path}`])
-  );
+  return {
+    ...Object.fromEntries(
+      routing.locales.map((locale) => [locale, `${SITE_URL}/${locale}${path}`])
+    ),
+    "x-default": `${SITE_URL}/es${path}`,
+  };
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
