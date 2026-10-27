@@ -131,8 +131,10 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       data-scroll-behavior="smooth"
+      // Geist vars live on <html>: :root's --font-body references them, so they must be defined at the root.
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
-      <body className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body>
         <script
           id="structured-data"
           type="application/ld+json"
