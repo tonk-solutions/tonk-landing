@@ -1,7 +1,8 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
-import theme, { accentButtonVariant } from "@/app/theme";
+import theme from "@/app/theme";
+import { accentButtonVariant } from "@/app/buttonVariants";
 
 /**
  * SAFETY: Chakra types `getRecipe` as `any` (`styled-system/types.d.ts`), so

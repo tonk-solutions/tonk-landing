@@ -43,13 +43,11 @@ const customConfig = defineConfig({
     },
     tokens: {
       /**
-       * Geist first, then the `globals.css` aliases, then the system stack.
-       *
-       * `layout.tsx` puts `GeistSans.variable` / `GeistMono.variable` on the
-       * body, which define `--font-geist-sans` / `--font-geist-mono`; the
-       * `--font-*` aliases are declared in `globals.css`. Leading with the
-       * Geist variables means the chain still resolves to Geist when the
-       * aliases are missing, instead of silently falling back to Inter.
+       * Geist via its own variables (defined on <html> by `layout.tsx`).
+       * `--font-body` already starts with Geist; it stays as a second entry
+       * only so the system stack keeps the same order. If a variable is
+       * undefined the whole declaration is invalid and the font is inherited,
+       * which is why the Geist classes must live on <html>, not on <body>.
        */
       fonts: {
         heading: {
@@ -112,7 +110,5 @@ const customConfig = defineConfig({
 });
 
 const theme = createSystem(defaultConfig, customConfig);
-
-export { accentButtonVariant } from "./buttonVariants";
 
 export default theme;
