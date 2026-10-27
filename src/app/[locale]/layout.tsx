@@ -9,6 +9,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { resolveRequestLocale } from '@/i18n/requestLocale';
+import { pickClientMessages } from '@/i18n/clientMessages';
 import { buildStructuredDataGraph } from '../seo/structuredData';
 import type { ServiceContent } from '../services/catalog';
 
@@ -95,7 +96,8 @@ export default async function LocaleLayout({
 }>) {
   const locale = resolveRequestLocale((await params).locale);
 
-  const messages = await getMessages();
+  // Only the namespaces client components read cross the server/client boundary.
+  const messages = pickClientMessages(await getMessages());
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
   const tSchema = await getTranslations({ locale, namespace: 'schema' });
   const tServices = await getTranslations({ locale, namespace: 'services' });
