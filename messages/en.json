@@ -8,6 +8,20 @@
     "team": "Team",
     "contact": "Contact"
   },
+  "a11y": {
+    "heroLabel": "Tonk Solutions introduction",
+    "mainNav": "Main navigation",
+    "homeLink": "Tonk Solutions - Home",
+    "menuOpen": "Open navigation menu",
+    "menuClose": "Close navigation menu",
+    "contactNav": "Contact information",
+    "socialNav": "Social networks",
+    "linkedinProfile": "Tonk Solutions on LinkedIn",
+    "instagramProfile": "Tonk Solutions on Instagram",
+    "aboutImage": "Illustration of systemic continuity",
+    "teamAvatar": "{name} - {role} at Tonk Solutions",
+    "teamLinkedIn": "{name} on LinkedIn"
+  },
   "hero": {
     "subtitle": "Senior software engineering",
     "title": "Complex enterprise integrations,",
@@ -150,6 +164,7 @@
     "label": "CONTACT",
     "title": "Do you have a project in mind?",
     "description": "Whether you have something concrete to quote or are exploring options, tell us what it's about.",
+    "whatsappCta": "Message us on WhatsApp",
     "items": [
       {
         "icon": "Mail",

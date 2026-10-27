@@ -10,6 +10,7 @@ import { brandAlpha } from '@/app/brandTokens';
 
 const Footer = () => {
   const t = useTranslations('footer');
+  const tA11y = useTranslations('a11y');
   const currentYear = new Date().getFullYear();
 
   const getIcon = (iconName: string | undefined) => {
@@ -27,8 +28,8 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: "linkedin", href: "https://www.linkedin.com/company/tonk-solutions", ariaLabel: "Tonk Solutions en LinkedIn" },
-    { icon: "instagram", href: "https://www.instagram.com/tonk_solutions", ariaLabel: "Tonk Solutions en Instagram" }
+    { icon: "linkedin", href: "https://www.linkedin.com/company/tonk-solutions", ariaLabel: tA11y('linkedinProfile') },
+    { icon: "instagram", href: "https://www.instagram.com/tonk_solutions", ariaLabel: tA11y('instagramProfile') }
   ];
 
   const contactLinks = [
@@ -56,7 +57,7 @@ const Footer = () => {
           </Box>
 
           <Stack direction={{ base: 'column', md: 'row' }} gap={12}>
-            <Box as="nav" aria-label="Información de contacto">
+            <Box as="nav" aria-label={tA11y('contactNav')}>
               <Text
                 mb={4}
                 fontFamily="mono"
@@ -88,7 +89,7 @@ const Footer = () => {
               </Stack>
             </Box>
 
-            <Box as="nav" aria-label="Redes sociales">
+            <Box as="nav" aria-label={tA11y('socialNav')}>
               <Text
                 mb={4}
                 fontFamily="mono"

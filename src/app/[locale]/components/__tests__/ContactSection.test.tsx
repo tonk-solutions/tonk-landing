@@ -10,9 +10,6 @@ import ContactSection from "../ContactSection";
 const MESSAGES = { es, en } as const;
 type TestLocale = keyof typeof MESSAGES;
 
-/** Copy shipped with the CTA; TL-39 moves it into `contact.*`. */
-const WHATSAPP_CTA_COPY = "Escribinos por WhatsApp";
-
 /** jsdom ships no IntersectionObserver; the section only needs it to exist. */
 class IntersectionObserverStub implements IntersectionObserver {
   readonly root = null;
@@ -75,7 +72,7 @@ describe("ContactSection call to action", () => {
   it("renders the WhatsApp CTA as a single anchor carrying the button recipe", () => {
     renderSection();
 
-    const cta = screen.getByRole("link", { name: WHATSAPP_CTA_COPY });
+    const cta = screen.getByRole("link", { name: es.contact.whatsappCta });
 
     expect(cta.tagName).toBe("A");
     expect(cta.getAttribute("href")).toBe(WHATSAPP_URL);
@@ -83,7 +80,7 @@ describe("ContactSection call to action", () => {
     expect(cta.getAttribute("rel")).toBe("noopener noreferrer");
     // `Button asChild` keeps the plate: the anchor is the button.
     expect(cta.className).toContain("chakra-button");
-    expect(screen.getAllByRole("link", { name: WHATSAPP_CTA_COPY })).toHaveLength(1);
+    expect(screen.getAllByRole("link", { name: es.contact.whatsappCta })).toHaveLength(1);
   });
 
   it("keeps the contact items as their own single anchor each", () => {
@@ -109,7 +106,9 @@ describe("ContactSection copy", () => {
         MESSAGES[locale].contact.title
       );
       expect(screen.getByText(MESSAGES[locale].contact.description)).toBeTruthy();
-      expect(screen.getByRole("link", { name: WHATSAPP_CTA_COPY })).toBeTruthy();
+      expect(
+        screen.getByRole("link", { name: MESSAGES[locale].contact.whatsappCta })
+      ).toBeTruthy();
     }
   );
 });

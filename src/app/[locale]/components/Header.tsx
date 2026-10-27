@@ -21,6 +21,7 @@ const Header = () => {
   const { open, onToggle, onClose } = useDisclosure();
   const [scrolled, setScrolled] = useState(false);
   const t = useTranslations('nav');
+  const tA11y = useTranslations('a11y');
 
   const navLinks = [
     { label: t('services'), href: '#servicios' },
@@ -89,12 +90,12 @@ const Header = () => {
       <Container maxW="1280px" mx="auto" px={{ base: 5, md: 8 }} position="relative" zIndex={1000}>
         <Flex
           as="nav"
-          aria-label="Navegación principal"
+          aria-label={tA11y('mainNav')}
           py={4}
           align="center"
           justify="space-between"
         >
-          <Link href="#hero" _hover={{ textDecoration: 'none' }} aria-label="Tonk Solutions - Inicio" onClick={onClose}>
+          <Link href="#hero" _hover={{ textDecoration: 'none' }} aria-label={tA11y('homeLink')} onClick={onClose}>
             <TonkLogo variant="horizontal" height={38} priority />
           </Link>
 
@@ -141,7 +142,8 @@ const Header = () => {
           <IconButton
             display={{ base: 'flex', md: 'none' }}
             onClick={onToggle}
-            aria-label="Abrir menú de navegación"
+            aria-label={open ? tA11y('menuClose') : tA11y('menuOpen')}
+            aria-expanded={open}
             color="brand.fg"
             bg="transparent"
             _hover={{ bg: 'whiteAlpha.200' }}

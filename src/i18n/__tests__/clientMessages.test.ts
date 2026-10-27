@@ -106,7 +106,7 @@ describe.each(LOCALES)("pickClientMessages ($name)", ({ messages }) => {
 });
 
 describe("pickClientMessages tolerance", () => {
-  it("skips namespaces that do not exist yet, such as a11y", () => {
+  it("skips namespaces that are missing from the dictionary", () => {
     const picked = pickClientMessages({ nav: { home: "Inicio" } });
 
     expect(picked).toEqual({ nav: { home: "Inicio" } });
@@ -136,7 +136,7 @@ describe("client sources", () => {
 
     const scanned = new Set([...clientNamespaces.values()].flatMap((set) => [...set]));
     expect([...scanned].sort()).toEqual(
-      ["about", "contact", "footer", "nav", "services", "team", "ui"]
+      ["a11y", "about", "contact", "footer", "nav", "services", "team", "ui"]
     );
   });
 

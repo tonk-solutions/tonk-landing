@@ -317,7 +317,7 @@ const ContactSection = () => {
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                   <Flex align="center" gap={2}>
                     <MessageCircle size={18} />
-                    <Text>Escribinos por WhatsApp</Text>
+                    <Text>{t('whatsappCta')}</Text>
                   </Flex>
                 </a>
               </Button>

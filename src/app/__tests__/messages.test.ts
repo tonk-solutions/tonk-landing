@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { createTranslator } from "next-intl";
 import es from "../../../messages/es.json";
 import en from "../../../messages/en.json";
 
@@ -67,9 +68,40 @@ describe.each(locales)("team messages ($name)", ({ name, messages }) => {
 });
 
 describe("messages key parity", () => {
-  it("keeps the team block shape identical across es and en", () => {
-    const esKeys = deepKeyPaths((es as Messages).team).sort();
-    const enKeys = deepKeyPaths((en as Messages).team).sort();
-    expect(enKeys).toEqual(esKeys);
+  it("keeps every namespace shape identical across es and en", () => {
+    // Not just team: a key added to one locale and forgotten in the other is a
+    // missing message at runtime, so the whole dictionary is compared.
+    const esKeys = deepKeyPaths(es).sort();
+    const enKeys = deepKeyPaths(en).sort();
+
+    const onlyInEs = esKeys.filter((key) => !enKeys.includes(key));
+    const onlyInEn = enKeys.filter((key) => !esKeys.includes(key));
+
+    expect({ onlyInEs, onlyInEn }).toEqual({ onlyInEs: [], onlyInEn: [] });
+  });
+
+  it("ships the same top-level namespaces in both locales", () => {
+    expect(Object.keys(en).sort()).toEqual(Object.keys(es).sort());
+    // The accessibility copy lives in its own namespace so the client provider
+    // can ship it without the server-only blocks.
+    expect(Object.keys(es)).toContain("a11y");
+  });
+});
+
+describe.each([
+  { name: "es" as const, messages: es },
+  { name: "en" as const, messages: en },
+])("a11y messages ($name)", ({ name, messages }) => {
+  const t = createTranslator({ locale: name, messages, namespace: "a11y" });
+
+  it("interpolates the team avatar and LinkedIn labels", () => {
+    const avatar = t("teamAvatar", { name: "Matías Castillo", role: "Co-Founder" });
+    const linkedin = t("teamLinkedIn", { name: "Matías Castillo" });
+
+    expect(avatar).toContain("Matías Castillo");
+    expect(avatar).toContain("Co-Founder");
+    expect(avatar).not.toContain("{");
+    expect(linkedin).toContain("Matías Castillo");
+    expect(linkedin).not.toContain("{name}");
   });
 });

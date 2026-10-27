@@ -18,8 +18,8 @@ export function isClientNamespace(value: string): value is ClientNamespace {
 }
 
 /**
- * Keeps only the namespaces client components actually consume; unknown or
- * still-missing namespaces (`a11y` today) are skipped instead of injected empty.
+ * Keeps only the namespaces client components actually consume; namespaces that
+ * are still missing from the dictionaries are skipped instead of injected empty.
  */
 export function pickClientMessages<T extends object>(messages: T): Partial<T> {
   const picked: Partial<T> = {};

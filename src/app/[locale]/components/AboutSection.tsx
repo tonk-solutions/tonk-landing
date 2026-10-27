@@ -72,6 +72,7 @@ const AboutSection = () => {
     triggerOnce: true,
   });
   const t = useTranslations('about');
+  const tA11y = useTranslations('a11y');
 
   const icons = [Cloud, Building2, Database, BrainCircuit];
   const translatedPillars = t.raw('pillars') as Array<{ title: string; description: string }>;
@@ -109,7 +110,7 @@ const AboutSection = () => {
           >
             <Box
               as="aside"
-              aria-label="Imagen representativa de continuidad sistémica"
+              aria-label={tA11y('aboutImage')}
               position="relative"
               borderRadius="2xl"
               overflow="hidden"

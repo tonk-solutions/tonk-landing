@@ -36,6 +36,7 @@ const TeamMember: React.FC<TeamMemberProps> = ({
     threshold: 0.1,
     triggerOnce: true,
   });
+  const tA11y = useTranslations('a11y');
 
   return (
     <MotionBox
@@ -82,7 +83,7 @@ const TeamMember: React.FC<TeamMemberProps> = ({
                 >
                   <Image
                     src={avatarUrl}
-                    alt={`${name} - ${role} en Tonk Solutions`}
+                    alt={tA11y('teamAvatar', { name, role })}
                     width={88}
                     height={88}
                     style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -183,7 +184,7 @@ const TeamMember: React.FC<TeamMemberProps> = ({
               fontFamily="mono"
               fontSize="xs"
               _hover={{ color: 'brand.accent' }}
-              aria-label={`Perfil de LinkedIn de ${name}`}
+              aria-label={tA11y('teamLinkedIn', { name })}
               transition="color 0.2s ease"
             >
               <Linkedin size={16} /> LinkedIn

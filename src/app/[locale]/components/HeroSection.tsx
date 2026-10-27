@@ -14,13 +14,14 @@ import HeroDecor from "./HeroDecor";
  */
 const HeroSection = async () => {
   const t = await getTranslations("hero");
+  const tA11y = await getTranslations("a11y");
   const integrations = t.raw("integrations") as string[];
 
   return (
     <Box
       as="section"
       id="hero"
-      aria-label="Presentación de Tonk Solutions"
+      aria-label={tA11y("heroLabel")}
       position="relative"
       bg="brand.bg"
       color="brand.fg"
