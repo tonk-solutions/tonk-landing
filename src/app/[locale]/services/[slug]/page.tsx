@@ -9,6 +9,7 @@ import EnterpriseIntegrationsLanding from "./EnterpriseIntegrationsLanding";
 import { Link as LocaleLink, routing } from "@/i18n/routing";
 import { resolveRequestLocale } from "@/i18n/requestLocale";
 import { SITE_NAME, SITE_URL, WHATSAPP_URL } from "@/app/constants";
+import { brandTokens } from "@/app/brandTokens";
 import {
   getServiceEntry,
   getServiceSlugs,
@@ -143,7 +144,7 @@ export default async function ServicePage({
           pt={{ base: 28, md: 36 }}
           pb={{ base: 16, md: 24 }}
           px={{ base: 4, md: 8 }}
-          bg="gray.50"
+          bg="brand.bg"
           minH="100vh"
         >
           <Container maxW="900px" mx="auto">
@@ -151,8 +152,8 @@ export default async function ServicePage({
               href="/#servicios"
               style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}
             >
-              <ArrowLeft size={16} color="#0891b2" />
-              <Text as="span" fontSize="sm" fontWeight="semibold" color="primary.600">
+              <ArrowLeft size={16} color={brandTokens.accent} />
+              <Text as="span" fontSize="sm" fontWeight="semibold" color="brand.muted" fontFamily="mono">
                 {tDetail("backToServices")}
               </Text>
             </LocaleLink>
@@ -164,25 +165,34 @@ export default async function ServicePage({
                 borderRadius="xl"
                 justify="center"
                 align="center"
-                background="linear-gradient(135deg, #06b6d4, #2563eb)"
+                bg="brand.accentSubtle"
+                border="1px solid"
+                borderColor="brand.accentHalo"
                 flexShrink={0}
               >
-                <ServiceIcon size={36} color="#ffffff" />
+                <ServiceIcon size={36} color={brandTokens.accent} />
               </Flex>
-              <Heading as="h1" fontSize="clamp(1.8rem, 4vw + 1rem, 2.75rem)" color="dark.900" lineHeight="1.2">
+              <Heading as="h1" fontSize="clamp(1.8rem, 4vw + 1rem, 2.75rem)" color="brand.fg" lineHeight="1.2">
                 {content.title}
               </Heading>
             </Flex>
 
-            <Text fontSize="lg" color="dark.600" lineHeight="1.8" mb={10} maxW="720px">
+            <Text fontSize="lg" color="brand.muted" lineHeight="1.8" mb={10} maxW="720px">
               {content.description}
             </Text>
 
-            <Box bg="dark.900" color="white" borderRadius="xl" p={{ base: 6, md: 10 }}>
+            <Box
+              bg="brand.surface"
+              border="1px solid"
+              borderColor="brand.border"
+              color="brand.fg"
+              borderRadius="xl"
+              p={{ base: 6, md: 10 }}
+            >
               <Heading as="h2" fontSize="xl" mb={3}>
                 {tDetail("ctaTitle")}
               </Heading>
-              <Text color="dark.300" mb={6} maxW="520px">
+              <Text color="brand.muted" mb={6} maxW="520px">
                 {tDetail("ctaDescription")}
               </Text>
               <ChakraLink
@@ -194,12 +204,12 @@ export default async function ServicePage({
               >
                 <Button
                   size="lg"
-                  bg="primary.500"
-                  color="white"
-                  borderRadius="full"
+                  bg="brand.accent"
+                  color="brand.bg"
+                  borderRadius="md"
                   px={8}
                   fontWeight="semibold"
-                  _hover={{ bg: "primary.600" }}
+                  _hover={{ bg: "accent.emphasized" }}
                 >
                   <Flex align="center" gap={2}>
                     <MessageCircle size={18} />

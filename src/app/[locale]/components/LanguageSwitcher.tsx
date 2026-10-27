@@ -3,17 +3,14 @@
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button, Flex } from '@chakra-ui/react';
+import { brandAlpha } from '@/app/brandTokens';
 
 const languages = [
   { code: 'es', label: 'Español', short: 'ES' },
   { code: 'en', label: 'English', short: 'EN' }
 ];
 
-interface LanguageSwitcherProps {
-  isLightMode?: boolean;
-}
-
-export default function LanguageSwitcher({ isLightMode = false }: LanguageSwitcherProps) {
+export default function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -26,14 +23,13 @@ export default function LanguageSwitcher({ isLightMode = false }: LanguageSwitch
 
   return (
     <Flex
-      bg={isLightMode ? 'blackAlpha.50' : 'whiteAlpha.50'}
+      bg={brandAlpha.fg(0.04)}
       p="1"
       borderRadius="full"
       alignItems="center"
       display="inline-flex"
       border="1px solid"
-      borderColor={isLightMode ? 'blackAlpha.100' : 'whiteAlpha.100'}
-      boxShadow="inset 0 1px 2px rgba(0,0,0,0.1)"
+      borderColor={brandAlpha.fg(0.1)}
     >
       {languages.map((lang) => {
         const isActive = locale === lang.code;
@@ -46,15 +42,16 @@ export default function LanguageSwitcher({ isLightMode = false }: LanguageSwitch
             py={1}
             h="28px"
             minW="50px"
-            bg={isActive ? 'primary.600' : 'transparent'}
-            color={isActive ? 'white' : (isLightMode ? 'gray.600' : 'whiteAlpha.500')}
+            bg={isActive ? 'brand.accent' : 'transparent'}
+            color={isActive ? 'brand.bg' : 'brand.muted'}
             borderRadius="full"
-            fontSize="sm"
-            fontWeight={isActive ? "bold" : "semibold"}
+            fontFamily="mono"
+            fontSize="xs"
+            fontWeight={isActive ? "bold" : "medium"}
             onClick={() => handleLanguageChange(lang.code)}
             _hover={!isActive ? {
-              color: isLightMode ? 'gray.900' : 'whiteAlpha.800',
-              bg: isLightMode ? 'blackAlpha.50' : 'whiteAlpha.100'
+              color: 'brand.fg',
+              bg: brandAlpha.fg(0.08)
             } : {}}
             transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
           >

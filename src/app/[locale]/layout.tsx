@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
-import { Syne, DM_Sans } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "../globals.css";
+import { brandTokens } from "../brandTokens";
 import { Providers } from "./providers";
 import { SITE_NAME, SITE_URL } from "../constants";
 import { NextIntlClientProvider } from 'next-intl';
@@ -10,17 +12,10 @@ import { resolveRequestLocale } from '@/i18n/requestLocale';
 import { buildStructuredDataGraph } from '../seo/structuredData';
 import type { ServiceContent } from '../services/catalog';
 
-const syne = Syne({
-  subsets: ["latin"],
-  variable: "--font-heading",
-  weight: ["500", "600", "700", "800"],
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["400", "500", "600", "700"],
-});
+export const viewport: Viewport = {
+  themeColor: brandTokens.bg,
+  colorScheme: "dark",
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const locale = resolveRequestLocale((await params).locale);
@@ -134,7 +129,7 @@ export default async function LocaleLayout({
       lang={locale}
       data-scroll-behavior="smooth"
     >
-      <body className={`${syne.variable} ${dmSans.variable}`}>
+      <body className={`${GeistSans.variable} ${GeistMono.variable}`}>
         <script
           id="structured-data"
           type="application/ld+json"

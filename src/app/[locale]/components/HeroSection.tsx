@@ -4,6 +4,7 @@ import React from "react";
 import { Box, Button, Container, Heading, Text, Flex } from "@chakra-ui/react";
 import { ArrowDown } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { brandAlpha, brandTokens } from "@/app/brandTokens";
 
 const HeroSection = () => {
   const t = useTranslations("hero");
@@ -22,8 +23,8 @@ const HeroSection = () => {
       aria-label="Presentación de Tonk Solutions"
       position="relative"
       h="100vh"
-      bg="dark.900"
-      color="white"
+      bg="brand.bg"
+      color="brand.fg"
       overflow="hidden"
     >
       {/* Dot grid pattern */}
@@ -34,7 +35,7 @@ const HeroSection = () => {
         right="0"
         bottom="0"
         aria-hidden="true"
-        bgImage="radial-gradient(circle, rgba(6, 182, 212, 0.15) 1px, transparent 1px)"
+        bgImage={`radial-gradient(circle, ${brandAlpha.fg(0.06)} 1px, transparent 1px)`}
         bgSize="32px 32px"
       />
 
@@ -71,24 +72,24 @@ const HeroSection = () => {
           xmlns="http://www.w3.org/2000/svg"
           style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
         >
-          <line x1="0" y1="900" x2="600" y2="0" stroke="rgba(6, 182, 212, 0.06)" strokeWidth="1" />
-          <line x1="200" y1="900" x2="800" y2="0" stroke="rgba(59, 130, 246, 0.04)" strokeWidth="1" />
-          <line x1="900" y1="900" x2="1440" y2="200" stroke="rgba(6, 182, 212, 0.05)" strokeWidth="1" />
+          <line x1="0" y1="900" x2="600" y2="0" stroke={brandAlpha.muted(0.12)} strokeWidth="1" />
+          <line x1="200" y1="900" x2="800" y2="0" stroke={brandAlpha.fg(0.05)} strokeWidth="1" />
+          <line x1="900" y1="900" x2="1440" y2="200" stroke={brandAlpha.muted(0.1)} strokeWidth="1" />
 
-          <rect x="60" y="60" width="120" height="1" fill="rgba(6, 182, 212, 0.2)" />
-          <rect x="60" y="60" width="1" height="80" fill="rgba(6, 182, 212, 0.2)" />
-          <rect x="1260" y="60" width="120" height="1" fill="rgba(6, 182, 212, 0.2)" />
-          <rect x="1380" y="60" width="1" height="80" fill="rgba(6, 182, 212, 0.2)" />
-          <rect x="60" y="839" width="120" height="1" fill="rgba(6, 182, 212, 0.12)" />
-          <rect x="60" y="760" width="1" height="80" fill="rgba(6, 182, 212, 0.12)" />
+          <rect x="60" y="60" width="120" height="1" fill={brandTokens.borderStrong} />
+          <rect x="60" y="60" width="1" height="80" fill={brandTokens.borderStrong} />
+          <rect x="1260" y="60" width="120" height="1" fill={brandTokens.borderStrong} />
+          <rect x="1380" y="60" width="1" height="80" fill={brandTokens.borderStrong} />
+          <rect x="60" y="839" width="120" height="1" fill={brandAlpha.fg(0.1)} />
+          <rect x="60" y="760" width="1" height="80" fill={brandAlpha.fg(0.1)} />
 
-          <g opacity="0.15">
-            <line x1="1300" y1="700" x2="1320" y2="700" stroke="#06b6d4" strokeWidth="1" />
-            <line x1="1310" y1="690" x2="1310" y2="710" stroke="#06b6d4" strokeWidth="1" />
+          <g opacity="0.35">
+            <line x1="1300" y1="700" x2="1320" y2="700" stroke={brandTokens.accent} strokeWidth="1" />
+            <line x1="1310" y1="690" x2="1310" y2="710" stroke={brandTokens.accent} strokeWidth="1" />
           </g>
-          <g opacity="0.1">
-            <line x1="140" y1="400" x2="160" y2="400" stroke="#3b82f6" strokeWidth="1" />
-            <line x1="150" y1="390" x2="150" y2="410" stroke="#3b82f6" strokeWidth="1" />
+          <g opacity="0.2">
+            <line x1="140" y1="400" x2="160" y2="400" stroke={brandTokens.muted} strokeWidth="1" />
+            <line x1="150" y1="390" x2="150" y2="410" stroke={brandTokens.muted} strokeWidth="1" />
           </g>
         </svg>
       </Box>
@@ -100,7 +101,7 @@ const HeroSection = () => {
         w="400px"
         h="400px"
         aria-hidden="true"
-        background="radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%)"
+        background={`radial-gradient(circle, ${brandAlpha.accent(0.04)} 0%, transparent 70%)`}
       />
       <Box
         position="absolute"
@@ -109,7 +110,7 @@ const HeroSection = () => {
         w="350px"
         h="350px"
         aria-hidden="true"
-        background="radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%)"
+        background={`radial-gradient(circle, ${brandAlpha.muted(0.06)} 0%, transparent 70%)`}
       />
 
       <Container maxW="1280px" mx="auto" h="full" px={{ base: 4, md: 8 }} position="relative" zIndex={2}>
@@ -125,31 +126,28 @@ const HeroSection = () => {
             <Box className="hero-fade-block-1">
               <Text
                 as="span"
-                color="primary.400"
+                color="brand.muted"
+                fontFamily="mono"
                 fontWeight="medium"
                 letterSpacing="0.2em"
-                fontSize="sm"
+                fontSize="xs"
                 textTransform="uppercase"
                 display="block"
-                mb={3}
+                mb={4}
               >
                 {t("subtitle")}
               </Text>
               <Heading
                 as="h1"
                 fontSize="clamp(2rem, 5vw + 1rem, 3.5rem)"
-                fontWeight="bold"
+                fontWeight="semibold"
                 lineHeight="1.1"
                 mb={4}
                 letterSpacing="tight"
+                color="brand.fg"
               >
                 {t("title")}{" "}
-                <Text
-                  as="span"
-                  background="linear-gradient(135deg, #06b6d4, #3b82f6)"
-                  backgroundClip="text"
-                  color="transparent"
-                >
+                <Text as="span" color="brand.accent">
                   {t("titleHighlight")}
                 </Text>
               </Heading>
@@ -159,7 +157,7 @@ const HeroSection = () => {
               <Text
                 as="p"
                 fontSize="clamp(1.125rem, 2vw + 0.5rem, 1.25rem)"
-                color="dark.400"
+                color="brand.muted"
                 maxW="700px"
                 mx="auto"
                 lineHeight="1.6"
@@ -174,20 +172,20 @@ const HeroSection = () => {
                 px={10}
                 py={6}
                 onClick={handleScrollDown}
-                borderRadius="full"
+                borderRadius="md"
                 fontWeight="semibold"
                 letterSpacing="wide"
                 position="relative"
-                bg="transparent"
-                color="white"
+                bg="brand.accent"
+                color="brand.bg"
                 border="1px solid"
-                borderColor="primary.500"
+                borderColor="brand.accent"
                 _hover={{
-                  bg: "primary.500",
-                  transform: "scale(1.05)",
-                  boxShadow: "0 0 30px rgba(6, 182, 212, 0.3)",
+                  bg: "accent.emphasized",
+                  borderColor: "accent.emphasized",
+                  transform: "translateY(-1px)",
                 }}
-                transition="background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease"
+                transition="background 0.3s ease, transform 0.3s ease"
               >
                 {t("cta")}
               </Button>
@@ -210,11 +208,10 @@ const HeroSection = () => {
             h="40px"
             borderRadius="full"
             border="1px solid"
-            borderColor="primary.500"
+            borderColor="brand.borderStrong"
             align="center"
             justify="center"
-            opacity={0.6}
-            boxShadow="0 0 15px rgba(6, 182, 212, 0.15)"
+            color="brand.muted"
           >
             <ArrowDown size={18} />
           </Flex>

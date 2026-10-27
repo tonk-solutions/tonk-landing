@@ -110,6 +110,7 @@
   },
   "team": {
     "label": "NUESTRO EQUIPO FUNDADOR",
+    "spokesperson": "Vocero",
     "title": "Ingenieros senior, experiencia real",
     "description": "Venimos de trabajar en algunas de las plataformas más exigentes de la región — BBVA, Santander, ICBC, Accenture, Endava — y decidimos armar algo propio. Eso nos da una perspectiva clave: sabemos lo que cuesta que un sistema falle en producción.",
     "members": [
@@ -118,7 +119,8 @@
         "role": "Co-Founder · Financial Systems Lead",
         "bio": "App Owner en BBVA, a cargo de sistemas financieros críticos con millones de transacciones diarias. Entiende lo que significa responsabilidad técnica real en entornos donde no hay margen de error.",
         "linkedin": "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/",
-        "avatarUrl": "/images/founders/agustin-castillo.jpeg"
+        "avatarUrl": "/images/founders/agustin-castillo.jpeg",
+        "spokesperson": true
       },
       {
         "name": "Nicolás Gómez",
@@ -132,7 +134,8 @@
         "role": "Co-Founder · Platform Engineering",
         "bio": "Experiencia construyendo plataformas cloud-native escalables. Referente en arquitecturas de microservicios y soluciones distribuidas.",
         "linkedin": "https://www.linkedin.com/in/rodrigoenzohernandez/",
-        "avatarUrl": "/images/founders/rodrigo-hernandez.jpeg"
+        "avatarUrl": "/images/founders/rodrigo-hernandez.jpeg",
+        "spokesperson": true
       }
     ]
   },

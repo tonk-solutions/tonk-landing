@@ -7,6 +7,7 @@ import { useInView } from 'react-intersection-observer';
 import { Linkedin } from 'lucide-react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { brandAlpha } from '@/app/brandTokens';
 
 const MotionBox = motion(Box);
 
@@ -17,9 +18,20 @@ interface TeamMemberProps {
   linkedin: string;
   delay: number;
   avatarUrl?: string;
+  isSpokesperson?: boolean;
+  spokespersonLabel: string;
 }
 
-const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, delay, avatarUrl }) => {
+const TeamMember: React.FC<TeamMemberProps> = ({
+  name,
+  role,
+  bio,
+  linkedin,
+  delay,
+  avatarUrl,
+  isSpokesperson = false,
+  spokespersonLabel,
+}) => {
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -34,18 +46,17 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
     >
       <Box
         as="article"
-        bg="white"
+        data-testid="team-card"
+        bg="brand.surface"
         borderRadius="xl"
         overflow="hidden"
-        boxShadow="sm"
         borderWidth="1px"
-        borderColor="gray.100"
+        borderColor="brand.border"
         height="100%"
-        transition="transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease"
+        transition="transform 0.35s ease, border-color 0.35s ease"
         _hover={{
-          boxShadow: 'md',
-          transform: 'scale(1.02)',
-          borderColor: 'primary.300',
+          transform: 'translateY(-2px)',
+          borderColor: 'brand.accentHalo',
         }}
       >
         <Flex direction="column" h="100%">
@@ -57,12 +68,10 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
                 borderRadius="full"
                 overflow="hidden"
                 position="relative"
-                p="3px"
-                transition="all 0.35s ease"
-                background="linear-gradient(135deg, rgba(203, 213, 225, 0.5), rgba(203, 213, 225, 0.5))"
-                _hover={{
-                  background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
-                }}
+                p="2px"
+                bg={brandAlpha.fg(0.1)}
+                transition="background 0.35s ease"
+                _hover={{ background: 'brand.accentGlow' }}
               >
                 <Box
                   w="100%"
@@ -86,19 +95,17 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
                 h="88px"
                 borderRadius="full"
                 position="relative"
-                p="3px"
-                transition="all 0.35s ease"
-                background="linear-gradient(135deg, rgba(203, 213, 225, 0.5), rgba(203, 213, 225, 0.5))"
-                _hover={{
-                  background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
-                }}
+                p="2px"
+                bg={brandAlpha.fg(0.1)}
+                transition="background 0.35s ease"
+                _hover={{ background: 'brand.accentGlow' }}
               >
                 <Box
                   w="100%"
                   h="100%"
                   borderRadius="full"
-                  bg="dark.900"
-                  color="white"
+                  bg="brand.bg"
+                  color="brand.fg"
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
@@ -113,14 +120,15 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
           </Flex>
 
           <Flex direction="column" p={5} gap={2} align="center" flex="1">
-            <Heading as="h3" fontSize="clamp(1.125rem, 2vw + 0.5rem, 1.3rem)">
+            <Heading as="h3" fontSize="clamp(1.125rem, 2vw + 0.5rem, 1.3rem)" color="brand.fg">
               {name}
             </Heading>
-            <Box>
+            <Box textAlign="center">
               <Text
-                color="primary.600"
-                fontWeight="semibold"
-                fontSize="sm"
+                as="p"
+                fontFamily="mono"
+                color="brand.muted"
+                fontSize="xs"
                 textTransform="uppercase"
                 letterSpacing="0.08em"
               >
@@ -130,16 +138,40 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
                 w="24px"
                 h="2px"
                 mx="auto"
-                mt={1}
-                background="linear-gradient(90deg, #06b6d4, transparent)"
+                mt={2}
+                bg="brand.accent"
+                opacity={0.7}
               />
             </Box>
-            <Text as="p" textAlign="center" color="dark.500" fontSize="sm" mt={2}>
+
+            {isSpokesperson && (
+              <Box
+                data-testid="spokesperson-badge"
+                display="inline-flex"
+                alignItems="center"
+                px={2}
+                py="2px"
+                mt={1}
+                border="1px solid"
+                borderColor="brand.accentHalo"
+                borderRadius="full"
+                color="brand.accent"
+                fontFamily="mono"
+                fontSize="10px"
+                textTransform="uppercase"
+                letterSpacing="0.12em"
+                lineHeight="1.6"
+              >
+                {spokespersonLabel}
+              </Box>
+            )}
+
+            <Text as="p" textAlign="center" color="brand.muted" fontSize="sm" mt={2}>
               {bio}
             </Text>
           </Flex>
 
-          <Flex justify="center" borderTop="1px solid" borderColor="gray.100" p={4}>
+          <Flex justify="center" borderTop="1px solid" borderColor="brand.border" p={4}>
             <Link
               href={linkedin}
               target="_blank"
@@ -147,10 +179,10 @@ const TeamMember: React.FC<TeamMemberProps> = ({ name, role, bio, linkedin, dela
               display="flex"
               alignItems="center"
               gap={2}
-              color="dark.500"
-              fontSize="sm"
-              fontWeight="medium"
-              _hover={{ color: 'primary.500' }}
+              color="brand.muted"
+              fontFamily="mono"
+              fontSize="xs"
+              _hover={{ color: 'brand.accent' }}
               aria-label={`Perfil de LinkedIn de ${name}`}
               transition="color 0.2s ease"
             >
@@ -168,8 +200,9 @@ interface TeamMemberData {
   role: string;
   bio: string;
   linkedin: string;
-  delay: number;
   avatarUrl: string;
+  spokesperson?: boolean;
+  delay: number;
 }
 
 const TeamSection = () => {
@@ -178,7 +211,7 @@ const TeamSection = () => {
     triggerOnce: true,
   });
   const t = useTranslations('team');
-  
+
   type RawMember = Omit<TeamMemberData, 'delay'>;
   const rawMembers = t.raw('members') as RawMember[];
   const teamMembers: TeamMemberData[] = rawMembers.map((member, index) => ({
@@ -193,7 +226,7 @@ const TeamSection = () => {
       aria-labelledby="equipo-heading"
       py={{ base: 14, md: 20 }}
       px={{ base: 4, md: 8 }}
-      bg="gray.50"
+      bg="brand.bg"
       w="100%"
       overflow="hidden"
       scrollMarginTop="80px"
@@ -207,19 +240,19 @@ const TeamSection = () => {
             textAlign="center"
           >
             <Text
-              color="primary.500"
-              fontWeight="semibold"
-              mb={2}
-              fontSize="sm"
+              color="brand.muted"
+              fontFamily="mono"
+              mb={3}
+              fontSize="xs"
               textTransform="uppercase"
-              letterSpacing="0.15em"
+              letterSpacing="0.18em"
             >
               {t('label')}
             </Text>
-            <Heading as="h2" id="equipo-heading" fontSize="clamp(1.8rem, 4vw + 1rem, 2.5rem)" lineHeight="1.2" mb={4}>
+            <Heading as="h2" id="equipo-heading" fontSize="clamp(1.8rem, 4vw + 1rem, 2.5rem)" lineHeight="1.2" mb={4} color="brand.fg">
               {t('title')}
             </Heading>
-            <Text as="p" fontSize="clamp(1rem, 1.5vw + 0.5rem, 1.125rem)" color="dark.500" maxW="800px" mx="auto">
+            <Text as="p" fontSize="clamp(1rem, 1.5vw + 0.5rem, 1.125rem)" color="brand.muted" maxW="800px" mx="auto">
               {t('description')}
             </Text>
           </MotionBox>
@@ -228,13 +261,15 @@ const TeamSection = () => {
         <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} gap={8}>
           {teamMembers.map((member, index) => (
             <TeamMember
-              key={index}
+              key={member.name ?? index}
               name={member.name}
               role={member.role}
               bio={member.bio}
               linkedin={member.linkedin}
               delay={member.delay}
               avatarUrl={member.avatarUrl}
+              isSpokesperson={member.spokesperson === true}
+              spokespersonLabel={t('spokesperson')}
             />
           ))}
         </Grid>

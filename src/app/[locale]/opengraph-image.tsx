@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { brandTokens } from "@/app/brandTokens";
 
 export const alt = "Tonk Solutions";
 export const size = { width: 1200, height: 630 };
@@ -9,10 +10,6 @@ export const contentType = "image/png";
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
-
-const PRIMARY = "#06b6d4";
-const SECONDARY = "#2563eb";
-const DARK = "#0f172a";
 
 export default async function Image({
   params,
@@ -34,60 +31,61 @@ export default async function Image({
           alignItems: "flex-start",
           justifyContent: "center",
           padding: "80px",
-          background: DARK,
-          backgroundImage:
-            "radial-gradient(circle at 85% 20%, rgba(6,182,212,0.25), transparent 55%)",
+          backgroundColor: brandTokens.bg,
         }}
       >
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 24,
-            marginBottom: 40,
+            gap: 28,
+            marginBottom: 44,
           }}
         >
-          <div style={{ display: "flex", width: 90, height: 90, position: "relative" }}>
-            <div
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                width: 36,
-                height: 90,
-                background: SECONDARY,
-                opacity: 0.9,
-              }}
+          {/* Official isotipo: same geometry as src/app/icon.svg. */}
+          <svg width="96" height="96" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="6" fill={brandTokens.bg} />
+            <path
+              d="M5 9.5H27M16 9.5V20"
+              fill="none"
+              stroke={brandTokens.fg}
+              strokeWidth="5"
             />
-            <div
-              style={{
-                position: "absolute",
-                left: 44,
-                top: 0,
-                width: 36,
-                height: 66,
-                background: PRIMARY,
-              }}
-            />
-          </div>
+            <circle cx="16" cy="25.5" r="3.5" fill={brandTokens.accent} />
+          </svg>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: 64, fontWeight: 700, color: "white", letterSpacing: -1 }}>
+            <span
+              style={{
+                fontSize: 68,
+                fontWeight: 600,
+                color: brandTokens.fg,
+                letterSpacing: -1,
+                lineHeight: 1,
+              }}
+            >
               TONK
             </span>
             <span
               style={{
-                fontSize: 22,
-                fontWeight: 600,
-                color: PRIMARY,
-                letterSpacing: 6,
-                textTransform: "uppercase",
+                fontSize: 20,
+                fontWeight: 500,
+                color: brandTokens.muted,
+                letterSpacing: 8,
+                marginTop: 10,
               }}
             >
-              Solutions
+              SOLUTIONS
             </span>
           </div>
         </div>
-        <span style={{ fontSize: 38, color: "#cbd5e1", maxWidth: 900, lineHeight: 1.3 }}>
+        <span
+          style={{
+            fontSize: 38,
+            color: brandTokens.fg,
+            maxWidth: 900,
+            lineHeight: 1.3,
+          }}
+        >
           {tagline}
         </span>
       </div>

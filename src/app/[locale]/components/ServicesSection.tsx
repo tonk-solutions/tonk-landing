@@ -8,6 +8,7 @@ import { useInView } from 'react-intersection-observer';
 import { useTranslations } from 'next-intl';
 import { Link as LocaleLink } from '@/i18n/routing';
 import { SERVICES_CATALOG, type ServiceBranch } from '@/app/services/catalog';
+import { brandAlpha, brandTokens } from '@/app/brandTokens';
 
 const MotionBox = motion(Box);
 
@@ -52,18 +53,17 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch, isActiv
       templateColumns={{ base: "1fr", lg: "300px 1fr" }}
       gap={{ base: 6, lg: 12 }}
       w="100%"
-      bg="white"
+      bg="brand.surface"
       rounded="xl"
       p={{ base: 6, lg: 8 }}
-      boxShadow="sm"
       border="1px solid"
-      borderColor="gray.100"
+      borderColor="brand.border"
     >
       <Box>
         <Text
           fontSize="xs"
-          fontWeight="bold"
-          color="dark.500"
+          fontFamily="mono"
+          color="brand.muted"
           textTransform="uppercase"
           letterSpacing="0.15em"
           mb={6}
@@ -81,23 +81,22 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch, isActiv
               onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedServiceIndex(index); } }}
               role="button"
               tabIndex={0}
-              transition="background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease"
+              transition="background 0.25s ease, border-color 0.25s ease"
               position="relative"
-              bg={selectedServiceIndex === index ? "dark.900" : "white"}
+              bg={selectedServiceIndex === index ? "brand.bg" : "transparent"}
               border="1px solid"
-              borderColor={selectedServiceIndex === index ? "dark.700" : "gray.200"}
+              borderColor={selectedServiceIndex === index ? "brand.accentHalo" : brandAlpha.fg(0.06)}
               _hover={{
-                borderColor: selectedServiceIndex === index ? "dark.700" : "primary.300",
-                bg: selectedServiceIndex === index ? "dark.900" : "gray.50",
+                borderColor: selectedServiceIndex === index ? "brand.accentGlow" : "brand.borderStrong",
+                bg: selectedServiceIndex === index ? "brand.bg" : brandAlpha.fg(0.03),
               }}
-              boxShadow={selectedServiceIndex === index ? "0 4px 20px rgba(6, 182, 212, 0.1)" : undefined}
             >
               <Flex align="center" gap={3}>
                 <Flex
                   w="36px"
                   h="36px"
                   borderRadius="md"
-                  bg={selectedServiceIndex === index ? "primary.500" : "gray.100"}
+                  bg={selectedServiceIndex === index ? "brand.accentSubtle" : brandAlpha.fg(0.05)}
                   justify="center"
                   align="center"
                   transition="background 0.25s ease"
@@ -105,13 +104,13 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch, isActiv
                   <Icon
                     as={iconMap[service.icon] || Code}
                     boxSize={4}
-                    color={selectedServiceIndex === index ? "white" : "dark.500"}
+                    color={selectedServiceIndex === index ? "brand.accent" : "brand.muted"}
                   />
                 </Flex>
                 <Text
                   fontSize="sm"
                   fontWeight="semibold"
-                  color={selectedServiceIndex === index ? "white" : "dark.700"}
+                  color={selectedServiceIndex === index ? "brand.fg" : "brand.muted"}
                 >
                   {service.title}
                 </Text>
@@ -145,24 +144,28 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch, isActiv
                     borderRadius="xl"
                     justify="center"
                     align="center"
-                    background="linear-gradient(135deg, #06b6d4, #2563eb)"
+                    bg="brand.accentSubtle"
+                    border="1px solid"
+                    borderColor="brand.accentHalo"
+                    flexShrink={0}
                   >
-                    <Icon as={iconMap[service.icon] || Code} boxSize={10} color="white" />
+                    <Icon as={iconMap[service.icon] || Code} boxSize={9} color="brand.accent" />
                   </Flex>
                   <Box>
-                    <Heading as="h3" fontSize="clamp(1.5rem, 3vw + 0.5rem, 2rem)" color="dark.900" lineHeight="1.3">
+                    <Heading as="h3" fontSize="clamp(1.5rem, 3vw + 0.5rem, 2rem)" color="brand.fg" lineHeight="1.3">
                       {service.title}
                     </Heading>
                     <Box
                       w="40px"
                       h="2px"
                       mt={2}
-                      background="linear-gradient(90deg, #06b6d4, transparent)"
+                      bg="brand.accent"
+                      opacity={0.7}
                     />
                   </Box>
                 </Flex>
 
-                <Text fontSize="clamp(0.875rem, 1vw + 0.5rem, 1rem)" color="dark.600" lineHeight="1.8" mb={6}>
+                <Text fontSize="clamp(0.875rem, 1vw + 0.5rem, 1rem)" color="brand.muted" lineHeight="1.8" mb={6}>
                   {service.description}
                 </Text>
 
@@ -171,10 +174,10 @@ const BranchServicesGrid: React.FC<BranchServicesGridProps> = ({ branch, isActiv
                     href={`/services/${catalogEntry.slug}`}
                     style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    <Text as="span" fontSize="sm" fontWeight="semibold" color="primary.600">
+                    <Text as="span" fontSize="sm" fontWeight="semibold" color="brand.accent">
                       {t('viewDetails')}
                     </Text>
-                    <Icon as={ArrowRight} boxSize={4} color="primary.600" />
+                    <Icon as={ArrowRight} boxSize={4} color="brand.accent" />
                   </LocaleLink>
                 )}
               </Box>
@@ -222,7 +225,7 @@ const ServicesSection = () => {
       aria-labelledby="servicios-heading"
       py={{ base: 14, md: 20 }}
       px={{ base: 4, md: 8 }}
-      bg="gray.50"
+      bg="brand.bg"
       w="100%"
       overflow="hidden"
       scrollMarginTop="80px"
@@ -238,19 +241,19 @@ const ServicesSection = () => {
             w="full"
           >
             <Text
-              color="primary.500"
-              fontWeight="semibold"
-              mb={2}
-              fontSize="sm"
+              color="brand.muted"
+              fontFamily="mono"
+              mb={3}
+              fontSize="xs"
               textTransform="uppercase"
-              letterSpacing="0.15em"
+              letterSpacing="0.18em"
             >
               {t('label')}
             </Text>
-            <Heading as="h2" id="servicios-heading" fontSize="clamp(1.8rem, 4vw + 1rem, 2.5rem)" lineHeight="1.2" mb={4}>
+            <Heading as="h2" id="servicios-heading" fontSize="clamp(1.8rem, 4vw + 1rem, 2.5rem)" lineHeight="1.2" mb={4} color="brand.fg">
               {t('title')}
             </Heading>
-            <Text as="p" fontSize="clamp(1rem, 1.5vw + 0.5rem, 1.125rem)" color="dark.500">
+            <Text as="p" fontSize="clamp(1rem, 1.5vw + 0.5rem, 1.125rem)" color="brand.muted">
               {t('description')}
             </Text>
           </MotionBox>
@@ -260,13 +263,13 @@ const ServicesSection = () => {
             value={selectedBranch}
             onValueChange={(e) => setSelectedBranch(e.value || branches[0]?.name || "")}
             size="lg"
-            bg="white"
+            bg="brand.surface"
             p={1}
             rounded="full"
             border="1px solid"
-            borderColor="gray.200"
+            borderColor={brandAlpha.fg(0.08)}
             css={{
-              "--segment-indicator-bg": "var(--chakra-colors-dark-900, #0f172a)",
+              "--segment-indicator-bg": `var(--chakra-colors-brand-bg, ${brandTokens.bg})`,
               "--segment-indicator-shadow": "none",
             }}
             suppressHydrationWarning
@@ -280,21 +283,22 @@ const ServicesSection = () => {
                 py={3}
                 rounded="full"
                 _checked={{
-                  bg: "dark.900",
+                  bg: "brand.bg",
                 }}
-                bg="white"
+                bg="transparent"
               >
                 <Flex align="center" gap={2}>
                   <Icon
                     as={branchIcons[branch.name] || Hammer}
                     boxSize={4}
-                    _checked={{ color: "white" }}
+                    _checked={{ color: "brand.accent" }}
                   />
                   <SegmentGroup.ItemText
-                    fontWeight="semibold"
-                    color="dark.600"
+                    fontFamily="mono"
+                    fontWeight="medium"
+                    color="brand.muted"
                     _checked={{
-                      color: "white",
+                      color: "brand.fg",
                     }}
                     fontSize="sm"
                   >
@@ -309,7 +313,7 @@ const ServicesSection = () => {
 
         {branches.map((branch) => (
           <Box key={branch.name} display={selectedBranch === branch.name ? "block" : "none"} mb={8} textAlign="center">
-            <Text as="p" fontSize="lg" color="dark.500" maxW="600px" mx="auto">
+            <Text as="p" fontSize="lg" color="brand.muted" maxW="600px" mx="auto">
               {branch.subtitle}
             </Text>
           </Box>

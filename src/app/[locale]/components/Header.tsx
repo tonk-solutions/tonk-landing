@@ -15,6 +15,7 @@ import TonkLogo from './TonkLogo';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
+import { brandAlpha } from '@/app/brandTokens';
 
 const Header = () => {
   const { open, onToggle, onClose } = useDisclosure();
@@ -30,7 +31,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 24);
     };
 
     handleScroll();
@@ -50,7 +51,7 @@ const Header = () => {
     };
   }, [open]);
 
-  const isLightMode = scrolled && !open;
+  const isScrolled = scrolled && !open;
 
   // Animation variants
   const menuVariants = {
@@ -79,11 +80,11 @@ const Header = () => {
       left="0"
       w="100%"
       zIndex={999}
-      bg={(scrolled && !open) ? 'rgba(255, 255, 255, 0.95)' : 'transparent'}
-      backdropFilter={(scrolled && !open) ? 'blur(10px)' : 'none'}
-      color={isLightMode ? 'gray.800' : 'white'}
-      boxShadow={(scrolled && !open) ? 'sm' : 'none'}
-      transition="background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease"
+      bg={isScrolled ? brandAlpha.bg(0.92) : 'transparent'}
+      backdropFilter={isScrolled ? 'blur(10px)' : 'none'}
+      borderBottomWidth="1px"
+      borderBottomColor={isScrolled ? brandAlpha.fg(0.08) : 'transparent'}
+      transition="background-color 0.3s ease, border-color 0.3s ease"
     >
       <Container maxW="1280px" mx="auto" px={{ base: 5, md: 8 }} position="relative" zIndex={1000}>
         <Flex
@@ -94,7 +95,7 @@ const Header = () => {
           justify="space-between"
         >
           <Link href="#hero" _hover={{ textDecoration: 'none' }} aria-label="Tonk Solutions - Inicio" onClick={onClose}>
-            <TonkLogo theme={isLightMode ? 'light' : 'dark'} size="sm" />
+            <TonkLogo variant="horizontal" height={38} priority />
           </Link>
 
           {/* Desktop Navigation */}
@@ -109,24 +110,28 @@ const Header = () => {
                 key={link.href}
                 href={link.href}
                 fontWeight={500}
-                color={scrolled ? 'gray.800' : 'white'}
-                _hover={{ color: 'primary.500', textDecoration: 'none' }}
+                fontSize="sm"
+                color="brand.muted"
+                _hover={{ color: 'brand.fg', textDecoration: 'none' }}
+                transition="color 0.2s ease"
               >
                 {link.label}
               </Link>
             ))}
-            <LanguageSwitcher isLightMode={isLightMode} />
+            <LanguageSwitcher />
             <Link
               href="#contacto"
-              bg="primary.500"
-              color="white"
+              bg="brand.accent"
+              color="brand.bg"
               px={6}
               py={2}
               borderRadius="md"
               fontSize="sm"
-              fontWeight={500}
+              fontWeight={600}
               display="inline-block"
-              _hover={{ bg: 'primary.600', textDecoration: 'none' }}
+              _hover={{ bg: 'accent.emphasized', textDecoration: 'none' }}
+              _focusVisible={{ outline: '2px solid', outlineColor: 'brand.accent', outlineOffset: '2px' }}
+              transition="background 0.2s ease"
             >
               {t('contact')}
             </Link>
@@ -137,9 +142,9 @@ const Header = () => {
             display={{ base: 'flex', md: 'none' }}
             onClick={onToggle}
             aria-label="Abrir menú de navegación"
-            color={isLightMode ? 'gray.800' : 'white'}
+            color="brand.fg"
             bg="transparent"
-            _hover={{ bg: isLightMode ? 'blackAlpha.100' : 'whiteAlpha.200' }}
+            _hover={{ bg: 'whiteAlpha.200' }}
             variant="ghost"
           >
             {open ? <X size={24} /> : <Menu size={24} />}
@@ -157,7 +162,7 @@ const Header = () => {
             left="0"
             w="100vw"
             h="100dvh"
-            bg="rgba(15, 23, 42, 0.98)"
+            bg={brandAlpha.bg(0.98)}
             backdropFilter="blur(20px)"
             display={{ base: 'flex', md: 'none' }}
             flexDirection="column"
@@ -179,9 +184,9 @@ const Header = () => {
                             href={link.href}
                             fontSize="2xl"
                             fontWeight={600}
-                            color="white"
+                            color="brand.fg"
                             letterSpacing="tight"
-                            _hover={{ color: 'primary.500', textDecoration: 'none' }}
+                            _hover={{ color: 'brand.accent', textDecoration: 'none' }}
                             onClick={onClose}
                           >
                             {link.label}
@@ -194,16 +199,16 @@ const Header = () => {
                   <Stack gap={8} align="center" w="full">
                     <Box asChild>
                       <motion.div variants={itemVariants}>
-                        <LanguageSwitcher isLightMode={false} />
+                        <LanguageSwitcher />
                       </motion.div>
                     </Box>
-                    
+
                     <Box asChild w="full" maxW="300px">
                       <motion.div variants={itemVariants}>
                         <Link
                           href="#contacto"
-                          bg="primary.500"
-                          color="white"
+                          bg="brand.accent"
+                          color="brand.bg"
                           px={8}
                           py={4}
                           borderRadius="full"
@@ -212,7 +217,7 @@ const Header = () => {
                           display="block"
                           textAlign="center"
                           w="full"
-                          _hover={{ bg: 'primary.600', textDecoration: 'none', transform: 'translateY(-2px)' }}
+                          _hover={{ bg: 'accent.emphasized', textDecoration: 'none', transform: 'translateY(-2px)' }}
                           transition="all 0.2s"
                           onClick={onClose}
                         >

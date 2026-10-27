@@ -17,6 +17,7 @@ import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, ArrowRight, MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { WHATSAPP_URL } from '@/app/constants';
+import { brandAlpha } from '@/app/brandTokens';
 
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
@@ -53,34 +54,19 @@ const ContactItem: React.FC<ContactItemProps> = ({ icon, label, value, href, ind
       gap={5}
       p={5}
       borderRadius="xl"
-      bg="dark.800"
+      bg="brand.bg"
       border="1px solid"
-      borderColor="dark.700"
+      borderColor="brand.border"
       position="relative"
       overflow="hidden"
       role="group"
       cursor={href ? "pointer" : "default"}
-      css={{ transition: "border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease" }}
+      css={{ transition: "border-color 0.3s ease, transform 0.3s ease" }}
       _hover={{
-        borderColor: "var(--chakra-colors-primary-500, #06b6d4)",
+        borderColor: "brand.accentHalo",
         transform: "translateY(-2px)",
-        boxShadow: "0 8px 32px rgba(6, 182, 212, 0.12)",
       }}
     >
-      {/* Subtle gradient shine on hover */}
-      <Box
-        position="absolute"
-        top="0"
-        left="0"
-        right="0"
-        bottom="0"
-        opacity={0}
-        _groupHover={{ opacity: 0.04 }}
-        background="linear-gradient(135deg, #06b6d4, #3b82f6)"
-        transition="opacity 0.3s ease"
-        aria-hidden="true"
-      />
-
       <Flex
         w="48px"
         h="48px"
@@ -89,27 +75,29 @@ const ContactItem: React.FC<ContactItemProps> = ({ icon, label, value, href, ind
         align="center"
         flexShrink={0}
         position="relative"
-        background="linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.1))"
+        bg="brand.accentSubtle"
+        border="1px solid"
+        borderColor="brand.accentHalo"
       >
-        <Icon as={icon} boxSize={5} color="primary.400" />
+        <Icon as={icon} boxSize={5} color="brand.accent" />
       </Flex>
 
       <Box flex="1" position="relative" zIndex={1} minW={0}>
         <Text
           fontSize="xs"
-          fontWeight="bold"
+          fontFamily="mono"
           textTransform="uppercase"
           letterSpacing="0.1em"
-          color="dark.400"
+          color="brand.muted"
           mb={1}
         >
           {label}
         </Text>
         <Text
           fontSize="sm"
-          color="dark.200"
+          color="brand.fg"
           fontWeight="medium"
-          _groupHover={{ color: 'primary.300' }}
+          _groupHover={{ color: 'brand.fg' }}
           transition="color 0.3s ease"
           wordBreak="break-word"
         >
@@ -123,11 +111,12 @@ const ContactItem: React.FC<ContactItemProps> = ({ icon, label, value, href, ind
             w="32px"
             h="32px"
             borderRadius="md"
-            bg="dark.700"
+            bg="brand.surface"
             justify="center"
             align="center"
-            _groupHover={{ bg: 'primary.500' }}
-            transition="background 0.3s ease"
+            color="brand.muted"
+            _groupHover={{ bg: 'brand.accent', color: 'brand.bg' }}
+            transition="background 0.3s ease, color 0.3s ease"
           >
             <ArrowRight size={14} color="currentColor" />
           </Flex>
@@ -168,7 +157,7 @@ const ContactSection = () => {
       aria-labelledby="contacto-heading"
       py={{ base: 16, md: 24 }}
       px={{ base: 4, md: 8 }}
-      bg="dark.900"
+      bg="brand.surface"
       position="relative"
       overflow="hidden"
       w="100%"
@@ -182,7 +171,7 @@ const ContactSection = () => {
         right="0"
         bottom="0"
         aria-hidden="true"
-        bgImage="radial-gradient(circle, rgba(6, 182, 212, 0.08) 1px, transparent 1px)"
+        bgImage={`radial-gradient(circle, ${brandAlpha.fg(0.05)} 1px, transparent 1px)`}
         bgSize="32px 32px"
       />
 
@@ -200,7 +189,7 @@ const ContactSection = () => {
         bgSize="128px 128px"
       />
 
-      {/* Gradient glow accents */}
+      {/* Soft glow accents */}
       <Box
         position="absolute"
         top="-10%"
@@ -208,7 +197,7 @@ const ContactSection = () => {
         w="450px"
         h="450px"
         aria-hidden="true"
-        background="radial-gradient(circle, rgba(6, 182, 212, 0.07) 0%, transparent 70%)"
+        background={`radial-gradient(circle, ${brandAlpha.accent(0.04)} 0%, transparent 70%)`}
       />
       <Box
         position="absolute"
@@ -217,7 +206,7 @@ const ContactSection = () => {
         w="400px"
         h="400px"
         aria-hidden="true"
-        background="radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%)"
+        background={`radial-gradient(circle, ${brandAlpha.muted(0.05)} 0%, transparent 70%)`}
       />
 
       {/* Geometric accent lines */}
@@ -239,25 +228,25 @@ const ContactSection = () => {
           xmlns="http://www.w3.org/2000/svg"
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
         >
-          <line x1="0" y1="600" x2="400" y2="0" stroke="rgba(6, 182, 212, 0.04)" strokeWidth="1" />
-          <line x1="1100" y1="600" x2="1440" y2="100" stroke="rgba(59, 130, 246, 0.03)" strokeWidth="1" />
+          <line x1="0" y1="600" x2="400" y2="0" stroke={brandAlpha.fg(0.04)} strokeWidth="1" />
+          <line x1="1100" y1="600" x2="1440" y2="100" stroke={brandAlpha.muted(0.08)} strokeWidth="1" />
 
           {/* Corner frame elements */}
-          <rect x="60" y="40" width="80" height="1" fill="rgba(6, 182, 212, 0.15)" />
-          <rect x="60" y="40" width="1" height="60" fill="rgba(6, 182, 212, 0.15)" />
-          <rect x="1300" y="540" width="80" height="1" fill="rgba(6, 182, 212, 0.1)" />
-          <rect x="1380" y="480" width="1" height="61" fill="rgba(6, 182, 212, 0.1)" />
+          <rect x="60" y="40" width="80" height="1" fill={brandAlpha.fg(0.14)} />
+          <rect x="60" y="40" width="1" height="60" fill={brandAlpha.fg(0.14)} />
+          <rect x="1300" y="540" width="80" height="1" fill={brandAlpha.fg(0.1)} />
+          <rect x="1380" y="480" width="1" height="61" fill={brandAlpha.fg(0.1)} />
         </svg>
       </Box>
 
-      {/* Gradient separator at top */}
+      {/* Hairline separator at top */}
       <Box
         position="absolute"
         top="0"
         left="0"
         right="0"
         h="1px"
-        background="linear-gradient(90deg, transparent, #06b6d4, #3b82f6, transparent)"
+        background={`linear-gradient(90deg, transparent, ${brandAlpha.fg(0.16)}, transparent)`}
         aria-hidden="true"
       />
 
@@ -277,10 +266,11 @@ const ContactSection = () => {
             >
               <Text
                 as="span"
-                color="primary.400"
+                color="brand.muted"
+                fontFamily="mono"
                 fontWeight="medium"
-                letterSpacing="0.2em"
-                fontSize="sm"
+                letterSpacing="0.18em"
+                fontSize="xs"
                 textTransform="uppercase"
                 display="block"
                 mb={3}
@@ -292,7 +282,7 @@ const ContactSection = () => {
                 as="h2"
                 id="contacto-heading"
                 fontSize="clamp(1.8rem, 4vw + 1rem, 3rem)"
-                color="white"
+                color="brand.fg"
                 mb={5}
                 lineHeight="1.2"
                 letterSpacing="tight"
@@ -303,7 +293,7 @@ const ContactSection = () => {
               <Text
                 as="p"
                 fontSize="clamp(1rem, 1.5vw + 0.5rem, 1.125rem)"
-                color="dark.400"
+                color="brand.muted"
                 lineHeight="1.6"
                 maxW="440px"
                 mb={8}
@@ -329,19 +319,19 @@ const ContactSection = () => {
                   size="lg"
                   px={8}
                   py={6}
-                  borderRadius="full"
+                  borderRadius="md"
                   fontWeight="semibold"
                   letterSpacing="wide"
-                  bg="transparent"
-                  color="white"
+                  bg="brand.accent"
+                  color="brand.bg"
                   border="1px solid"
-                  borderColor="primary.500"
+                  borderColor="brand.accent"
                   _hover={{
-                    bg: 'primary.500',
-                    transform: 'scale(1.05)',
-                    boxShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
+                    bg: 'accent.emphasized',
+                    borderColor: 'accent.emphasized',
+                    transform: 'translateY(-1px)',
                   }}
-                  transition="background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease"
+                  transition="background 0.3s ease, transform 0.3s ease"
                 >
                   <Flex align="center" gap={2}>
                     <MessageCircle size={18} />
@@ -377,7 +367,7 @@ const ContactSection = () => {
             >
               <Box
                 h="1px"
-                  background="linear-gradient(90deg, rgba(6, 182, 212, 0.2), rgba(59, 130, 246, 0.15), transparent)"
+                background={`linear-gradient(90deg, ${brandAlpha.fg(0.18)}, ${brandAlpha.fg(0.06)}, transparent)`}
               />
             </MotionBox>
           </Box>

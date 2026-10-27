@@ -1,11 +1,13 @@
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+import { brandTokens } from "./brandTokens";
 
 const customConfig = defineConfig({
   theme: {
     tokens: {
       fonts: {
-        heading: { value: "var(--font-heading), system-ui, sans-serif" },
-        body: { value: "var(--font-body), system-ui, sans-serif" },
+        heading: { value: "var(--font-heading), Inter, system-ui, sans-serif" },
+        body: { value: "var(--font-body), Inter, system-ui, sans-serif" },
+        mono: { value: "var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace" },
       },
       sizes: {
         container: {
@@ -16,73 +18,40 @@ const customConfig = defineConfig({
         },
       },
       colors: {
-        primary: {
-          50: { value: "#e6fafc" },
-          100: { value: "#c3f1f7" },
-          200: { value: "#9de8f1" },
-          300: { value: "#77dfeb" },
-          400: { value: "#52d6e5" },
-          500: { value: "#06b6d4" },
-          600: { value: "#0891b2" },
-          700: { value: "#066c85" },
-          800: { value: "#034858" },
-          900: { value: "#01232c" },
-        },
-        secondary: {
-          50: { value: "#eef4ff" },
-          100: { value: "#d6e2ff" },
-          200: { value: "#bdcfff" },
-          300: { value: "#a3bcff" },
-          400: { value: "#8aa9ff" },
-          500: { value: "#3b82f6" },
-          600: { value: "#2563eb" },
-          700: { value: "#1a4ab1" },
-          800: { value: "#0f3177" },
-          900: { value: "#07193c" },
-        },
-        dark: {
-          50: { value: "#f8fafc" },
-          100: { value: "#f1f5f9" },
-          200: { value: "#e2e8f0" },
-          300: { value: "#cbd5e1" },
-          400: { value: "#94a3b8" },
-          500: { value: "#64748b" },
-          600: { value: "#475569" },
-          700: { value: "#334155" },
-          800: { value: "#1e293b" },
-          900: { value: "#0f172a" },
+        brand: {
+          bg: { value: brandTokens.bg },
+          surface: { value: brandTokens.surface },
+          muted: { value: brandTokens.muted },
+          fg: { value: brandTokens.fg },
+          accent: { value: brandTokens.accent },
+          accentOnLight: { value: brandTokens.accentOnLight },
+          // Accent hover lives on graphite: darker than `accent`, never `accentOnLight`.
+          accentHover: { value: brandTokens.accentHover },
+          // Translucent steps, composed once in brandTokens.ts.
+          border: { value: brandTokens.border },
+          borderStrong: { value: brandTokens.borderStrong },
+          accentSubtle: { value: brandTokens.accentSubtle },
+          accentHalo: { value: brandTokens.accentHalo },
+          accentGlow: { value: brandTokens.accentGlow },
         },
       },
     },
     semanticTokens: {
       colors: {
-        primary: {
-          solid: { value: "{colors.primary.500}" },
-          contrast: { value: "white" },
-          fg: { value: "{colors.primary.600}" },
-          muted: { value: "{colors.primary.100}" },
-          subtle: { value: "{colors.primary.50}" },
-          emphasized: { value: "{colors.primary.500}" },
-          focusRing: { value: "{colors.primary.500}" },
+        // Mint accent contract: solid fills, contrast text, focus rings.
+        // `muted` is the light-surface mint; dark surfaces use `emphasized`.
+        accent: {
+          solid: { value: "{colors.brand.accent}" },
+          contrast: { value: "{colors.brand.bg}" },
+          fg: { value: "{colors.brand.accent}" },
+          muted: { value: "{colors.brand.accentOnLight}" },
+          subtle: { value: "{colors.brand.accentSubtle}" },
+          emphasized: { value: "{colors.brand.accentHover}" },
+          halo: { value: "{colors.brand.accentHalo}" },
+          glow: { value: "{colors.brand.accentGlow}" },
+          focusRing: { value: "{colors.brand.accent}" },
         },
-        secondary: {
-          solid: { value: "{colors.secondary.500}" },
-          contrast: { value: "white" },
-          fg: { value: "{colors.secondary.600}" },
-          muted: { value: "{colors.secondary.100}" },
-          subtle: { value: "{colors.secondary.50}" },
-          emphasized: { value: "{colors.secondary.500}" },
-          focusRing: { value: "{colors.secondary.500}" },
-        },
-        dark: {
-          solid: { value: "{colors.dark.800}" },
-          contrast: { value: "white" },
-          fg: { value: "{colors.dark.700}" },
-          muted: { value: "{colors.dark.200}" },
-          subtle: { value: "{colors.dark.50}" },
-          emphasized: { value: "{colors.dark.800}" },
-          focusRing: { value: "{colors.dark.700}" },
-        },
+        focusRing: { value: "{colors.brand.accent}" },
       },
     },
   },

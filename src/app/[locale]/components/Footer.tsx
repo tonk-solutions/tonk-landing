@@ -6,6 +6,7 @@ import { Linkedin, Instagram, MessageCircle } from 'lucide-react';
 import TonkLogo from './TonkLogo';
 import { useTranslations } from 'next-intl';
 import { CONTACT_EMAIL, WHATSAPP_URL } from '@/app/constants';
+import { brandAlpha } from '@/app/brandTokens';
 
 const Footer = () => {
   const t = useTranslations('footer');
@@ -36,15 +37,9 @@ const Footer = () => {
   ];
 
   return (
-    <Box as="footer" role="contentinfo" position="relative" bg="dark.900" color="white" pt={0} pb={10} px={{ base: 4, md: 8 }} w="100%" overflow="hidden">
-      {/* Gradient separator */}
-      <Box
-        w="100%"
-        h="1px"
-        mb={12}
-        background="linear-gradient(90deg, transparent, #06b6d4, #3b82f6, transparent)"
-        aria-hidden="true"
-      />
+    <Box as="footer" role="contentinfo" position="relative" bg="brand.bg" color="brand.fg" pt={0} pb={10} px={{ base: 4, md: 8 }} w="100%" overflow="hidden">
+      {/* Hairline separator */}
+      <Box w="100%" h="1px" mb={12} bg={brandAlpha.fg(0.08)} aria-hidden="true" />
 
       <Container maxW="1280px" mx="auto" w="100%" px={0}>
         <Flex
@@ -54,8 +49,8 @@ const Footer = () => {
           gap={8}
         >
           <Box maxW={{ base: '100%', md: '380px' }} mb={{ base: 8, md: 0 }}>
-            <TonkLogo size="md" theme="dark" />
-            <Text as="p" mt={4} color="dark.400" fontSize="sm" lineHeight="tall">
+            <TonkLogo variant="apilado" height={96} />
+            <Text as="p" mt={5} color="brand.muted" fontSize="sm" lineHeight="tall">
               {t('description')}
             </Text>
           </Box>
@@ -63,12 +58,12 @@ const Footer = () => {
           <Stack direction={{ base: 'column', md: 'row' }} gap={12}>
             <Box as="nav" aria-label="Información de contacto">
               <Text
-                fontWeight="bold"
                 mb={4}
+                fontFamily="mono"
                 fontSize="xs"
                 textTransform="uppercase"
                 letterSpacing="0.15em"
-                color="dark.300"
+                color="brand.muted"
               >
                 {t('contactLabel')}
               </Text>
@@ -81,9 +76,9 @@ const Footer = () => {
                     rel={link.href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
                     display="flex"
                     alignItems="center"
-                    color="dark.400"
+                    color="brand.muted"
                     fontSize="sm"
-                    _hover={{ color: 'primary.400' }}
+                    _hover={{ color: 'brand.accent' }}
                     transition="color 0.2s ease"
                   >
                     {link.icon && getIcon(link.icon)}
@@ -95,12 +90,12 @@ const Footer = () => {
 
             <Box as="nav" aria-label="Redes sociales">
               <Text
-                fontWeight="bold"
                 mb={4}
+                fontFamily="mono"
                 fontSize="xs"
                 textTransform="uppercase"
                 letterSpacing="0.15em"
-                color="dark.300"
+                color="brand.muted"
               >
                 {t('socialLabel')}
               </Text>
@@ -117,13 +112,15 @@ const Footer = () => {
                     w="36px"
                     h="36px"
                     borderRadius="md"
-                    color="dark.400"
-                    bg="dark.800"
+                    color="brand.muted"
+                    bg="brand.surface"
+                    border="1px solid"
+                    borderColor={brandAlpha.fg(0.06)}
                     _hover={{
-                      color: 'primary.400',
-                      bg: 'dark.700',
+                      color: 'brand.accent',
+                      borderColor: 'brand.accentGlow',
                     }}
-                    transition="color 0.2s ease, background 0.2s ease"
+                    transition="color 0.2s ease, border-color 0.2s ease"
                     aria-label={link.ariaLabel}
                   >
                     {getIcon(link.icon)}
@@ -136,7 +133,7 @@ const Footer = () => {
 
         <Flex
           borderTopWidth={1}
-          borderTopColor="dark.800"
+          borderTopColor={brandAlpha.fg(0.08)}
           mt={10}
           pt={6}
           justify="space-between"
@@ -144,7 +141,7 @@ const Footer = () => {
           align="center"
           gap={4}
         >
-          <Text fontSize="xs" color="dark.600">
+          <Text fontSize="xs" color="brand.muted">
             {t('copyright', { year: currentYear })}
           </Text>
         </Flex>
