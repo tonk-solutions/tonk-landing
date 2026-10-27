@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 type TonkLogoVariant = 'horizontal' | 'apilado';
 
@@ -17,6 +18,10 @@ interface TonkLogoProps {
  *
  * The `*-oscuro` variants are the ones made for dark backgrounds: graphite
  * (#17191C) plate, light wordmark (#E8EAED) and a mint detail (#3DF5C8).
+ *
+ * `next/image` is used with `unoptimized`: the lockups are static SVGs the
+ * optimizer would reject, so the source is served as-is from `public/` while
+ * the component still gets the layout reservation and the `priority` preload.
  */
 const LOCKUPS = {
   horizontal: {
@@ -41,16 +46,15 @@ const TonkLogo: React.FC<TonkLogoProps> = ({
   const width = Math.round((height * lockup.width) / lockup.height);
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element -- brand lockups are static SVGs; the optimizer rejects SVG sources by default.
-    <img
+    <Image
       src={lockup.src}
       alt="Tonk Solutions"
       width={width}
       height={height}
-      className={className}
-      loading={priority ? 'eager' : 'lazy'}
+      unoptimized
+      priority={priority}
       fetchPriority={priority ? 'high' : undefined}
-      decoding="async"
+      className={className}
       style={{
         display: 'block',
         height: `${height}px`,

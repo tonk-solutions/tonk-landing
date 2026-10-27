@@ -49,13 +49,19 @@ const HeroSection = async () => {
         <Flex direction="column" align="center" justify="center" textAlign="center" w="100%">
           <Flex direction="column" gap={{ base: 3, md: 6 }} maxW="800px" align="center">
             <Box className="hero-fade-block-1">
+              {/*
+                Eyebrow above the title. `sm` keeps it legible on the smallest
+                phones; the tracking tightens on base so the 27-character
+                subtitle still fits inside 360px (328px of content) on a
+                single line, and opens back up from `md`.
+              */}
               <Text
                 as="span"
                 color="brand.muted"
                 fontFamily="mono"
                 fontWeight="medium"
-                letterSpacing="0.2em"
-                fontSize="xs"
+                letterSpacing={{ base: "0.12em", md: "0.2em" }}
+                fontSize="sm"
                 textTransform="uppercase"
                 display="block"
                 mb={{ base: 3, md: 4 }}

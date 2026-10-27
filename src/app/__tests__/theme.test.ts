@@ -79,3 +79,34 @@ describe("button recipe accent variant", () => {
     expect(source).not.toMatch(/_hover=\{\{\s*bg:\s*["']accent\.emphasized["']/);
   });
 });
+
+/**
+ * `layout.tsx` puts the Geist CSS variables on the body; the chain in
+ * `theme.ts` must lead with them so the site never depends on `globals.css`
+ * declaring `--font-body` / `--font-mono` first.
+ */
+const fontStack = (name: "fonts.body" | "fonts.heading" | "fonts.mono") =>
+  theme.tokens.getByName(name)?.value ?? "";
+
+describe("font tokens", () => {
+  it("leads the body and heading stacks with the Geist sans variable", () => {
+    for (const name of ["fonts.body", "fonts.heading"] as const) {
+      const stack = fontStack(name);
+
+      expect(stack).toContain("--font-geist-sans");
+      expect(stack.startsWith("var(--font-geist-sans)")).toBe(true);
+      // The alias and the system fallbacks stay behind Geist.
+      expect(stack).toContain("var(--font-body)");
+      expect(stack).toMatch(/Inter, system-ui, sans-serif$/);
+    }
+  });
+
+  it("leads the mono stack with the Geist mono variable", () => {
+    const stack = fontStack("fonts.mono");
+
+    expect(stack).toContain("--font-geist-mono");
+    expect(stack.startsWith("var(--font-geist-mono)")).toBe(true);
+    expect(stack).toContain("var(--font-mono)");
+    expect(stack).toMatch(/ui-monospace, SFMono-Regular, Menlo, monospace$/);
+  });
+});

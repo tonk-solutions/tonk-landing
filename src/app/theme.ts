@@ -43,10 +43,26 @@ const customConfig = defineConfig({
       }),
     },
     tokens: {
+      /**
+       * Geist first, then the `globals.css` aliases, then the system stack.
+       *
+       * `layout.tsx` puts `GeistSans.variable` / `GeistMono.variable` on the
+       * body, which define `--font-geist-sans` / `--font-geist-mono`; the
+       * `--font-*` aliases are declared in `globals.css`. Leading with the
+       * Geist variables means the chain still resolves to Geist when the
+       * aliases are missing, instead of silently falling back to Inter.
+       */
       fonts: {
-        heading: { value: "var(--font-heading), Inter, system-ui, sans-serif" },
-        body: { value: "var(--font-body), Inter, system-ui, sans-serif" },
-        mono: { value: "var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace" },
+        heading: {
+          value: "var(--font-geist-sans), var(--font-body), Inter, system-ui, sans-serif",
+        },
+        body: {
+          value: "var(--font-geist-sans), var(--font-body), Inter, system-ui, sans-serif",
+        },
+        mono: {
+          value:
+            "var(--font-geist-mono), var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace",
+        },
       },
       sizes: {
         container: {

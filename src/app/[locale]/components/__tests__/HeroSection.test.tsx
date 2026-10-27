@@ -104,6 +104,21 @@ describe("HeroSection", () => {
     expect(screen.getByText(heroMessages.subtitle)).toBeTruthy();
   });
 
+  it("sizes the hero eyebrow at sm and tightens its tracking on the base breakpoint", async () => {
+    renderWithTheme(await HeroSection());
+
+    const css = styleText();
+    const className = emotionClassOf(screen.getByText(heroMessages.subtitle));
+    const baseRule = baseRuleOf(css, className);
+
+    // `sm` is the legible step; `xs` made the eyebrow too light at 360px.
+    expect(baseRule).toContain("font-size:var(--chakra-font-sizes-sm)");
+    expect(baseRule).not.toContain("font-size:var(--chakra-font-sizes-xs)");
+    // Tighter tracking on base keeps the 27-character subtitle on one line.
+    expect(baseRule).toContain("letter-spacing:0.12em");
+    expect(mediaRuleDeclares(css, className, "letter-spacing:0.2em")).toBe(true);
+  });
+
   it("stays a Server Component: no client directive and no scroll handler", () => {
     expect(heroSource).not.toMatch(/^\s*["']use client["']/m);
     expect(heroSource).not.toMatch(/\bonClick\b/);
