@@ -17,7 +17,7 @@ import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, ArrowRight, MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { WHATSAPP_URL } from '@/app/constants';
-import { accentButtonVariant } from '@/app/theme';
+import { accentButtonVariant } from '@/app/buttonVariants';
 import { brandAlpha } from '@/app/brandTokens';
 
 const MotionBox = m(Box);

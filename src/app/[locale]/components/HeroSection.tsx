@@ -1,7 +1,7 @@
-import { Box, Button, chakra, Container, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { ArrowDown } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import { accentButtonVariant } from "@/app/theme";
+import { accentButtonVariant } from "@/app/buttonVariants";
 import HeroDecor from "./HeroDecor";
 
 /**
@@ -130,7 +130,7 @@ const HeroSection = async () => {
                 >
                   {t("integrationsLabel")}
                 </Text>
-                <chakra.ul
+                <Box as="ul"
                   data-testid="hero-integrations"
                   display="flex"
                   flexWrap="wrap"
@@ -142,7 +142,7 @@ const HeroSection = async () => {
                   listStyleType="none"
                 >
                   {integrations.map((integration) => (
-                    <chakra.li
+                    <Box as="li"
                       key={integration}
                       px={2.5}
                       py={1}
@@ -154,9 +154,9 @@ const HeroSection = async () => {
                       color="brand.muted"
                     >
                       {integration}
-                    </chakra.li>
+                    </Box>
                   ))}
-                </chakra.ul>
+                </Box>
               </Box>
             </Box>
           </Flex>
