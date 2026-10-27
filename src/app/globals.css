@@ -126,6 +126,20 @@ body {
   animation: hero-arrow-bounce 2s ease-in-out infinite;
 }
 
+/*
+ * Mobile sticky CTA: the fixed bar overlays the bottom edge, so the page keeps
+ * an equivalent bottom gutter on phones to stay clear of the footer.
+ */
+.page-shell {
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 48em) {
+  .page-shell {
+    padding-bottom: 0;
+  }
+}
+
 /* Screen-reader-only helper */
 .sr-only {
   position: absolute;

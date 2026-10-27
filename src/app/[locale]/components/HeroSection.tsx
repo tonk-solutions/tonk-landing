@@ -1,20 +1,18 @@
-"use client";
-
-import React from "react";
-import { Box, Button, Container, Heading, Text, Flex } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { ArrowDown } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { brandAlpha, brandTokens } from "@/app/brandTokens";
+import { getTranslations } from "next-intl/server";
+import HeroDecor from "./HeroDecor";
 
-const HeroSection = () => {
-  const t = useTranslations("hero");
-
-  const handleScrollDown = () => {
-    const contactSection = document.querySelector("#contacto");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+/**
+ * Hero as a Server Component: the copy and the decorative layers are rendered
+ * on the server and the call to action is a real anchor, so the hero ships no
+ * scroll handler and hydrates no component of its own.
+ *
+ * The anchor target is the contact section (`#contacto`); `html` already sets
+ * `scroll-behavior: smooth`, which keeps the previous glide without JS.
+ */
+const HeroSection = async () => {
+  const t = await getTranslations("hero");
 
   return (
     <Box
@@ -22,107 +20,31 @@ const HeroSection = () => {
       id="hero"
       aria-label="Presentación de Tonk Solutions"
       position="relative"
-      h="100vh"
       bg="brand.bg"
       color="brand.fg"
       overflow="hidden"
+      display="flex"
+      alignItems="center"
+      css={{
+        // Smallest viewport keeps the CTA above the fold on phones; `vh` is the fallback.
+        minHeight: "100vh",
+        "@supports (min-height: 100svh)": { minHeight: "100svh" },
+      }}
     >
-      {/* Dot grid pattern */}
-      <Box
-        position="absolute"
-        top="0"
-        left="0"
-        right="0"
-        bottom="0"
-        aria-hidden="true"
-        bgImage={`radial-gradient(circle, ${brandAlpha.fg(0.06)} 1px, transparent 1px)`}
-        bgSize="32px 32px"
-      />
+      <HeroDecor />
 
-      {/* Noise texture overlay */}
-      <Box
-        position="absolute"
-        top="0"
-        left="0"
-        right="0"
-        bottom="0"
-        opacity={0.03}
-        aria-hidden="true"
-        bgImage={`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}
-        bgRepeat="repeat"
-        bgSize="128px 128px"
-      />
-
-      {/* Geometric accent lines */}
-      <Box
-        position="absolute"
-        top="0"
-        left="0"
-        right="0"
-        bottom="0"
-        aria-hidden="true"
-        overflow="hidden"
+      <Container
+        maxW="1280px"
+        mx="auto"
+        w="100%"
+        px={{ base: 4, md: 8 }}
+        pt={{ base: "56px", md: "0" }}
+        pb={{ base: "76px", md: "0" }}
+        position="relative"
+        zIndex={2}
       >
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 1440 900"
-          preserveAspectRatio="xMidYMid slice"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-        >
-          <line x1="0" y1="900" x2="600" y2="0" stroke={brandAlpha.muted(0.12)} strokeWidth="1" />
-          <line x1="200" y1="900" x2="800" y2="0" stroke={brandAlpha.fg(0.05)} strokeWidth="1" />
-          <line x1="900" y1="900" x2="1440" y2="200" stroke={brandAlpha.muted(0.1)} strokeWidth="1" />
-
-          <rect x="60" y="60" width="120" height="1" fill={brandTokens.borderStrong} />
-          <rect x="60" y="60" width="1" height="80" fill={brandTokens.borderStrong} />
-          <rect x="1260" y="60" width="120" height="1" fill={brandTokens.borderStrong} />
-          <rect x="1380" y="60" width="1" height="80" fill={brandTokens.borderStrong} />
-          <rect x="60" y="839" width="120" height="1" fill={brandAlpha.fg(0.1)} />
-          <rect x="60" y="760" width="1" height="80" fill={brandAlpha.fg(0.1)} />
-
-          <g opacity="0.35">
-            <line x1="1300" y1="700" x2="1320" y2="700" stroke={brandTokens.accent} strokeWidth="1" />
-            <line x1="1310" y1="690" x2="1310" y2="710" stroke={brandTokens.accent} strokeWidth="1" />
-          </g>
-          <g opacity="0.2">
-            <line x1="140" y1="400" x2="160" y2="400" stroke={brandTokens.muted} strokeWidth="1" />
-            <line x1="150" y1="390" x2="150" y2="410" stroke={brandTokens.muted} strokeWidth="1" />
-          </g>
-        </svg>
-      </Box>
-
-      <Box
-        position="absolute"
-        top="15%"
-        left="-5%"
-        w="400px"
-        h="400px"
-        aria-hidden="true"
-        background={`radial-gradient(circle, ${brandAlpha.accent(0.04)} 0%, transparent 70%)`}
-      />
-      <Box
-        position="absolute"
-        bottom="10%"
-        right="-5%"
-        w="350px"
-        h="350px"
-        aria-hidden="true"
-        background={`radial-gradient(circle, ${brandAlpha.muted(0.06)} 0%, transparent 70%)`}
-      />
-
-      <Container maxW="1280px" mx="auto" h="full" px={{ base: 4, md: 8 }} position="relative" zIndex={2}>
-        <Flex
-          direction="column"
-          align="center"
-          justify="center"
-          textAlign="center"
-          h="full"
-          pt={{ base: "80px", md: "0" }}
-        >
-          <Flex direction="column" gap={6} maxW="800px" align="center">
+        <Flex direction="column" align="center" justify="center" textAlign="center" w="100%">
+          <Flex direction="column" gap={{ base: 3, md: 6 }} maxW="800px" align="center">
             <Box className="hero-fade-block-1">
               <Text
                 as="span"
@@ -133,7 +55,7 @@ const HeroSection = () => {
                 fontSize="xs"
                 textTransform="uppercase"
                 display="block"
-                mb={4}
+                mb={{ base: 3, md: 4 }}
               >
                 {t("subtitle")}
               </Text>
@@ -142,7 +64,7 @@ const HeroSection = () => {
                 fontSize="clamp(2rem, 5vw + 1rem, 3.5rem)"
                 fontWeight="semibold"
                 lineHeight="1.1"
-                mb={4}
+                mb={{ base: 3, md: 4 }}
                 letterSpacing="tight"
                 color="brand.fg"
               >
@@ -166,12 +88,18 @@ const HeroSection = () => {
               </Text>
             </Box>
 
-            <Box className="hero-fade-block-3" pt={6}>
+            <Box className="hero-fade-block-3" pt={{ base: 3, md: 6 }}>
+              {/*
+                The anchor inherits Chakra's button recipe, which also sets
+                `type="button"`: browsers and assistive tech ignore `type` on a
+                link, and this keeps the plate pixel-identical to the previous
+                JS button.
+              */}
               <Button
+                asChild
                 size="lg"
                 px={10}
                 py={6}
-                onClick={handleScrollDown}
                 borderRadius="md"
                 fontWeight="semibold"
                 letterSpacing="wide"
@@ -187,14 +115,16 @@ const HeroSection = () => {
                 }}
                 transition="background 0.3s ease, transform 0.3s ease"
               >
-                {t("cta")}
+                <a href="#contacto">{t("cta")}</a>
               </Button>
             </Box>
           </Flex>
         </Flex>
       </Container>
 
+      {/* Decorative scroll hint: desktop only, on phones the sticky CTA owns that edge. */}
       <Box
+        display={{ base: "none", md: "block" }}
         position="absolute"
         bottom="32px"
         left="50%"

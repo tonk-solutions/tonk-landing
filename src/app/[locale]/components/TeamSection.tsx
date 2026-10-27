@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { Box, Container, Flex, Heading, Text, Link, Grid } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Linkedin } from 'lucide-react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { brandAlpha } from '@/app/brandTokens';
 
-const MotionBox = motion(Box);
+const MotionBox = m(Box);
 
 interface TeamMemberProps {
   name: string;

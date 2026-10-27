@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Box, Container, Grid, Heading, Text, Icon, Flex, SegmentGroup } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Code, Cloud, FileText, BrainCircuit, Users, CheckCircle, Sparkles, UserCheck, Hammer, UsersRound, ArrowRight } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useTranslations } from 'next-intl';
@@ -10,7 +10,7 @@ import { Link as LocaleLink } from '@/i18n/routing';
 import { SERVICES_CATALOG, type ServiceBranch } from '@/app/services/catalog';
 import { brandAlpha, brandTokens } from '@/app/brandTokens';
 
-const MotionBox = motion(Box);
+const MotionBox = m(Box);
 
 interface Service {
   title: string;

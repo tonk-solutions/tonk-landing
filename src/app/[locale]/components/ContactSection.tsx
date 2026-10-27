@@ -12,15 +12,15 @@ import {
   Link,
   Button,
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, ArrowRight, MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { WHATSAPP_URL } from '@/app/constants';
 import { brandAlpha } from '@/app/brandTokens';
 
-const MotionBox = motion(Box);
-const MotionFlex = motion(Flex);
+const MotionBox = m(Box);
+const MotionFlex = m(Flex);
 
 interface ContactItemData {
   icon: string;

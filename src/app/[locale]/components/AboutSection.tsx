@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { Box, Container, Flex, Heading, Text, Grid, Icon } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { CheckCircle, Cloud, Building2, Database, BrainCircuit } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { brandAlpha, brandTokens } from '@/app/brandTokens';
 
-const MotionBox = motion(Box);
-const MotionFlex = motion(Flex);
+const MotionBox = m(Box);
+const MotionFlex = m(Flex);
 
 interface PillarItemProps {
   title: string;

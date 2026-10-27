@@ -14,7 +14,7 @@ import { Menu, X } from 'lucide-react';
 import TonkLogo from './TonkLogo';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslations } from 'next-intl';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { brandAlpha } from '@/app/brandTokens';
 
 const Header = () => {
@@ -168,7 +168,7 @@ const Header = () => {
             flexDirection="column"
             zIndex={999}
           >
-            <motion.div
+            <m.div
               initial="closed"
               animate="open"
               exit="closed"
@@ -179,7 +179,7 @@ const Header = () => {
                   <Stack gap={8} align="center" w="full" mt={8}>
                     {navLinks.map((link) => (
                       <Box asChild key={link.href}>
-                        <motion.div variants={itemVariants}>
+                        <m.div variants={itemVariants}>
                           <Link
                             href={link.href}
                             fontSize="2xl"
@@ -191,20 +191,20 @@ const Header = () => {
                           >
                             {link.label}
                           </Link>
-                        </motion.div>
+                        </m.div>
                       </Box>
                     ))}
                   </Stack>
 
                   <Stack gap={8} align="center" w="full">
                     <Box asChild>
-                      <motion.div variants={itemVariants}>
+                      <m.div variants={itemVariants}>
                         <LanguageSwitcher />
-                      </motion.div>
+                      </m.div>
                     </Box>
 
                     <Box asChild w="full" maxW="300px">
-                      <motion.div variants={itemVariants}>
+                      <m.div variants={itemVariants}>
                         <Link
                           href="#contacto"
                           bg="brand.accent"
@@ -223,12 +223,12 @@ const Header = () => {
                         >
                           {t('contact')}
                         </Link>
-                      </motion.div>
+                      </m.div>
                     </Box>
                   </Stack>
                 </Flex>
               </Container>
-            </motion.div>
+            </m.div>
           </Box>
         )}
       </AnimatePresence>
