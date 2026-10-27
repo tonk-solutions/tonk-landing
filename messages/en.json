@@ -12,8 +12,15 @@
     "subtitle": "Senior software engineering",
     "title": "Complex enterprise integrations,",
     "titleHighlight": "no intermediaries.",
-    "description": "We connect the critical systems of your operation: ERPs, third-party APIs, payment gateways and tax authorities such as AFIP and DGI. You talk directly to the engineer who designs and delivers the integration, alongside senior engineers end to end.",
-    "cta": "Let's talk about your integration"
+    "description": "We connect ARCA, ERPs, and payments for Argentine companies: you talk to the engineer.",
+    "cta": "Let's talk about your integration",
+    "integrationsLabel": "We integrate with",
+    "integrations": [
+      "ARCA",
+      "ERPs",
+      "Payment gateways",
+      "Third-party APIs"
+    ]
   },
   "about": {
     "label": "WHO WE ARE",

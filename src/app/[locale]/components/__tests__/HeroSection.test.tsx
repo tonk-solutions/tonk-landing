@@ -5,24 +5,44 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "@/app/theme";
 import es from "../../../../../messages/es.json";
+import en from "../../../../../messages/en.json";
 import HeroSection from "../HeroSection";
 import HeroDecor from "../HeroDecor";
 import MobileStickyCta from "../MobileStickyCta";
 
-const heroMessages = es.hero as Record<string, string>;
+const MESSAGES = { es, en } as const;
+type TestLocale = keyof typeof MESSAGES;
+
+const heroMessages = es.hero;
 
 // The hero is an async Server Component: `next-intl/server` is the only piece of
-// the Next runtime it needs, so the suite resolves it from the Spanish messages.
+// the Next runtime it needs, so the suite resolves it from the real messages.
+// The locale lives in a hoisted holder because `vi.mock` factories run above the
+// imports; each test picks the dictionary it wants.
+const intl = vi.hoisted(() => ({ locale: "es" as TestLocale }));
+
 vi.mock("next-intl/server", async () => {
-  const messages = (await import("../../../../../messages/es.json")).default as {
-    hero: Record<string, string>;
+  const messages = {
+    es: (await import("../../../../../messages/es.json")).default,
+    en: (await import("../../../../../messages/en.json")).default,
   };
+
   return {
-    getTranslations: async () => (key: string) => messages.hero[key],
+    getTranslations: async () => {
+      const hero = messages[intl.locale].hero;
+      // `t()` reads single keys and `t.raw()` reads the integrations array.
+      return Object.assign(
+        (key: keyof typeof hero) => hero[key],
+        { raw: (key: keyof typeof hero) => hero[key] }
+      );
+    },
   };
 });
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  intl.locale = "es";
+});
 
 const renderWithTheme = (ui: React.ReactElement) =>
   render(<ChakraProvider value={theme}>{ui}</ChakraProvider>);
@@ -89,6 +109,60 @@ describe("HeroSection", () => {
     expect(heroSource).not.toMatch(/\bonClick\b/);
     expect(heroSource).toMatch(/getTranslations\(["']hero["']\)/);
   });
+});
+
+describe("HeroSection integrations", () => {
+  it.each(Object.keys(MESSAGES) as TestLocale[])(
+    "lists the integrations from the %s messages right below the CTA",
+    async (locale) => {
+      intl.locale = locale;
+      renderWithTheme(await HeroSection());
+
+      const list = screen.getByTestId("hero-integrations");
+      const items = Array.from(list.querySelectorAll("li")).map((item) => item.textContent);
+
+      // A semantic list, not a row of spans.
+      expect(list.tagName).toBe("UL");
+      expect(items).toEqual(MESSAGES[locale].hero.integrations);
+      expect(screen.getByText(MESSAGES[locale].hero.integrationsLabel)).toBeTruthy();
+      expect(list.getAttribute("listStyleType") ?? "none").not.toContain("disc");
+    }
+  );
+
+  it("wraps instead of overflowing on a 360px viewport", async () => {
+    renderWithTheme(await HeroSection());
+
+    const list = screen.getByTestId("hero-integrations");
+    const rule = baseRuleOf(styleText(), emotionClassOf(list));
+
+    expect(rule).toContain("flex-wrap:wrap");
+  });
+
+  it("never claims Mercado Pago or SAP: the site does not mention them", async () => {
+    for (const locale of Object.keys(MESSAGES) as TestLocale[]) {
+      intl.locale = locale;
+      renderWithTheme(await HeroSection());
+
+      const text = screen.getByTestId("hero-integrations").textContent ?? "";
+      expect(text).not.toMatch(/mercado\s*pago|sap/i);
+      cleanup();
+    }
+  });
+});
+
+describe("hero copy", () => {
+  it.each(Object.keys(MESSAGES) as TestLocale[])(
+    "keeps the %s description on one line, under 90 characters, naming ARCA",
+    (locale) => {
+      const { description } = MESSAGES[locale].hero;
+
+      expect(description).not.toContain("\n");
+      expect(description.length).toBeLessThanOrEqual(90);
+      // AFIP and DGI became ARCA: the hero never names the old authorities.
+      expect(description).toContain("ARCA");
+      expect(description).not.toMatch(/AFIP|DGI/);
+    }
+  );
 });
 
 describe("HeroDecor", () => {

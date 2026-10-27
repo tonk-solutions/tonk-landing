@@ -12,8 +12,15 @@
     "subtitle": "Ingeniería de software senior",
     "title": "Integraciones enterprise complejas,",
     "titleHighlight": "sin intermediarios.",
-    "description": "Conectamos los sistemas críticos de tu operación: ERPs, APIs de terceros, pasarelas de pago y organismos fiscales como AFIP y DGI. Hablás directo con quien diseña y resuelve la integración, con ingenieros senior de principio a fin.",
-    "cta": "Hablemos de tu integración"
+    "description": "Conectamos ARCA, ERPs y pagos para empresas argentinas: hablás directo con el ingeniero.",
+    "cta": "Hablemos de tu integración",
+    "integrationsLabel": "Integramos con",
+    "integrations": [
+      "ARCA",
+      "ERPs",
+      "Pasarelas de pago",
+      "APIs de terceros"
+    ]
   },
   "about": {
     "label": "QUIÉNES SOMOS",

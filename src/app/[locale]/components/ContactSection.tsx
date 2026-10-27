@@ -17,6 +17,7 @@ import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, ArrowRight, MessageCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { WHATSAPP_URL } from '@/app/constants';
+import { accentButtonVariant } from '@/app/theme';
 import { brandAlpha } from '@/app/brandTokens';
 
 const MotionBox = m(Box);
@@ -308,37 +309,18 @@ const ContactSection = () => {
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Link
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                _hover={{ textDecoration: 'none' }}
-                display="inline-block"
-              >
-                <Button
-                  size="lg"
-                  px={8}
-                  py={6}
-                  borderRadius="md"
-                  fontWeight="semibold"
-                  letterSpacing="wide"
-                  bg="brand.accent"
-                  color="brand.bg"
-                  border="1px solid"
-                  borderColor="brand.accent"
-                  _hover={{
-                    bg: 'accent.emphasized',
-                    borderColor: 'accent.emphasized',
-                    transform: 'translateY(-1px)',
-                  }}
-                  transition="background 0.3s ease, transform 0.3s ease"
-                >
+              {/*
+                One interactive element only: the anchor *is* the button
+                (`asChild`), instead of a Chakra Link wrapping a Button.
+              */}
+              <Button asChild variant={accentButtonVariant} size="lg" px={8} py={6}>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                   <Flex align="center" gap={2}>
                     <MessageCircle size={18} />
                     <Text>Escribinos por WhatsApp</Text>
                   </Flex>
-                </Button>
-              </Link>
+                </a>
+              </Button>
             </MotionBox>
           </Box>
 

@@ -1,6 +1,7 @@
-import { Box, Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, chakra, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { ArrowDown } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { accentButtonVariant } from "@/app/theme";
 import HeroDecor from "./HeroDecor";
 
 /**
@@ -13,6 +14,7 @@ import HeroDecor from "./HeroDecor";
  */
 const HeroSection = async () => {
   const t = await getTranslations("hero");
+  const integrations = t.raw("integrations") as string[];
 
   return (
     <Box
@@ -97,26 +99,58 @@ const HeroSection = async () => {
               */}
               <Button
                 asChild
+                variant={accentButtonVariant}
                 size="lg"
                 px={10}
                 py={6}
-                borderRadius="md"
-                fontWeight="semibold"
-                letterSpacing="wide"
-                position="relative"
-                bg="brand.accent"
-                color="brand.bg"
-                border="1px solid"
-                borderColor="brand.accent"
-                _hover={{
-                  bg: "accent.emphasized",
-                  borderColor: "accent.emphasized",
-                  transform: "translateY(-1px)",
-                }}
-                transition="background 0.3s ease, transform 0.3s ease"
               >
                 <a href="#contacto">{t("cta")}</a>
               </Button>
+
+              {/*
+                Integration strip: a semantic list, small and sober, that wraps
+                instead of overflowing on a 360px viewport.
+              */}
+              <Box mt={{ base: 5, md: 7 }}>
+                <Text
+                  as="p"
+                  fontFamily="mono"
+                  fontSize="xs"
+                  letterSpacing="0.18em"
+                  textTransform="uppercase"
+                  color="brand.muted"
+                  mb={2.5}
+                >
+                  {t("integrationsLabel")}
+                </Text>
+                <chakra.ul
+                  data-testid="hero-integrations"
+                  display="flex"
+                  flexWrap="wrap"
+                  alignItems="center"
+                  justifyContent="center"
+                  gap={2}
+                  m={0}
+                  p={0}
+                  listStyleType="none"
+                >
+                  {integrations.map((integration) => (
+                    <chakra.li
+                      key={integration}
+                      px={2.5}
+                      py={1}
+                      borderWidth="1px"
+                      borderColor="brand.border"
+                      borderRadius="full"
+                      fontSize="xs"
+                      lineHeight="1.4"
+                      color="brand.muted"
+                    >
+                      {integration}
+                    </chakra.li>
+                  ))}
+                </chakra.ul>
+              </Box>
             </Box>
           </Flex>
         </Flex>

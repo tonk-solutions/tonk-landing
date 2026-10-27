@@ -1,8 +1,47 @@
-import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+import {
+  createSystem,
+  defaultConfig,
+  defineConfig,
+  defineRecipe,
+  type ButtonProps,
+} from "@chakra-ui/react";
 import { brandTokens } from "./brandTokens";
 
 const customConfig = defineConfig({
   theme: {
+    recipes: {
+      /**
+       * `accent` is the mint plate the primary CTAs share (hero, WhatsApp).
+       * `createSystem` deep-merges this config over `defaultConfig`, so the
+       * button recipe keeps its base, its `size` scale, its default variants
+       * (`solid`, `subtle`, `surface`, `outline`, `ghost`, `plain`) and its
+       * `chakra-button` class name; only this extra variant is added.
+       * Spacing (`px`, `py`, `size`) stays on each call site because the plates
+       * differ in width.
+       */
+      button: defineRecipe({
+        variants: {
+          variant: {
+            accent: {
+              bg: "brand.accent",
+              color: "brand.bg",
+              borderWidth: "1px",
+              borderStyle: "solid",
+              borderColor: "brand.accent",
+              borderRadius: "md",
+              fontWeight: "semibold",
+              letterSpacing: "wide",
+              _hover: {
+                bg: "accent.emphasized",
+                borderColor: "accent.emphasized",
+                transform: "translateY(-1px)",
+              },
+              transition: "background 0.3s ease, transform 0.3s ease",
+            },
+          },
+        },
+      }),
+    },
     tokens: {
       fonts: {
         heading: { value: "var(--font-heading), Inter, system-ui, sans-serif" },
@@ -58,5 +97,19 @@ const customConfig = defineConfig({
 });
 
 const theme = createSystem(defaultConfig, customConfig);
+
+/**
+ * Chakra types `Button`'s `variant` prop from its own static recipe, so a
+ * variant registered in this system cannot be spelled as a bare literal. The
+ * single cast lives here; call sites just read `accentButtonVariant`.
+ *
+ * SAFETY: the invariant TypeScript cannot check is that `accent` really exists
+ * on the button recipe built above. `createSystem(defaultConfig, customConfig)`
+ * deep-merges it, so it is rendered by the same system the components use; the
+ * recipe test in `theme.test.ts` fails if the variant stops resolving.
+ */
+export const accentButtonVariant = "accent" as unknown as NonNullable<
+  ButtonProps["variant"]
+>;
 
 export default theme;
