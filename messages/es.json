@@ -41,11 +41,14 @@
   "integrations": {
     "number": "02",
     "label": "Integramos con",
-    "meta": "8 plataformas",
+    "meta": "11 plataformas",
     "platforms": [
       "Dynamics 365",
       "Salesforce",
       "Odoo",
+      "AWS",
+      "Google Cloud",
+      "Firebase",
       "ARCA",
       "Mercado Pago",
       "Stripe",
@@ -78,7 +81,7 @@
         },
         {
           "title": "Arquitectura y Sistemas Distribuidos",
-          "description": "Diseñamos arquitecturas que escalan: microservicios, cloud-native, migraciones de monolitos. Especialmente útil cuando el sistema actual se está convirtiendo en un cuello de botella.",
+          "description": "Diseñamos arquitecturas que escalan: microservicios, cloud-native sobre AWS, Google Cloud o Firebase, migraciones de monolitos. Especialmente útil cuando el sistema actual se está convirtiendo en un cuello de botella.",
           "icon": "Cloud"
         },
         {
@@ -208,11 +211,10 @@
       "BBVA",
       "Santander",
       "ICBC",
-      "Accenture",
       "Endava",
       "Rootstrap"
     ],
-    "intro": "Somos ingenieros senior con experiencia en empresas como BBVA, Santander, Accenture, Endava y Rootstrap. Nos juntamos para armar algo propio: una consultora ágil donde el cliente habla directo con quien resuelve el problema.",
+    "intro": "Somos ingenieros senior con experiencia en empresas como BBVA, Santander, ICBC, Endava y Rootstrap. Nos juntamos para armar algo propio: una consultora ágil donde el cliente habla directo con quien resuelve el problema.",
     "principles": [
       "Seniority real: venimos de operar sistemas críticos en producción.",
       "Resolvemos desde arquitecturas complejas hasta productos que arrancan de cero.",
@@ -224,7 +226,7 @@
     "pillars": [
       {
         "title": "Cloud Native",
-        "description": "Plataformas en contenedores, observables y preparadas para escalar."
+        "description": "Plataformas en AWS, Google Cloud o Firebase: contenedores, observabilidad y escalado."
       },
       {
         "title": "Core Banking",
@@ -310,6 +312,9 @@
       "desarrollo de producto desde cero",
       "greenfield software",
       "arquitectura cloud-native",
+      "AWS",
+      "Google Cloud",
+      "Firebase",
       "microservicios",
       "IA aplicada",
       "ingenieros senior",
@@ -326,6 +331,24 @@
     "inLanguage": "es-AR",
     "servicesListName": "Servicios de Ingeniería de Software",
     "servicesListDescription": "Servicios especializados de consultoría en ingeniería de software para instituciones financieras, fintechs y corporaciones enterprise."
+  },
+  "llms": {
+    "languageNote": "Sitio bilingüe: este archivo usa el español, el idioma por defecto. Versión en inglés: {url}",
+    "intro": "Tonk Solutions es una consultora boutique de ingeniería de software en Buenos Aires, Argentina (GMT−3): integraciones enterprise y producto desde cero, con trato directo con el ingeniero que lo construye. Fundada en 2026.",
+    "foundersHeading": "Equipo fundador",
+    "stackHeading": "Stack y plataformas",
+    "cloudLabel": "Cloud",
+    "integrationsLabel": "Integramos con",
+    "servicesHeading": "Servicios",
+    "projectsHeading": "Proyectos",
+    "contactHeading": "Contacto",
+    "linksHeading": "Enlaces",
+    "emailLabel": "Email",
+    "whatsappLabel": "WhatsApp",
+    "locationLabel": "Ubicación",
+    "cloud": ["AWS", "Google Cloud", "Firebase"],
+    "homeEs": "Home en español",
+    "homeEn": "Home en inglés"
   },
   "landing": {
     "enterpriseIntegrations": {
@@ -385,7 +408,7 @@
           },
           {
             "title": "Experiencia en producción real",
-            "description": "Nuestro equipo viene de operar sistemas críticos en BBVA, Santander, Accenture, Endava y Rootstrap."
+            "description": "Nuestro equipo viene de operar sistemas críticos en BBVA, Santander, ICBC, Endava y Rootstrap."
           },
           {
             "title": "Enfoque en LatAm",

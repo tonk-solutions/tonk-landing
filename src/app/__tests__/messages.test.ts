@@ -74,8 +74,71 @@ describe("specs del titular y del diagnóstico", () => {
     ]);
   });
 
-  it("la barra de integraciones declara 8 plataformas sin SAP", () => {
-    expect(es.integrations.platforms).toHaveLength(8);
+  it("la barra de integraciones declara 11 plataformas, incluidas las cloud, sin SAP", () => {
+    expect(es.integrations.platforms).toHaveLength(11);
+    expect(en.integrations.platforms).toHaveLength(11);
+    // La última entrada está traducida (APIs propias / Own APIs); el resto es igual.
+    expect(es.integrations.platforms.slice(0, -1)).toEqual(en.integrations.platforms.slice(0, -1));
+    expect(es.integrations.platforms).toEqual(
+      expect.arrayContaining(["AWS", "Google Cloud", "Firebase"]),
+    );
     expect(es.integrations.platforms).not.toContain("SAP");
+    expect(es.integrations.meta).toBe("11 plataformas");
+    expect(en.integrations.meta).toBe("11 platforms");
+  });
+});
+
+describe("mejoras de la landing (odd/tasks/landing-mejoras.md)", () => {
+  const esTexts = texts(es).join(" \n ");
+  const enTexts = texts(en).join(" \n ");
+
+  it("S2: no menciona Accenture en ningún idioma", () => {
+    expect(esTexts).not.toMatch(/Accenture/i);
+    expect(enTexts).not.toMatch(/Accenture/i);
+    expect(es.criterio.companies).toEqual(["BBVA", "Santander", "ICBC", "Endava", "Rootstrap"]);
+  });
+
+  it("S3: AWS, Google Cloud y Firebase están en las dos descripciones del stack", () => {
+    const cloudNames = ["AWS", "Google Cloud", "Firebase"];
+
+    for (const cloud of cloudNames) {
+      expect(es.llms.cloud).toContain(cloud);
+      expect(en.llms.cloud).toContain(cloud);
+      expect(es.seo.keywords).toContain(cloud);
+      expect(en.seo.keywords).toContain(cloud);
+    }
+
+    // Por path: revertir cualquiera de las dos descripciones tiene que hacer caer el test.
+    expect(es.services.craft.services[2].title).toBe("Arquitectura y Sistemas Distribuidos");
+    expect(es.criterio.pillars[0].title).toBe("Cloud Native");
+    expect(en.services.craft.services[2].title).toBe("Architecture and Distributed Systems");
+    expect(en.criterio.pillars[0].title).toBe("Cloud Native");
+
+    const descriptions = [
+      es.services.craft.services[2].description,
+      es.criterio.pillars[0].description,
+      en.services.craft.services[2].description,
+      en.criterio.pillars[0].description,
+    ];
+
+    for (const description of descriptions) {
+      for (const cloud of cloudNames) expect(description).toContain(cloud);
+    }
+  });
+
+  it("S4: no menciona a Ignacio Sileo en ningún idioma", () => {
+    expect(esTexts).not.toMatch(/Ignacio|Sileo/i);
+    expect(enTexts).not.toMatch(/Ignacio|Sileo/i);
+  });
+
+  it("S4: el equipo fundador son tres personas y el archivo canónico no afirma nada de nóminas previas", () => {
+    expect(es.team.members).toHaveLength(3);
+    expect(es.team.members.map((member) => member.name)).toEqual([
+      "Matías Castillo",
+      "Nicolás Gómez",
+      "Rodrigo Hernandez",
+    ]);
+    expect(es.llms).not.toHaveProperty("foundersNote");
+    expect(en.llms).not.toHaveProperty("foundersNote");
   });
 });

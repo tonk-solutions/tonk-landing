@@ -168,4 +168,27 @@
     font-size: clamp(34px, 9vw, 44px);
     line-height: 1.02;
   }
+
+  /*
+   * En inglés la frase resaltada no entra en una línea de teléfono: con `nowrap`
+   * desbordaba el viewport 43-101px entre 320px y 430px (S1 de
+   * odd/tasks/landing-mejoras.md). En mobile envuelve y la regla menta sigue al
+   * texto; desde 768px se mantiene en una sola línea (S2 del doc del port).
+   */
+  .hl {
+    display: inline;
+    white-space: normal;
+  }
+
+  /*
+   * Espaciado equivalente al separador `·` de escritorio (14px + glifo + 14px)
+   * para que no haya salto visual al cruzar 767/768.
+   */
+  .meta {
+    column-gap: 35px;
+  }
+
+  .meta li + li::before {
+    content: none;
+  }
 }

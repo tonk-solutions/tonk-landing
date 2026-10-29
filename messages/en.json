@@ -41,11 +41,14 @@
   "integrations": {
     "number": "02",
     "label": "We integrate with",
-    "meta": "8 platforms",
+    "meta": "11 platforms",
     "platforms": [
       "Dynamics 365",
       "Salesforce",
       "Odoo",
+      "AWS",
+      "Google Cloud",
+      "Firebase",
       "ARCA",
       "Mercado Pago",
       "Stripe",
@@ -78,7 +81,7 @@
         },
         {
           "title": "Architecture and Distributed Systems",
-          "description": "We design architectures that scale: microservices, cloud-native, monolith migrations. Especially useful when the current system is becoming a bottleneck.",
+          "description": "We design architectures that scale: microservices, cloud-native on AWS, Google Cloud or Firebase, monolith migrations. Especially useful when the current system is becoming a bottleneck.",
           "icon": "Cloud"
         },
         {
@@ -208,11 +211,10 @@
       "BBVA",
       "Santander",
       "ICBC",
-      "Accenture",
       "Endava",
       "Rootstrap"
     ],
-    "intro": "We are senior engineers with experience at companies like BBVA, Santander, Accenture, Endava and Rootstrap. We got together to build something of our own: an agile consultancy where the client talks directly to whoever solves the problem.",
+    "intro": "We are senior engineers with experience at companies like BBVA, Santander, ICBC, Endava and Rootstrap. We got together to build something of our own: an agile consultancy where the client talks directly to whoever solves the problem.",
     "principles": [
       "Real seniority: we come from running critical systems in production.",
       "We solve everything from complex architectures to products that start from zero.",
@@ -224,7 +226,7 @@
     "pillars": [
       {
         "title": "Cloud Native",
-        "description": "Containerized, observable platforms ready to scale."
+        "description": "Platforms on AWS, Google Cloud or Firebase: containerized, observable and ready to scale."
       },
       {
         "title": "Core Banking",
@@ -310,6 +312,9 @@
       "product development from scratch",
       "greenfield software",
       "cloud-native architecture",
+      "AWS",
+      "Google Cloud",
+      "Firebase",
       "microservices",
       "applied AI",
       "senior engineers",
@@ -326,6 +331,24 @@
     "inLanguage": "en-US",
     "servicesListName": "Software Engineering Services",
     "servicesListDescription": "Specialized software engineering consultancy services for financial institutions, fintechs and enterprise corporations."
+  },
+  "llms": {
+    "languageNote": "Bilingual site: this file uses Spanish, the default language. English version: {url}",
+    "intro": "Tonk Solutions is a boutique software engineering consultancy in Buenos Aires, Argentina (GMT−3): enterprise integrations and products built from scratch, working directly with the engineer who builds them. Founded in 2026.",
+    "foundersHeading": "Founding team",
+    "stackHeading": "Stack and platforms",
+    "cloudLabel": "Cloud",
+    "integrationsLabel": "We integrate with",
+    "servicesHeading": "Services",
+    "projectsHeading": "Projects",
+    "contactHeading": "Contact",
+    "linksHeading": "Links",
+    "emailLabel": "Email",
+    "whatsappLabel": "WhatsApp",
+    "locationLabel": "Location",
+    "cloud": ["AWS", "Google Cloud", "Firebase"],
+    "homeEs": "Home in Spanish",
+    "homeEn": "Home in English"
   },
   "landing": {
     "enterpriseIntegrations": {
@@ -385,7 +408,7 @@
           },
           {
             "title": "Real production experience",
-            "description": "Our team comes from running critical systems at BBVA, Santander, Accenture, Endava and Rootstrap."
+            "description": "Our team comes from running critical systems at BBVA, Santander, ICBC, Endava and Rootstrap."
           },
           {
             "title": "LatAm focus",

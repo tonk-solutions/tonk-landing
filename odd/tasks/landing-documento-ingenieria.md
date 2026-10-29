@@ -18,8 +18,8 @@ primario y la fila meta `Buenos Aires, AR · Senior only · ES / EN` quedan visi
 
 **S3 — SAP.** El sitio no menciona SAP en ningún lado: ni copy, ni nodos del diagrama, ni barras de
 integración, ni `alt`, ni `aria-label`, ni comentarios, ni metadata. El nodo que ocupaba ese lugar es
-`E-COMMERCE` y la ruta del pulso es `E-COMMERCE → TONK → ARCA`. La barra de integraciones tiene 8
-plataformas y su contador dice `8 plataformas`.
+`E-COMMERCE` y la ruta del pulso es `E-COMMERCE → TONK → ARCA`. La barra de integraciones tiene 11
+plataformas y su contador dice `11 plataformas` (ver `landing-mejoras` S3 y L6 de ese doc).
 
 **S4 — Nombres de proyectos.** Proyecto 01 = `Konekta` (ningún texto dice "DUCE").
 Proyecto 02 = `Clank`. Ambos con su tipo, descripción, stack y `PRODUCTO COMPLETO`.
@@ -201,3 +201,22 @@ home; rama desde `main` y cerrar #31 y #32 como superseded → S15, S16.
   HTML los nuevos. Verificado: 3 requests consecutivas emiten un solo `<style data-emotion>` de ~59,4 KB,
   y el CSS llega completo (el HTML bajó de 1.643.855 a 150.330 bytes).
 - Verificación: `tsc` 0 · `vitest` 15/15 · `build` OK · `playwright` 39 pasan, 1 salteado.
+
+**L21** (mejoras pedidas por el dueño, specs en `odd/tasks/landing-mejoras.md`):
+- **`landing-mejoras` S1**: el `white-space: nowrap` del tramo resaltado del titular desbordaba el viewport
+  en inglés (43-101px entre 320px y 430px). Desde ese pedido, por debajo de 768px la frase envuelve; desde
+  768px la regla menta sigue siendo un solo trazo.
+- **`landing-mejoras` S2**: Accenture sale de las empresas y de los dos textos que la listaban.
+- **`landing-mejoras` S3**: la barra de integraciones pasa a 11 plataformas con AWS, Google Cloud y
+  Firebase visibles, y el contador a `11 plataformas`; además entran en el copy de servicios, el pilar
+  `Cloud Native`, las keywords y el JSON-LD.
+- **`landing-mejoras` S4**: se agrega `/llms.txt` (con enlaces a las páginas de servicio) y `founder` al
+  nodo `Organization` (tres co-founders) como ficha canónica para crawlers y LLMs.
+
+**L22** (cambio de requerimiento sobre S3, verbatim del dueño: `4. Lo quiero visibile`):
+- La barra `Integramos con` pasa de 8 a **11 plataformas** (`AWS`, `Google Cloud` y `Firebase` entre
+  `Odoo` y `ARCA`) y el contador a `11 plataformas` / `11 platforms`.
+- Se retiran los separadores `·` de la lista en todos los anchos (`column-gap: 32px`), porque con 11
+  items la lista envuelve también en desktop y el punto abría la segunda línea.
+- Verificación: `messages.test.ts` fija conteo, paridad es/en y los tres nombres; el e2e de ancho sigue en
+  verde y el HTML de `/es` y `/en` muestra las 11 plataformas.

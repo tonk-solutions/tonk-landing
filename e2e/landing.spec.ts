@@ -193,6 +193,70 @@ test.describe("chrome compartido fuera de la home", () => {
 });
 
 
+test.describe("ancho en mobile", () => {
+  // S1 de odd/tasks/landing-mejoras.md: en inglés la frase resaltada del hero
+  // desbordaba el viewport entre 320px y 430px. El switch de CSS está en 768px,
+  // así que la banda 431-767 y el borde 767/768 también entran en el guard.
+  for (const width of [320, 360, 390, 430, 640, 767, 768]) {
+    test(`sin desborde horizontal a ${width}px en los dos idiomas`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+
+      for (const locale of ["es", "en"]) {
+        await page.goto(`/${locale}`, { waitUntil: "networkidle" });
+
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        );
+
+        expect(overflow, `/${locale} a ${width}px desborda ${overflow}px`).toBeLessThanOrEqual(0);
+      }
+    });
+  }
+});
+
+test.describe("llms.txt", () => {
+  test("responde 200 con texto plano, enlaces de servicio y los co-founders", async ({ request }) => {
+    const response = await request.get("/llms.txt");
+    const body = await response.text();
+
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toMatch(/text\/plain/);
+    expect(body).toContain("Matías Castillo");
+    expect(body).toContain("https://tonksolutions.com.ar/es/services/enterprise-integrations");
+    expect(body).not.toMatch(/Ignacio|Sileo/i);
+  });
+});
+
+test.describe("datos estructurados", () => {
+  // Cierra el cableado real de layout.tsx: el unit test usa pickFounders, este
+  // mira el JSON-LD tal como lo sirve el HTML.
+  for (const locale of ["es", "en"]) {
+    test(`el JSON-LD de /${locale} declara los tres co-founders con LinkedIn`, async ({ page }) => {
+      await page.goto(`/${locale}`);
+
+      const raw = await page.locator("script#structured-data").textContent();
+      const graph = JSON.parse(raw ?? "{}") as {
+        "@graph": { "@type": string; founder?: unknown[]; knowsAbout?: string[] }[];
+      };
+      const organization = graph["@graph"].find((node) => node["@type"] === "Organization") as {
+        founder: { name: string; sameAs: string[] }[];
+        knowsAbout: string[];
+      };
+
+      expect(organization.founder.map((person) => person.name)).toEqual([
+        "Matías Castillo",
+        "Nicolás Gómez",
+        "Rodrigo Hernandez",
+      ]);
+      expect(organization.founder.every((person) => Array.isArray(person.sameAs))).toBe(true);
+      expect(organization.knowsAbout).toEqual(
+        expect.arrayContaining(["AWS", "Google Cloud", "Firebase"]),
+      );
+      expect(raw).not.toMatch(/Ignacio|Sileo/i);
+    });
+  }
+});
+
 test.describe("menú mobile y consola limpia", () => {
   test("el menú mobile navega a la sección, cierra y scrollea", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });

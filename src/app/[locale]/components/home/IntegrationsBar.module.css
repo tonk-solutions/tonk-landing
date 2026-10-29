@@ -48,6 +48,12 @@
   grid-column: 3 / span 8;
   display: flex;
   flex-wrap: wrap;
+  /*
+   * Con 11 plataformas la lista envuelve en cualquier ancho, y el separador `·`
+   * quedaba al principio de la línea. Se usa separación de columnas, equivalente
+   * al espaciado viejo del punto (12px + glifo + 12px).
+   */
+  column-gap: 32px;
   row-gap: 6px;
 }
 
@@ -57,12 +63,6 @@
   letter-spacing: 0.02em;
   color: var(--body);
   white-space: nowrap;
-}
-
-.list li + li::before {
-  content: "·";
-  margin: 0 12px;
-  color: var(--muted);
 }
 
 .count {
