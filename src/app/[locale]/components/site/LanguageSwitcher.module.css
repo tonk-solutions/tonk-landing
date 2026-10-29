@@ -1,0 +1,35 @@
+.lang {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  border: 1px solid var(--border-strong);
+  padding: 6px 9px;
+  border-radius: 2px;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.sep {
+  color: var(--muted);
+  margin: 0 4px;
+}
+
+.opt {
+  color: var(--fg);
+  transition: color 0.15s ease;
+}
+
+.opt:hover {
+  color: var(--accent);
+}
+
+.opt:focus-visible {
+  border-radius: 2px;
+}
