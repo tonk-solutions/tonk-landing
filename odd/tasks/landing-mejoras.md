@@ -20,10 +20,15 @@ tanto no aparece en la home ni en `/[locale]/services/[slug]`. Las listas de emp
 quedan `BBVA`, `Santander`, `ICBC`, `Endava`, `Rootstrap`. El prototipo de `design/` es
 referencia visual congelada y no se edita.
 
-**S3 — AWS, Google Cloud y Firebase mencionados.** Pedido textual: `mencionar cosas de AWS, google cloud y firebase`.
-Los tres nombres aparecen en copy visible del sitio (descripción del servicio de
-arquitectura y pilar `Cloud Native`), en `seo.keywords` y en `knowsAbout` del JSON-LD.
-La barra `Integramos con` conserva sus 8 plataformas (S3 del doc del port).
+**S3 — AWS, Google Cloud y Firebase visibles en la barra.** Pedido textual: `mencionar cosas de AWS, google cloud y firebase`
+y luego, al confirmarse el alcance, `4. Lo quiero visibile`.
+La barra `Integramos con` tiene **11 plataformas** en este orden: `Dynamics 365`, `Salesforce`,
+`Odoo`, `AWS`, `Google Cloud`, `Firebase`, `ARCA`, `Mercado Pago`, `Stripe`,
+`WhatsApp Business API`, `APIs propias` (en inglés, `Own APIs`). El contador dice
+`11 plataformas` / `11 platforms`. Los tres nombres también aparecen en la descripción del servicio de
+arquitectura, el pilar `Cloud Native`, `seo.keywords`, `knowsAbout` del JSON-LD y `/llms.txt`. La lista
+no usa separadores `·`: con 11 items envuelve en cualquier ancho y el punto quedaba al principio de la
+línea, así que la separación es `column-gap`.
 
 **S4 — LLMO: la ficha canónica del equipo no incluye a Ignacio Sileo.** Pedido textual: `Arreglar el LLMO porque sigue apareciendo ignacio sileo cuando no deberia aprecer`.
 `/llms.txt` responde 200 con `text/plain`, lista a los tres co-founders
@@ -71,7 +76,7 @@ renderizada (`/es` y `/en`, 320/360/390/430/768px):
 - **S3**: AWS, Google Cloud y Firebase **no** se suman a la barra `Integramos con` porque esa lista está
   congelada en 8 plataformas por S3 del doc del port y por `messages.test.ts`. Se mencionan en la
   descripción del servicio de arquitectura, el pilar `Cloud Native`, `seo.keywords`, `knowsAbout` del
-  JSON-LD y `/llms.txt`.
+  JSON-LD y `/llms.txt`. *(Revisado en L6: el dueño pidió que fueran visibles en la barra.)*
 - **S4**: no existe `/llms.txt` ni en el repo ni en los dominios desplegados (404), y `Ignacio Sileo` no
   aparece en el sitio actual: sobrevive en índices viejos (perfil de LinkedIn, ramas públicas del repo con
   `content/team.md`). El fix del sitio es publicar la ficha canónica: `/llms.txt` + `founder` en el JSON-LD
@@ -126,3 +131,42 @@ renderizada (`/es` y `/en`, 320/360/390/430/768px):
   Verificación de la ronda: `vitest run` **35/35** · `tsc --noEmit` 0 · `eslint .` 0 · `next build` 0
   (`/llms.txt` prerenderizado) · `playwright test` contra `next start :3200` **59 pasan, 1 salteado**
   (guard de ancho con 640/767/768 y JSON-LD de `/es` y `/en` incluidos).
+
+**L6 — Cambio de requerimiento sobre S3 (verbatim).**
+```text
+4. Lo quiero visibile
+```
+- La barra `Integramos con` pasa a **11 plataformas** con `AWS`, `Google Cloud` y `Firebase` entre `Odoo`
+  y `ARCA`, y el contador a `11 plataformas` / `11 platforms`. `messages.test.ts` fija el conteo, la
+  paridad es/en y la presencia de los tres nombres.
+- Se retiran los separadores `·` de la lista en todos los anchos (`column-gap: 32px`): con 11 items
+  envuelve también en desktop y el punto quedaba abriendo la segunda línea.
+- S3 del doc del port (`odd/tasks/landing-documento-ingenieria.md`) se reescribe: 11 plataformas y
+  contador `11 plataformas`.
+
+**L7 — Ramas remotas obsoletas (decisión del dueño: `2. OK`).**
+El borrado de refs remotas está bloqueado por el sandbox (`git push --delete`), así que queda como paso
+manual del dueño. Ramas públicas del repo que todavía contienen la ficha de Ignacio Sileo —con su SHA
+corto para poder recuperarlas—:
+
+```text
+feature/critical-problems                      7dc5062
+feature/first-init                             ef4e8bf
+feature/improvement-SEO-LLMO                   433177a
+feature/improvement-optimization               78a6aef
+feature/improvement-ui-desing                  021adfd
+feature/pilar-1-landing                        931513c
+feature/pilar-1-marca-y-evidencia              aa3d30b
+feature/skills                                 d53f48c
+feature/wrap-services-into-branches            ce97928
+fix/seo-1-domain-assets-sitemap                980993f
+fix/seo-2-jsonld                               6162023
+fix/seo-3-services-pages                       50a7be1
+fix/seo-4-static-locale                        a1d600d
+refactor/decouple-presentation-from-content    9e3bce8
+refactor/improve-based-on-repo-scan            882a191
+revert-12-feature/improvement-ui-desing        b5e05f2
+```
+
+Ninguna es head de un PR abierto (los abiertos son #27, #29 y #30), así que el borrado no cierra PRs.
+`main`, `fix/landing` y las ramas de esos tres PRs no contienen la cadena.

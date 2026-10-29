@@ -41,11 +41,14 @@
   "integrations": {
     "number": "02",
     "label": "We integrate with",
-    "meta": "8 platforms",
+    "meta": "11 platforms",
     "platforms": [
       "Dynamics 365",
       "Salesforce",
       "Odoo",
+      "AWS",
+      "Google Cloud",
+      "Firebase",
       "ARCA",
       "Mercado Pago",
       "Stripe",

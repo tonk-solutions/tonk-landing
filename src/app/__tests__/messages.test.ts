@@ -74,9 +74,17 @@ describe("specs del titular y del diagnóstico", () => {
     ]);
   });
 
-  it("la barra de integraciones declara 8 plataformas sin SAP", () => {
-    expect(es.integrations.platforms).toHaveLength(8);
+  it("la barra de integraciones declara 11 plataformas, incluidas las cloud, sin SAP", () => {
+    expect(es.integrations.platforms).toHaveLength(11);
+    expect(en.integrations.platforms).toHaveLength(11);
+    // La última entrada está traducida (APIs propias / Own APIs); el resto es igual.
+    expect(es.integrations.platforms.slice(0, -1)).toEqual(en.integrations.platforms.slice(0, -1));
+    expect(es.integrations.platforms).toEqual(
+      expect.arrayContaining(["AWS", "Google Cloud", "Firebase"]),
+    );
     expect(es.integrations.platforms).not.toContain("SAP");
+    expect(es.integrations.meta).toBe("11 plataformas");
+    expect(en.integrations.meta).toBe("11 platforms");
   });
 });
 
