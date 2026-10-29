@@ -91,7 +91,7 @@ export default async function HeroTopology() {
       </svg>
 
       <figcaption className={styles.figcaption}>
-        <span className={styles.captionLabel}>{t("diagramCaption")}</span>
+        <span className={styles.captionLabel}>{t("diagramTitle")}</span>
         <span className={styles.captionMeta}>{t("diagramCaption")}</span>
       </figcaption>
     </figure>
