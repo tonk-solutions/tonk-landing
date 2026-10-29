@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { Providers } from "./providers";
 import { SITE_NAME, SITE_URL } from "../constants";
@@ -10,16 +10,18 @@ import { resolveRequestLocale } from '@/i18n/requestLocale';
 import { buildStructuredDataGraph } from '../seo/structuredData';
 import type { ServiceContent } from '../services/catalog';
 
-const syne = Syne({
+const geistSans = Geist({
   subsets: ["latin"],
-  variable: "--font-heading",
-  weight: ["500", "600", "700", "800"],
+  variable: "--font-geist-sans",
+  weight: ["400", "500", "600"],
+  display: "swap",
 });
 
-const dmSans = DM_Sans({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-geist-mono",
+  weight: ["400", "500"],
+  display: "swap",
 });
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -134,7 +136,7 @@ export default async function LocaleLayout({
       lang={locale}
       data-scroll-behavior="smooth"
     >
-      <body className={`${syne.variable} ${dmSans.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <script
           id="structured-data"
           type="application/ld+json"
