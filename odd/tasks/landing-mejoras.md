@@ -170,3 +170,14 @@ revert-12-feature/improvement-ui-desing        b5e05f2
 
 Ninguna es head de un PR abierto (los abiertos son #27, #29 y #30), así que el borrado no cierra PRs.
 `main`, `fix/landing` y las ramas de esos tres PRs no contienen la cadena.
+
+**L8 — Borrado de ramas verificado (29/10/2026).** El dueño corrió la eliminación de refs. Después de
+`git fetch --prune` quedan 8 ramas remotas (`chore/bump-deps-2026-10`, `feat/landing-documento-ingenieria`,
+`feature/TL-23-voseo-i18n`, `feature/TL-30-mejoras-landing`, `feature/TL-33-rediseno-visual`,
+`fix/pie-diagrama-emotion-duplicado`, `franky/fix-tonk-landing-28`, `main`) y **ninguna contiene
+`Ignacio` ni `Sileo`**; las 16 ramas de L7 ya no existen en `origin`.
+
+Residuo conocido y fuera del alcance de refs: los commits viejos siguen alcanzables desde los PR
+históricos y la API de GitHub. Una limpieza total exigiría reescribir la historia (`git filter-repo` +
+force push), con costo sobre PRs, forks y clones existentes. El sitio publicado y la ficha canónica
+(`/llms.txt` y JSON-LD) ya no mencionan esa nómina.
