@@ -105,6 +105,7 @@ export default async function LocaleLayout({
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
   const tSchema = await getTranslations({ locale, namespace: 'schema' });
   const tServices = await getTranslations({ locale, namespace: 'services' });
+  const tTeam = await getTranslations({ locale, namespace: 'team' });
 
   const structuredDataGraph = buildStructuredDataGraph({
     locale,
@@ -116,6 +117,7 @@ export default async function LocaleLayout({
       addressCountry: "AR",
       linkedinUrl: "https://www.linkedin.com/company/tonk-solutions",
       instagramUrl: "https://www.instagram.com/tonk_solutions",
+      founders: tTeam.raw('members') as { name: string; role: string; linkedin: string }[],
     },
     website: {
       inLanguage: tSchema('inLanguage'),

@@ -213,6 +213,18 @@ test.describe("ancho en mobile", () => {
   }
 });
 
+test.describe("llms.txt", () => {
+  test("responde 200 con texto plano y lista a los co-founders", async ({ request }) => {
+    const response = await request.get("/llms.txt");
+    const body = await response.text();
+
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toMatch(/text\/plain/);
+    expect(body).toContain("Matías Castillo");
+    expect(body).not.toMatch(/Ignacio|Sileo/i);
+  });
+});
+
 test.describe("menú mobile y consola limpia", () => {
   test("el menú mobile navega a la sección, cierra y scrollea", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });

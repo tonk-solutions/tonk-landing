@@ -6,6 +6,12 @@ import {
   type ServiceContent,
 } from "../services/catalog";
 
+export interface FounderInfo {
+  name: string;
+  role: string;
+  linkedin: string;
+}
+
 export interface OrganizationInfo {
   description: string;
   slogan: string;
@@ -14,6 +20,7 @@ export interface OrganizationInfo {
   addressCountry: string;
   linkedinUrl: string;
   instagramUrl: string;
+  founders: FounderInfo[];
 }
 
 export interface WebsiteInfo {
@@ -48,6 +55,9 @@ const KNOWS_ABOUT = [
   "Technical Debt Resolution",
   "Distributed Systems",
   "Enterprise AI",
+  "AWS",
+  "Google Cloud",
+  "Firebase",
 ];
 
 /**
@@ -90,6 +100,12 @@ export function buildStructuredDataGraph(input: StructuredDataInput) {
     sameAs: [input.organization.linkedinUrl, input.organization.instagramUrl].filter(Boolean),
     knowsAbout: KNOWS_ABOUT,
     slogan: input.organization.slogan,
+    founder: input.organization.founders.map((founder) => ({
+      "@type": "Person",
+      name: founder.name,
+      jobTitle: founder.role,
+      sameAs: founder.linkedin,
+    })),
   };
 
   const websiteNode = {
