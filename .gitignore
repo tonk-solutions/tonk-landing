@@ -42,3 +42,8 @@ next-env.d.ts
 
 # gentle-ai skill registry cache
 .atl/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
