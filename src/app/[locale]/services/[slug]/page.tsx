@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Box, Container, Flex, Heading, Text, Link as ChakraLink, Button } from "@chakra-ui/react";
 import { ArrowLeft, MessageCircle, Code, Cloud, FileText, BrainCircuit, Users, Sparkles, UserCheck } from "lucide-react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import { Header } from "../../components/site/Header";
+import { Footer } from "../../components/site/Footer";
 import EnterpriseIntegrationsLanding from "./EnterpriseIntegrationsLanding";
 import { Link as LocaleLink, routing } from "@/i18n/routing";
 import { resolveRequestLocale } from "@/i18n/requestLocale";
@@ -122,7 +122,7 @@ export default async function ServicePage({
     return (
       <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
         <Header />
-        <main role="main" style={{ width: "100%" }}>
+        <main id="main" role="main" style={{ width: "100%" }}>
           <EnterpriseIntegrationsLanding locale={locale} />
         </main>
         <Footer />
@@ -137,7 +137,7 @@ export default async function ServicePage({
   return (
     <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
       <Header />
-      <main role="main" style={{ width: "100%" }}>
+      <main id="main" role="main" style={{ width: "100%" }}>
         <Box
           as="section"
           pt={{ base: 28, md: 36 }}
@@ -148,7 +148,7 @@ export default async function ServicePage({
         >
           <Container maxW="900px" mx="auto">
             <LocaleLink
-              href="/#servicios"
+              href="/#s03"
               style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}
             >
               <ArrowLeft size={16} color="#0891b2" />

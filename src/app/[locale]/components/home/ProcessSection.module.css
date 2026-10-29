@@ -1,0 +1,93 @@
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 48px;
+  align-items: stretch;
+  list-style: none;
+  margin: clamp(40px, 6vh, 72px) 0 0;
+  padding: 0;
+}
+
+.step {
+  position: relative;
+  border: 1px solid var(--border-strong);
+  padding: 24px 24px 28px;
+}
+
+.step:last-child {
+  border-color: var(--accent);
+}
+
+.step:not(:last-child)::before,
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border: 0 solid var(--border-strong);
+}
+
+.step:not(:last-child)::before {
+  left: calc(100% + 1px);
+  top: 28px;
+  width: 24px;
+  height: 28px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+
+.step:not(:last-child)::after {
+  left: calc(100% + 24px);
+  top: 55px;
+  width: 24px;
+  border-top-width: 1px;
+}
+
+.num {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.step h3 {
+  margin-top: 20px;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+
+.step p {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--body);
+}
+
+@media (max-width: 1023px) {
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 40px;
+    max-width: 620px;
+  }
+
+  .step:not(:last-child)::before {
+    left: 28px;
+    top: calc(100% + 1px);
+    width: 28px;
+    height: 20px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-left-width: 1px;
+    border-bottom-width: 1px;
+  }
+
+  .step:not(:last-child)::after {
+    left: 55px;
+    top: calc(100% + 20px);
+    width: 0;
+    height: 20px;
+    border-top-width: 0;
+    border-left-width: 1px;
+  }
+}

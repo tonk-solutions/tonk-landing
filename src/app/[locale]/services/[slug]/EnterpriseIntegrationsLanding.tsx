@@ -60,7 +60,7 @@ export default async function EnterpriseIntegrationsLanding({
       >
         <Container maxW="1280px" mx="auto" w="100%" px={0}>
           <LocaleLink
-            href="/#servicios"
+            href="/#s03"
             style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}
           >
             <ArrowLeft size={16} color="#0891b2" />

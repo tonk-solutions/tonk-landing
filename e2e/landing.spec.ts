@@ -1,0 +1,236 @@
+import { expect, test } from "@playwright/test";
+
+/**
+ * Cubre las specs del port (odd/tasks/landing-documento-ingenieria.md) sobre la
+ * página renderizada. Cada bloque referencia la spec que protege.
+ */
+test.describe("estructura y contenido", () => {
+  test("las nueve secciones están en orden y son las únicas anclas del índice", async ({ page }) => {
+    await page.goto("/es");
+
+    const ids = await page.locator("main section").evaluateAll((sections) =>
+      sections.map((section) => section.id),
+    );
+
+    expect(ids).toEqual(["s01", "s02", "s03", "s04", "s05", "s06", "s07", "s08", "s09"]);
+  });
+
+  test("el titular tiene las dos líneas de la spec S2", async ({ page }) => {
+    await page.goto("/es");
+    const heading = page.getByRole("heading", { level: 1 });
+
+    await expect(heading).toContainText("Integraciones enterprise complejas,");
+    await expect(heading).toContainText("y producto desde cero.");
+  });
+
+  test("el sitio no menciona SAP en ningún texto visible", async ({ page }) => {
+    await page.goto("/es");
+    const body = await page.locator("body").innerText();
+
+    expect(body).not.toMatch(/\bSAP\b/i);
+  });
+
+  test("los proyectos son Konekta y Clank, sin DUCE", async ({ page }) => {
+    await page.goto("/es");
+    const projects = page.locator("#s04");
+
+    await expect(projects).toContainText("Konekta");
+    await expect(projects).toContainText("Clank");
+    await expect(projects).not.toContainText("DUCE");
+  });
+
+  test("no hay etiquetas de vocero ni sección de comentarios", async ({ page }) => {
+    await page.goto("/es");
+    const body = await page.locator("body").innerText();
+
+    expect(body).not.toMatch(/vocero/i);
+    expect(body).not.toMatch(/comentarios de clientes/i);
+  });
+
+  test("el diagnóstico respeta las seis filas", async ({ page }) => {
+    await page.goto("/es");
+    const labels = await page
+      .locator("#s05 dt")
+      .evaluateAll((items) => items.map((item) => item.textContent?.trim()));
+
+    expect(labels).toEqual([
+      "Alcance",
+      "Duración",
+      "Presupuesto",
+      "Entregable",
+      "Pruebas",
+      "Plan de mantenimiento",
+    ]);
+  });
+
+  test("contacto tiene un solo CTA de WhatsApp y ningún mailto", async ({ page }) => {
+    await page.goto("/es");
+    const contact = page.locator("#s09");
+
+    await expect(contact.getByRole("link")).toHaveCount(1);
+    await expect(contact.getByRole("link")).toHaveAttribute("href", /wa\.me/);
+    await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0);
+  });
+});
+
+test.describe("marca", () => {
+  test("el header muestra el isotipo y el wordmark sin SOLUTIONS", async ({ page }) => {
+    await page.goto("/es");
+    const header = page.locator("header").first();
+
+    await expect(header.locator("svg circle")).toHaveCount(3);
+    await expect(header).toContainText("tonk");
+    await expect(header).not.toContainText("SOLUTIONS");
+  });
+});
+
+test.describe("navegación e interacción", () => {
+  test("el acordeón abre y cierra con aria-expanded", async ({ page }) => {
+    await page.goto("/es");
+    const first = page.locator("#s03 button[aria-expanded]").first();
+
+    await expect(first).toHaveAttribute("aria-expanded", "true");
+    await first.click();
+    await expect(first).toHaveAttribute("aria-expanded", "false");
+  });
+
+  test("el índice lateral aparece en desktop y marca la sección activa", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/es");
+
+    const index = page.getByRole("navigation", { name: "Índice de secciones" });
+    await expect(index).toBeVisible();
+    await expect(index.locator("a")).toHaveCount(9);
+    await expect(index.locator('a[aria-current="true"]')).toHaveCount(1);
+  });
+
+  test("el índice lateral se oculta en mobile", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/es");
+
+    await expect(page.getByRole("navigation", { name: "Índice de secciones" })).toBeHidden();
+  });
+
+  test("el CTA fijo mobile aparece después del hero y no tapa el contacto", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    // Sin scroll suave: el desplazamiento tiene que ser determinista para el test.
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/es");
+
+    const bar = page.locator('[aria-hidden="true"], [aria-hidden="false"]').filter({ hasText: /WhatsApp|Escribinos/ });
+    await expect.poll(() => bar.first().getAttribute("aria-hidden"), { timeout: 10_000 }).toBe("true");
+
+    await page.locator("#s03").scrollIntoViewIfNeeded();
+    await expect.poll(() => bar.first().getAttribute("aria-hidden"), { timeout: 10_000 }).toBe("false");
+
+    await page.locator("#s09").scrollIntoViewIfNeeded();
+    await expect.poll(() => bar.first().getAttribute("aria-hidden"), { timeout: 10_000 }).toBe("true");
+  });
+});
+
+test.describe("bilingüismo", () => {
+  test("la versión en inglés traduce el titular", async ({ page }) => {
+    await page.goto("/en");
+    const heading = page.getByRole("heading", { level: 1 });
+
+    await expect(heading).toContainText("Complex enterprise integrations,");
+    await expect(heading).toContainText("and products built from scratch.");
+  });
+});
+
+test.describe("chrome compartido fuera de la home", () => {
+  const servicePath = "/es/services/enterprise-integrations";
+
+  test("el selector de idioma conserva la ruta del detalle de servicio", async ({ page }) => {
+    const response = await page.goto(servicePath);
+    expect(response?.status()).toBe(200);
+
+    await page.getByRole("link", { name: "EN", exact: true }).click();
+    await page.waitForURL("**/en/services/enterprise-integrations");
+
+    expect(new URL(page.url()).pathname).toBe("/en/services/enterprise-integrations");
+    await expect(page.locator("main#main")).toBeVisible();
+  });
+
+  test("hay un solo skip link por página", async ({ page }) => {
+    await page.goto("/es");
+    await expect(page.locator("a.skip-link")).toHaveCount(1);
+
+    await page.goto(servicePath);
+    await expect(page.locator("a.skip-link")).toHaveCount(1);
+  });
+
+  test("el skip link apunta a un main existente en el detalle de servicio", async ({ page }) => {
+    await page.goto(servicePath);
+
+    await expect(page.locator("a.skip-link")).toHaveAttribute("href", "#main");
+    await expect(page.locator("main#main")).toHaveCount(1);
+  });
+
+  test("el nav del header vuelve a la home y ancla la sección de servicios", async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 1440) < 1024, "el nav de escritorio está oculto en mobile");
+    await page.goto(servicePath);
+
+    await page.locator("header nav a", { hasText: "Servicios" }).first().click();
+    await page.waitForURL("**/es#s03");
+
+    // Lo que se arregló es el scroll: la sección tiene que quedar a la vista.
+    await expect
+      .poll(() => page.evaluate(() => Math.round(document.getElementById("s03")!.getBoundingClientRect().top)), {
+        timeout: 10_000,
+      })
+      .toBeLessThan(200);
+    await expect(page.locator("#s03")).toBeVisible();
+  });
+
+  test("el volver del detalle de servicio ancla la sección de servicios", async ({ page }) => {
+    await page.goto(servicePath);
+
+    const back = page.locator('main a[href$="#s03"]').first();
+    await expect(back).toBeVisible();
+    await expect(back).toHaveAttribute("href", /\/es#s03$/);
+  });
+});
+
+
+test.describe("menú mobile y consola limpia", () => {
+  test("el menú mobile navega a la sección, cierra y scrollea", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/es");
+
+    // El label del botón cambia a "Cerrar" al abrir: se ancla por aria-controls.
+    const menuButton = page.locator('button[aria-controls="main-nav-mobile"]');
+    await menuButton.click();
+    await expect(menuButton).toHaveAttribute("aria-expanded", "true");
+
+    await page.locator("#main-nav-mobile a", { hasText: "Servicios" }).click();
+    await expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    await expect(page).toHaveURL(/\/es#s03$/);
+
+    await expect
+      .poll(() => page.evaluate(() => Math.round(document.getElementById("s03")!.getBoundingClientRect().top)), {
+        timeout: 10_000,
+      })
+      .toBeLessThan(200);
+  });
+
+  test("ninguna ruta emite errores de hidratación ni excepciones", async ({ page }) => {
+    const errors: string[] = [];
+    // El ruido de red (fuentes, prefetch) no es un defecto de la página.
+    const isHydrationOrCrash = (text: string) =>
+      /hydrat|minified react error|418|423|did not match/i.test(text);
+
+    page.on("console", (message) => {
+      if (message.type() === "error" && isHydrationOrCrash(message.text())) errors.push(message.text());
+    });
+    page.on("pageerror", (error) => errors.push(error.message));
+
+    for (const path of ["/es", "/en", "/es/services/enterprise-integrations"]) {
+      await page.goto(path, { waitUntil: "networkidle" });
+      await page.waitForTimeout(150);
+    }
+
+    expect(errors).toEqual([]);
+  });
+});

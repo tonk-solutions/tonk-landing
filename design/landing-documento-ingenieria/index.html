@@ -1,0 +1,1047 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tonk Solutions — Integraciones enterprise, sin intermediarios</title>
+<meta name="description" content="Consultora de ingeniería de software senior en Buenos Aires. Integramos los sistemas que tu operación ya tiene y construimos producto desde cero, con trato directo con el ingeniero.">
+<meta name="theme-color" content="#17191C">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%2317191C%27/%3E%3Cg transform=%27translate(4 4) scale(.75)%27%3E%3Cpath d=%27M6 9.5H26M16 9.5V20%27 fill=%27none%27 stroke=%27%23E8EAED%27 stroke-width=%274.5%27 stroke-linecap=%27round%27/%3E%3Ccircle cx=%275%27 cy=%279.5%27 r=%274.2%27 fill=%27%23E8EAED%27/%3E%3Ccircle cx=%2727%27 cy=%279.5%27 r=%274.2%27 fill=%27%23E8EAED%27/%3E%3Ccircle cx=%2716%27 cy=%2725.5%27 r=%274.2%27 fill=%27%233DF5C8%27/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#17191C;
+  --surface:#24272C;
+  --muted:#8A9099;
+  --fg:#E8EAED;
+  --accent:#3DF5C8;
+  --accent-on-light:#10B98F;
+  --border:rgba(232,234,237,0.07);
+  --border-strong:rgba(232,234,237,0.18);
+  --accent-subtle:rgba(61,245,200,0.12);
+  --body:rgba(232,234,237,0.78);
+  --icon:rgba(232,234,237,0.7);
+  --m:clamp(20px,4vw,64px);
+  --g:24px;
+  --max:1520px;
+  --header:64px;
+  --sec-pad:clamp(72px,10vh,140px);
+
+  --sans:"Geist",ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:var(--header)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{
+  margin:0;background:var(--bg);color:var(--fg);
+  font-family:var(--sans);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent-subtle);color:var(--fg)}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,p,ol,ul,dl,dd,figure,blockquote{margin:0}
+ol,ul{padding:0;list-style:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+svg{display:block}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+a,button,[tabindex]{scroll-margin-top:16px}
+.acc-btn:focus-visible,.foot-b a:focus-visible,.mcta .btn:focus-visible,.lang-opt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.mono{font-family:var(--mono)}
+.label{
+  font-family:var(--mono);font-size:11px;font-weight:400;line-height:1.4;
+  text-transform:uppercase;letter-spacing:.14em;color:var(--muted);
+}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.skip{
+  position:fixed;top:12px;left:12px;z-index:100;
+  background:var(--accent);color:var(--bg);font-weight:500;font-size:14px;
+  padding:10px 14px;border-radius:2px;transform:translateY(-200%);
+}
+.skip:focus{transform:none}
+
+/* ---------- Grid system ---------- */
+.wrap{
+  width:100%;max-width:calc(var(--max) + 2 * var(--m));
+  margin-inline:auto;padding-inline:var(--m);
+}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g)}
+
+
+/* ---------- Buttons & links ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:48px;padding:0 22px;border-radius:2px;
+  background:var(--accent);color:var(--bg);
+  font-size:15px;font-weight:500;letter-spacing:.01em;line-height:1;
+  transition:background-color .15s ease;
+}
+.btn:hover{background:color-mix(in oklch, var(--accent) 82%, white)}
+.btn:active{background:color-mix(in oklch, var(--accent) 88%, black)}
+.btn-sm{min-height:36px;padding:0 14px;font-size:14px}
+
+.link{
+  display:inline-flex;align-items:center;min-height:44px;
+  font-size:15px;font-weight:500;color:var(--fg);
+}
+.link span{border-bottom:1px solid var(--border-strong);padding-bottom:3px;transition:border-color .15s ease}
+.link:hover span{border-color:var(--fg)}
+
+/* ---------- Header ---------- */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:50;height:var(--header);
+  background:rgba(23,25,28,0.92);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border-strong);
+}
+.site-header .wrap{height:100%;display:flex;align-items:center;gap:32px}
+.lockup{display:inline-flex;align-items:center;gap:10px;min-height:44px;flex-shrink:0;white-space:nowrap;color:var(--fg)}
+.lockup .isotype{width:28px;height:28px;flex:none}
+.lockup .l-word{font-family:var(--sans);font-weight:500;font-size:22px;line-height:1;letter-spacing:-.02em;color:var(--fg)}
+.lockup-stack{flex-direction:column;gap:8px}
+.lockup-stack .isotype{width:32px;height:32px}
+.nav{margin-left:auto}
+.nav ul{display:flex;gap:28px}
+.nav a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:500;color:var(--body);transition:color .15s ease}
+.nav a:hover{color:var(--fg)}
+.lang{font-family:var(--mono);font-size:11px;letter-spacing:.14em;border:1px solid var(--border-strong);padding:6px 9px;border-radius:2px;color:var(--fg);white-space:nowrap}
+.lang .off{color:var(--muted)}
+.lang-opt{color:var(--fg)}
+.lang .sep{color:var(--muted);margin:0 4px}
+.menu-btn{display:none;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;min-height:44px;padding:0 4px;color:var(--fg)}
+.menu-btn .bars{display:inline-block;width:16px;height:9px;border-top:1px solid var(--fg);border-bottom:1px solid var(--fg);margin-left:10px;vertical-align:middle}
+
+/* ---------- Side index ---------- */
+.side-index{position:fixed;left:0;top:50%;transform:translateY(-50%);width:56px;z-index:40;display:none}
+.side-index ol{display:flex;flex-direction:column;gap:2px}
+.side-index a{
+  display:flex;align-items:center;gap:5px;min-height:28px;padding-left:8px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted);
+  transition:color .15s ease;
+}
+.side-index a::before{content:"";width:8px;height:1px;background:transparent}
+.side-index a:hover{color:var(--fg)}
+.side-index a[aria-current="true"]{color:var(--accent)}
+.side-index a[aria-current="true"]::before{background:var(--accent)}
+@media (min-width:1280px){.side-index{display:block}}
+
+/* ---------- Sections ---------- */
+main{position:relative;z-index:1}
+.sec{padding-block:var(--sec-pad);scroll-margin-top:16px}
+.sec-head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px 24px;flex-wrap:wrap;
+  border-top:1px solid var(--border-strong);padding-top:14px;
+}
+.sec-head .sec-num,.bar .sec-num{font-size:22px;line-height:1;letter-spacing:.02em;color:var(--accent);vertical-align:-2px}
+.sec-intro{margin-top:clamp(40px,6vh,72px);margin-bottom:clamp(40px,6vh,72px)}
+.h2{
+  font-size:clamp(30px,3.4vw,52px);line-height:1.02;letter-spacing:-.02em;font-weight:500;
+  grid-column:1 / span 8;text-wrap:balance;
+}
+.intro-p{grid-column:9 / span 4;align-self:end;color:var(--body);font-size:16px;max-width:62ch}
+.prose{font-size:17px;line-height:1.6;color:var(--body);max-width:62ch}
+
+/* ---------- 01 Hero ---------- */
+.hero{padding-top:calc(var(--header) + clamp(32px,5vh,64px))}
+.hero-grid{margin-top:clamp(40px,7vh,88px);align-items:start;row-gap:56px}
+.hero-text{grid-column:1 / span 8}
+.hero h1{
+  font-size:clamp(46px,5vw,68px);line-height:.94;letter-spacing:-.03em;font-weight:500;
+  text-wrap:balance;
+}
+.hero h1 .hl{
+  display:inline-block;white-space:nowrap;
+  text-decoration-line:underline;text-decoration-color:var(--accent);
+  text-decoration-thickness:2px;text-underline-offset:.14em;text-decoration-skip-ink:none;
+}
+.hero .lede{margin-top:clamp(28px,4vh,44px);font-size:clamp(17px,1.4vw,20px);line-height:1.55;color:var(--body);max-width:62ch}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;margin-top:36px}
+.meta{
+  display:flex;flex-wrap:wrap;gap:6px 0;margin-top:48px;padding-top:14px;
+  border-top:1px solid var(--border);
+}
+.meta li{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.meta li+li::before{content:"·";margin:0 14px;color:var(--muted)}
+.hero-fig{grid-column:9 / span 4;width:100%}
+.hero-fig svg{width:100%;height:auto;max-height:420px}
+.hero-fig figcaption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
+
+.dg-line{fill:none;stroke:var(--border-strong);stroke-width:1}
+.dg-node{fill:var(--bg);stroke:var(--border-strong);stroke-width:1}
+.dg-core{fill:var(--bg);stroke:var(--accent);stroke-width:1}
+.dg-port{fill:var(--muted)}
+.dg-text{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;fill:var(--fg)}
+.dg-core-text{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.16em;fill:var(--fg)}
+.dg-small{font-family:var(--mono);font-size:9px;letter-spacing:.12em;fill:var(--muted)}
+.dg-cross{stroke:var(--muted);stroke-width:1}
+.pulse{
+  fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:square;
+  stroke-dasharray:8 140;stroke-dashoffset:8;opacity:0;
+  animation:pulse 6s linear infinite;
+}
+@keyframes pulse{
+  0%{stroke-dashoffset:8;opacity:1}
+  24%{stroke-dashoffset:-100;opacity:1}
+  25%,100%{stroke-dashoffset:-100;opacity:0}
+}
+
+/* ---------- 02 Integrations bar ---------- */
+.bar{border-top:1px solid var(--border-strong);border-bottom:1px solid var(--border-strong);scroll-margin-top:16px}
+.bar-in{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);row-gap:12px;align-items:baseline;padding-block:26px}
+.bar-in h2{grid-column:1 / span 2}
+.bar-list{grid-column:3 / span 8;display:flex;flex-wrap:wrap;row-gap:6px}
+.bar-list li{font-family:var(--mono);font-size:14px;letter-spacing:.02em;color:var(--body);white-space:nowrap}
+.bar-list li+li::before{content:"·";margin:0 12px;color:var(--muted)}
+.bar-count{grid-column:11 / span 2;justify-self:end;white-space:nowrap}
+
+/* ---------- 03 Services ---------- */
+.group+.group{margin-top:clamp(56px,8vh,96px)}
+.group-head{border-top:1px solid var(--border-strong);padding-block:18px 28px;row-gap:10px}
+.group-head .label{grid-column:1 / span 2;padding-top:6px}
+.group-head p{grid-column:3 / span 7;font-size:19px;line-height:1.55;color:var(--fg);max-width:62ch}
+.acc-item{border-top:1px solid var(--border)}
+.acc-item:last-child{border-bottom:1px solid var(--border)}
+.acc-item h3{font:inherit}
+.acc-btn{
+  width:100%;min-height:76px;align-items:center;padding-block:12px;
+  display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);
+  transition:background-color .15s ease;
+}
+.acc-btn:hover{background:rgba(36,39,44,0.6)}
+.acc-num{grid-column:1 / span 2;font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--muted)}
+.acc-title{grid-column:3 / span 8;font-size:26px;line-height:1.15;letter-spacing:-.01em;font-weight:500;color:var(--fg)}
+.acc-icons{grid-column:11 / span 2;justify-self:end;display:flex;align-items:center;gap:20px;color:var(--icon)}
+.acc-icons svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.acc-icons .chev{width:20px;height:20px;transition:transform .2s ease}
+.acc-btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.acc-btn[aria-expanded="true"] .acc-num{color:var(--fg)}
+.acc-panel{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);padding-bottom:32px}
+.acc-panel[hidden]{display:none}
+.acc-panel-in{grid-column:3 / span 7}
+.acc-panel .prose{margin-top:2px}
+.acc-panel .link{margin-top:14px}
+
+/* ---------- 06 Process ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:48px;align-items:stretch}
+.step{position:relative;border:1px solid var(--border-strong);padding:24px 24px 28px}
+.step:last-child{border-color:var(--accent)}
+.step:not(:last-child)::before,.step:not(:last-child)::after{content:"";position:absolute;pointer-events:none;border:0 solid var(--border-strong)}
+.step:not(:last-child)::before{left:calc(100% + 1px);top:28px;width:24px;height:28px;border-top-width:1px;border-right-width:1px}
+.step:not(:last-child)::after{left:calc(100% + 24px);top:55px;width:24px;border-top-width:1px}
+.step .num{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--muted)}
+.step h3{margin-top:20px;font-size:20px;line-height:1.2;letter-spacing:-.01em;font-weight:500}
+.step p{margin-top:10px;font-size:14px;line-height:1.55;color:var(--body)}
+
+/* ---------- 04 Projects ---------- */
+.project .stack{margin-top:16px;font-family:var(--mono);font-size:11px;line-height:1.6;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.scope{
+  grid-column:11 / span 2;justify-self:end;
+  border:1px solid var(--border-strong);padding:8px 10px;
+  font-family:var(--mono);font-size:10px;line-height:1.4;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);
+}
+/* ---------- 05 Diagnostic ---------- */
+.sec-lede{grid-column:1 / span 8;margin-top:20px;font-size:19px;line-height:1.55;color:var(--body);max-width:62ch}
+.spec-sheet{margin-inline:-24px;padding:48px;background:var(--surface);border:1px solid var(--border-strong)}
+.spec div{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;align-items:baseline;padding-block:20px;border-top:1px solid var(--border)}
+.spec div:last-child{border-bottom:1px solid var(--border)}
+.spec dd{font-size:17px;line-height:1.6;color:var(--body);max-width:62ch}
+.spec-cta{margin-top:32px}
+
+/* ---------- 07 Criteria ---------- */
+.ops-strip{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 48px;padding-block:28px;margin-bottom:clamp(48px,7vh,80px);border-top:1px solid var(--border-strong);border-bottom:1px solid var(--border-strong)}
+.ops-list{display:flex;flex-wrap:wrap;row-gap:12px}
+.ops-list li{padding-inline:24px;font-size:20px;line-height:1.2;font-weight:500;letter-spacing:-.01em;color:var(--muted)}
+.ops-list li+li{border-left:1px solid var(--border-strong)}
+.ops-list li:last-child{padding-right:0}
+.crit{row-gap:64px;align-items:start}
+.crit-left{grid-column:1 / span 7}
+.crit-right{grid-column:9 / span 4}
+.points{margin-top:40px;counter-reset:pt}
+.points li{
+  display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:baseline;
+  padding-block:18px;border-top:1px solid var(--border);font-size:17px;color:var(--fg);line-height:1.5;
+}
+.points li:last-child{border-bottom:1px solid var(--border)}
+.points li::before{counter-increment:pt;content:counter(pt,decimal-leading-zero);font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--muted)}
+.mission{border-left:2px solid var(--accent);padding:4px 0 4px 24px}
+.mission p{font-size:28px;line-height:1.3;letter-spacing:-.01em;font-weight:400;color:var(--fg)}
+.mission footer{margin-top:18px}
+.pillars{margin-top:48px}
+.pillars div{padding-block:16px;border-top:1px solid var(--border)}
+.pillars div:last-child{border-bottom:1px solid var(--border)}
+.pillars dt{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg)}
+.pillars dd{margin-top:4px;font-size:15px;line-height:1.5;color:var(--body)}
+
+/* ---------- 08 Team ---------- */
+.member{border-top:1px solid var(--border);padding-block:32px;row-gap:16px;align-items:start}
+.member:last-child{border-bottom:1px solid var(--border)}
+.member .num{grid-column:1 / span 2;font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--muted);padding-top:8px}
+.who{grid-column:3 / span 3}
+.who h3{font-size:26px;line-height:1.15;letter-spacing:-.01em;font-weight:500}
+.who .role{margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);line-height:1.5}
+.member .bio-col{grid-column:6 / span 5}
+.member .bio-col p{font-size:16px;line-height:1.6;color:var(--body);max-width:62ch}
+.member .bio-col .link{margin-top:6px;font-size:14px}
+.monogram{grid-column:11 / span 2;justify-self:end;align-self:start;display:grid;place-items:center;width:96px;height:96px;border:1px solid var(--border-strong);font-family:var(--mono);font-size:16px;font-weight:500;letter-spacing:.08em;color:var(--fg)}
+
+/* ---------- 09 Contact ---------- */
+.contact{row-gap:56px;align-items:start}
+.contact-left{grid-column:1 / span 7}
+.contact-left h2{font-size:clamp(32px,3.6vw,52px);line-height:1.02;letter-spacing:-.02em;font-weight:500;text-wrap:balance}
+.contact-left .prose{margin-top:24px;font-size:19px;line-height:1.55}
+.crit-left > .prose{font-size:19px;line-height:1.55}
+.contact-right{grid-column:9 / span 4}
+.data-rows div{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;padding-block:20px;border-top:1px solid var(--border)}
+.data-rows div:last-child{border-bottom:1px solid var(--border)}
+.data-rows dd{font-family:var(--mono);font-size:15px;color:var(--fg);overflow-wrap:anywhere}
+.data-rows dd a{border-bottom:1px solid var(--border-strong);transition:border-color .15s ease}
+.data-rows dd a:hover{border-color:var(--fg)}
+
+/* ---------- Footer ---------- */
+.site-footer{position:relative;z-index:1;padding-bottom:48px}
+.foot{border-top:1px solid var(--border-strong);padding-top:32px;row-gap:32px;align-items:start}
+.foot-a{grid-column:1 / span 5}
+.foot-a p{margin-top:12px;font-size:15px;color:var(--body);max-width:40ch}
+.foot-b{grid-column:6 / span 4}
+.foot-b ul{display:grid;grid-template-columns:repeat(2,max-content);gap:0 32px}
+.foot-b a{display:inline-flex;min-height:36px;align-items:center;font-size:14px;color:var(--body)}
+.foot-b a:hover{color:var(--fg)}
+.foot-c{grid-column:10 / span 3;justify-self:end;text-align:right}
+.foot-c p{margin-top:8px;font-size:14px;color:var(--body)}
+
+/* ---------- Mobile CTA ---------- */
+.mcta{display:none}
+
+/* ================= 768–1279: 8 columns ================= */
+@media (max-width:1279px){
+  .grid,.bar-in,.acc-btn,.acc-panel{grid-template-columns:repeat(8,minmax(0,1fr))}
+  .h2{grid-column:1 / -1}
+  .intro-p{grid-column:1 / span 6;margin-top:20px}
+  .hero-text{grid-column:1 / -1}
+  .hero-fig{grid-column:1 / span 5;max-width:460px}
+  .bar-in h2{grid-column:1 / span 2}
+  .bar-list{grid-column:3 / span 6}
+  .bar-count{grid-column:3 / span 6;justify-self:start}
+  .group-head .label{grid-column:1 / span 2}
+  .group-head p{grid-column:3 / span 6}
+  .acc-num{grid-column:1 / span 1}
+  .acc-title{grid-column:2 / span 5}
+  .acc-icons{grid-column:7 / span 2}
+  .acc-panel-in{grid-column:2 / span 6}
+  .crit-left{grid-column:1 / span 5}
+  .crit-right{grid-column:6 / span 3}
+  .mission p{font-size:24px}
+  .member .num{grid-column:1 / span 1}
+  .who{grid-column:2 / span 3}
+  .member .bio-col{grid-column:5 / span 3}
+  .monogram{grid-column:8 / span 1}
+  .project .bio-col{grid-column:5 / span 4}
+  .project .scope{grid-column:5 / span 4;grid-row:2;justify-self:start}
+  .sec-lede{grid-column:1 / -1}
+  .contact-left{grid-column:1 / span 5}
+  .contact-right{grid-column:6 / span 3}
+  .data-rows div{grid-template-columns:1fr;gap:6px}
+  .foot-a{grid-column:1 / span 4}
+  .foot-b{grid-column:5 / span 2}
+  .foot-b ul{grid-template-columns:1fr}
+  .foot-c{grid-column:7 / span 2}
+}
+@media (max-width:1023px){
+  .nav{display:none;margin-left:0}
+  .menu-btn{display:inline-flex;align-items:center;margin-left:auto}
+  .site-header.open .nav{
+    display:block;position:absolute;top:var(--header);left:0;right:0;
+    background:var(--bg);border-bottom:1px solid var(--border-strong);
+  }
+  .site-header.open .nav ul{flex-direction:column;gap:0;padding:8px var(--m) 16px}
+  .site-header.open .nav li+li{border-top:1px solid var(--border)}
+  .site-header.open .nav a{width:100%;min-height:52px;font-size:16px}
+  .steps{grid-template-columns:minmax(0,1fr);row-gap:40px;max-width:620px}
+  .step:not(:last-child)::before{left:28px;top:calc(100% + 1px);width:28px;height:20px;border-top-width:0;border-right-width:0;border-left-width:1px;border-bottom-width:1px}
+  .step:not(:last-child)::after{left:55px;top:calc(100% + 20px);width:0;height:20px;border-top-width:0;border-left-width:1px}
+  .crit-left,.crit-right,.contact-left,.contact-right{grid-column:1 / -1}
+  .crit-right{max-width:620px}
+  .monogram{width:64px;height:64px}
+  .data-rows div{grid-template-columns:120px 1fr;gap:16px}
+}
+
+/* ================= <768: 1 column ================= */
+@media (max-width:767px){
+  :root{--header:56px}
+  html{scroll-padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+  .site-footer{padding-bottom:calc(48px + 72px + env(safe-area-inset-bottom))}
+  .grid,.bar-in{grid-template-columns:minmax(0,1fr)}
+  .grid > *,.bar-in > *{grid-column:1 / -1 !important}
+  .site-header .wrap{gap:16px}
+  .site-header .lockup .isotype{width:26px;height:26px}
+  .site-header .lockup .l-word{font-size:20px}
+  .header-cta{display:none}
+  .hero h1{font-size:clamp(34px,9vw,44px);line-height:1.02}
+  .hero-fig{max-width:420px}
+  .bar-count{justify-self:start}
+  .bar-list li{font-size:13px}
+  .group-head p,.sec-lede,.contact-left .prose,.crit-left > .prose{font-size:17px}
+  .acc-btn{grid-template-columns:36px minmax(0,1fr) auto;column-gap:12px;min-height:76px}
+  .acc-num{grid-column:1}
+  .acc-title{grid-column:2;font-size:20px}
+  .acc-icons{grid-column:3;gap:14px}
+  .acc-icons .svc-icon{display:none}
+  .acc-panel{grid-template-columns:36px minmax(0,1fr);column-gap:12px}
+  .acc-panel-in{grid-column:2}
+  .mission p{font-size:22px}
+  .points li{grid-template-columns:40px 1fr}
+  .member{grid-template-columns:minmax(0,1fr) 64px !important;column-gap:16px}
+  .member .num{grid-column:1 !important;grid-row:1;padding-top:0}
+  .member .monogram{grid-column:2 !important;grid-row:1 / span 2;align-self:start}
+  .member .who{grid-column:1 !important;grid-row:2}
+  .member .bio-col{grid-column:1 / -1 !important;grid-row:3}
+  .project{grid-template-columns:minmax(0,1fr) !important}
+  .project .scope{grid-column:1 !important;grid-row:4;justify-self:start}
+  .who h3{font-size:22px}
+  .data-rows div{grid-template-columns:1fr;gap:4px;padding-block:16px}
+  .ops-list{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;width:100%}
+  .ops-list li{padding-inline:14px;font-size:17px}
+  .ops-list li:nth-child(3n+1){border-left:0;padding-left:0}
+  .spec-sheet{margin-inline:-8px;padding:24px}
+  .spec div{grid-template-columns:1fr;gap:6px;padding-block:18px}
+  .spec dd{font-size:16px}
+  .foot-c{justify-self:start;text-align:left}
+  .mcta{
+    display:block;position:fixed;left:0;right:0;bottom:0;z-index:45;
+    background:var(--bg);border-top:1px solid var(--border-strong);
+    padding:12px var(--m);padding-bottom:calc(12px + env(safe-area-inset-bottom));
+    transition:transform .2s ease,visibility 0s linear 0s;
+  }
+  .mcta .btn{width:100%}
+  .mcta.is-hidden{transform:translateY(110%);visibility:hidden;transition:transform .2s ease,visibility 0s linear .2s}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .pulse{animation:none;display:none}
+  *,*::before,*::after{transition:none !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<!-- 00 · Header -->
+<header class="site-header" id="site-header" data-od-id="site-header">
+  <div class="wrap">
+    <a class="lockup" href="#s01" aria-label="Tonk Solutions, inicio" data-od-id="header-lockup">
+      <svg class="isotype" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"><path d="M6 9.5H26M16 9.5V20"/></g><circle cx="5" cy="9.5" r="4.2" fill="currentColor"/><circle cx="27" cy="9.5" r="4.2" fill="currentColor"/><circle cx="16" cy="25.5" r="4.2" fill="var(--accent)"/></svg><span class="l-word">tonk</span>
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="main-nav" id="menu-btn">Menú<span class="bars" aria-hidden="true"></span></button>
+    <nav class="nav" id="main-nav" aria-label="Principal" data-od-id="header-nav">
+      <ul>
+        <li><a href="#s03">Integraciones</a></li>
+        <li><a href="#s06">Cómo trabajamos</a></li>
+        <li><a href="#s08">Equipo</a></li>
+        <li><a href="#s09">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="lang" role="group" aria-label="Idioma: español" data-od-id="header-lang">
+      <a class="lang-opt" href="#main" lang="es" hreflang="es" aria-current="true">ES</a><span class="sep" aria-hidden="true">/</span><span class="off" lang="en" aria-disabled="true">EN</span>
+    </div>
+    <a class="btn btn-sm header-cta" href="#s09" data-od-id="header-cta">Hablemos</a>
+  </div>
+</header>
+
+<!-- Side index -->
+<nav class="side-index" aria-label="Índice de secciones" data-od-id="side-index">
+  <ol>
+    <li><a href="#s01" data-idx="s01" aria-current="true"><span class="sr-only">Sección </span>01</a></li>
+    <li><a href="#s02" data-idx="s02"><span class="sr-only">Sección </span>02</a></li>
+    <li><a href="#s03" data-idx="s03"><span class="sr-only">Sección </span>03</a></li>
+    <li><a href="#s04" data-idx="s04"><span class="sr-only">Sección </span>04</a></li>
+    <li><a href="#s05" data-idx="s05"><span class="sr-only">Sección </span>05</a></li>
+    <li><a href="#s06" data-idx="s06"><span class="sr-only">Sección </span>06</a></li>
+    <li><a href="#s07" data-idx="s07"><span class="sr-only">Sección </span>07</a></li>
+    <li><a href="#s08" data-idx="s08"><span class="sr-only">Sección </span>08</a></li>
+    <li><a href="#s09" data-idx="s09"><span class="sr-only">Sección </span>09</a></li>
+  </ol>
+</nav>
+
+<main id="main" tabindex="-1">
+
+  <!-- 01 · Hero -->
+  <section class="sec hero" id="s01" aria-labelledby="t01" data-od-id="hero">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label"><span class="sec-num">01</span> / Integraciones enterprise</span>
+        <span class="label">Hoja 01 / 09</span>
+      </div>
+      <div class="grid hero-grid">
+        <div class="hero-text">
+          <h1 id="t01" data-od-id="hero-title">Integraciones enterprise complejas,<br>y producto <span class="hl">desde cero.</span></h1>
+          <p class="lede" data-od-id="hero-lede">Conectamos los sistemas que tu operación ya tiene —ARCA, ERPs, pagos— y construimos desde cero lo que todavía no existe.<br>Hablás directo con el ingeniero.</p>
+          <div class="cta-row">
+            <a class="btn" href="#s09" data-od-id="hero-cta-primary">Hablemos de tu integración</a>
+            <a class="link" href="#s06" data-od-id="hero-cta-secondary"><span>Ver cómo trabajamos →</span></a>
+          </div>
+          <ul class="meta" aria-label="Datos del estudio" data-od-id="hero-meta">
+            <li>Buenos Aires, AR</li>
+            <li>Senior only</li>
+            <li>ES / EN</li>
+          </ul>
+        </div>
+
+        <figure class="hero-fig" data-od-id="hero-diagram">
+          <svg viewBox="0 0 420 420" role="img" aria-labelledby="dg-title dg-desc">
+            <title id="dg-title">Topología de integración</title>
+            <desc id="dg-desc">Tonk como nodo central conectado con e-commerce, ERP legado, CRM, API propia, ARCA y pasarela de pagos mediante conexiones ortogonales.</desc>
+
+            <!-- frame crosshairs -->
+            <g class="dg-cross">
+              <path d="M0 6 H12 M6 0 V12"/>
+              <path d="M408 6 H420 M414 0 V12"/>
+              <path d="M0 414 H12 M6 408 V420"/>
+              <path d="M408 414 H420 M414 408 V420"/>
+            </g>
+
+            <!-- connections -->
+            <path class="dg-line" d="M140 66 H190 V170"/>
+            <path class="dg-line" d="M280 66 H230 V170"/>
+            <path class="dg-line" d="M140 210 H170"/>
+            <path class="dg-line" d="M280 210 H250"/>
+            <path class="dg-line" d="M140 354 H190 V250"/>
+            <path class="dg-line" d="M280 354 H230 V250"/>
+
+            <!-- pulse: E-COMMERCE → TONK → ARCA -->
+            <path class="pulse" pathLength="100" d="M140 66 H190 V354 H140"/>
+
+            <!-- nodes -->
+            <rect class="dg-node" x="0.5" y="48.5" width="139" height="35"/>
+            <text class="dg-text" x="70" y="70" text-anchor="middle">E-COMMERCE</text>
+            <rect class="dg-node" x="280.5" y="48.5" width="139" height="35"/>
+            <text class="dg-text" x="350" y="70" text-anchor="middle">ERP LEGADO</text>
+
+            <rect class="dg-node" x="0.5" y="192.5" width="139" height="35"/>
+            <text class="dg-text" x="70" y="214" text-anchor="middle">CRM</text>
+            <rect class="dg-node" x="280.5" y="192.5" width="139" height="35"/>
+            <text class="dg-text" x="350" y="214" text-anchor="middle">API PROPIA</text>
+
+            <rect class="dg-node" x="0.5" y="336.5" width="139" height="35"/>
+            <text class="dg-text" x="70" y="358" text-anchor="middle">ARCA</text>
+            <rect class="dg-node" x="280.5" y="336.5" width="139" height="35"/>
+            <text class="dg-text" x="350" y="358" text-anchor="middle">PASARELA DE PAGOS</text>
+
+            <!-- ports -->
+            <g class="dg-port">
+              <rect x="138" y="64" width="4" height="4"/><rect x="278" y="64" width="4" height="4"/>
+              <rect x="138" y="208" width="4" height="4"/><rect x="278" y="208" width="4" height="4"/>
+              <rect x="138" y="352" width="4" height="4"/><rect x="278" y="352" width="4" height="4"/>
+            </g>
+
+            <!-- core -->
+            <rect class="dg-core" x="170.5" y="170.5" width="79" height="79"/>
+            <text class="dg-core-text" x="211" y="214" text-anchor="middle">TONK</text>
+
+            <text class="dg-small" x="70" y="40" text-anchor="middle">ORIGEN</text>
+            <text class="dg-small" x="70" y="392" text-anchor="middle">DESTINO</text>
+          </svg>
+          <figcaption>
+            <span class="label">Fig. 01 — Topología de integración</span>
+            <span class="label">6 sistemas · 1 nodo</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · Integrations bar -->
+  <section class="bar" id="s02" aria-labelledby="t02" data-od-id="integrations-bar">
+    <div class="wrap bar-in">
+      <h2 id="t02" class="label"><span class="sec-num">02</span> / Integramos con</h2>
+      <ul class="bar-list" data-od-id="integrations-list">
+        <li>Dynamics 365</li>
+        <li>Salesforce</li>
+        <li>Odoo</li>
+        <li>ARCA</li>
+        <li>Mercado Pago</li>
+        <li>Stripe</li>
+        <li>WhatsApp Business API</li>
+        <li>APIs propias</li>
+      </ul>
+      <span class="label bar-count">8 plataformas</span>
+    </div>
+  </section>
+
+  <!-- 03 · Services -->
+  <section class="sec" id="s03" aria-labelledby="t03" data-od-id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label"><span class="sec-num">03</span> / Servicios</span>
+        <span class="label">4 capacidades · 3 de talent</span>
+      </div>
+      <div class="grid sec-intro">
+        <h2 id="t03" class="h2">Dos líneas de trabajo, un mismo estándar técnico.</h2>
+      </div>
+
+      <div class="group" data-od-id="services-group-craft">
+        <div class="grid group-head">
+          <span class="label">Grupo A / Craft</span>
+          <p>Especialidad: integraciones enterprise. También desarrollamos producto y arquitectura de punta a punta.</p>
+        </div>
+        <ul>
+          <li class="acc-item" data-od-id="service-integraciones">
+            <h3><button class="acc-btn" id="b01" type="button" aria-expanded="true" aria-controls="p01">
+              <span class="acc-num">01</span>
+              <span class="acc-title">Integraciones y Sistemas Enterprise</span>
+              <span class="acc-icons" aria-hidden="true">
+                <svg class="svc-icon" viewBox="0 0 24 24"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg>
+                <svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </button></h3>
+            <div class="acc-panel" id="p01" role="region" aria-labelledby="b01">
+              <div class="acc-panel-in">
+                <p class="prose">Conectamos sistemas que no hablan entre sí: ERPs, APIs de terceros, pasarelas de pago, organismos fiscales. Si tiene complejidad de integración, es nuestro terreno.</p>
+                <a class="link" href="#s09"><span>Hablemos de esto →</span></a>
+              </div>
+            </div>
+          </li>
+          <li class="acc-item" data-od-id="service-productos">
+            <h3><button class="acc-btn" id="b02" type="button" aria-expanded="false" aria-controls="p02">
+              <span class="acc-num">02</span>
+              <span class="acc-title">Productos desde Cero (Greenfield)</span>
+              <span class="acc-icons" aria-hidden="true">
+                <svg class="svc-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="1"/><path d="M2 8h20"/><path d="M6 4v4"/><path d="M10 4v4"/></svg>
+                <svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </button></h3>
+            <div class="acc-panel" id="p02" role="region" aria-labelledby="b02" hidden>
+              <div class="acc-panel-in">
+                <p class="prose">Construimos plataformas, aplicaciones y productos digitales a medida — desde un ecommerce con integraciones custom hasta sistemas internos complejos. Nos adaptamos al stack y al contexto del proyecto. Los proyectos de la sección 04 salieron de acá.</p>
+                <a class="link" href="#s09"><span>Hablemos de esto →</span></a>
+              </div>
+            </div>
+          </li>
+          <li class="acc-item" data-od-id="service-arquitectura">
+            <h3><button class="acc-btn" id="b03" type="button" aria-expanded="false" aria-controls="p03">
+              <span class="acc-num">03</span>
+              <span class="acc-title">Arquitectura y Sistemas Distribuidos</span>
+              <span class="acc-icons" aria-hidden="true">
+                <svg class="svc-icon" viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>
+                <svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </button></h3>
+            <div class="acc-panel" id="p03" role="region" aria-labelledby="b03" hidden>
+              <div class="acc-panel-in">
+                <p class="prose">Diseñamos arquitecturas que escalan: microservicios, cloud-native, migraciones de monolitos. Especialmente útil cuando el sistema actual se está convirtiendo en un cuello de botella.</p>
+                <a class="link" href="#s09"><span>Hablemos de esto →</span></a>
+              </div>
+            </div>
+          </li>
+          <li class="acc-item" data-od-id="service-ia">
+            <h3><button class="acc-btn" id="b04" type="button" aria-expanded="false" aria-controls="p04">
+              <span class="acc-num">04</span>
+              <span class="acc-title">IA Aplicada</span>
+              <span class="acc-icons" aria-hidden="true">
+                <svg class="svc-icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></svg>
+                <svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </button></h3>
+            <div class="acc-panel" id="p04" role="region" aria-labelledby="b04" hidden>
+              <div class="acc-panel-in">
+                <p class="prose">Incorporamos inteligencia artificial donde tiene sentido real: automatización de procesos, análisis de datos, asistentes internos, optimización operativa, con resultados concretos.</p>
+                <a class="link" href="#s09"><span>Hablemos de esto →</span></a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="group" data-od-id="services-group-talent">
+        <div class="grid group-head">
+          <span class="label">Grupo B / Talent</span>
+          <p>Somos ingenieros contratando ingenieros. Sabemos exactamente qué buscar y cómo evaluarlo.</p>
+        </div>
+        <ul>
+          <li class="acc-item" data-od-id="service-seleccion">
+            <h3><button class="acc-btn" id="b05" type="button" aria-expanded="false" aria-controls="p05">
+              <span class="acc-num">05</span>
+              <span class="acc-title">Búsqueda y Selección Técnica</span>
+              <span class="acc-icons" aria-hidden="true">
+                <svg class="svc-icon" viewBox="0 0 24 24"><circle cx="10" cy="7" r="4"/><path d="M10.3 15H7a4 4 0 0 0-4 4v2"/><circle cx="17" cy="17" r="3"/><path d="m21 21-1.9-1.9"/></svg>
+                <svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </button></h3>
+            <div class="acc-panel" id="p05" role="region" aria-labelledby="b05" hidden>
+              <div class="acc-panel-in">
+                <p class="prose">Identificamos ingenieros que realmente encajan con tu equipo — en lo técnico y en lo cultural. Evaluamos nosotros porque sabemos lo que significa trabajar en producción con esos perfiles.</p>
+                <a class="link" href="#s09"><span>Hablemos de esto →</span></a>
+              </div>
+            </div>
+          </li>
+          <li class="acc-item" data-od-id="service-proceso-ia">
+            <h3><button class="acc-btn" id="b06" type="button" aria-expanded="false" aria-controls="p06">
+              <span class="acc-num">06</span>
+              <span class="acc-title">Proceso Apoyado en IA</span>
+              <span class="acc-icons" aria-hidden="true">
+                <svg class="svc-icon" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="m16 16-1.9-1.9"/></svg>
+                <svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </button></h3>
+            <div class="acc-panel" id="p06" role="region" aria-labelledby="b06" hidden>
+              <div class="acc-panel-in">
+                <p class="prose">Usamos inteligencia artificial para acelerar la búsqueda, analizar perfiles y predecir compatibilidad técnica y cultural. Llegamos más rápido a los candidatos correctos sin bajar el estándar de evaluación.</p>
+                <a class="link" href="#s09"><span>Hablemos de esto →</span></a>
+              </div>
+            </div>
+          </li>
+          <li class="acc-item" data-od-id="service-onboarding">
+            <h3><button class="acc-btn" id="b07" type="button" aria-expanded="false" aria-controls="p07">
+              <span class="acc-num">07</span>
+              <span class="acc-title">Onboarding e Integración</span>
+              <span class="acc-icons" aria-hidden="true">
+                <svg class="svc-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>
+                <svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </button></h3>
+            <div class="acc-panel" id="p07" role="region" aria-labelledby="b07" hidden>
+              <div class="acc-panel-in">
+                <p class="prose">Acompañamos los primeros meses del ingeniero en tu equipo. Hacemos seguimiento, resolvemos fricciones y nos aseguramos de que la incorporación sea exitosa.</p>
+                <a class="link" href="#s09"><span>Hablemos de esto →</span></a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Projects -->
+  <section class="sec" id="s04" aria-labelledby="t04" data-od-id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label"><span class="sec-num">04</span> / Proyectos</span>
+        <span class="label">2 productos · greenfield</span>
+      </div>
+      <div class="grid sec-intro">
+        <h2 id="t04" class="h2">Proyectos greenfield.</h2>
+        <p class="sec-lede">También construimos producto desde cero: arquitectura, backend, frontend y puesta en producción, con el mismo equipo que después lo mantiene.</p>
+      </div>
+      <ul>
+        <li class="grid member project" data-od-id="project-konekta">
+          <span class="num">01</span>
+          <div class="who">
+            <h3>Konekta</h3>
+            <p class="role">App mobile · iOS + Android</p>
+          </div>
+          <div class="bio-col">
+            <p>Directorio de profesionales de oficio para clientes e inquilinos de una inmobiliaria: plomeros, electricistas y gasistas de confianza, con reseñas y calificaciones. Le bajó a la inmobiliaria la carga de consultas operativas y le agregó un canal de valor propio.</p>
+            <p class="stack">React Native · Expo · Firebase Auth · PostgreSQL · Data Connect</p>
+          </div>
+          <span class="scope">Producto completo</span>
+        </li>
+        <li class="grid member project" data-od-id="project-clank">
+          <span class="num">02</span>
+          <div class="who">
+            <h3>Clank</h3>
+            <p class="role">Plataforma web · Créditos</p>
+          </div>
+          <div class="bio-col">
+            <p>Plataforma de gestión de créditos que reemplazó la operatoria manual en Excel: alta de créditos, cobranzas mensuales y conciliación de pagos, con roles para administración, proveedores externos y cliente final.</p>
+            <p class="stack">NestJS · Prisma · PostgreSQL · Next.js · Playwright</p>
+          </div>
+          <span class="scope">Producto completo</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 05 · Diagnostic -->
+  <section class="sec" id="s05" aria-labelledby="t05" data-od-id="diagnostic">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label"><span class="sec-num">05</span> / Diagnóstico de integración</span>
+        <span class="label">Servicio / 2 semanas</span>
+      </div>
+      <div class="grid sec-intro">
+        <h2 id="t05" class="h2">Diagnóstico de integración.</h2>
+        <p class="sec-lede">Antes de escribir una línea de código, mapeamos qué sistemas tenés, cómo se hablan hoy y dónde se va a romper. Es el único punto de partida honesto para una integración.</p>
+      </div>
+      <div class="spec-sheet" data-od-id="diagnostic-sheet">
+        <dl class="spec" data-od-id="diagnostic-spec">
+          <div data-od-id="spec-alcance"><dt class="label">Alcance</dt><dd>Relevamiento de los sistemas que hoy no se hablan: mapa de integraciones actual, flujos de datos y puntos únicos de falla. Típicamente entre 4 y 8 sistemas.</dd></div>
+          <div data-od-id="spec-duracion"><dt class="label">Duración</dt><dd>Dos semanas desde el kickoff, con una sesión de relevamiento por sistema crítico.</dd></div>
+          <div data-od-id="spec-presupuesto"><dt class="label">Presupuesto</dt><dd>Cerrado antes de empezar, sin horas sorpresa. Si después avanzás con la implementación, se descuenta del proyecto.</dd></div>
+          <div data-od-id="spec-entregable"><dt class="label">Entregable</dt><dd>Documento técnico y sesión de presentación: mapa de integración, riesgos priorizados y plan de implementación por etapas con estimaciones.</dd></div>
+          <div data-od-id="spec-pruebas"><dt class="label">Pruebas</dt><dd>Casos de prueba por flujo crítico y criterios de aceptación acordados por escrito antes de codear.</dd></div>
+          <div data-od-id="spec-mantenimiento"><dt class="label">Plan de mantenimiento</dt><dd>Monitoreo, alertas, versionado de contratos de API y traspaso documentado para que tu equipo pueda operarlo.</dd></div>
+        </dl>
+        <div class="cta-row spec-cta">
+          <a class="btn" href="https://wa.me/5491123908349" target="_blank" rel="noopener noreferrer" data-od-id="diagnostic-cta">Pedir diagnóstico</a>
+          <span class="label">Respuesta en 24 h</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 · Process -->
+  <section class="sec" id="s06" aria-labelledby="t06" data-od-id="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label"><span class="sec-num">06</span> / Cómo trabajamos</span>
+        <span class="label">4 etapas · secuenciales</span>
+      </div>
+      <div class="grid sec-intro">
+        <h2 id="t06" class="h2">Cuatro etapas, un solo interlocutor técnico.</h2>
+      </div>
+      <ol class="steps">
+        <li class="step" data-od-id="step-diagnostico">
+          <span class="num">01</span>
+          <h3>Diagnóstico</h3>
+          <p>Revisamos cómo se comunican (o no se comunican) tus sistemas actuales.</p>
+        </li>
+        <li class="step" data-od-id="step-arquitectura">
+          <span class="num">02</span>
+          <h3>Arquitectura</h3>
+          <p>Definimos el modelo de integración, los flujos de datos y los puntos de falla.</p>
+        </li>
+        <li class="step" data-od-id="step-implementacion">
+          <span class="num">03</span>
+          <h3>Implementación</h3>
+          <p>Desarrollamos, probamos y desplegamos la conexión en staging y producción.</p>
+        </li>
+        <li class="step" data-od-id="step-soporte">
+          <span class="num">04</span>
+          <h3>Soporte</h3>
+          <p>Monitoreo inicial y documentación para que tu equipo pueda operar solo.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 07 · Criteria -->
+  <section class="sec" id="s07" aria-labelledby="t07" data-od-id="criteria">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label"><span class="sec-num">07</span> / Criterio</span>
+        <span class="label">4 principios · 4 pilares</span>
+      </div>
+      <div class="grid sec-intro">
+        <h2 id="t07" class="h2">Criterio que viene de operar sistemas críticos.</h2>
+      </div>
+      <div class="ops-strip" data-od-id="ops-strip">
+        <span class="label">Dónde operó el equipo</span>
+        <ul class="ops-list">
+          <li>BBVA</li>
+          <li>Santander</li>
+          <li>ICBC</li>
+          <li>Accenture</li>
+          <li>Endava</li>
+          <li>Rootstrap</li>
+        </ul>
+      </div>
+      <div class="grid crit">
+        <div class="crit-left">
+          <p class="prose" data-od-id="criteria-body">Somos ingenieros senior con experiencia en empresas como BBVA, Santander, Accenture, Endava y Rootstrap. Nos juntamos para armar algo propio: una consultora ágil donde el cliente habla directo con quien resuelve el problema.</p>
+          <ol class="points" data-od-id="criteria-points">
+            <li>Seniority real: venimos de operar sistemas críticos en producción.</li>
+            <li>Resolvemos desde arquitecturas complejas hasta productos que arrancan de cero.</li>
+            <li>Proceso de trabajo claro, comunicación directa, sin intermediarios.</li>
+            <li>Te ayudamos a encontrar el recurso ideal para tu proyecto.</li>
+          </ol>
+        </div>
+        <div class="crit-right">
+          <blockquote class="mission" data-od-id="mission-quote">
+            <p>Ser el equipo de ingeniería que nuestros clientes necesitan, con el criterio para tomar buenas decisiones técnicas, la experiencia para ejecutarlas y la responsabilidad de llevarlas hasta el final.</p>
+            <footer class="label">Misión / Tonk Solutions</footer>
+          </blockquote>
+          <dl class="pillars" data-od-id="pillars">
+            <div><dt>Cloud Native</dt><dd>Plataformas en contenedores, observables y preparadas para escalar.</dd></div>
+            <div><dt>Core Banking</dt><dd>Sistemas transaccionales donde no hay margen de error.</dd></div>
+            <div><dt>Integraciones Enterprise</dt><dd>ERPs, organismos fiscales y pagos hablando el mismo idioma.</dd></div>
+            <div><dt>IA Aplicada</dt><dd>Automatización con resultados medibles en la operación.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 · Team -->
+  <section class="sec" id="s08" aria-labelledby="t08" data-od-id="team">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label"><span class="sec-num">08</span> / Equipo</span>
+        <span class="label">3 co-founders</span>
+      </div>
+      <div class="grid sec-intro">
+        <h2 id="t08" class="h2">Quienes fundaron Tonk son quienes atienden tu proyecto.</h2>
+      </div>
+      <ul>
+        <li class="grid member" data-od-id="member-matias-castillo">
+          <span class="num">01</span>
+          <div class="who">
+            <h3>Matías Castillo</h3>
+            <p class="role">Co-Founder · Financial Systems Lead</p>
+          </div>
+          <div class="bio-col">
+            <p>App Owner en BBVA, a cargo de sistemas financieros críticos con millones de transacciones diarias. Entiende lo que significa responsabilidad técnica real en entornos donde no hay margen de error.</p>
+            <a class="link" href="https://www.linkedin.com/search/results/people/?keywords=Mat%C3%ADas%20Castillo%20Tonk%20Solutions" target="_blank" rel="noopener noreferrer"><span>LinkedIn ↗</span><span class="sr-only"> (abre en una pestaña nueva)</span></a>
+          </div>
+          <div class="monogram" aria-hidden="true">MC</div>
+        </li>
+        <li class="grid member" data-od-id="member-nicolas-gomez">
+          <span class="num">02</span>
+          <div class="who">
+            <h3>Nicolás Gómez</h3>
+            <p class="role">Co-Founder · Core Banking</p>
+          </div>
+          <div class="bio-col">
+            <p>Trayectoria en Santander e ICBC desarrollando y evolucionando productos bancarios core y sistemas transaccionales de alta criticidad. Especialista en arquitecturas que no pueden fallar.</p>
+            <a class="link" href="https://www.linkedin.com/search/results/people/?keywords=Nicol%C3%A1s%20G%C3%B3mez%20Tonk%20Solutions" target="_blank" rel="noopener noreferrer"><span>LinkedIn ↗</span><span class="sr-only"> (abre en una pestaña nueva)</span></a>
+          </div>
+          <div class="monogram" aria-hidden="true">NG</div>
+        </li>
+        <li class="grid member" data-od-id="member-rodrigo-hernandez">
+          <span class="num">03</span>
+          <div class="who">
+            <h3>Rodrigo Hernandez</h3>
+            <p class="role">Co-Founder · Platform Engineering</p>
+          </div>
+          <div class="bio-col">
+            <p>Experiencia construyendo plataformas cloud-native escalables. Referente en arquitecturas de microservicios y soluciones distribuidas.</p>
+            <a class="link" href="https://www.linkedin.com/search/results/people/?keywords=Rodrigo%20Hernandez%20Tonk%20Solutions" target="_blank" rel="noopener noreferrer"><span>LinkedIn ↗</span><span class="sr-only"> (abre en una pestaña nueva)</span></a>
+          </div>
+          <div class="monogram" aria-hidden="true">RH</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 09 · Contact -->
+  <section class="sec" id="s09" aria-labelledby="t09" data-od-id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label"><span class="sec-num">09</span> / Contacto</span>
+        <span class="label">Buenos Aires · GMT−3</span>
+      </div>
+      <div class="grid contact" style="margin-top:clamp(40px,6vh,72px)">
+        <div class="contact-left">
+          <h2 id="t09" data-od-id="contact-title">¿Tenés un proyecto en mente?</h2>
+          <p class="prose">Ya sea que tengas algo concreto para presupuestar o estés explorando opciones, contanos de qué se trata.</p>
+          <div class="cta-row">
+            <a class="btn" href="https://wa.me/5491123908349" target="_blank" rel="noopener noreferrer" data-od-id="contact-cta-whatsapp">Escribinos por WhatsApp</a>
+          </div>
+        </div>
+        <div class="contact-right">
+          <dl class="data-rows" data-od-id="contact-data">
+            <div><dt class="label">Correo</dt><dd>contact@tonksolutions.com.ar</dd></div>
+            <div><dt class="label">WhatsApp</dt><dd><a href="https://wa.me/5491123908349" target="_blank" rel="noopener noreferrer">+54 9 11 2390-8349</a></dd></div>
+            <div><dt class="label">Ubicación</dt><dd>Buenos Aires, Argentina</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" data-od-id="site-footer">
+  <div class="wrap">
+    <div class="grid foot">
+      <div class="foot-a">
+        <a class="lockup lockup-stack" href="#s01" aria-label="Tonk Solutions, volver al inicio" data-od-id="footer-lockup">
+          <svg class="isotype" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"><path d="M6 9.5H26M16 9.5V20"/></g><circle cx="5" cy="9.5" r="4.2" fill="currentColor"/><circle cx="27" cy="9.5" r="4.2" fill="currentColor"/><circle cx="16" cy="25.5" r="4.2" fill="var(--accent)"/></svg><span class="l-word">tonk</span>
+        </a>
+        <p>Ingeniería de software senior. Integraciones enterprise, sin intermediarios.</p>
+      </div>
+      <nav class="foot-b" aria-label="Mapa del sitio">
+        <ul>
+          <li><a href="#s03">Integraciones</a></li>
+          <li><a href="#s06">Cómo trabajamos</a></li>
+          <li><a href="#s07">Criterio</a></li>
+          <li><a href="#s08">Equipo</a></li>
+          <li><a href="#s09">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="foot-c">
+        <span class="label">Buenos Aires, AR</span>
+        <p>© <span id="year">2026</span> Tonk Solutions</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="mcta is-hidden" id="mcta" data-od-id="mobile-cta">
+  <a class="btn" href="#s09">Hablemos de tu integración</a>
+</div>
+
+<script>
+(function () {
+  // Accordion
+  document.querySelectorAll('.acc-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      document.getElementById(btn.getAttribute('aria-controls')).hidden = open;
+    });
+  });
+
+  // Mobile menu
+  var header = document.getElementById('site-header');
+  var menuBtn = document.getElementById('menu-btn');
+  function setMenu(open) {
+    header.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+  }
+  menuBtn.addEventListener('click', function () {
+    setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
+  });
+  document.querySelectorAll('#main-nav a').forEach(function (a) {
+    a.addEventListener('click', function () { setMenu(false); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && header.classList.contains('open')) { setMenu(false); menuBtn.focus(); }
+  });
+
+  // Footer year
+  document.getElementById('year').textContent = String(new Date().getFullYear());
+
+  var mcta = document.getElementById('mcta');
+  if (!('IntersectionObserver' in window)) { mcta.classList.remove('is-hidden'); return; }
+
+  // Active side index
+  var links = {};
+  document.querySelectorAll('.side-index a').forEach(function (a) { links[a.dataset.idx] = a; });
+  var sectionObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      Object.keys(links).forEach(function (id) { links[id].removeAttribute('aria-current'); });
+      var current = links[entry.target.id];
+      if (current) current.setAttribute('aria-current', 'true');
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  ['s01','s02','s03','s04','s05','s06','s07','s08','s09'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
+
+  // Mobile CTA: visible only after the hero has scrolled out and before contact/footer enter
+  var heroPassed = false;
+  var endZones = new Set();
+  function updateCta() {
+    mcta.classList.toggle('is-hidden', !(heroPassed && endZones.size === 0));
+  }
+  new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { heroPassed = !e.isIntersecting && e.boundingClientRect.top < 0; });
+    updateCta();
+  }).observe(document.getElementById('s01'));
+  var endObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) endZones.add(e.target); else endZones.delete(e.target);
+    });
+    updateCta();
+  });
+  endObserver.observe(document.getElementById('s09'));
+  endObserver.observe(document.querySelector('.site-footer'));
+})();
+</script>
+</body>
+</html>

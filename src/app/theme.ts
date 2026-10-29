@@ -4,8 +4,8 @@ const customConfig = defineConfig({
   theme: {
     tokens: {
       fonts: {
-        heading: { value: "var(--font-heading), system-ui, sans-serif" },
-        body: { value: "var(--font-body), system-ui, sans-serif" },
+        heading: { value: "var(--font-geist-sans), system-ui, sans-serif" },
+        body: { value: "var(--font-geist-sans), system-ui, sans-serif" },
       },
       sizes: {
         container: {
