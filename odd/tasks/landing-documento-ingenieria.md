@@ -141,3 +141,18 @@ home; rama desde `main` y cerrar #31 y #32 como superseded → S15, S16.
 - Slice 5 — `6267fcb` `feat(landing): servicios, proyectos y diagnóstico`. Acordeón de siete filas en dos
   grupos, proyectos Konekta/Clank y diagnóstico con `dl/dt/dd` sobre `SurfaceBlock`.
 - Corrección del padre: se eliminó `ServicesSection.module.css`, que había quedado vacío y sin import.
+
+**L17** (slices 6 y 7, cierre del port):
+- Slice 6 — `9d2c71e` `feat(landing): composición, índice lateral y CTA mobile`. `page.tsx` compone las
+  nueve secciones, `services/[slug]` reapuntado a `components/site/`, y se borraron los diez componentes
+  viejos con Chakra (`Header`, `Footer`, `HeroSection`, `ServicesSection`, `AboutSection`, `TeamSection`,
+  `ContactSection`, `LanguageSwitcher`, `TonkLogo`, `SectionLoadingFallback`). Neto: −2021 / +862.
+- Slice 7 — `8b87047` `chore: ignorar artefactos de Playwright`.
+- **Defecto encontrado por el e2e y corregido**: el acordeón de servicios no cerraba al segundo click
+  (`setOpenIndex(globalIndex)` en vez de toggle). El prototipo sí togglea. Ahora `setOpenIndex(isOpen ? -1 : globalIndex)`.
+- Verificación final: `npx tsc --noEmit` 0 · `npm run lint` 0 · `npx vitest run` 15/15 ·
+  `npm run build` 23 rutas · `npx playwright test` **26/26** (desktop y mobile).
+- Desvíos conocidos respecto del prototipo, pendientes de decisión: el h2 de Contacto lo renderiza
+  `SectionHeader` a todo el ancho en vez de dentro de la columna izquierda del grid; los conectores del
+  flujo de "Cómo trabajamos" tienen un codo que baja antes de entrar al nodo siguiente. `/[locale]/services/[slug]`
+  sigue con Chakra (segunda pasada). La imagen OG todavía no usa el diseño nuevo.
