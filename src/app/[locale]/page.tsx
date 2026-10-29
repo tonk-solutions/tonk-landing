@@ -25,15 +25,10 @@ const SECTION_NUMBERS = ["01", "02", "03", "04", "05", "06", "07", "08", "09"];
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   resolveRequestLocale((await params).locale);
 
-  const tNav = await getTranslations("nav");
   const tContact = await getTranslations("contact");
 
   return (
     <>
-      <a className="skip-link" href="#main">
-        {tNav("skip")}
-      </a>
-
       <Header />
       <SideIndex numbers={SECTION_NUMBERS} />
 

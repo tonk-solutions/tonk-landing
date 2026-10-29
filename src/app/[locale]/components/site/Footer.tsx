@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
 import { Container } from "../layout/Container";
 import { BrandLockup } from "../brand/BrandLockup";
 import styles from "./Footer.module.css";
@@ -13,11 +14,11 @@ export async function Footer() {
   const currentYear = new Date().getFullYear();
 
   const sitemap = [
-    { href: "#s03", label: tNav("services") },
-    { href: "#s06", label: tNav("process") },
-    { href: "#s07", label: tCriterio("label") },
-    { href: "#s08", label: tNav("team") },
-    { href: "#s09", label: tNav("contact") },
+    { href: "/#s03", label: tNav("services") },
+    { href: "/#s06", label: tNav("process") },
+    { href: "/#s07", label: tCriterio("label") },
+    { href: "/#s08", label: tNav("team") },
+    { href: "/#s09", label: tNav("contact") },
   ];
 
   return (
@@ -25,13 +26,13 @@ export async function Footer() {
       <Container>
         <div className={styles.foot}>
           <div className={styles.brand}>
-            <a
+            <Link
               className={styles.lockupLink}
-              href="#s01"
+              href="/#s01"
               aria-label="Tonk Solutions, volver al inicio"
             >
               <BrandLockup variant="stacked" size="md" markSize={32} />
-            </a>
+            </Link>
             <p>{tFooter("tagline")}</p>
           </div>
 
@@ -39,7 +40,7 @@ export async function Footer() {
             <ul>
               {sitemap.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href}>{item.label}</a>
+                  <Link href={item.href}>{item.label}</Link>
                 </li>
               ))}
             </ul>

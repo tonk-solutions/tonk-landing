@@ -16,7 +16,8 @@ const LANGUAGES = [
 export default function LanguageSwitcher() {
   const locale = useLocale();
   const pathname = usePathname();
-  const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}/, "") || "/";
+  // `usePathname` de next-intl ya devuelve la ruta sin el prefijo de idioma.
+  const pathWithoutLocale = pathname || "/";
 
   return (
     <span className={styles.lang} role="group" aria-label="Idioma">

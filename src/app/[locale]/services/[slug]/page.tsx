@@ -122,7 +122,7 @@ export default async function ServicePage({
     return (
       <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
         <Header />
-        <main role="main" style={{ width: "100%" }}>
+        <main id="main" role="main" style={{ width: "100%" }}>
           <EnterpriseIntegrationsLanding locale={locale} />
         </main>
         <Footer />
@@ -137,7 +137,7 @@ export default async function ServicePage({
   return (
     <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
       <Header />
-      <main role="main" style={{ width: "100%" }}>
+      <main id="main" role="main" style={{ width: "100%" }}>
         <Box
           as="section"
           pt={{ base: 28, md: 36 }}
@@ -148,7 +148,7 @@ export default async function ServicePage({
         >
           <Container maxW="900px" mx="auto">
             <LocaleLink
-              href="/#servicios"
+              href="/#s03"
               style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}
             >
               <ArrowLeft size={16} color="#0891b2" />

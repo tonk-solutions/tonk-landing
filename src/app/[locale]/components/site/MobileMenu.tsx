@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import styles from "./MobileMenu.module.css";
 
 type MobileMenuProps = {
@@ -58,7 +59,7 @@ export default function MobileMenu({ items }: MobileMenuProps) {
           <ul>
             {items.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
                   onClick={(event) => {
                     event.stopPropagation();
@@ -66,7 +67,7 @@ export default function MobileMenu({ items }: MobileMenuProps) {
                   }}
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

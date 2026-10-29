@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
 import { Container } from "../layout/Container";
 import { BrandLockup } from "../brand/BrandLockup";
 import MobileMenu from "./MobileMenu";
@@ -13,10 +14,10 @@ export async function Header() {
   const t = await getTranslations("nav");
 
   const navLinks = [
-    { href: "#s03", label: t("services") },
-    { href: "#s06", label: t("process") },
-    { href: "#s08", label: t("team") },
-    { href: "#s09", label: t("contact") },
+    { href: "/#s03", label: t("services") },
+    { href: "/#s06", label: t("process") },
+    { href: "/#s08", label: t("team") },
+    { href: "/#s09", label: t("contact") },
   ];
 
   return (
@@ -26,13 +27,13 @@ export async function Header() {
       </a>
       <header className={styles.header} id="site-header">
         <Container className={styles.inner}>
-          <a
+          <Link
             className={styles.lockupLink}
-            href="#s01"
+            href="/#s01"
             aria-label="Tonk Solutions, inicio"
           >
             <BrandLockup variant="horizontal" size="md" markSize={28} />
-          </a>
+          </Link>
 
           <MobileMenu items={navLinks} />
 
@@ -40,7 +41,7 @@ export async function Header() {
             <ul>
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href}>{link.label}</a>
+                  <Link href={link.href}>{link.label}</Link>
                 </li>
               ))}
             </ul>
@@ -48,9 +49,9 @@ export async function Header() {
 
           <LanguageSwitcher />
 
-          <a className={styles.cta} href="#s09">
+          <Link className={styles.cta} href="/#s09">
             {t("cta")}
-          </a>
+          </Link>
         </Container>
       </header>
     </>

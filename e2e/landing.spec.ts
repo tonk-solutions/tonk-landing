@@ -113,18 +113,18 @@ test.describe("navegación e interacción", () => {
 
   test("el CTA fijo mobile aparece después del hero y no tapa el contacto", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
+    // Sin scroll suave: el desplazamiento tiene que ser determinista para el test.
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/es");
 
     const bar = page.locator('[aria-hidden="true"], [aria-hidden="false"]').filter({ hasText: /WhatsApp|Escribinos/ });
-    await expect(bar.first()).toBeHidden();
+    await expect.poll(() => bar.first().getAttribute("aria-hidden"), { timeout: 10_000 }).toBe("true");
 
     await page.locator("#s03").scrollIntoViewIfNeeded();
-    await page.waitForTimeout(300);
-    await expect(bar.first()).toBeVisible();
+    await expect.poll(() => bar.first().getAttribute("aria-hidden"), { timeout: 10_000 }).toBe("false");
 
     await page.locator("#s09").scrollIntoViewIfNeeded();
-    await page.waitForTimeout(300);
-    await expect(bar.first()).toBeHidden();
+    await expect.poll(() => bar.first().getAttribute("aria-hidden"), { timeout: 10_000 }).toBe("true");
   });
 });
 
@@ -135,5 +135,53 @@ test.describe("bilingüismo", () => {
 
     await expect(heading).toContainText("Complex enterprise integrations,");
     await expect(heading).toContainText("and products built from scratch.");
+  });
+});
+
+test.describe("chrome compartido fuera de la home", () => {
+  const servicePath = "/es/services/enterprise-integrations";
+
+  test("el selector de idioma conserva la ruta del detalle de servicio", async ({ page }) => {
+    const response = await page.goto(servicePath);
+    expect(response?.status()).toBe(200);
+
+    await page.getByRole("link", { name: "EN", exact: true }).click();
+    await page.waitForURL("**/en/services/enterprise-integrations");
+
+    expect(new URL(page.url()).pathname).toBe("/en/services/enterprise-integrations");
+    await expect(page.locator("main#main")).toBeVisible();
+  });
+
+  test("hay un solo skip link por página", async ({ page }) => {
+    await page.goto("/es");
+    await expect(page.locator("a.skip-link")).toHaveCount(1);
+
+    await page.goto(servicePath);
+    await expect(page.locator("a.skip-link")).toHaveCount(1);
+  });
+
+  test("el skip link apunta a un main existente en el detalle de servicio", async ({ page }) => {
+    await page.goto(servicePath);
+
+    await expect(page.locator("a.skip-link")).toHaveAttribute("href", "#main");
+    await expect(page.locator("main#main")).toHaveCount(1);
+  });
+
+  test("el nav del header vuelve a la home y ancla la sección de servicios", async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 1440) < 1024, "el nav de escritorio está oculto en mobile");
+    await page.goto(servicePath);
+
+    await page.locator("header nav a", { hasText: "Servicios" }).first().click();
+    await page.waitForURL("**/es#s03");
+
+    await expect(page.locator("#s03")).toBeVisible();
+  });
+
+  test("el volver del detalle de servicio ancla la sección de servicios", async ({ page }) => {
+    await page.goto(servicePath);
+
+    const back = page.locator('main a[href$="#s03"]').first();
+    await expect(back).toBeVisible();
+    await expect(back).toHaveAttribute("href", /\/es#s03$/);
   });
 });

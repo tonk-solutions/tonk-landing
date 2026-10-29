@@ -156,3 +156,15 @@ home; rama desde `main` y cerrar #31 y #32 como superseded → S15, S16.
   `SectionHeader` a todo el ancho en vez de dentro de la columna izquierda del grid; los conectores del
   flujo de "Cómo trabajamos" tienen un codo que baja antes de entrar al nodo siguiente. `/[locale]/services/[slug]`
   sigue con Chakra (segunda pasada). La imagen OG todavía no usa el diseño nuevo.
+
+**L18** (ronda 1 de review, cinco hallazgos aplicados):
+- `LanguageSwitcher`: se eliminó el `replace(/^\/[a-z]{2}/, "")`. `usePathname` de next-intl ya devuelve
+  la ruta sin locale; la limpieza mutilaba el primer segmento (`/es/services/...` → `rvices/...`). El chip
+  EN ahora resuelve bien fuera de la home y hay e2e que lo cubre.
+- Skip link duplicado: quedó solo el del `Header` (compartido); se quitó el de `page.tsx`.
+- `services/[slug]`: las dos `<main>` tienen `id="main"`, así el skip link funciona en esa ruta.
+- Ancla vieja `/#servicios` → `/#s03` en el detalle y en `EnterpriseIntegrationsLanding`.
+- Chrome compartido: nav del header, menú mobile, CTA, lockups y sitemap del footer pasaron de anclas
+  locales (`#s03`) a `Link` de next-intl con `/#s03`, que resuelve desde cualquier ruta y agrega el locale.
+- e2e: 35 pasan y 1 se saltea a propósito (el nav de escritorio en el proyecto mobile). El test del CTA
+  mobile se volvió determinista con `emulateMedia({ reducedMotion: "reduce" })`.
