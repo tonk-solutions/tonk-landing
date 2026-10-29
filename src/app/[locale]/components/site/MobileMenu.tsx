@@ -16,6 +16,7 @@ type MobileMenuProps = {
 export default function MobileMenu({ items }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
   const t = useTranslations("nav");
+  const tA11y = useTranslations("a11y");
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const closeAndFocus = useCallback(() => {
@@ -54,7 +55,7 @@ export default function MobileMenu({ items }: MobileMenuProps) {
         <nav
           id="main-nav-mobile"
           className={styles.panel}
-          aria-label="Principal"
+          aria-label={tA11y("primaryNav")}
         >
           <ul>
             {items.map((item) => (

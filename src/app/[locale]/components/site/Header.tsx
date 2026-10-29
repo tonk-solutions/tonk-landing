@@ -12,6 +12,7 @@ import styles from "./Header.module.css";
  */
 export async function Header() {
   const t = await getTranslations("nav");
+  const tA11y = await getTranslations("a11y");
 
   const navLinks = [
     { href: "/#s03", label: t("services") },
@@ -30,14 +31,14 @@ export async function Header() {
           <Link
             className={styles.lockupLink}
             href="/#s01"
-            aria-label="Tonk Solutions, inicio"
+            aria-label={tA11y("homeLink")}
           >
             <BrandLockup variant="horizontal" size="md" markSize={28} />
           </Link>
 
           <MobileMenu items={navLinks} />
 
-          <nav className={styles.nav} aria-label="Principal">
+          <nav className={styles.nav} aria-label={tA11y("primaryNav")}>
             <ul>
               {navLinks.map((link) => (
                 <li key={link.href}>

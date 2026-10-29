@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import { Providers } from "./providers";
 import { SITE_NAME, SITE_URL } from "../constants";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
@@ -143,9 +142,7 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredDataGraph) }}
         />
         <NextIntlClientProvider messages={messages}>
-          <Providers>
-            {children}
-          </Providers>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>

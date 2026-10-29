@@ -92,7 +92,7 @@ export default async function HeroTopology() {
 
       <figcaption className={styles.figcaption}>
         <span className={styles.captionLabel}>{t("diagramCaption")}</span>
-        <span className={styles.captionMeta}>6 sistemas · 1 nodo</span>
+        <span className={styles.captionMeta}>{t("diagramCaption")}</span>
       </figcaption>
     </figure>
   );

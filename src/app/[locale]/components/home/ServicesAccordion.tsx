@@ -20,8 +20,6 @@ interface ServicesAccordionProps {
   craft: ServiceGroup;
   talent: ServiceGroup;
   cta: string;
-  openLabel: string;
-  closeLabel: string;
 }
 
 const ICONS: Record<string, React.ReactNode> = {
@@ -100,16 +98,12 @@ function ServiceGroupAccordion({
   openIndex,
   setOpenIndex,
   cta,
-  openLabel,
-  closeLabel,
 }: {
   group: ServiceGroup;
   baseIndex: number;
   openIndex: number;
   setOpenIndex: (index: number) => void;
   cta: string;
-  openLabel: string;
-  closeLabel: string;
 }) {
   return (
     <div className={styles.group}>
@@ -132,7 +126,6 @@ function ServiceGroupAccordion({
                   className={styles.button}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
-                  aria-label={isOpen ? closeLabel : openLabel}
                   onClick={() => setOpenIndex(isOpen ? -1 : globalIndex)}
                 >
                   <span className={styles.number}>
@@ -176,8 +169,6 @@ export function ServicesAccordion({
   craft,
   talent,
   cta,
-  openLabel,
-  closeLabel,
 }: ServicesAccordionProps) {
   const [openIndex, setOpenIndex] = useState(0);
 
@@ -189,8 +180,6 @@ export function ServicesAccordion({
         openIndex={openIndex}
         setOpenIndex={setOpenIndex}
         cta={cta}
-        openLabel={openLabel}
-        closeLabel={closeLabel}
       />
       <ServiceGroupAccordion
         group={talent}
@@ -198,8 +187,6 @@ export function ServicesAccordion({
         openIndex={openIndex}
         setOpenIndex={setOpenIndex}
         cta={cta}
-        openLabel={openLabel}
-        closeLabel={closeLabel}
       />
     </div>
   );

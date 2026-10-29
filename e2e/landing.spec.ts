@@ -174,6 +174,12 @@ test.describe("chrome compartido fuera de la home", () => {
     await page.locator("header nav a", { hasText: "Servicios" }).first().click();
     await page.waitForURL("**/es#s03");
 
+    // Lo que se arregló es el scroll: la sección tiene que quedar a la vista.
+    await expect
+      .poll(() => page.evaluate(() => Math.round(document.getElementById("s03")!.getBoundingClientRect().top)), {
+        timeout: 10_000,
+      })
+      .toBeLessThan(200);
     await expect(page.locator("#s03")).toBeVisible();
   });
 
@@ -183,5 +189,48 @@ test.describe("chrome compartido fuera de la home", () => {
     const back = page.locator('main a[href$="#s03"]').first();
     await expect(back).toBeVisible();
     await expect(back).toHaveAttribute("href", /\/es#s03$/);
+  });
+});
+
+
+test.describe("menú mobile y consola limpia", () => {
+  test("el menú mobile navega a la sección, cierra y scrollea", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/es");
+
+    // El label del botón cambia a "Cerrar" al abrir: se ancla por aria-controls.
+    const menuButton = page.locator('button[aria-controls="main-nav-mobile"]');
+    await menuButton.click();
+    await expect(menuButton).toHaveAttribute("aria-expanded", "true");
+
+    await page.locator("#main-nav-mobile a", { hasText: "Servicios" }).click();
+    await expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    await expect(page).toHaveURL(/\/es#s03$/);
+
+    await expect
+      .poll(() => page.evaluate(() => Math.round(document.getElementById("s03")!.getBoundingClientRect().top)), {
+        timeout: 10_000,
+      })
+      .toBeLessThan(200);
+  });
+
+  test("ninguna ruta emite errores de hidratación ni excepciones", async ({ page }) => {
+    const errors: string[] = [];
+    // El ruido de red (fuentes, prefetch) no es un defecto de la página.
+    const isHydrationOrCrash = (text: string) =>
+      /hydrat|minified react error|418|423|did not match/i.test(text);
+
+    page.on("console", (message) => {
+      if (message.type() === "error" && isHydrationOrCrash(message.text())) errors.push(message.text());
+    });
+    page.on("pageerror", (error) => errors.push(error.message));
+
+    for (const path of ["/es", "/en", "/es/services/enterprise-integrations"]) {
+      await page.goto(path, { waitUntil: "networkidle" });
+      await page.waitForTimeout(150);
+    }
+
+    expect(errors).toEqual([]);
   });
 });

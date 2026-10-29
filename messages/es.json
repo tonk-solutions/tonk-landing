@@ -59,8 +59,6 @@
     "meta": "4 capacidades · 3 de talent",
     "title": "Dos líneas de trabajo, un mismo estándar técnico.",
     "intro": "Especialidad: integraciones enterprise. También desarrollamos producto y arquitectura de punta a punta.",
-    "openLabel": "Abrir",
-    "closeLabel": "Cerrar",
     "cta": "Hablemos de esto",
     "viewDetails": "Ver página completa",
     "craft": {
@@ -206,7 +204,14 @@
     "meta": "4 principios · 4 pilares",
     "title": "Criterio que viene de operar sistemas críticos.",
     "evidenceLabel": "Dónde operó el equipo",
-    "companies": ["BBVA", "Santander", "ICBC", "Accenture", "Endava", "Rootstrap"],
+    "companies": [
+      "BBVA",
+      "Santander",
+      "ICBC",
+      "Accenture",
+      "Endava",
+      "Rootstrap"
+    ],
     "intro": "Somos ingenieros senior con experiencia en empresas como BBVA, Santander, Accenture, Endava y Rootstrap. Nos juntamos para armar algo propio: una consultora ágil donde el cliente habla directo con quien resuelve el problema.",
     "principles": [
       "Seniority real: venimos de operar sistemas críticos en producción.",
@@ -432,5 +437,14 @@
         "whatsappText": "Hola, quiero solicitar un diagnóstico de integración."
       }
     }
+  },
+  "a11y": {
+    "homeLink": "Tonk Solutions, inicio",
+    "homeLinkFooter": "Tonk Solutions, volver al inicio",
+    "primaryNav": "Principal",
+    "language": "Idioma",
+    "sideIndex": "Índice de secciones",
+    "sectionPrefix": "Sección ",
+    "heroMeta": "Datos del estudio"
   }
 }

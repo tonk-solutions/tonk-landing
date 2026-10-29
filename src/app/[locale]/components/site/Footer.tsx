@@ -11,6 +11,7 @@ export async function Footer() {
   const tFooter = await getTranslations("footer");
   const tNav = await getTranslations("nav");
   const tCriterio = await getTranslations("criterio");
+  const tA11y = await getTranslations("a11y");
   const currentYear = new Date().getFullYear();
 
   const sitemap = [
@@ -29,7 +30,7 @@ export async function Footer() {
             <Link
               className={styles.lockupLink}
               href="/#s01"
-              aria-label="Tonk Solutions, volver al inicio"
+              aria-label={tA11y("homeLinkFooter")}
             >
               <BrandLockup variant="stacked" size="md" markSize={32} />
             </Link>

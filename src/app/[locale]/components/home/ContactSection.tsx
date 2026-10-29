@@ -24,7 +24,7 @@ export async function ContactSection() {
           title={t("title")}
           titleId="t09"
         />
-        <Container grid className={styles.contact}>
+        <Container grid padded={false} className={styles.contact}>
           <div className={styles.left}>
             <p className={styles.description}>{t("description")}</p>
             <a

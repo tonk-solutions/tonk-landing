@@ -9,6 +9,7 @@ import styles from "./HeroSection.module.css";
  */
 export async function HeroSection() {
   const t = await getTranslations("hero");
+  const tA11y = await getTranslations("a11y");
 
   return (
     <section className={styles.hero} id="s01" aria-labelledby="t01">
@@ -42,7 +43,7 @@ export async function HeroSection() {
               </a>
             </div>
 
-            <ul className={styles.meta} aria-label="Datos del estudio">
+            <ul className={styles.meta} aria-label={tA11y("heroMeta")}>
               <li>{t("metaLocation")}</li>
               <li>{t("metaSenior")}</li>
               <li>{t("metaLocale")}</li>

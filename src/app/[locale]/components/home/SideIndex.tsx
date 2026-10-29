@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import styles from "./SideIndex.module.css";
 
 type SideIndexProps = {
@@ -14,6 +15,7 @@ type SideIndexProps = {
  */
 export function SideIndex({ numbers }: SideIndexProps) {
   const [active, setActive] = useState(0);
+  const tA11y = useTranslations("a11y");
 
   useEffect(() => {
     const sections = numbers
@@ -40,7 +42,7 @@ export function SideIndex({ numbers }: SideIndexProps) {
   }, [numbers]);
 
   return (
-    <nav className={styles.rail} aria-label="Índice de secciones">
+    <nav className={styles.rail} aria-label={tA11y("sideIndex")}>
       <ol className={styles.list}>
         {numbers.map((number, index) => (
           <li key={number}>
@@ -49,7 +51,7 @@ export function SideIndex({ numbers }: SideIndexProps) {
               href={`#s${String(index + 1).padStart(2, "0")}`}
               aria-current={index === active ? "true" : undefined}
             >
-              <span className="sr-only">Sección </span>
+              <span className="sr-only">{tA11y("sectionPrefix")}</span>
               {number}
             </a>
           </li>

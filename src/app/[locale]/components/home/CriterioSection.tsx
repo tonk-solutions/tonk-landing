@@ -33,7 +33,7 @@ export async function CriterioSection() {
             ))}
           </ul>
         </div>
-        <Container grid className={styles.crit}>
+        <Container grid padded={false} className={styles.crit}>
           <div className={styles.left}>
             <p className={styles.intro}>{t("intro")}</p>
             <ol className={styles.principles}>

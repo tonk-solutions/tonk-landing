@@ -36,8 +36,6 @@ export async function ServicesSection() {
           craft={craft}
           talent={talent}
           cta={t("cta")}
-          openLabel={t("openLabel")}
-          closeLabel={t("closeLabel")}
         />
       </Container>
     </Section>

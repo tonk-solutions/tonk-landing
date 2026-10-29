@@ -168,3 +168,23 @@ home; rama desde `main` y cerrar #31 y #32 como superseded → S15, S16.
   locales (`#s03`) a `Link` de next-intl con `/#s03`, que resuelve desde cualquier ruta y agrega el locale.
 - e2e: 35 pasan y 1 se saltea a propósito (el nav de escritorio en el proyecto mobile). El test del CTA
   mobile se volvió determinista con `emulateMedia({ reducedMotion: "reduce" })`.
+
+**L19** (ronda 2 de review, seis hallazgos aplicados):
+- **Hidratación**: `ChakraProvider` salió del layout raíz y quedó en un `layout.tsx` anidado de
+  `services/[slug]`. Eso arregló `/es` y `/en`; el detalle seguía con error 418, así que se agregó
+  `emotion-registry.tsx` (patrón `useServerInsertedHTML` + `CacheProvider`) y `@emotion/cache` como
+  dependencia directa. Verificado en `next dev` y en build: **cero errores de consola y cero pageerror**
+  en `/es`, `/en`, `/es/services/...` y `/en/services/...`.
+- **A11Y**: el acordeón ya no pisa el nombre accesible con `aria-label="Abrir"`; el nombre sale del
+  título visible y el estado va en `aria-expanded`. Se retiraron `openLabel`/`closeLabel` de los mensajes.
+- **I18N**: las nueve cadenas en español hardcodeadas pasaron a un namespace `a11y` (`homeLink`,
+  `homeLinkFooter`, `primaryNav`, `language`, `sideIndex`, `sectionPrefix`, `heroMeta`) y el pie del
+  diagrama usa `hero.diagramCaption`. Ya no se filtran a `/en`.
+- **LAYOUT**: `Container` acepta `padded={false}`; los contenedores anidados de Criterio y Contacto
+  dejaron de cobrar el gutter dos veces. Medido a 1440px: todo el contenido arranca en x=58 (antes 115).
+- **SPEC S3**: el nodo del diagrama se renderiza `E-COMMERCE` (mayúsculas por CSS, igual que el resto
+  de las etiquetas mono).
+- **TEST**: el test del nav ahora verifica el scroll real (`getBoundingClientRect().top < 200`), y se
+  agregaron dos e2e: menú mobile (abre, navega, cierra con `aria-expanded=false` y scrollea) y guard de
+  hidratación/consola en las tres rutas.
+- Verificación final: `tsc` 0 · `lint` 0 · `vitest` 15/15 · `build` OK · `playwright` **39 pasan, 1 salteado**.

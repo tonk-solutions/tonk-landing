@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { usePathname, Link } from "@/i18n/routing";
 import styles from "./LanguageSwitcher.module.css";
 
@@ -15,12 +15,13 @@ const LANGUAGES = [
  */
 export default function LanguageSwitcher() {
   const locale = useLocale();
+  const tA11y = useTranslations("a11y");
   const pathname = usePathname();
   // `usePathname` de next-intl ya devuelve la ruta sin el prefijo de idioma.
   const pathWithoutLocale = pathname || "/";
 
   return (
-    <span className={styles.lang} role="group" aria-label="Idioma">
+    <span className={styles.lang} role="group" aria-label={tA11y("language")}>
       {LANGUAGES.map((language, index) => {
         const isActive = locale === language.code;
 
