@@ -89,6 +89,15 @@
 
   .list {
     grid-column: 3 / span 6;
+    /*
+     * Por debajo de 1280px la lista envuelve y el `·` de separación quedaba
+     * colgando al principio de la línea. Se cambia por separación de columnas.
+     */
+    column-gap: 16px;
+  }
+
+  .list li + li::before {
+    content: none;
   }
 
   .count {

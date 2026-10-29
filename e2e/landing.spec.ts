@@ -193,6 +193,26 @@ test.describe("chrome compartido fuera de la home", () => {
 });
 
 
+test.describe("ancho en mobile", () => {
+  // S1 de odd/tasks/landing-mejoras.md: en inglés la frase resaltada del hero
+  // desbordaba el viewport entre 320px y 430px.
+  for (const width of [320, 360, 390, 430]) {
+    test(`sin desborde horizontal a ${width}px en los dos idiomas`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+
+      for (const locale of ["es", "en"]) {
+        await page.goto(`/${locale}`, { waitUntil: "networkidle" });
+
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        );
+
+        expect(overflow, `/${locale} a ${width}px desborda ${overflow}px`).toBeLessThanOrEqual(0);
+      }
+    });
+  }
+});
+
 test.describe("menú mobile y consola limpia", () => {
   test("el menú mobile navega a la sección, cierra y scrollea", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });

@@ -79,3 +79,39 @@ describe("specs del titular y del diagnóstico", () => {
     expect(es.integrations.platforms).not.toContain("SAP");
   });
 });
+
+describe("mejoras de la landing (odd/tasks/landing-mejoras.md)", () => {
+  const esTexts = texts(es).join(" \n ");
+  const enTexts = texts(en).join(" \n ");
+
+  it("S2: no menciona Accenture en ningún idioma", () => {
+    expect(esTexts).not.toMatch(/Accenture/i);
+    expect(enTexts).not.toMatch(/Accenture/i);
+    expect(es.criterio.companies).toEqual(["BBVA", "Santander", "ICBC", "Endava", "Rootstrap"]);
+  });
+
+  it("S3: menciona AWS, Google Cloud y Firebase en el stack y en las keywords", () => {
+    for (const cloud of ["AWS", "Google Cloud", "Firebase"]) {
+      expect(es.llms.cloud).toContain(cloud);
+      expect(en.llms.cloud).toContain(cloud);
+      expect(es.seo.keywords).toContain(cloud);
+      expect(en.seo.keywords).toContain(cloud);
+    }
+    expect(esTexts).toContain("AWS, Google Cloud o Firebase");
+    expect(enTexts).toContain("AWS, Google Cloud or Firebase");
+  });
+
+  it("S4: no menciona a Ignacio Sileo en ningún idioma", () => {
+    expect(esTexts).not.toMatch(/Ignacio|Sileo/i);
+    expect(enTexts).not.toMatch(/Ignacio|Sileo/i);
+  });
+
+  it("S4: el equipo fundador son tres personas y ninguna viene de una nómina anterior", () => {
+    expect(es.team.members).toHaveLength(3);
+    expect(es.team.members.map((member) => member.name)).toEqual([
+      "Matías Castillo",
+      "Nicolás Gómez",
+      "Rodrigo Hernandez",
+    ]);
+  });
+});
