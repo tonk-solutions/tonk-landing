@@ -117,3 +117,27 @@ home; rama desde `main` y cerrar #31 y #32 como superseded → S15, S16.
 
 **L13** (evidencia, no pedido): del repo real de Clank se verificó que el producto se llama
 "Plataforma de Gestión de Créditos" y del de Konekta que la marca de la app es `Konekta`.
+
+**L14** (evidencia de avance, slices):
+- Slice 1 — `1852359` `feat(landing): tokens, tipografía y marca del rediseño`. Incluye el prototipo
+  congelado en `design/landing-documento-ingenieria/index.html` como referencia, que no es código
+  escrito: el código real del slice son ~300 líneas (tokens, fuentes, assets, Vitest).
+- Slice 2 — `8edf4b2` `feat(i18n): copy del rediseño en es y en`. Copy de los dos idiomas con paridad,
+  primitivas de layout y marca, índice lateral, CTA mobile y armado de los e2e.
+- Verificación de esos slices: `npx vitest run` 15/15 y `npm run build` OK.
+- Bloqueo operativo: el detector de solapamiento del harness lee el segmento `[locale]` de las rutas
+  como glob y rechaza writers hermanos, así que las tandas de secciones se ejecutan de a una.
+
+**L15** (slices 3 y 4):
+- Slice 3 — `8bbae3c` `feat(landing): shell y hero documento de ingeniería`. Header, menú mobile,
+  selector de idioma, footer, hero y topología SVG. `tsc`, `lint` y `vitest` (15/15) en verde.
+  Decisión aceptada del worker: el nodo `E-COMMERCE` del diagrama se ensanchó a 165px para que la
+  etiqueta entre. Corrección del padre: el link "Criterio" del footer pasó de texto hardcodeado a
+  `criterio.label` de i18n.
+- Bloqueo operativo confirmado: las tres tandas de secciones van de a una porque el detector de
+  solapamiento del harness expande `[locale]` como glob.
+
+**L16** (slice 5):
+- Slice 5 — `6267fcb` `feat(landing): servicios, proyectos y diagnóstico`. Acordeón de siete filas en dos
+  grupos, proyectos Konekta/Clank y diagnóstico con `dl/dt/dd` sobre `SurfaceBlock`.
+- Corrección del padre: se eliminó `ServicesSection.module.css`, que había quedado vacío y sin import.

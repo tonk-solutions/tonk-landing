@@ -133,7 +133,7 @@ function ServiceGroupAccordion({
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                   aria-label={isOpen ? closeLabel : openLabel}
-                  onClick={() => setOpenIndex(globalIndex)}
+                  onClick={() => setOpenIndex(isOpen ? -1 : globalIndex)}
                 >
                   <span className={styles.number}>
                     {String(globalIndex + 1).padStart(2, "0")}
