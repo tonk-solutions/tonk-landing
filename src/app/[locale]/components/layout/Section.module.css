@@ -1,0 +1,29 @@
+.sec {
+  padding-block: var(--sec-pad);
+  scroll-margin-top: 16px;
+}
+
+/*
+ * La única superficie elevada de la página. Debe leerse como una hoja apoyada:
+ * sin sombra, sin radio, con hairline.
+ */
+.surfaceBlock {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  padding: 48px;
+  margin-inline: -24px;
+}
+
+@media (max-width: 767px) {
+  .surfaceBlock {
+    padding: 24px;
+    margin-inline: 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .surfaceBlock {
+    padding: 32px;
+    margin-inline: -12px;
+  }
+}

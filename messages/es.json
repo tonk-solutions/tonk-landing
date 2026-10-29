@@ -4,57 +4,68 @@
   },
   "nav": {
     "services": "Servicios",
-    "about": "Quiénes Somos",
+    "process": "Cómo trabajamos",
     "team": "Equipo",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "cta": "Hablemos",
+    "menu": "Menú",
+    "menuClose": "Cerrar",
+    "language": "Idioma",
+    "skip": "Saltar al contenido"
   },
   "hero": {
-    "subtitle": "Ingeniería de software senior",
-    "title": "Integraciones enterprise complejas,",
-    "titleHighlight": "sin intermediarios.",
-    "description": "Conectamos los sistemas críticos de tu operación: ERPs, APIs de terceros, pasarelas de pago y organismos fiscales como AFIP y DGI. Hablás directo con quien diseña y resuelve la integración, con ingenieros senior de principio a fin.",
-    "cta": "Hablemos de tu integración"
+    "number": "01",
+    "label": "Integraciones enterprise",
+    "sheet": "Hoja 01 / 09",
+    "titleLine1": "Integraciones enterprise complejas,",
+    "titleLine2": "y producto desde cero.",
+    "lede": "Conectamos los sistemas que tu operación ya tiene —ARCA, ERPs, pagos— y construimos desde cero lo que todavía no existe. Hablás directo con el ingeniero.",
+    "ctaPrimary": "Hablemos de tu integración",
+    "ctaSecondary": "Ver cómo trabajamos",
+    "metaLocation": "Buenos Aires, AR",
+    "metaSenior": "Senior only",
+    "metaLocale": "ES / EN",
+    "diagramOrigin": "Origen",
+    "diagramDestination": "Destino",
+    "diagramTitle": "Fig. 01 — Topología de integración",
+    "diagramDesc": "Tonk como nodo central conectado con e-commerce, ERP legado, CRM, API propia, ARCA y pasarela de pagos.",
+    "diagramCaption": "6 sistemas · 1 nodo",
+    "nodeEcommerce": "E-commerce",
+    "nodeErpLegacy": "ERP legado",
+    "nodeCrm": "CRM",
+    "nodeOwnApi": "API propia",
+    "nodeArca": "ARCA",
+    "nodePayments": "Pasarela de pagos",
+    "nodeCenter": "Tonk"
   },
-  "about": {
-    "label": "QUIÉNES SOMOS",
-    "title": "Socios estratégicos en ingeniería de software",
-    "description": "Somos ingenieros senior con experiencia en empresas como BBVA, Santander, Accenture, Endava y Rootstrap. Nos juntamos para armar algo propio: una consultora ágil donde el cliente habla directo con quien resuelve el problema.",
-    "valuePoints": [
-      "Seniority real: venimos de operar sistemas críticos en producción",
-      "Resolvemos desde arquitecturas complejas hasta productos a medida",
-      "Proceso de trabajo claro, comunicación directa, sin intermediarios",
-      "Te ayudamos a encontrar el recurso ideal para tu proyecto"
-    ],
-    "missionTitle": "Nuestra Misión",
-    "mission": "Ser el equipo de ingeniería que nuestros clientes necesitan, con el criterio para tomar buenas decisiones técnicas, la experiencia para ejecutarlas y la responsabilidad de llevarlas hasta el final.",
-    "imageAlt": "Equipo de ingeniería Tonk Solutions",
-    "imageTitle": "Ingeniería con criterio",
-    "imageSubtitle": "Del problema a la solución.",
-    "pillars": [
-      {
-        "title": "Cloud Native",
-        "description": "Arquitecturas escalables y elásticas"
-      },
-      {
-        "title": "Core Banking",
-        "description": "Sistemas críticos transaccionales"
-      },
-      {
-        "title": "Integraciones Enterprise",
-        "description": "Integración de procesos core"
-      },
-      {
-        "title": "IA Aplicada",
-        "description": "Optimización y conocimiento"
-      }
+  "integrations": {
+    "number": "02",
+    "label": "Integramos con",
+    "meta": "8 plataformas",
+    "platforms": [
+      "Dynamics 365",
+      "Salesforce",
+      "Odoo",
+      "ARCA",
+      "Mercado Pago",
+      "Stripe",
+      "WhatsApp Business API",
+      "APIs propias"
     ]
   },
   "services": {
-    "label": "NUESTROS SERVICIOS",
-    "title": "Nuestro foco: las integraciones enterprise",
-    "description": "Conectamos sistemas que no hablan entre sí — ERPs, APIs, pasarelas de pago y organismos fiscales. Alrededor de ese foco, también desarrollamos producto, diseñamos arquitectura y sumamos los ingenieros que tu equipo necesite.",
+    "number": "03",
+    "label": "Servicios",
+    "meta": "4 capacidades · 3 de talent",
+    "title": "Dos líneas de trabajo, un mismo estándar técnico.",
+    "intro": "Especialidad: integraciones enterprise. También desarrollamos producto y arquitectura de punta a punta.",
+    "openLabel": "Abrir",
+    "closeLabel": "Cerrar",
+    "cta": "Hablemos de esto",
+    "viewDetails": "Ver página completa",
     "craft": {
       "name": "Craft",
+      "label": "Grupo A / Craft",
       "subtitle": "Especialidad: integraciones enterprise. También desarrollamos producto y arquitectura de punta a punta.",
       "services": [
         {
@@ -63,8 +74,8 @@
           "icon": "FileText"
         },
         {
-          "title": "Desarrollo de Productos Digitales",
-          "description": "Construimos plataformas, aplicaciones y productos digitales a medida — desde un ecommerce con integraciones custom hasta sistemas internos complejos. Nos adaptamos al stack y al contexto del proyecto.",
+          "title": "Productos desde Cero (Greenfield)",
+          "description": "Construimos plataformas, aplicaciones y productos digitales a medida — desde un ecommerce con integraciones custom hasta sistemas internos complejos. Nos adaptamos al stack y al contexto del proyecto. Los proyectos de la sección 04 salieron de acá.",
           "icon": "Code"
         },
         {
@@ -81,6 +92,7 @@
     },
     "talent": {
       "name": "Talent",
+      "label": "Grupo B / Talent",
       "subtitle": "Somos ingenieros contratando ingenieros. Sabemos exactamente qué buscar y cómo evaluarlo.",
       "services": [
         {
@@ -100,7 +112,6 @@
         }
       ]
     },
-    "viewDetails": "Ver página completa",
     "detail": {
       "backToServices": "Volver a servicios",
       "ctaTitle": "¿Te interesa este servicio?",
@@ -108,91 +119,205 @@
       "ctaButton": "Hablemos por WhatsApp"
     }
   },
+  "projects": {
+    "number": "04",
+    "label": "Proyectos",
+    "meta": "2 productos · greenfield",
+    "title": "Proyectos greenfield.",
+    "intro": "También construimos producto desde cero: arquitectura, backend, frontend y puesta en producción, con el mismo equipo que después lo mantiene.",
+    "scope": "Producto completo",
+    "items": [
+      {
+        "name": "Konekta",
+        "type": "App mobile · iOS + Android",
+        "description": "Directorio de profesionales de oficio para clientes e inquilinos de una inmobiliaria: plomeros, electricistas y gasistas de confianza, con reseñas y calificaciones. Le bajó a la inmobiliaria la carga de consultas operativas y le agregó un canal de valor propio.",
+        "stack": "React Native · Expo · Firebase Auth · PostgreSQL · Data Connect"
+      },
+      {
+        "name": "Clank",
+        "type": "Plataforma web · Créditos",
+        "description": "Plataforma de gestión de créditos que reemplazó la operatoria manual en Excel: alta de créditos, cobranzas mensuales y conciliación de pagos, con roles para administración, proveedores externos y cliente final.",
+        "stack": "NestJS · Prisma · PostgreSQL · Next.js · Playwright"
+      }
+    ]
+  },
+  "diagnostic": {
+    "number": "05",
+    "label": "Diagnóstico de integración",
+    "meta": "Servicio / 2 semanas",
+    "title": "Diagnóstico de integración.",
+    "intro": "Antes de escribir una línea de código, mapeamos qué sistemas tenés, cómo se hablan hoy y dónde se va a romper. Es el único punto de partida honesto para una integración.",
+    "cta": "Pedir diagnóstico",
+    "note": "Respuesta en 24 h",
+    "rows": [
+      {
+        "label": "Alcance",
+        "value": "Relevamiento de los sistemas que hoy no se hablan: mapa de integraciones actual, flujos de datos y puntos únicos de falla. Típicamente entre 4 y 8 sistemas."
+      },
+      {
+        "label": "Duración",
+        "value": "Dos semanas desde el kickoff, con una sesión de relevamiento por sistema crítico."
+      },
+      {
+        "label": "Presupuesto",
+        "value": "Cerrado antes de empezar, sin horas sorpresa. Si después avanzás con la implementación, se descuenta del proyecto."
+      },
+      {
+        "label": "Entregable",
+        "value": "Documento técnico y sesión de presentación: mapa de integración, riesgos priorizados y plan de implementación por etapas con estimaciones."
+      },
+      {
+        "label": "Pruebas",
+        "value": "Casos de prueba por flujo crítico y criterios de aceptación acordados por escrito antes de codear."
+      },
+      {
+        "label": "Plan de mantenimiento",
+        "value": "Monitoreo, alertas, versionado de contratos de API y traspaso documentado para que tu equipo pueda operarlo."
+      }
+    ]
+  },
+  "process": {
+    "number": "06",
+    "label": "Cómo trabajamos",
+    "meta": "4 etapas · secuenciales",
+    "title": "Cuatro etapas, un solo interlocutor técnico.",
+    "steps": [
+      {
+        "title": "Diagnóstico",
+        "description": "Revisamos cómo se comunican (o no se comunican) tus sistemas actuales."
+      },
+      {
+        "title": "Arquitectura",
+        "description": "Definimos el modelo de integración, los flujos de datos y los puntos de falla."
+      },
+      {
+        "title": "Implementación",
+        "description": "Desarrollamos, probamos y desplegamos la conexión en staging y producción."
+      },
+      {
+        "title": "Soporte",
+        "description": "Monitoreo inicial y documentación para que tu equipo pueda operar solo."
+      }
+    ]
+  },
+  "criterio": {
+    "number": "07",
+    "label": "Criterio",
+    "meta": "4 principios · 4 pilares",
+    "title": "Criterio que viene de operar sistemas críticos.",
+    "evidenceLabel": "Dónde operó el equipo",
+    "companies": ["BBVA", "Santander", "ICBC", "Accenture", "Endava", "Rootstrap"],
+    "intro": "Somos ingenieros senior con experiencia en empresas como BBVA, Santander, Accenture, Endava y Rootstrap. Nos juntamos para armar algo propio: una consultora ágil donde el cliente habla directo con quien resuelve el problema.",
+    "principles": [
+      "Seniority real: venimos de operar sistemas críticos en producción.",
+      "Resolvemos desde arquitecturas complejas hasta productos que arrancan de cero.",
+      "Proceso de trabajo claro, comunicación directa, sin intermediarios.",
+      "Te ayudamos a encontrar el recurso ideal para tu proyecto."
+    ],
+    "missionLabel": "Misión / Tonk Solutions",
+    "mission": "Ser el equipo de ingeniería que nuestros clientes necesitan, con el criterio para tomar buenas decisiones técnicas, la experiencia para ejecutarlas y la responsabilidad de llevarlas hasta el final.",
+    "pillars": [
+      {
+        "title": "Cloud Native",
+        "description": "Plataformas en contenedores, observables y preparadas para escalar."
+      },
+      {
+        "title": "Core Banking",
+        "description": "Sistemas transaccionales donde no hay margen de error."
+      },
+      {
+        "title": "Integraciones Enterprise",
+        "description": "ERPs, organismos fiscales y pagos hablando el mismo idioma."
+      },
+      {
+        "title": "IA Aplicada",
+        "description": "Automatización con resultados medibles en la operación."
+      }
+    ]
+  },
   "team": {
-    "label": "NUESTRO EQUIPO FUNDADOR",
-    "title": "Ingenieros senior, experiencia real",
-    "description": "Venimos de trabajar en algunas de las plataformas más exigentes de la región — BBVA, Santander, ICBC, Accenture, Endava — y decidimos armar algo propio. Eso nos da una perspectiva clave: sabemos lo que cuesta que un sistema falle en producción.",
+    "number": "08",
+    "label": "Equipo",
+    "meta": "3 co-founders",
+    "title": "Quienes fundaron Tonk son quienes atienden tu proyecto.",
+    "linkedinLabel": "LinkedIn",
+    "newTabHint": "abre en una pestaña nueva",
     "members": [
       {
         "name": "Matías Castillo",
         "role": "Co-Founder · Financial Systems Lead",
         "bio": "App Owner en BBVA, a cargo de sistemas financieros críticos con millones de transacciones diarias. Entiende lo que significa responsabilidad técnica real en entornos donde no hay margen de error.",
-        "linkedin": "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/",
-        "avatarUrl": "/images/founders/agustin-castillo.jpeg"
+        "initials": "MC",
+        "linkedin": "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/"
       },
       {
         "name": "Nicolás Gómez",
         "role": "Co-Founder · Core Banking",
         "bio": "Trayectoria en Santander e ICBC desarrollando y evolucionando productos bancarios core y sistemas transaccionales de alta criticidad. Especialista en arquitecturas que no pueden fallar.",
-        "linkedin": "https://www.linkedin.com/in/nicolas-gomez-467b26141/",
-        "avatarUrl": "/images/founders/nicolas-gomez.jpeg"
+        "initials": "NG",
+        "linkedin": "https://www.linkedin.com/in/nicolas-gomez-467b26141/"
       },
       {
         "name": "Rodrigo Hernandez",
         "role": "Co-Founder · Platform Engineering",
         "bio": "Experiencia construyendo plataformas cloud-native escalables. Referente en arquitecturas de microservicios y soluciones distribuidas.",
-        "linkedin": "https://www.linkedin.com/in/rodrigoenzohernandez/",
-        "avatarUrl": "/images/founders/rodrigo-hernandez.jpeg"
+        "initials": "RH",
+        "linkedin": "https://www.linkedin.com/in/rodrigoenzohernandez/"
       }
     ]
   },
   "contact": {
-    "label": "CONTACTO",
+    "number": "09",
+    "label": "Contacto",
+    "meta": "Buenos Aires · GMT−3",
     "title": "¿Tenés un proyecto en mente?",
     "description": "Ya sea que tengas algo concreto para presupuestar o estés explorando opciones, contanos de qué se trata.",
-    "items": [
+    "cta": "Escribinos por WhatsApp",
+    "rows": [
       {
-        "icon": "Mail",
-        "label": "Correo Electrónico",
-        "value": "contact@tonksolutions.com.ar",
-        "href": "mailto:contact@tonksolutions.com.ar"
+        "label": "Correo",
+        "value": "contact@tonksolutions.com.ar"
       },
       {
-        "icon": "Phone",
         "label": "WhatsApp",
-        "value": "+54 9 11 2390-8349",
-        "href": "https://wa.me/5491123908349"
+        "value": "+54 9 11 2390-8349"
       },
       {
-        "icon": "MapPin",
         "label": "Ubicación",
         "value": "Buenos Aires, Argentina"
       }
     ]
   },
   "footer": {
-    "description": "Somos un equipo de ingeniería de software senior con experiencia en las plataformas más exigentes de la región. Resolvemos desafíos técnicos complejos con criterio, experiencia y responsabilidad.",
-    "contactLabel": "Contacto",
-    "socialLabel": "Síguenos",
-    "copyright": "© {year} Tonk Solutions. Todos los derechos reservados."
+    "tagline": "Ingeniería de software senior. Integraciones enterprise, sin intermediarios.",
+    "navLabel": "Navegación",
+    "location": "Buenos Aires, AR",
+    "copyright": "© {year} Tonk Solutions",
+    "legal": "Todos los derechos reservados"
   },
   "seo": {
-    "description": "Conectamos los sistemas críticos de tu operación: ERPs, APIs, pasarelas de pago y organismos fiscales. Ingeniería senior, trato directo y sin intermediarios.",
-    "titleDefault": "Tonk Solutions | Integraciones Enterprise, sin Intermediarios",
+    "description": "Consultora de ingeniería de software senior en Buenos Aires. Integramos los sistemas que tu operación ya tiene y construimos producto desde cero, con trato directo con el ingeniero.",
+    "titleDefault": "Tonk Solutions | Integraciones Enterprise y Producto desde Cero",
     "keywords": [
       "consultoría de ingeniería de software",
-      "desarrollo de software a medida",
-      "desarrollo de productos digitales",
-      "arquitectura de sistemas",
       "integraciones enterprise",
-      "integraciones ERP",
-      "integraciones AFIP",
-      "ingenieros senior",
-      "selección técnica de ingenieros",
-      "reclutamiento IT",
-      "staffing tecnológico",
+      "integraciones ARCA",
+      "desarrollo de producto desde cero",
+      "greenfield software",
       "arquitectura cloud-native",
       "microservicios",
       "IA aplicada",
+      "ingenieros senior",
+      "selección técnica de ingenieros",
       "consultoría software Argentina",
       "ingeniería de software Buenos Aires"
     ],
-    "ogTitle": "Tonk Solutions | Integraciones Enterprise",
-    "ogImageAlt": "Tonk Solutions — Integraciones enterprise complejas, sin intermediarios",
-    "twitterTitle": "Tonk Solutions | Integraciones Enterprise"
+    "ogTitle": "Tonk Solutions | Integraciones y Producto desde Cero",
+    "ogImageAlt": "Tonk Solutions — Integraciones enterprise y producto desde cero",
+    "twitterTitle": "Tonk Solutions | Integraciones y Producto desde Cero"
   },
   "schema": {
-    "slogan": "Integraciones enterprise complejas, sin intermediarios.",
+    "slogan": "Integraciones enterprise complejas, y producto desde cero.",
     "inLanguage": "es-AR",
     "servicesListName": "Servicios de Ingeniería de Software",
     "servicesListDescription": "Servicios especializados de consultoría en ingeniería de software para instituciones financieras, fintechs y corporaciones enterprise."
@@ -205,7 +330,7 @@
       },
       "hero": {
         "title": "Conectamos sistemas que no hablan entre sí",
-        "description": "Integraciones enterprise complejas para empresas en Argentina y la región. ERPs, APIs de terceros, pasarelas de pago y organismos fiscales. Hablas directo con quien resuelve el problema.",
+        "description": "Integraciones enterprise complejas para empresas en Argentina y la región. ERPs, APIs de terceros, pasarelas de pago y organismos fiscales. Hablás directo con quien resuelve el problema.",
         "cta": "Hablemos de tu integración",
         "whatsappText": "Hola, quiero hablar sobre una integración entre sistemas."
       },
@@ -216,7 +341,7 @@
           "El ERP no sincroniza con el ecommerce ni con la pasarela de pago.",
           "Cada mes, alguien pasa datos a mano de una plataforma a otra.",
           "Las integraciones existentes se rompen tras una actualización y nadie sabe por qué.",
-          "Necesitas conectarte con AFIP, DGI u otros organismos fiscales y no encuentras quién se haga cargo."
+          "Necesitás conectarte con ARCA, DGI u otros organismos fiscales y no encontrás quién se haga cargo."
         ],
         "closing": "Esto genera errores, retrasos y costos ocultos que no aparecen en el presupuesto de TI."
       },
@@ -238,7 +363,7 @@
           },
           {
             "title": "Organismos fiscales",
-            "description": "Integración con AFIP, DGI y entidades reguladoras de la región."
+            "description": "Integración con ARCA, DGI y entidades reguladoras de la región."
           },
           {
             "title": "Migraciones y sincronización",
@@ -251,7 +376,7 @@
         "items": [
           {
             "title": "Ingenieros senior, sin intermediarios",
-            "description": "Hablas directamente con quien diseña y ejecuta la integración. No hay account managers ni capas de aprobación que diluyan el mensaje técnico."
+            "description": "Hablás directamente con quien diseña y ejecuta la integración. No hay account managers ni capas de aprobación que diluyan el mensaje técnico."
           },
           {
             "title": "Experiencia en producción real",
@@ -302,7 +427,7 @@
       },
       "cta": {
         "title": "¿Tu empresa necesita integrar sistemas críticos?",
-        "description": "Cuéntanos sobre tu proyecto y armamos una propuesta a medida.",
+        "description": "Contanos sobre tu proyecto y armamos una propuesta a medida.",
         "button": "Solicitar diagnóstico de integración",
         "whatsappText": "Hola, quiero solicitar un diagnóstico de integración."
       }
