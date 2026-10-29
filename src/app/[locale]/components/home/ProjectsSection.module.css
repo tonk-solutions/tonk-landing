@@ -1,0 +1,133 @@
+.list {
+  list-style: none;
+  margin: clamp(40px, 6vh, 72px) 0 0;
+  padding: 0;
+}
+
+.project {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--g);
+  row-gap: 16px;
+  align-items: start;
+  border-top: 1px solid var(--border);
+  padding-block: 32px;
+}
+
+.project:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.number {
+  grid-column: 1 / span 2;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding-top: 8px;
+}
+
+.who {
+  grid-column: 3 / span 3;
+}
+
+.who h3 {
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  margin: 0;
+}
+
+.role {
+  margin: 8px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.bio {
+  grid-column: 6 / span 5;
+}
+
+.bio > p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--body);
+  max-width: 62ch;
+  margin: 0;
+}
+
+.stack {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.scope {
+  grid-column: 11 / span 2;
+  justify-self: end;
+  align-self: start;
+  border: 1px solid var(--border-strong);
+  padding: 8px 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+@media (max-width: 1279px) {
+  .project {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .number {
+    grid-column: 1 / span 1;
+  }
+
+  .who {
+    grid-column: 2 / span 3;
+  }
+
+  .bio {
+    grid-column: 5 / span 3;
+  }
+
+  .scope {
+    grid-column: 5 / span 3;
+    grid-row: 2;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 767px) {
+  .project {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 12px;
+  }
+
+  .number,
+  .who,
+  .bio,
+  .scope {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .who h3 {
+    font-size: 22px;
+  }
+
+  .scope {
+    justify-self: start;
+  }
+}
