@@ -1,11 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { buildStructuredDataGraph } from "../seo/structuredData";
+import { buildStructuredDataGraph, pickFounders } from "../seo/structuredData";
+import messages from "../../../messages/es.json";
 
 interface PersonNode {
   "@type": "Person";
   name: string;
   jobTitle: string;
-  sameAs: string;
+  sameAs: string[];
 }
 
 interface OrganizationNode {
@@ -14,6 +15,8 @@ interface OrganizationNode {
   founder: PersonNode[];
 }
 
+// Los founders salen de los mensajes reales: si `team.members` cambia de forma,
+// este test cae igual que el render (el e2e además mira el HTML servido).
 const BASE_INPUT = {
   locale: "es",
   organization: {
@@ -24,24 +27,7 @@ const BASE_INPUT = {
     addressCountry: "AR",
     linkedinUrl: "https://www.linkedin.com/company/tonk-solutions",
     instagramUrl: "https://www.instagram.com/tonk_solutions",
-    founders: [
-      {
-        name: "Matías Castillo",
-        role: "Co-Founder · Financial Systems Lead",
-        linkedin:
-          "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/",
-      },
-      {
-        name: "Nicolás Gómez",
-        role: "Co-Founder · Core Banking",
-        linkedin: "https://www.linkedin.com/in/nicolas-gomez-467b26141/",
-      },
-      {
-        name: "Rodrigo Hernandez",
-        role: "Co-Founder · Platform Engineering",
-        linkedin: "https://www.linkedin.com/in/rodrigoenzohernandez/",
-      },
-    ],
+    founders: pickFounders(messages.team.members),
   },
   website: {
     inLanguage: "es-AR",
@@ -65,60 +51,74 @@ const BASE_INPUT = {
   },
 };
 
-describe("buildStructuredDataGraph", () => {
-  it("declara founder con exactamente tres Person", () => {
-    const graph = buildStructuredDataGraph(BASE_INPUT);
-    const organization = graph["@graph"].find(
-      (node) => node["@type"] === "Organization",
-    ) as OrganizationNode | undefined;
+function organizationOf(input: typeof BASE_INPUT): OrganizationNode {
+  const graph = buildStructuredDataGraph(input);
+  const organization = graph["@graph"].find((node) => node["@type"] === "Organization");
 
-    expect(organization).toBeDefined();
-    expect(Array.isArray(organization!.founder)).toBe(true);
-    expect(organization!.founder).toHaveLength(3);
-    expect(organization!.founder.map((person) => person["@type"])).toEqual([
+  expect(organization).toBeDefined();
+  return organization as unknown as OrganizationNode;
+}
+
+describe("buildStructuredDataGraph", () => {
+  it("declara founder con exactamente tres Person y los datos reales de team.members", () => {
+    const organization = organizationOf(BASE_INPUT);
+
+    expect(Array.isArray(organization.founder)).toBe(true);
+    expect(organization.founder).toHaveLength(3);
+    expect(organization.founder.map((person) => person["@type"])).toEqual([
       "Person",
       "Person",
       "Person",
     ]);
+    expect(organization.founder.map((person) => person.name)).toEqual(
+      messages.team.members.map((member) => member.name),
+    );
+    expect(organization.founder.map((person) => person.jobTitle)).toEqual(
+      messages.team.members.map((member) => member.role),
+    );
   });
 
-  it("los founders tienen nombre, jobTitle y sameAs correctos", () => {
-    const graph = buildStructuredDataGraph(BASE_INPUT);
-    const organization = graph["@graph"].find(
-      (node) => node["@type"] === "Organization",
-    ) as OrganizationNode | undefined;
+  it("sameAs de cada founder es un array, igual que el del Organization", () => {
+    const organization = organizationOf(BASE_INPUT);
 
-    expect(organization!.founder.map((person) => person.name)).toEqual([
-      "Matías Castillo",
-      "Nicolás Gómez",
-      "Rodrigo Hernandez",
-    ]);
-    expect(organization!.founder.map((person) => person.jobTitle)).toEqual([
-      "Co-Founder · Financial Systems Lead",
-      "Co-Founder · Core Banking",
-      "Co-Founder · Platform Engineering",
-    ]);
-    expect(
-      organization!.founder.every((person) => person.sameAs.length > 0),
-    ).toBe(true);
+    for (const person of organization.founder) {
+      expect(Array.isArray(person.sameAs)).toBe(true);
+      expect(person.sameAs).toHaveLength(1);
+      expect(person.sameAs[0]).toMatch(/^https:\/\/www\.linkedin\.com\//);
+    }
   });
 
   it("no menciona a Ignacio Sileo en el grafo serializado", () => {
-    const graph = buildStructuredDataGraph(BASE_INPUT);
-    const json = JSON.stringify(graph);
+    const json = JSON.stringify(buildStructuredDataGraph(BASE_INPUT));
 
     expect(json).not.toMatch(/Ignacio/i);
     expect(json).not.toMatch(/Sileo/i);
   });
 
   it("knowsAbout incluye AWS, Google Cloud y Firebase", () => {
-    const graph = buildStructuredDataGraph(BASE_INPUT);
-    const organization = graph["@graph"].find(
-      (node) => node["@type"] === "Organization",
-    ) as OrganizationNode | undefined;
+    const organization = organizationOf(BASE_INPUT);
 
-    expect(organization!.knowsAbout).toContain("AWS");
-    expect(organization!.knowsAbout).toContain("Google Cloud");
-    expect(organization!.knowsAbout).toContain("Firebase");
+    expect(organization.knowsAbout).toContain("AWS");
+    expect(organization.knowsAbout).toContain("Google Cloud");
+    expect(organization.knowsAbout).toContain("Firebase");
+  });
+});
+
+describe("pickFounders", () => {
+  it("deriva los tres co-founders con LinkedIn desde team.members", () => {
+    const founders = pickFounders(messages.team.members);
+
+    expect(founders).toHaveLength(3);
+    expect(founders.every((founder) => founder.linkedin.startsWith("https://"))).toBe(true);
+  });
+
+  it("falla si un miembro no trae LinkedIn, en vez de emitir undefined", () => {
+    expect(() => pickFounders([{ name: "Alguien", role: "Co-Founder" }])).toThrow(
+      /team\.members\[0\] necesita name, role y linkedin/,
+    );
+  });
+
+  it("falla si team.members no es un array", () => {
+    expect(() => pickFounders({})).toThrow(/tiene que ser un array/);
   });
 });

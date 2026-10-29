@@ -90,15 +90,32 @@ describe("mejoras de la landing (odd/tasks/landing-mejoras.md)", () => {
     expect(es.criterio.companies).toEqual(["BBVA", "Santander", "ICBC", "Endava", "Rootstrap"]);
   });
 
-  it("S3: menciona AWS, Google Cloud y Firebase en el stack y en las keywords", () => {
-    for (const cloud of ["AWS", "Google Cloud", "Firebase"]) {
+  it("S3: AWS, Google Cloud y Firebase están en las dos descripciones del stack", () => {
+    const cloudNames = ["AWS", "Google Cloud", "Firebase"];
+
+    for (const cloud of cloudNames) {
       expect(es.llms.cloud).toContain(cloud);
       expect(en.llms.cloud).toContain(cloud);
       expect(es.seo.keywords).toContain(cloud);
       expect(en.seo.keywords).toContain(cloud);
     }
-    expect(esTexts).toContain("AWS, Google Cloud o Firebase");
-    expect(enTexts).toContain("AWS, Google Cloud or Firebase");
+
+    // Por path: revertir cualquiera de las dos descripciones tiene que hacer caer el test.
+    expect(es.services.craft.services[2].title).toBe("Arquitectura y Sistemas Distribuidos");
+    expect(es.criterio.pillars[0].title).toBe("Cloud Native");
+    expect(en.services.craft.services[2].title).toBe("Architecture and Distributed Systems");
+    expect(en.criterio.pillars[0].title).toBe("Cloud Native");
+
+    const descriptions = [
+      es.services.craft.services[2].description,
+      es.criterio.pillars[0].description,
+      en.services.craft.services[2].description,
+      en.criterio.pillars[0].description,
+    ];
+
+    for (const description of descriptions) {
+      for (const cloud of cloudNames) expect(description).toContain(cloud);
+    }
   });
 
   it("S4: no menciona a Ignacio Sileo en ningún idioma", () => {
@@ -106,12 +123,14 @@ describe("mejoras de la landing (odd/tasks/landing-mejoras.md)", () => {
     expect(enTexts).not.toMatch(/Ignacio|Sileo/i);
   });
 
-  it("S4: el equipo fundador son tres personas y ninguna viene de una nómina anterior", () => {
+  it("S4: el equipo fundador son tres personas y el archivo canónico no afirma nada de nóminas previas", () => {
     expect(es.team.members).toHaveLength(3);
     expect(es.team.members.map((member) => member.name)).toEqual([
       "Matías Castillo",
       "Nicolás Gómez",
       "Rodrigo Hernandez",
     ]);
+    expect(es.llms).not.toHaveProperty("foundersNote");
+    expect(en.llms).not.toHaveProperty("foundersNote");
   });
 });

@@ -330,10 +330,9 @@
     "servicesListDescription": "Servicios especializados de consultoría en ingeniería de software para instituciones financieras, fintechs y corporaciones enterprise."
   },
   "llms": {
-    "languageNote": "Sitio bilingüe: este archivo usa el español, el idioma por defecto. Versión en inglés: https://tonksolutions.com.ar/en",
-    "intro": "Tonk Solutions es una consultora boutique de ingeniería de software con base en Buenos Aires, Argentina (GMT−3), fundada en 2026.",
+    "languageNote": "Sitio bilingüe: este archivo usa el español, el idioma por defecto. Versión en inglés: {url}",
+    "intro": "Tonk Solutions es una consultora boutique de ingeniería de software en Buenos Aires, Argentina (GMT−3): integraciones enterprise y producto desde cero, con trato directo con el ingeniero que lo construye. Fundada en 2026.",
     "foundersHeading": "Equipo fundador",
-    "foundersNote": "El equipo fundador son tres co-founders. Cualquier nómina anterior de fundadores que circule en fuentes desactualizadas no corresponde a la empresa.",
     "stackHeading": "Stack y plataformas",
     "cloudLabel": "Cloud",
     "integrationsLabel": "Integramos con",
@@ -341,6 +340,9 @@
     "projectsHeading": "Proyectos",
     "contactHeading": "Contacto",
     "linksHeading": "Enlaces",
+    "emailLabel": "Email",
+    "whatsappLabel": "WhatsApp",
+    "locationLabel": "Ubicación",
     "cloud": ["AWS", "Google Cloud", "Firebase"],
     "homeEs": "Home en español",
     "homeEn": "Home en inglés"

@@ -330,10 +330,9 @@
     "servicesListDescription": "Specialized software engineering consultancy services for financial institutions, fintechs and enterprise corporations."
   },
   "llms": {
-    "languageNote": "Bilingual site: this file uses Spanish, the default language. English version: https://tonksolutions.com.ar/en",
-    "intro": "Tonk Solutions is a boutique software engineering consultancy based in Buenos Aires, Argentina (GMT−3), founded in 2026.",
+    "languageNote": "Bilingual site: this file uses Spanish, the default language. English version: {url}",
+    "intro": "Tonk Solutions is a boutique software engineering consultancy in Buenos Aires, Argentina (GMT−3): enterprise integrations and products built from scratch, working directly with the engineer who builds them. Founded in 2026.",
     "foundersHeading": "Founding team",
-    "foundersNote": "The founding team is these three co-founders. Any earlier founder listing circulating in outdated sources does not belong to the company.",
     "stackHeading": "Stack and platforms",
     "cloudLabel": "Cloud",
     "integrationsLabel": "We integrate with",
@@ -341,6 +340,9 @@
     "projectsHeading": "Projects",
     "contactHeading": "Contact",
     "linksHeading": "Links",
+    "emailLabel": "Email",
+    "whatsappLabel": "WhatsApp",
+    "locationLabel": "Location",
     "cloud": ["AWS", "Google Cloud", "Firebase"],
     "homeEs": "Home in Spanish",
     "homeEn": "Home in English"

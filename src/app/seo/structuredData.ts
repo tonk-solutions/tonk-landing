@@ -40,6 +40,36 @@ export interface StructuredDataInput {
   servicesList: ServicesListInfo;
 }
 
+/**
+ * Deriva los founders desde `team.members` de los mensajes. Valida la forma para
+ * que un rename o un campo faltante rompa el render en vez de emitir un
+ * `founder` vacío o con `undefined` en el JSON-LD.
+ */
+export function pickFounders(members: unknown): FounderInfo[] {
+  if (!Array.isArray(members)) {
+    throw new Error("team.members tiene que ser un array para armar founder en el JSON-LD");
+  }
+
+  return members.map((member, index) => {
+    const { name, role, linkedin } = (member ?? {}) as Partial<FounderInfo>;
+
+    if (
+      typeof name !== "string" ||
+      !name.trim() ||
+      typeof role !== "string" ||
+      !role.trim() ||
+      typeof linkedin !== "string" ||
+      !/^https?:\/\//.test(linkedin)
+    ) {
+      throw new Error(
+        `team.members[${index}] necesita name, role y linkedin válidos para el JSON-LD`,
+      );
+    }
+
+    return { name, role, linkedin };
+  });
+}
+
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const SERVICES_LIST_ID = `${SITE_URL}/#services`;
@@ -104,7 +134,7 @@ export function buildStructuredDataGraph(input: StructuredDataInput) {
       "@type": "Person",
       name: founder.name,
       jobTitle: founder.role,
-      sameAs: founder.linkedin,
+      sameAs: [founder.linkedin],
     })),
   };
 

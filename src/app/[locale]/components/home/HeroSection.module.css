@@ -180,9 +180,12 @@
     white-space: normal;
   }
 
-  /* Igual que en la barra de integraciones: el `·` no debe abrir una línea. */
+  /*
+   * Espaciado equivalente al separador `·` de escritorio (14px + glifo + 14px)
+   * para que no haya salto visual al cruzar 767/768.
+   */
   .meta {
-    column-gap: 14px;
+    column-gap: 35px;
   }
 
   .meta li + li::before {

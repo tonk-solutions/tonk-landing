@@ -202,11 +202,12 @@ home; rama desde `main` y cerrar #31 y #32 como superseded → S15, S16.
   y el CSS llega completo (el HTML bajó de 1.643.855 a 150.330 bytes).
 - Verificación: `tsc` 0 · `vitest` 15/15 · `build` OK · `playwright` 39 pasan, 1 salteado.
 
-**L21** (mejoras pedidas por el dueño, `odd/tasks/landing-mejoras.md`):
-- **S2**: el `white-space: nowrap` del tramo resaltado del titular desbordaba el viewport en inglés
-  (43-101px entre 320px y 430px). Desde ese pedido, por debajo de 768px la frase envuelve; desde 768px
-  la regla menta sigue siendo un solo trazo.
-- **S3**: la barra de integraciones conserva sus 8 plataformas; AWS, Google Cloud y Firebase entran en el
-  copy de servicios, el pilar `Cloud Native`, las keywords y el JSON-LD.
-- Se agrega `/llms.txt` y `founder` al nodo `Organization` (tres co-founders) como ficha canónica para
-  crawlers y LLMs.
+**L21** (mejoras pedidas por el dueño, specs en `odd/tasks/landing-mejoras.md`):
+- **`landing-mejoras` S1**: el `white-space: nowrap` del tramo resaltado del titular desbordaba el viewport
+  en inglés (43-101px entre 320px y 430px). Desde ese pedido, por debajo de 768px la frase envuelve; desde
+  768px la regla menta sigue siendo un solo trazo.
+- **`landing-mejoras` S2**: Accenture sale de las empresas y de los dos textos que la listaban.
+- **`landing-mejoras` S3**: la barra de integraciones conserva sus 8 plataformas; AWS, Google Cloud y
+  Firebase entran en el copy de servicios, el pilar `Cloud Native`, las keywords y el JSON-LD.
+- **`landing-mejoras` S4**: se agrega `/llms.txt` (con enlaces a las páginas de servicio) y `founder` al
+  nodo `Organization` (tres co-founders) como ficha canónica para crawlers y LLMs.

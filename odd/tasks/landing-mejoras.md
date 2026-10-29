@@ -65,8 +65,9 @@ renderizada (`/es` y `/en`, 320/360/390/430/768px):
 - **S1**: por debajo de 768px la frase resaltada puede envolver (`display: inline`, `white-space: normal`);
   desde 768px se mantiene en una línea con la regla menta continua. Evita el desborde sin achicar el
   titular un 30% (la alternativa que entraba a 320px era 23,7px de tipografía).
-- **S1 (extra)**: los separadores `·` del titular y de la barra se cambian por separación de columnas por
-  debajo de 1280px, para que ninguna línea empiece con una viñeta suelta.
+- **S1 (extra)**: los separadores `·` se reemplazan por `column-gap` equivalente al espaciado del
+  separador de escritorio: en el titular (`.meta`) por debajo de 768px y en la barra de integraciones
+  (`.list`) por debajo de 1280px, que son los anchos donde cada uno envuelve.
 - **S3**: AWS, Google Cloud y Firebase **no** se suman a la barra `Integramos con` porque esa lista está
   congelada en 8 plataformas por S3 del doc del port y por `messages.test.ts`. Se mencionan en la
   descripción del servicio de arquitectura, el pilar `Cloud Native`, `seo.keywords`, `knowsAbout` del
@@ -74,7 +75,9 @@ renderizada (`/es` y `/en`, 320/360/390/430/768px):
 - **S4**: no existe `/llms.txt` ni en el repo ni en los dominios desplegados (404), y `Ignacio Sileo` no
   aparece en el sitio actual: sobrevive en índices viejos (perfil de LinkedIn, ramas públicas del repo con
   `content/team.md`). El fix del sitio es publicar la ficha canónica: `/llms.txt` + `founder` en el JSON-LD
-  con los tres co-founders y una nota de que una nómina anterior no corresponde a la empresa.
+  con la lista de los tres co-founders. El archivo no dice nada sobre nóminas previas: una afirmación
+  negativa sobre terceros no se puede respaldar desde el repo y amplifica el nombre que se busca
+  desindexar.
 
 **L4 — Verificación sobre el árbol final.**
 
@@ -86,10 +89,40 @@ renderizada (`/es` y `/en`, 320/360/390/430/768px):
   y el e2e de `/llms.txt`.
 - Barrido manual de ancho en 19 viewports (320→1440) sobre el documento renderizado: desborde 0 en `/es`
   y `/en`.
-- `/llms.txt`: `200`, `content-type: text/plain; charset=utf-8`, lista los tres co-founders,
-  AWS/Google Cloud/Firebase, ARCA y el email; sin `Ignacio`/`Sileo`.
+- `/llms.txt`: `200`, `content-type: text/plain; charset=utf-8`, resumen único con ciudad y huso, lista
+  de los tres co-founders, las siete páginas de servicio enlazadas con su URL canónica, proyectos,
+  AWS/Google Cloud/Firebase, ARCA y contacto; sin `Ignacio`/`Sileo`.
 - HTML de `/es`, `/en`, `/es/services/enterprise-integrations` y
   `/en/services/distributed-systems-architecture`: 0 apariciones de `Accenture`, `Ignacio` o `Sileo`;
   AWS, Google Cloud y Firebase presentes; JSON-LD con `founder` de tres personas.
 - **Fuera del código**: los índices de búsqueda y de LLM siguen citando fuentes viejas (LinkedIn y ramas
   remotas del repo). Borrar esas ramas públicas o pedir desindexación requiere decisión del dueño.
+
+**L5 — Ronda 1 de QA/review (11 hallazgos aplicados).**
+
+- **Resumen canónico sin duplicar**: el blockquote concatenaba `llms.intro` + `seo.description` y repetía
+  "consultora boutique". Ahora es una sola frase (`llms.intro`) con ciudad, `GMT−3` y foco.
+- **Enlaces**: `Servicios` ya no es una lista de títulos; cada entrada sale del catálogo con
+  `https://tonksolutions.com.ar/es/services/<slug>` y su descripción. `Proyectos` sigue sin URL porque no
+  existe ruta de proyecto.
+- **Cableado único**: `buildLlmsInput(messages)` es el único mapeo messages → builder y lo usan la ruta y
+  el unit test, así un campo mal pasado falla en los dos.
+- **Etiquetas i18n**: `Email`, `WhatsApp` y `Ubicación` salen de `messages.llms.*` y la URL de
+  `languageNote` se arma con `SITE_URL` (placeholder `{url}`), sin dominio hardcodeado.
+- **Sin nota defensiva**: se elimina `llms.foundersNote`; el archivo lista el equipo actual y no afirma
+  nada sobre nóminas previas (hallazgo de riesgo de contenido).
+- **Founders validados**: `pickFounders` valida `name`/`role`/`linkedin` y falla el render si `team.members`
+  cambia de forma; el test unitario y el e2e del JSON-LD usan los mensajes reales, no un fixture.
+- **`sameAs` consistente**: cada `Person` emite `sameAs` como array, igual que el `Organization`.
+- **S3 por path**: el test fija `services.craft.services[2]` y `criterio.pillars[0]` en los dos idiomas, así
+  revertir una sola descripción no pasa desapercibido.
+- **Guard de ancho**: agrega 640, 767 y 768 para cubrir la banda 431-767 y el borde del switch de CSS.
+- **Espaciado**: `column-gap` mobile iguala el espaciado equivalente al `·` de escritorio (35px en el
+  titular, 32px en la barra), sin salto al cruzar 767/768 ni 1279/1280.
+- **Pendiente fuera de ronda**: a 320px el CTA "Hablemos por WhatsApp" de
+  `/[locale]/services/[slug]` se recorta ~25px por un ancestro con `overflow-x: hidden`; es preexistente de
+  esa ruta y queda como follow-up (no hay diff de esta ronda ahí).
+
+  Verificación de la ronda: `vitest run` **35/35** · `tsc --noEmit` 0 · `eslint .` 0 · `next build` 0
+  (`/llms.txt` prerenderizado) · `playwright test` contra `next start :3200` **59 pasan, 1 salteado**
+  (guard de ancho con 640/767/768 y JSON-LD de `/es` y `/en` incluidos).

@@ -1,11 +1,23 @@
 /**
  * Builder puro para /llms.txt.
  *
- * No depende de next-intl ni de React: recibe todos los datos por parámetro
- * para poder testearlo sin montar el runtime de Next.js. El formato sigue
- * la propuesta de https://llmstxt.org/ (título H1, resumen en blockquote,
- * secciones H2).
+ * No depende de next-intl ni de React: recibe los mensajes por parámetro para
+ * poder testearlo sin montar el runtime de Next.js. `buildLlmsInput` es la
+ * única traducción de messages → builder, así la ruta y los tests no pueden
+ * divergir. El formato sigue https://llmstxt.org/ (H1, resumen en blockquote,
+ * secciones H2 con enlaces).
  */
+
+import { CONTACT_EMAIL, CONTACT_PHONE, SITE_NAME, SITE_URL, WHATSAPP_URL } from "../constants";
+import {
+  SERVICES_CATALOG,
+  pickServiceContent,
+  type ServiceBranch,
+  type ServiceContent,
+} from "../services/catalog";
+
+/** Idioma del archivo canónico: el por defecto del sitio (`es`). */
+const LLMS_LOCALE = "es";
 
 export interface LlmsFounder {
   name: string;
@@ -15,6 +27,8 @@ export interface LlmsFounder {
 
 export interface LlmsService {
   title: string;
+  description: string;
+  url: string;
 }
 
 export interface LlmsProject {
@@ -26,7 +40,6 @@ export interface LlmsCopy {
   languageNote: string;
   intro: string;
   foundersHeading: string;
-  foundersNote: string;
   stackHeading: string;
   cloudLabel: string;
   integrationsLabel: string;
@@ -34,6 +47,9 @@ export interface LlmsCopy {
   projectsHeading: string;
   contactHeading: string;
   linksHeading: string;
+  emailLabel: string;
+  whatsappLabel: string;
+  locationLabel: string;
   cloud: string[];
   homeEs: string;
   homeEn: string;
@@ -45,13 +61,59 @@ export interface LlmsInput {
   contactEmail: string;
   contactPhone: string;
   whatsappUrl: string;
-  seoDescription: string;
   location: string;
   copy: LlmsCopy;
   founders: LlmsFounder[];
   services: LlmsService[];
   projects: LlmsProject[];
   integrations: string[];
+}
+
+/** Subconjunto de `messages/{locale}.json` que alimenta el archivo canónico. */
+export interface LlmsMessages {
+  team: { members: LlmsFounder[] };
+  services: {
+    craft: { services: ServiceContent[] };
+    talent: { services: ServiceContent[] };
+  };
+  projects: { items: LlmsProject[] };
+  integrations: { platforms: string[] };
+  footer: { location: string };
+  llms: LlmsCopy;
+}
+
+/**
+ * Arma el input del builder desde los mensajes de un locale. Único punto de
+ * cableado: lo usan la ruta `/llms.txt` y sus tests.
+ */
+export function buildLlmsInput(messages: LlmsMessages): LlmsInput {
+  const servicesByBranch: Record<ServiceBranch, ServiceContent[]> = {
+    craft: messages.services.craft.services,
+    talent: messages.services.talent.services,
+  };
+
+  const services = SERVICES_CATALOG.map((entry) => {
+    const content = pickServiceContent(servicesByBranch, entry);
+    return {
+      title: content.title,
+      description: content.description,
+      url: `${SITE_URL}/${LLMS_LOCALE}/services/${entry.slug}`,
+    };
+  });
+
+  return {
+    siteName: SITE_NAME,
+    siteUrl: SITE_URL,
+    contactEmail: CONTACT_EMAIL,
+    contactPhone: CONTACT_PHONE,
+    whatsappUrl: WHATSAPP_URL,
+    location: messages.footer.location,
+    copy: messages.llms,
+    founders: messages.team.members,
+    services,
+    projects: messages.projects.items,
+    integrations: messages.integrations.platforms,
+  };
 }
 
 function joinList(items: string[]): string {
@@ -63,7 +125,9 @@ export function buildLlmsTxt(input: LlmsInput): string {
     .map((founder) => `- ${founder.name} — ${founder.role} (${founder.linkedin})`)
     .join("\n");
 
-  const servicesList = joinList(input.services.map((service) => service.title));
+  const servicesList = input.services
+    .map((service) => `- [${service.title}](${service.url}): ${service.description}`)
+    .join("\n");
   const projectsList = joinList(
     input.projects.map((project) => `${project.name} — ${project.type}`),
   );
@@ -71,13 +135,11 @@ export function buildLlmsTxt(input: LlmsInput): string {
 
   return `# ${input.siteName}
 
-> ${input.copy.intro} ${input.seoDescription}
+> ${input.copy.intro}
 
-${input.copy.languageNote}
+${input.copy.languageNote.replace("{url}", `${input.siteUrl}/en`)}
 
 ## ${input.copy.foundersHeading}
-
-${input.copy.foundersNote}
 
 ${foundersList}
 
@@ -99,9 +161,9 @@ ${projectsList}
 
 ## ${input.copy.contactHeading}
 
-- Email: ${input.contactEmail}
-- WhatsApp: ${input.contactPhone} (${input.whatsappUrl})
-- Ubicación: ${input.location}
+- ${input.copy.emailLabel}: ${input.contactEmail}
+- ${input.copy.whatsappLabel}: ${input.contactPhone} (${input.whatsappUrl})
+- ${input.copy.locationLabel}: ${input.location}
 
 ## ${input.copy.linksHeading}
 
