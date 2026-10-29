@@ -188,3 +188,16 @@ home; rama desde `main` y cerrar #31 y #32 como superseded → S15, S16.
   agregaron dos e2e: menú mobile (abre, navega, cierra con `aria-expanded=false` y scrollea) y guard de
   hidratación/consola en las tres rutas.
 - Verificación final: `tsc` 0 · `lint` 0 · `vitest` 15/15 · `build` OK · `playwright` **39 pasan, 1 salteado**.
+
+**L20** (ronda 3 de review, posteriores al merge de #33):
+- **Pie del diagrama**: el `captionLabel` usaba `hero.diagramCaption` (la meta) y la meta también, así que
+  el span izquierdo repetía el texto de la derecha. Ahora el label toma `hero.diagramTitle`
+  ("Fig. 01 — Topología de integración") y la meta queda con `diagramCaption` ("6 sistemas · 1 nodo"),
+  igual que el prototipo `index.html:549`.
+- **CSS duplicado en el detalle**: `useServerInsertedHTML` re-leía `cache.inserted` completo en cada
+  flush y reemitía todos los bloques. El HTML del detalle llegaba a 94% de hojas duplicadas (el estilo de
+  servicio pasaba de 3 bloques de ~1.643 KB a 7 bloques, uno de 1.150 KB + otro de 115 KB por request).
+  `emotion-registry.tsx` ahora lleva un `useRef<Set<string>>` con los nombres ya emitidos y solo manda al
+  HTML los nuevos. Verificado: 3 requests consecutivas emiten un solo `<style data-emotion>` de ~59,4 KB,
+  y el CSS llega completo (el HTML bajó de 1.643.855 a 150.330 bytes).
+- Verificación: `tsc` 0 · `vitest` 15/15 · `build` OK · `playwright` 39 pasan, 1 salteado.

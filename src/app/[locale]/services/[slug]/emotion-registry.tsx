@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { useServerInsertedHTML } from "next/navigation";
 import { CacheProvider } from "@emotion/react";
 import createCache, { type Options } from "@emotion/cache";
@@ -23,13 +23,25 @@ export function EmotionRegistry({ options, children }: { options: Options; child
     return instance;
   });
 
+  const emitted = useRef(new Set<string>());
+
   useServerInsertedHTML(() => {
+    // `cache.inserted` no se muta: lo administra Emotion y además es el valor de un
+    // useState. En cambio se recuerda acá qué se emitió ya, para no repetir el
+    // mismo bloque en cada flush (el HTML del detalle llegaba a 94% de hojas
+    // duplicadas). Este estado vive solo en el servidor: el callback no corre en
+    // el cliente.
     const inserted = cache.inserted;
-    const names = Object.keys(inserted).filter((name) => inserted[name] !== true);
+    const names = Object.keys(inserted).filter(
+      (name) => inserted[name] !== true && !emitted.current.has(name),
+    );
     if (names.length === 0) return null;
 
     let css = "";
-    for (const name of names) css += inserted[name];
+    for (const name of names) {
+      css += inserted[name];
+      emitted.current.add(name);
+    }
 
     // `children` en un <style> evita `dangerouslySetInnerHTML`: React escribe el
     // texto tal cual y el resultado es idéntico.
