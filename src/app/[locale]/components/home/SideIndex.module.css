@@ -1,9 +1,16 @@
+/*
+ * El riel ocupa el gutter izquierdo de la home (`.home-shell` en globals.css).
+ * Su ancho sale de `--m`, la misma medida que separa el contenido del borde:
+ * si el gutter no alcanza para el nombre completo, el label recorta con
+ * ellipsis pero nunca invade el texto de la página.
+ */
 .rail {
   position: fixed;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 56px;
+  width: var(--m);
+  padding-inline: 8px;
   z-index: 40;
   display: none;
 }
@@ -21,65 +28,38 @@
 }
 
 .item {
-  position: relative;
   display: flex;
-  align-items: center;
-  gap: 5px;
-  min-height: 28px;
-  padding-left: 8px;
+  align-items: baseline;
+  gap: 6px;
+  min-height: 26px;
   font-family: var(--mono);
   font-size: var(--t-micro);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: var(--muted);
   transition: color 0.15s ease;
 }
 
-.item::before {
-  content: "";
-  width: 8px;
-  height: 1px;
-  background: transparent;
-  transition: background-color 0.15s ease;
+.num {
+  flex: none;
 }
 
-/* El label vuela a la derecha del número y solo se revela en hover o foco,
-   porque a 1440px el riel de 56px deja apenas 2px de margen antes del
-   contenido: mostrarlo siempre taparía el texto de la página. */
 .label {
-  position: absolute;
-  left: 40px;
+  overflow: hidden;
   white-space: nowrap;
-  padding: 2px 8px;
-  background: var(--bg);
-  font-family: var(--mono);
-  font-size: var(--t-micro);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--fg);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s ease;
+  text-overflow: ellipsis;
 }
 
 .item:hover {
   color: var(--fg);
 }
 
-.item:hover .label,
-.item:focus-visible .label {
-  opacity: 1;
-}
-
 .item[aria-current="true"] {
   color: var(--accent);
-}
-
-.item[aria-current="true"]::before {
-  background: var(--accent);
+  font-weight: 500;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .label {
+  .item {
     transition: none;
   }
 }

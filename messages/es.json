@@ -16,6 +16,7 @@
   "hero": {
     "number": "01",
     "label": "Integraciones enterprise",
+    "indexLabel": "Inicio",
     "sheet": "Hoja 01 / 09",
     "titleLine1": "Integraciones enterprise complejas,",
     "titleLine2": "y producto desde cero.",
@@ -41,6 +42,7 @@
   "integrations": {
     "number": "02",
     "label": "Integramos con",
+    "indexLabel": "Plataformas",
     "meta": "8 plataformas",
     "platforms": [
       "Dynamics 365",
@@ -56,6 +58,7 @@
   "services": {
     "number": "03",
     "label": "Servicios",
+    "indexLabel": "Servicios",
     "meta": "4 capacidades · 3 de talent",
     "title": "Dos líneas de trabajo, un estándar técnico.",
     "cta": "Hablemos de esto",
@@ -119,6 +122,7 @@
   "projects": {
     "number": "04",
     "label": "Proyectos",
+    "indexLabel": "Proyectos",
     "meta": "2 productos · greenfield",
     "title": "Proyectos greenfield.",
     "intro": "Arquitectura, backend, frontend y producción, con el mismo equipo que después lo mantiene.",
@@ -141,6 +145,7 @@
   "diagnostic": {
     "number": "05",
     "label": "Diagnóstico de integración",
+    "indexLabel": "Diagnóstico",
     "meta": "Servicio / 2 semanas",
     "title": "Diagnóstico de integración.",
     "intro": "Antes de una línea de código: qué sistemas tenés, cómo se hablan y dónde se rompe.",
@@ -176,6 +181,7 @@
   "process": {
     "number": "06",
     "label": "Cómo trabajamos",
+    "indexLabel": "Proceso",
     "meta": "4 etapas · secuenciales",
     "title": "Cuatro etapas, un interlocutor técnico.",
     "steps": [
@@ -200,6 +206,7 @@
   "criterio": {
     "number": "07",
     "label": "Criterio",
+    "indexLabel": "Criterio",
     "meta": "4 principios · 4 pilares",
     "title": "Criterio que viene de operar sistemas críticos.",
     "evidenceLabel": "Dónde operó el equipo",
@@ -212,8 +219,8 @@
       "Rootstrap"
     ],
     "principles": [
-      "Seniority real: operamos sistemas críticos en producción.",
-      "De arquitecturas complejas a productos desde cero.",
+      "Operamos sistemas críticos en producción.",
+      "De sistemas complejos a producto de cero.",
       "Proceso claro y comunicación directa.",
       "Encontramos el recurso ideal para tu proyecto."
     ],
@@ -241,6 +248,7 @@
   "team": {
     "number": "08",
     "label": "Equipo",
+    "indexLabel": "Equipo",
     "meta": "3 co-founders",
     "title": "Los que fundaron Tonk atienden tu proyecto.",
     "linkedinLabel": "LinkedIn",
@@ -272,6 +280,7 @@
   "contact": {
     "number": "09",
     "label": "Contacto",
+    "indexLabel": "Contacto",
     "meta": "Buenos Aires · GMT−3",
     "title": "¿Tenés un proyecto en mente?",
     "description": "Contanos de qué se trata, tengas algo concreto o estés explorando.",

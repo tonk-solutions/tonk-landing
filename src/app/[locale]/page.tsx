@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { HOME_SECTIONS } from "@/app/sections";
 import { resolveRequestLocale } from "@/i18n/requestLocale";
 import { WHATSAPP_URL } from "@/app/constants";
 import { Header } from "./components/site/Header";
@@ -15,18 +16,6 @@ import { CriterioSection } from "./components/home/CriterioSection";
 import { TeamSection } from "./components/home/TeamSection";
 import { ContactSection } from "./components/home/ContactSection";
 
-const SECTION_NAMESPACES = [
-  "hero",
-  "integrations",
-  "services",
-  "projects",
-  "diagnostic",
-  "process",
-  "criterio",
-  "team",
-  "contact",
-] as const;
-
 /**
  * Home de Tonk: nueve secciones numeradas que se leen como el documento técnico
  * de la consultora. Todo es Server Component salvo el índice lateral, el CTA
@@ -38,15 +27,16 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const t = await getTranslations();
   const tContact = await getTranslations("contact");
 
-  // El índice necesita número y label de cada sección; los labels ya viven en
-  // los namespaces de i18n, así que los derivamos del mismo mensaje raíz.
-  const sideIndexItems = SECTION_NAMESPACES.map((namespace, index) => ({
-    number: String(index + 1).padStart(2, "0"),
-    label: t(`${namespace}.label`),
+  // Número, ancla y nombre del índice salen de HOME_SECTIONS: el número de la
+  // cabecera y el del riel no pueden separarse aunque se reordenen secciones.
+  const sideIndexItems = HOME_SECTIONS.map(({ namespace, id }) => ({
+    number: t(`${namespace}.number`),
+    label: t(`${namespace}.indexLabel`),
+    href: `#${id}`,
   }));
 
   return (
-    <>
+    <div className="home-shell">
       <Header />
       <SideIndex items={sideIndexItems} />
 
@@ -64,6 +54,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
       <Footer />
       <MobileStickyCta label={tContact("cta")} href={WHATSAPP_URL} />
-    </>
+    </div>
   );
 }

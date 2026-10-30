@@ -16,6 +16,7 @@
   "hero": {
     "number": "01",
     "label": "Enterprise integrations",
+    "indexLabel": "Overview",
     "sheet": "Sheet 01 / 09",
     "titleLine1": "Complex enterprise integrations,",
     "titleLine2": "and products built from scratch.",
@@ -41,6 +42,7 @@
   "integrations": {
     "number": "02",
     "label": "We integrate with",
+    "indexLabel": "Platforms",
     "meta": "8 platforms",
     "platforms": [
       "Dynamics 365",
@@ -56,6 +58,7 @@
   "services": {
     "number": "03",
     "label": "Services",
+    "indexLabel": "Services",
     "meta": "4 capabilities · 3 talent",
     "title": "Two lines of work, one technical standard.",
     "cta": "Let's talk about this",
@@ -119,6 +122,7 @@
   "projects": {
     "number": "04",
     "label": "Projects",
+    "indexLabel": "Projects",
     "meta": "2 products · greenfield",
     "title": "Greenfield projects.",
     "intro": "Architecture, backend, frontend and release, with the same team that maintains it afterwards.",
@@ -141,6 +145,7 @@
   "diagnostic": {
     "number": "05",
     "label": "Integration diagnostic",
+    "indexLabel": "Diagnostic",
     "meta": "Service / 2 weeks",
     "title": "Integration diagnostic.",
     "intro": "Before a line of code: what systems you have, how they talk today and where it breaks.",
@@ -176,6 +181,7 @@
   "process": {
     "number": "06",
     "label": "How we work",
+    "indexLabel": "Process",
     "meta": "4 stages · sequential",
     "title": "Four stages, one technical contact.",
     "steps": [
@@ -200,6 +206,7 @@
   "criterio": {
     "number": "07",
     "label": "Criteria",
+    "indexLabel": "Criteria",
     "meta": "4 principles · 4 pillars",
     "title": "Criteria that comes from running critical systems.",
     "evidenceLabel": "Where the team has operated",
@@ -212,8 +219,8 @@
       "Rootstrap"
     ],
     "principles": [
-      "Real seniority: we ran critical systems in production.",
-      "From complex architectures to products from scratch.",
+      "We ran critical systems in production.",
+      "From complex systems to new products.",
       "Clear process and direct communication.",
       "We find the right engineer for your project."
     ],
@@ -241,6 +248,7 @@
   "team": {
     "number": "08",
     "label": "Team",
+    "indexLabel": "Team",
     "meta": "3 co-founders",
     "title": "Tonk's founders run your project.",
     "linkedinLabel": "LinkedIn",
@@ -272,6 +280,7 @@
   "contact": {
     "number": "09",
     "label": "Contact",
+    "indexLabel": "Contact",
     "meta": "Buenos Aires · GMT−3",
     "title": "Have a project in mind?",
     "description": "Tell us what it's about, whether it's concrete or you're still exploring.",
