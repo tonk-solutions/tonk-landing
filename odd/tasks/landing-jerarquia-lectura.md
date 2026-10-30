@@ -18,26 +18,37 @@ agregan títulos nuevos.
 
 **S20 — Escala de cinco niveles.** `globals.css` declara `--t-claim` (≤ 38px), `--t-sub` (≤ 22px),
 `--t-body` (16px), `--t-detail` (14px) y `--t-micro` (11px). Los módulos de la home toman sus
-tamaños de la escala; ningún título de sección declara un tamaño propio. A 1440px:
-`h1 ≥ 1.6 × h2` y `h2 ≥ 2 × body`.
+tamaños de la escala y no declaran valores intermedios: a 1440px el texto de `main` solo puede medir
+68 (titular), 37,44 (claim), 21,6 (subtítulo), 16 (cuerpo), 14 (detalle) y 11 (micro), más los 15px
+de los controles. `h1 ≥ 1.6 × h2` y `h2 ≥ 2 × body`. La bajada del hero usa `--t-body` y el
+statement de Criterio usa `--t-sub`.
 
-**S21 — El acento no compite con el claim.** El número de sección se renderiza a 14px (hoy 22px).
-El acento queda para el titular, los CTA, el índice activo y la superficie del diagnóstico.
+**S21 — El acento no compite con el claim.** Los nueve números de sección —cabeceras, hero y barra
+de integraciones— se renderizan a 14px (hoy 22px en la barra) y en `--muted`, no en `--accent`. El
+acento queda para el titular, los CTA, el índice activo y el borde de la superficie del diagnóstico.
 
 **S22 — Presupuesto de prosa.** El copy de la home suma ≤ 450 palabras de prosa (hoy 738) y
 ningún bloque de prosa supera 22 palabras. Se conservan todos los claims distintos; se elimina la
 repetición y la explicación de lo obvio. El detalle comercial no se pierde: se mueve al panel del
 acordeón.
 
-**S23 — Detalle subordinado.** Ninguna sección muestra más de dos bloques de prosa a la vista.
-El detalle de los siete servicios vive solo en el panel abierto. "Criterio" deja de apilar cuatro
-jerarquías (intro + principios + misión + pilares): misión y pilares son el contenido, los
-principios pasan a una lista compacta de una línea.
+**S23 — Sin prosa duplicada.** Ninguna sección repite en su bajada lo que ya dice su claim o el
+subtítulo de su grupo: Servicios y Criterio no tienen bajada y el detalle de los siete servicios
+vive solo en el panel del acordeón. "Criterio" deja de apilar cuatro jerarquías: la misión es su
+statement, los pilares son sus dominios y los principios son una lista compacta de una línea por
+item a 1440px y a 375px (en mobile se oculta el contador para ganar ancho).
 
 **S24 — Medida de línea.** Ningún párrafo visible pasa de 50ch (hoy 62ch).
 
-**S25 — Orientación.** El índice lateral muestra el nombre de cada sección además del número, con
-9 items y `aria-current="true"` en el activo.
+**S25 — Orientación.** El índice lateral muestra el número y el nombre de cada sección **en reposo**,
+sin hover, con 9 items y `aria-current="true"` en el activo. Para que el riel no tape contenido, desde
+1280px la home reserva un gutter de 104–140px (`.home-shell`), y el nombre de índice es propio
+(`indexLabel`), no el kicker de la cabecera: "Integramos con" no es un nombre de sección.
+Número, ancla y nombre salen de una sola definición (`src/app/sections.ts`). En mobile, el menú
+desplegable mapea las nueve secciones, no cuatro.
+
+**S27 — e2e reproducible.** Playwright corre contra un build propio en un puerto propio (`:3111`) y
+nunca reutiliza un server ajeno: el resultado no depende de qué haya escuchando en la máquina.
 
 **S26 — Paridad i18n.** `es.json` y `en.json` mantienen paridad de claves y el mismo presupuesto de
 prosa en los dos idiomas.
@@ -109,3 +120,46 @@ diagnóstico, S9 un solo CTA) no se tocan.
   la orientación queda a cargo del CTA fijo y de los claims. `/[locale]/services/[slug]` sigue con
   Chakra y con el copy viejo: la segunda pasada de esa ruta no entró en este pedido.
 - **No verificado**: el aspecto en Safari/Firefox. Todo lo medido es Chromium headless.
+
+**L5** (ronda 1 de review: once hallazgos, todos aplicados):
+- **S21 (QA#1, review#1)**: `IntegrationsBar` conservaba `.num` en 22px y los nueve números seguían en
+  acento. Ahora los tres `.num` (cabecera, hero, barra) son 14px y `--muted`. El e2e nuevo mide los
+  **nueve** números: tamaño 14 y `color !== rgb(61,245,200)`.
+- **S25 (QA#2, review#2)**: los nombres estaban en `opacity: 0`. Ahora se leen en reposo: el riel toma
+  `width: var(--m)` y desde 1280px la home reserva un gutter (`clamp(116px, 8.5vw, 124px)` en
+  `.home-shell`) para que no tape contenido. Medido a 1440/1280/1920: `railRight` 114 < `contentLeft`
+  122 (y 108 < 116, 116 < 200), cero labels con `opacity != 1`, cero labels recortados. El e2e exige
+  opacidad 1, texto no vacío y no-solape, porque `toBeVisible()` de Playwright da por visible un
+  elemento con `opacity: 0`.
+- **Orientación mobile (QA#3)**: el menú desplegable mapeaba 4 secciones; ahora mapea las nueve
+  (`indexLinks` en `Header`, derivado de `HOME_SECTIONS`). e2e: 9 links.
+- **S20 (QA#4, review#6)**: `.mission p` declaraba `clamp(19px, 1.8vw, 24px)`, un sexto nivel. Pasa a
+  `var(--t-sub)`. Además la bajada del hero dejó de tener un valor propio (16,56px computados) y usa
+  `--t-body`. El e2e nuevo mide **todos** los tamaños de texto de `main` a 1440px y exige exactamente
+  `[11, 14, 16, 21.6, 37.44, 68]` (15px es el tamaño de los controles; las etiquetas del diagrama SVG
+  escalan con el viewBox y quedan fuera).
+- **e2e no reproducible (QA#5)**: `reuseExistingServer` contra `:3000` hacía que el resultado dependiera
+  de qué hubiera escuchando. Ahora `playwright.config.ts` levanta su propio build en `:3111` con
+  `reuseExistingServer: false` y `PLAYWRIGHT_BASE_URL` queda como escape explícito. La corrida de esta
+  ronda no reusa nada: `53 pasan, 1 salteado`.
+- **S23 (QA#6, review#3)**: dos cambios. (a) A 375px los principios de Criterio ocupaban dos líneas en
+  3 de 4: en mobile se oculta el contador y los cuatro textos se acortaron; medido con
+  `getClientRects` a 375px: `[1,1,1,1]`. (b) La regla "ninguna sección muestra más de dos bloques de
+  prosa" **se acota**: no describe la página entregada ni el pedido. Diagnóstico son seis filas de
+  especificación y Cómo trabajamos cuatro pasos; recortarlas habría borrado el contenido comercial. La
+  spec pasa a lo que sí se hizo y se verifica: no hay prosa duplicada y el detalle de servicios vive en
+  el acordeón.
+- **S25 contenido (review#4)**: el riel reusaba los kickers ("Integramos con", "Integraciones
+  enterprise"). Cada sección tiene ahora su `indexLabel`: Inicio, Plataformas, Servicios, Proyectos,
+  Diagnóstico, Proceso, Criterio, Equipo, Contacto. El 02 usa "Plataformas" porque "Integraciones" no
+  entra en el gutter a 11px mono sin recortarse.
+- **Una sola definición (review#5)**: `src/app/sections.ts` (`HOME_SECTIONS`) define namespace + ancla;
+  el número sale de `messages.*.number`. Lo consumen `page.tsx` (riel) y `Header` (menú mobile), así
+  que reordenar o renumerar una sección no puede desincronizar el riel del ancla.
+- **Referencia de diseño (review#8)**: `design/landing-documento-ingenieria/index.html` queda marcado
+  como histórico en un comentario de cabecera, con la escala vigente y el puntero a `globals.css`.
+- **Verificación de la ronda**: `npx tsc --noEmit` 0 · `npm run lint` 0 · `npx vitest run` 28/28 ·
+  `npm run build` 23 rutas · `npx playwright test` (build propio en :3111) **53 pasan, 1 salteado**.
+- **Efecto lateral aceptado y medido**: el titular del hero sigue en 3 líneas con el gutter nuevo
+  (1440: alto 192px / 63,92px de interlineado; 1280: 180/60,16) y la barra de integraciones envuelve en
+  dos líneas a 1440, igual que antes.
