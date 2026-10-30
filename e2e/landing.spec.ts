@@ -73,6 +73,78 @@ test.describe("estructura y contenido", () => {
   });
 });
 
+test.describe("jerarquía de lectura", () => {
+  test("las fuentes Geist resuelven: la página no cae a una serif del sistema", async ({ page }) => {
+    await page.goto("/es");
+    await page.evaluate(() => document.fonts.ready);
+
+    const fonts = await page.evaluate(() => {
+      const family = (selector: string) =>
+        getComputedStyle(document.querySelector(selector)!).fontFamily.split(",")[0].trim();
+
+      return { h1: family("h1"), monoLabel: family("#s02 h2 span:last-child") };
+    });
+
+    expect(fonts.h1).toContain("Geist");
+    expect(fonts.monoLabel).toContain("Geist Mono");
+  });
+
+  test("la escalera tipográfica tiene escalón: h1 ≥ 1.6 × h2 y h2 ≥ 2 × body", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/es");
+
+    const scale = await page.evaluate(() => {
+      const size = (element: Element) => parseFloat(getComputedStyle(element).fontSize);
+      // El número de sección se busca por su texto: los nombres de clase están hasheados
+      // y el kicker envuelve al número en dos spans.
+      const number = [...document.querySelectorAll("#s03 header span")].find(
+        (span) => span.textContent?.trim() === "03",
+      )!;
+
+      return {
+        h1: size(document.querySelector("h1")!),
+        h2: size(document.querySelector("#s03 h2")!),
+        body: size(document.querySelector("#s05 dd")!),
+        sectionNumber: size(number),
+      };
+    });
+
+    expect(scale.h1 / scale.h2).toBeGreaterThanOrEqual(1.6);
+    expect(scale.h2 / scale.body).toBeGreaterThanOrEqual(2);
+    // El acento del número no puede ser más grande que el claim de su sección.
+    expect(scale.sectionNumber).toBeLessThanOrEqual(14);
+  });
+
+  test("cada claim de sección entra en dos líneas a 1440px", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/es");
+    await page.evaluate(() => document.fonts.ready);
+
+    const lines = await page.evaluate(() => {
+      const result: Record<string, number> = {};
+      for (const id of ["s03", "s04", "s05", "s06", "s07", "s08", "s09"]) {
+        const heading = document.querySelector(`#${id} h2`)!;
+        const range = document.createRange();
+        range.selectNodeContents(heading);
+        result[id] = range.getClientRects().length;
+      }
+      return result;
+    });
+
+    for (const [id, count] of Object.entries(lines)) expect(count, id).toBeLessThanOrEqual(2);
+  });
+
+  test("el índice lateral nombra las secciones además de numerarlas", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/es");
+
+    const index = page.getByRole("navigation", { name: "Índice de secciones" });
+
+    await expect(index.locator("a").nth(2)).toContainText("Servicios");
+    await expect(index.locator("a").nth(2)).toContainText("03");
+  });
+});
+
 test.describe("marca", () => {
   test("el header muestra el isotipo y el wordmark sin SOLUTIONS", async ({ page }) => {
     await page.goto("/es");
