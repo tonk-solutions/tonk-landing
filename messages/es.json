@@ -19,7 +19,7 @@
     "sheet": "Hoja 01 / 09",
     "titleLine1": "Integraciones enterprise complejas,",
     "titleLine2": "y producto desde cero.",
-    "lede": "Conectamos los sistemas que tu operación ya tiene —ARCA, ERPs, pagos— y construimos desde cero lo que todavía no existe. Hablás directo con el ingeniero.",
+    "lede": "Integramos lo que ya tenés y construimos lo que falta. Hablás directo con el ingeniero.",
     "ctaPrimary": "Hablemos de tu integración",
     "ctaSecondary": "Ver cómo trabajamos",
     "metaLocation": "Buenos Aires, AR",
@@ -57,33 +57,32 @@
     "number": "03",
     "label": "Servicios",
     "meta": "4 capacidades · 3 de talent",
-    "title": "Dos líneas de trabajo, un mismo estándar técnico.",
-    "intro": "Especialidad: integraciones enterprise. También desarrollamos producto y arquitectura de punta a punta.",
+    "title": "Dos líneas de trabajo, un estándar técnico.",
     "cta": "Hablemos de esto",
     "viewDetails": "Ver página completa",
     "craft": {
       "name": "Craft",
       "label": "Grupo A / Craft",
-      "subtitle": "Especialidad: integraciones enterprise. También desarrollamos producto y arquitectura de punta a punta.",
+      "subtitle": "Nuestra especialidad. Además, producto y arquitectura de punta a punta.",
       "services": [
         {
           "title": "Integraciones y Sistemas Enterprise",
-          "description": "Conectamos sistemas que no hablan entre sí: ERPs, APIs de terceros, pasarelas de pago, organismos fiscales. Si tiene complejidad de integración, es nuestro terreno.",
+          "description": "Conectamos lo que no se habla: ERPs, APIs de terceros, pagos, organismos fiscales.",
           "icon": "FileText"
         },
         {
           "title": "Productos desde Cero (Greenfield)",
-          "description": "Construimos plataformas, aplicaciones y productos digitales a medida — desde un ecommerce con integraciones custom hasta sistemas internos complejos. Nos adaptamos al stack y al contexto del proyecto. Los proyectos de la sección 04 salieron de acá.",
+          "description": "Plataformas, apps y sistemas internos a medida. Los proyectos de la sección 04 salieron de acá.",
           "icon": "Code"
         },
         {
           "title": "Arquitectura y Sistemas Distribuidos",
-          "description": "Diseñamos arquitecturas que escalan: microservicios, cloud-native, migraciones de monolitos. Especialmente útil cuando el sistema actual se está convirtiendo en un cuello de botella.",
+          "description": "Microservicios, cloud-native y migraciones de monolitos cuando el sistema se vuelve cuello de botella.",
           "icon": "Cloud"
         },
         {
           "title": "IA Aplicada",
-          "description": "Incorporamos inteligencia artificial donde tiene sentido real: automatización de procesos, análisis de datos, asistentes internos, optimización operativa, con resultados concretos.",
+          "description": "Automatización, análisis de datos y asistentes internos donde hay resultado concreto.",
           "icon": "BrainCircuit"
         }
       ]
@@ -91,21 +90,21 @@
     "talent": {
       "name": "Talent",
       "label": "Grupo B / Talent",
-      "subtitle": "Somos ingenieros contratando ingenieros. Sabemos exactamente qué buscar y cómo evaluarlo.",
+      "subtitle": "Ingenieros contratando ingenieros: sabemos qué buscar y cómo evaluarlo.",
       "services": [
         {
           "title": "Búsqueda y Selección Técnica",
-          "description": "Identificamos ingenieros que realmente encajan con tu equipo — en lo técnico y en lo cultural. Evaluamos nosotros porque sabemos lo que significa trabajar en producción con esos perfiles.",
+          "description": "Evaluamos nosotros porque trabajamos en producción con esos perfiles.",
           "icon": "Users"
         },
         {
           "title": "Proceso Apoyado en IA",
-          "description": "Usamos inteligencia artificial para acelerar la búsqueda, analizar perfiles y predecir compatibilidad técnica y cultural. Llegamos más rápido a los candidatos correctos sin bajar el estándar de evaluación.",
+          "description": "Aceleramos la búsqueda y el filtro técnico sin bajar el estándar de evaluación.",
           "icon": "Sparkles"
         },
         {
           "title": "Onboarding e Integración",
-          "description": "Acompañamos los primeros meses del ingeniero en tu equipo. Hacemos seguimiento, resolvemos fricciones y nos aseguramos de que la incorporación sea exitosa.",
+          "description": "Acompañamos los primeros meses y destrabamos la fricción de la incorporación.",
           "icon": "UserCheck"
         }
       ]
@@ -122,19 +121,19 @@
     "label": "Proyectos",
     "meta": "2 productos · greenfield",
     "title": "Proyectos greenfield.",
-    "intro": "También construimos producto desde cero: arquitectura, backend, frontend y puesta en producción, con el mismo equipo que después lo mantiene.",
+    "intro": "Arquitectura, backend, frontend y producción, con el mismo equipo que después lo mantiene.",
     "scope": "Producto completo",
     "items": [
       {
         "name": "Konekta",
         "type": "App mobile · iOS + Android",
-        "description": "Directorio de profesionales de oficio para clientes e inquilinos de una inmobiliaria: plomeros, electricistas y gasistas de confianza, con reseñas y calificaciones. Le bajó a la inmobiliaria la carga de consultas operativas y le agregó un canal de valor propio.",
+        "description": "Directorio de oficios para inquilinos y clientes de una inmobiliaria, con reseñas. Menos consultas operativas, un canal propio.",
         "stack": "React Native · Expo · Firebase Auth · PostgreSQL · Data Connect"
       },
       {
         "name": "Clank",
         "type": "Plataforma web · Créditos",
-        "description": "Plataforma de gestión de créditos que reemplazó la operatoria manual en Excel: alta de créditos, cobranzas mensuales y conciliación de pagos, con roles para administración, proveedores externos y cliente final.",
+        "description": "Reemplazó la operatoria en Excel: alta de créditos, cobranzas y conciliación, con roles por tipo de usuario.",
         "stack": "NestJS · Prisma · PostgreSQL · Next.js · Playwright"
       }
     ]
@@ -144,13 +143,13 @@
     "label": "Diagnóstico de integración",
     "meta": "Servicio / 2 semanas",
     "title": "Diagnóstico de integración.",
-    "intro": "Antes de escribir una línea de código, mapeamos qué sistemas tenés, cómo se hablan hoy y dónde se va a romper. Es el único punto de partida honesto para una integración.",
+    "intro": "Antes de una línea de código: qué sistemas tenés, cómo se hablan y dónde se rompe.",
     "cta": "Pedir diagnóstico",
     "note": "Respuesta en 24 h",
     "rows": [
       {
         "label": "Alcance",
-        "value": "Relevamiento de los sistemas que hoy no se hablan: mapa de integraciones actual, flujos de datos y puntos únicos de falla. Típicamente entre 4 y 8 sistemas."
+        "value": "Mapa de integraciones actual, flujos de datos y puntos únicos de falla. Entre 4 y 8 sistemas."
       },
       {
         "label": "Duración",
@@ -158,19 +157,19 @@
       },
       {
         "label": "Presupuesto",
-        "value": "Cerrado antes de empezar, sin horas sorpresa. Si después avanzás con la implementación, se descuenta del proyecto."
+        "value": "Cerrado antes de empezar. Si después avanzás con la implementación, se descuenta del proyecto."
       },
       {
         "label": "Entregable",
-        "value": "Documento técnico y sesión de presentación: mapa de integración, riesgos priorizados y plan de implementación por etapas con estimaciones."
+        "value": "Documento técnico y sesión de presentación: mapa, riesgos priorizados y plan por etapas."
       },
       {
         "label": "Pruebas",
-        "value": "Casos de prueba por flujo crítico y criterios de aceptación acordados por escrito antes de codear."
+        "value": "Casos de prueba por flujo crítico y criterios de aceptación acordados por escrito."
       },
       {
         "label": "Plan de mantenimiento",
-        "value": "Monitoreo, alertas, versionado de contratos de API y traspaso documentado para que tu equipo pueda operarlo."
+        "value": "Monitoreo, alertas, versionado de contratos de API y traspaso documentado."
       }
     ]
   },
@@ -178,23 +177,23 @@
     "number": "06",
     "label": "Cómo trabajamos",
     "meta": "4 etapas · secuenciales",
-    "title": "Cuatro etapas, un solo interlocutor técnico.",
+    "title": "Cuatro etapas, un interlocutor técnico.",
     "steps": [
       {
         "title": "Diagnóstico",
-        "description": "Revisamos cómo se comunican (o no se comunican) tus sistemas actuales."
+        "description": "Revisamos cómo se comunican tus sistemas actuales."
       },
       {
         "title": "Arquitectura",
-        "description": "Definimos el modelo de integración, los flujos de datos y los puntos de falla."
+        "description": "Definimos el modelo de integración, los flujos y los puntos de falla."
       },
       {
         "title": "Implementación",
-        "description": "Desarrollamos, probamos y desplegamos la conexión en staging y producción."
+        "description": "Desarrollamos, probamos y desplegamos en staging y producción."
       },
       {
         "title": "Soporte",
-        "description": "Monitoreo inicial y documentación para que tu equipo pueda operar solo."
+        "description": "Monitoreo inicial y documentación para que tu equipo opere solo."
       }
     ]
   },
@@ -212,27 +211,26 @@
       "Endava",
       "Rootstrap"
     ],
-    "intro": "Somos ingenieros senior con experiencia en empresas como BBVA, Santander, Accenture, Endava y Rootstrap. Nos juntamos para armar algo propio: una consultora ágil donde el cliente habla directo con quien resuelve el problema.",
     "principles": [
-      "Seniority real: venimos de operar sistemas críticos en producción.",
-      "Resolvemos desde arquitecturas complejas hasta productos que arrancan de cero.",
-      "Proceso de trabajo claro, comunicación directa, sin intermediarios.",
-      "Te ayudamos a encontrar el recurso ideal para tu proyecto."
+      "Seniority real: operamos sistemas críticos en producción.",
+      "De arquitecturas complejas a productos desde cero.",
+      "Proceso claro y comunicación directa.",
+      "Encontramos el recurso ideal para tu proyecto."
     ],
     "missionLabel": "Misión / Tonk Solutions",
-    "mission": "Ser el equipo de ingeniería que nuestros clientes necesitan, con el criterio para tomar buenas decisiones técnicas, la experiencia para ejecutarlas y la responsabilidad de llevarlas hasta el final.",
+    "mission": "Ser el equipo de ingeniería que nuestros clientes necesitan: criterio para decidir, experiencia para ejecutar y responsabilidad para terminar.",
     "pillars": [
       {
         "title": "Cloud Native",
-        "description": "Plataformas en contenedores, observables y preparadas para escalar."
+        "description": "Contenedores, observabilidad y escala."
       },
       {
         "title": "Core Banking",
-        "description": "Sistemas transaccionales donde no hay margen de error."
+        "description": "Transaccionales donde no hay margen de error."
       },
       {
         "title": "Integraciones Enterprise",
-        "description": "ERPs, organismos fiscales y pagos hablando el mismo idioma."
+        "description": "ERPs, organismos fiscales y pagos en el mismo idioma."
       },
       {
         "title": "IA Aplicada",
@@ -244,28 +242,28 @@
     "number": "08",
     "label": "Equipo",
     "meta": "3 co-founders",
-    "title": "Quienes fundaron Tonk son quienes atienden tu proyecto.",
+    "title": "Los que fundaron Tonk atienden tu proyecto.",
     "linkedinLabel": "LinkedIn",
     "newTabHint": "abre en una pestaña nueva",
     "members": [
       {
         "name": "Matías Castillo",
-        "role": "Co-Founder · Financial Systems Lead",
-        "bio": "App Owner en BBVA, a cargo de sistemas financieros críticos con millones de transacciones diarias. Entiende lo que significa responsabilidad técnica real en entornos donde no hay margen de error.",
+        "role": "Cofundador · Sistemas Financieros",
+        "bio": "App Owner en BBVA. Sistemas financieros con millones de transacciones diarias.",
         "initials": "MC",
         "linkedin": "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/"
       },
       {
         "name": "Nicolás Gómez",
-        "role": "Co-Founder · Core Banking",
-        "bio": "Trayectoria en Santander e ICBC desarrollando y evolucionando productos bancarios core y sistemas transaccionales de alta criticidad. Especialista en arquitecturas que no pueden fallar.",
+        "role": "Cofundador · Core Banking",
+        "bio": "Santander e ICBC. Productos bancarios core y sistemas transaccionales críticos.",
         "initials": "NG",
         "linkedin": "https://www.linkedin.com/in/nicolas-gomez-467b26141/"
       },
       {
         "name": "Rodrigo Hernandez",
-        "role": "Co-Founder · Platform Engineering",
-        "bio": "Experiencia construyendo plataformas cloud-native escalables. Referente en arquitecturas de microservicios y soluciones distribuidas.",
+        "role": "Cofundador · Plataforma",
+        "bio": "Plataformas cloud-native escalables y arquitecturas de microservicios distribuidas.",
         "initials": "RH",
         "linkedin": "https://www.linkedin.com/in/rodrigoenzohernandez/"
       }
@@ -276,7 +274,7 @@
     "label": "Contacto",
     "meta": "Buenos Aires · GMT−3",
     "title": "¿Tenés un proyecto en mente?",
-    "description": "Ya sea que tengas algo concreto para presupuestar o estés explorando opciones, contanos de qué se trata.",
+    "description": "Contanos de qué se trata, tengas algo concreto o estés explorando.",
     "cta": "Escribinos por WhatsApp",
     "rows": [
       {

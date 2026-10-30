@@ -30,7 +30,6 @@ export async function ServicesSection() {
           meta={t("meta")}
           title={t("title")}
           titleId="t03"
-          intro={t("intro")}
         />
         <ServicesAccordion
           craft={craft}

@@ -9,6 +9,11 @@ interface Pillar {
   description: string;
 }
 
+/**
+ * "Criterio" reunía cuatro jerarquías en una sección (bajada, principios, misión y
+ * pilares). Quedan dos: la misión como statement de la sección y los pilares como
+ * dominios. Los principios bajan a lista compacta de una línea (spec S23).
+ */
 export async function CriterioSection() {
   const t = await getTranslations("criterio");
   const companies = t.raw("companies") as string[];
@@ -35,27 +40,24 @@ export async function CriterioSection() {
         </div>
         <Container grid padded={false} className={styles.crit}>
           <div className={styles.left}>
-            <p className={styles.intro}>{t("intro")}</p>
+            <blockquote className={styles.mission}>
+              <p>{t("mission")}</p>
+              <footer>{t("missionLabel")}</footer>
+            </blockquote>
             <ol className={styles.principles}>
               {principles.map((principle) => (
                 <li key={principle}>{principle}</li>
               ))}
             </ol>
           </div>
-          <div className={styles.right}>
-            <blockquote className={styles.mission}>
-              <p>{t("mission")}</p>
-              <footer>{t("missionLabel")}</footer>
-            </blockquote>
-            <dl className={styles.pillars}>
-              {pillars.map((pillar) => (
-                <div key={pillar.title}>
-                  <dt>{pillar.title}</dt>
-                  <dd>{pillar.description}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+          <dl className={styles.pillars}>
+            {pillars.map((pillar) => (
+              <div key={pillar.title}>
+                <dt>{pillar.title}</dt>
+                <dd>{pillar.description}</dd>
+              </div>
+            ))}
+          </dl>
         </Container>
       </Container>
     </Section>

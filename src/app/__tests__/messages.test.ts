@@ -57,6 +57,93 @@ describe("contenido del rediseño", () => {
   });
 });
 
+/**
+ * El feedback que originó esta pasada fue "tiene mucho texto" (spec S22). El presupuesto
+ * es el que evita que el copy vuelva a crecer bloque por bloque.
+ */
+describe("presupuesto de prosa de la home", () => {
+  const PROSE_KEYS = new Set([
+    "lede",
+    "intro",
+    "subtitle",
+    "description",
+    "bio",
+    "value",
+    "mission",
+    "principles",
+    "closing",
+  ]);
+  const HOME = ["hero", "projects", "diagnostic", "process", "criterio", "team", "contact"];
+
+  function collect(value: unknown, key: string, out: string[]) {
+    if (Array.isArray(value)) {
+      value.forEach((item) => collect(item, key, out));
+      return out;
+    }
+    if (value && typeof value === "object") {
+      for (const [childKey, child] of Object.entries(value as Json)) {
+        collect(child, childKey, out);
+      }
+      return out;
+    }
+    if (typeof value === "string" && PROSE_KEYS.has(key)) out.push(value);
+    return out;
+  }
+
+  function homeProse(messages: typeof es) {
+    const prose: string[] = [];
+    for (const namespace of HOME) collect((messages as unknown as Json)[namespace], namespace, prose);
+    // Del acordeón se cuentan solo los dos grupos de la home, no el detalle de servicio.
+    collect(messages.services.craft, "craft", prose);
+    collect(messages.services.talent, "talent", prose);
+    return prose;
+  }
+
+  const words = (text: string) => text.trim().split(/\s+/).filter(Boolean).length;
+
+  it.each([
+    ["es", es],
+    ["en", en as typeof es],
+  ] as const)("no pasa de 450 palabras de prosa en %s", (_locale, messages) => {
+    const total = homeProse(messages).reduce((sum, text) => sum + words(text), 0);
+    expect(total).toBeLessThanOrEqual(450);
+  });
+
+  it.each([
+    ["es", es],
+    ["en", en as typeof es],
+  ] as const)("ningún bloque de prosa pasa de 22 palabras en %s", (_locale, messages) => {
+    const long = homeProse(messages).filter((text) => words(text) > 22);
+    expect(long).toEqual([]);
+  });
+
+  it("cada sección tiene un claim de 7 palabras o menos", () => {
+    const titles = [
+      es.services.title,
+      es.projects.title,
+      es.diagnostic.title,
+      es.process.title,
+      es.criterio.title,
+      es.team.title,
+      es.contact.title,
+      en.services.title,
+      en.projects.title,
+      en.diagnostic.title,
+      en.process.title,
+      en.criterio.title,
+      en.team.title,
+      en.contact.title,
+    ];
+
+    for (const title of titles) expect(words(title)).toBeLessThanOrEqual(7);
+  });
+
+  it("la bajada del hero no pasa de 18 palabras", () => {
+    expect(words(es.hero.lede)).toBeLessThanOrEqual(18);
+    expect(words(en.hero.lede)).toBeLessThanOrEqual(18);
+  });
+});
+
 describe("specs del titular y del diagnóstico", () => {
   it("el titular tiene las dos líneas exactas", () => {
     expect(es.hero.titleLine1).toBe("Integraciones enterprise complejas,");
