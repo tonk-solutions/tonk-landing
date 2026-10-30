@@ -1,6 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { resolveRequestLocale } from "@/i18n/requestLocale";
 import { WHATSAPP_URL } from "@/app/constants";
+import { buildHomePageGraph } from "@/app/seo/structuredData";
+import { StructuredData } from "@/app/seo/StructuredData";
 import { Header } from "./components/site/Header";
 import { Footer } from "./components/site/Footer";
 import { SideIndex } from "./components/home/SideIndex";
@@ -23,12 +25,22 @@ const SECTION_NUMBERS = ["01", "02", "03", "04", "05", "06", "07", "08", "09"];
  * fijo mobile, el menú y el selector de idioma.
  */
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
-  resolveRequestLocale((await params).locale);
+  const locale = resolveRequestLocale((await params).locale);
 
   const tContact = await getTranslations("contact");
+  const tSeo = await getTranslations({ locale, namespace: "seo" });
+  const tSchema = await getTranslations({ locale, namespace: "schema" });
+
+  const webPageGraph = buildHomePageGraph({
+    locale,
+    name: tSeo("titleDefault"),
+    description: tSeo("description"),
+    inLanguage: tSchema("inLanguage"),
+  });
 
   return (
     <>
+      <StructuredData id="structured-data-home" data={webPageGraph} />
       <Header />
       <SideIndex numbers={SECTION_NUMBERS} />
 
