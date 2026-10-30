@@ -85,6 +85,11 @@ npx playwright test   # head y artefactos realmente servidos (e2e/seo-llmo.spec.
 
 El build usa el optimizador de `next/image` (Sharp) para avatares y assets locales. Si despliegas en un entorno sin runtime de Node para optimización (p. ej. export estático puro), puede ser necesario volver a `images: { unoptimized: true }` en `next.config.js` o servir tamaños fijos vía CDN.
 
+## Reglas del repositorio
+
+La autoría de los commits y PRs que llegan a `main` está fijada en
+[`AGENTS.md`](./AGENTS.md): va a nombre de Rodrigo Hernandez por el deploy de Netlify.
+
 ## Contacto
 
 Para más información, contactar a Tonk Solutions en:
