@@ -95,24 +95,65 @@ test.describe("jerarquía de lectura", () => {
 
     const scale = await page.evaluate(() => {
       const size = (element: Element) => parseFloat(getComputedStyle(element).fontSize);
-      // El número de sección se busca por su texto: los nombres de clase están hasheados
-      // y el kicker envuelve al número en dos spans.
-      const number = [...document.querySelectorAll("#s03 header span")].find(
-        (span) => span.textContent?.trim() === "03",
-      )!;
 
       return {
         h1: size(document.querySelector("h1")!),
         h2: size(document.querySelector("#s03 h2")!),
         body: size(document.querySelector("#s05 dd")!),
-        sectionNumber: size(number),
       };
     });
 
     expect(scale.h1 / scale.h2).toBeGreaterThanOrEqual(1.6);
     expect(scale.h2 / scale.body).toBeGreaterThanOrEqual(2);
-    // El acento del número no puede ser más grande que el claim de su sección.
-    expect(scale.sectionNumber).toBeLessThanOrEqual(14);
+  });
+
+  test("los nueve números de sección miden 14px y no usan el acento", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/es");
+
+    const numbers = await page.evaluate(() => {
+      const accent = "rgb(61, 245, 200)";
+
+      return ["01", "02", "03", "04", "05", "06", "07", "08", "09"].map((label, index) => {
+        const section = document.getElementById(`s${String(index + 1).padStart(2, "0")}`)!;
+        // Se busca por su texto: los nombres de clase están hasheados y el kicker
+        // envuelve al número en dos spans. El primero en orden de documento es el
+        // de la cabecera de la sección.
+        const number = [...section.querySelectorAll("span")].find(
+          (span) => span.textContent?.trim() === label,
+        )!;
+        const style = getComputedStyle(number);
+
+        return { label, size: parseFloat(style.fontSize), accent: style.color === accent };
+      });
+    });
+
+    for (const number of numbers) {
+      expect(number.size, `sección ${number.label}`).toBe(14);
+      expect(number.accent, `sección ${number.label}`).toBe(false);
+    }
+  });
+
+  test("la home no tiene tamaños de texto fuera de la escalera", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/es");
+    await page.evaluate(() => document.fonts.ready);
+
+    const sizes = await page.evaluate(() => {
+      const found = new Set<number>();
+      for (const element of document.querySelectorAll("main *")) {
+        if (!element.textContent?.trim()) continue;
+        // Las etiquetas del diagrama son SVG: escalan con el viewBox y no son
+        // texto de lectura.
+        if (element.closest("svg")) continue;
+        found.add(Math.round(parseFloat(getComputedStyle(element).fontSize) * 100) / 100);
+      }
+      // 15px es el tamaño de los controles (CTA y enlaces), no de un nivel de lectura.
+      return [...found].filter((size) => size !== 15).sort((a, b) => a - b);
+    });
+
+    // micro, detalle, cuerpo, subtítulo, claim y titular.
+    expect(sizes).toEqual([11, 14, 16, 21.6, 37.44, 68]);
   });
 
   test("cada claim de sección entra en dos líneas a 1440px", async ({ page }) => {
@@ -134,7 +175,7 @@ test.describe("jerarquía de lectura", () => {
     for (const [id, count] of Object.entries(lines)) expect(count, id).toBeLessThanOrEqual(2);
   });
 
-  test("el índice lateral nombra las secciones además de numerarlas", async ({ page }) => {
+  test("el índice lateral nombra las secciones y los nombres se leen sin hover", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/es");
 
@@ -142,6 +183,27 @@ test.describe("jerarquía de lectura", () => {
 
     await expect(index.locator("a").nth(2)).toContainText("Servicios");
     await expect(index.locator("a").nth(2)).toContainText("03");
+
+    const rail = await page.evaluate(() => {
+      const items = [...document.querySelectorAll('nav[aria-label="Índice de secciones"] a')];
+      const label = (anchor: Element) => anchor.querySelector("span:last-child")!;
+      const contentLeft = document.querySelector("main section h1, main section h2")!.getBoundingClientRect()
+        .left;
+
+      return {
+        count: items.length,
+        // Playwright considera visible a un elemento con opacity 0, así que la
+        // opacidad se mide a mano.
+        hidden: items.filter((anchor) => getComputedStyle(label(anchor)).opacity !== "1").length,
+        empty: items.filter((anchor) => !label(anchor).textContent?.trim()).length,
+        overlap: Math.max(...items.map((anchor) => anchor.getBoundingClientRect().right)) - contentLeft,
+      };
+    });
+
+    expect(rail.count).toBe(9);
+    expect(rail.hidden).toBe(0);
+    expect(rail.empty).toBe(0);
+    expect(rail.overlap).toBeLessThan(0);
   });
 });
 
@@ -174,6 +236,15 @@ test.describe("navegación e interacción", () => {
     await expect(index).toBeVisible();
     await expect(index.locator("a")).toHaveCount(9);
     await expect(index.locator('a[aria-current="true"]')).toHaveCount(1);
+  });
+
+  test("el menú mobile mapea las nueve secciones", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/es");
+
+    await page.locator('button[aria-controls="main-nav-mobile"]').click();
+    await expect(page.locator("#main-nav-mobile a")).toHaveCount(9);
+    await expect(page.locator("#main-nav-mobile a").nth(1)).toContainText("Plataformas");
   });
 
   test("el índice lateral se oculta en mobile", async ({ page }) => {
