@@ -19,7 +19,7 @@
     "sheet": "Sheet 01 / 09",
     "titleLine1": "Complex enterprise integrations,",
     "titleLine2": "and products built from scratch.",
-    "lede": "We connect the systems your operation already runs —ARCA, ERPs, payments— and build from scratch whatever doesn't exist yet. You talk directly to the engineer.",
+    "lede": "We connect what you already run and build what's missing. You talk directly to the engineer.",
     "ctaPrimary": "Let's talk about your integration",
     "ctaSecondary": "See how we work",
     "metaLocation": "Buenos Aires, AR",
@@ -61,32 +61,31 @@
     "label": "Services",
     "meta": "4 capabilities · 3 talent",
     "title": "Two lines of work, one technical standard.",
-    "intro": "Our specialty is enterprise integration. Around it we also build product and design architecture end to end.",
     "cta": "Let's talk about this",
     "viewDetails": "View full page",
     "craft": {
       "name": "Craft",
       "label": "Group A / Craft",
-      "subtitle": "Our specialty is enterprise integration. Around it we also build product and design architecture end to end.",
+      "subtitle": "Our specialty. Product and architecture end to end as well.",
       "services": [
         {
           "title": "Enterprise Integrations and Systems",
-          "description": "We connect systems that don't talk to each other: ERPs, third-party APIs, payment gateways, tax authorities. If it has integration complexity, it's our ground.",
+          "description": "We connect what doesn't talk: ERPs, third-party APIs, payments, tax authorities.",
           "icon": "FileText"
         },
         {
           "title": "Products from Scratch (Greenfield)",
-          "description": "We build platforms, applications and custom digital products — from an ecommerce with custom integrations to complex internal systems. We adapt to the project's stack and context. The projects in section 04 came from here.",
+          "description": "Platforms, apps and internal systems built to fit. The projects in section 04 came from here.",
           "icon": "Code"
         },
         {
           "title": "Architecture and Distributed Systems",
-          "description": "We design architectures that scale: microservices, cloud-native on AWS, Google Cloud or Firebase, monolith migrations. Especially useful when the current system is becoming a bottleneck.",
+          "description": "Microservices, cloud-native on AWS, Google Cloud or Firebase. And monolith migrations.",
           "icon": "Cloud"
         },
         {
           "title": "Applied AI",
-          "description": "We bring artificial intelligence where it makes real sense: process automation, data analysis, internal assistants, operational optimization, with concrete results.",
+          "description": "Automation, data analysis and internal assistants where there's a concrete result.",
           "icon": "BrainCircuit"
         }
       ]
@@ -94,21 +93,21 @@
     "talent": {
       "name": "Talent",
       "label": "Group B / Talent",
-      "subtitle": "We are engineers hiring engineers. We know exactly what to look for and how to evaluate it.",
+      "subtitle": "Engineers hiring engineers: we know what to look for and how to evaluate it.",
       "services": [
         {
           "title": "Technical Search and Selection",
-          "description": "We find engineers who genuinely fit your team — technically and culturally. We run the evaluation because we know what it means to work in production with those profiles.",
+          "description": "We run the evaluation because we work in production with those profiles.",
           "icon": "Users"
         },
         {
           "title": "AI-Assisted Process",
-          "description": "We use artificial intelligence to speed up the search, analyze profiles and predict technical and cultural fit. We reach the right candidates faster without lowering the evaluation bar.",
+          "description": "We speed up search and technical screening without lowering the evaluation bar.",
           "icon": "Sparkles"
         },
         {
           "title": "Onboarding and Integration",
-          "description": "We support the engineer's first months on your team. We follow up, resolve friction and make sure the onboarding succeeds.",
+          "description": "We support the first months and clear the friction of onboarding.",
           "icon": "UserCheck"
         }
       ]
@@ -125,19 +124,19 @@
     "label": "Projects",
     "meta": "2 products · greenfield",
     "title": "Greenfield projects.",
-    "intro": "We also build product from scratch: architecture, backend, frontend and production release, with the same team that maintains it afterwards.",
+    "intro": "Architecture, backend, frontend and release, with the same team that maintains it afterwards.",
     "scope": "Full product",
     "items": [
       {
         "name": "Konekta",
         "type": "Mobile app · iOS + Android",
-        "description": "A directory of tradespeople for a real estate agency's clients and tenants: trusted plumbers, electricians and gas fitters, with reviews and ratings. It reduced the agency's operational support load and gave it a value channel of its own.",
+        "description": "Trades directory for a real estate agency's tenants and clients, with reviews. Fewer support requests, a channel of its own.",
         "stack": "React Native · Expo · Firebase Auth · PostgreSQL · Data Connect"
       },
       {
         "name": "Clank",
         "type": "Web platform · Credit",
-        "description": "Credit management platform that replaced manual Excel operations: loan origination, monthly collections and payment reconciliation, with roles for administration, external providers and end customers.",
+        "description": "Replaced Excel operations: loan origination, monthly collections and reconciliation, with roles per user type.",
         "stack": "NestJS · Prisma · PostgreSQL · Next.js · Playwright"
       }
     ]
@@ -147,33 +146,33 @@
     "label": "Integration diagnostic",
     "meta": "Service / 2 weeks",
     "title": "Integration diagnostic.",
-    "intro": "Before writing a line of code, we map which systems you have, how they talk today and where it will break. It's the only honest starting point for an integration.",
+    "intro": "Before a line of code: what systems you have, how they talk today and where it breaks.",
     "cta": "Request a diagnostic",
     "note": "Reply within 24 h",
     "rows": [
       {
         "label": "Scope",
-        "value": "A survey of the systems that don't talk today: current integration map, data flows and single points of failure. Typically 4 to 8 systems."
+        "value": "Current integration map, data flows and single points of failure. Usually 4 to 8 systems."
       },
       {
         "label": "Duration",
-        "value": "Two weeks from kickoff, with one survey session per critical system."
+        "value": "Two weeks from kickoff, with one discovery session per critical system."
       },
       {
         "label": "Budget",
-        "value": "Fixed before we start, no surprise hours. If you move on to implementation, it's deducted from the project."
+        "value": "Fixed before we start. If you move on to implementation, it's deducted."
       },
       {
         "label": "Deliverable",
-        "value": "Technical document and presentation session: integration map, prioritized risks and a phased implementation plan with estimates."
+        "value": "Technical document and presentation: map, prioritized risks and a staged plan."
       },
       {
         "label": "Testing",
-        "value": "Test cases per critical flow and acceptance criteria agreed in writing before coding."
+        "value": "Test cases per critical flow and acceptance criteria agreed in writing."
       },
       {
         "label": "Maintenance plan",
-        "value": "Monitoring, alerts, API contract versioning and documented handover so your team can operate it."
+        "value": "Monitoring, alerts, API contract versioning and a documented handover."
       }
     ]
   },
@@ -181,23 +180,23 @@
     "number": "06",
     "label": "How we work",
     "meta": "4 stages · sequential",
-    "title": "Four stages, one technical counterpart.",
+    "title": "Four stages, one technical contact.",
     "steps": [
       {
         "title": "Diagnostic",
-        "description": "We review how your current systems talk (or don't talk) to each other."
+        "description": "We review how your current systems talk today."
       },
       {
         "title": "Architecture",
-        "description": "We define the integration model, the data flows and the failure points."
+        "description": "We define the integration model, the flows and the failure points."
       },
       {
         "title": "Implementation",
-        "description": "We build, test and deploy the connection in staging and production."
+        "description": "We develop, test and deploy in staging and production."
       },
       {
         "title": "Support",
-        "description": "Initial monitoring and documentation so your team can operate it on its own."
+        "description": "Initial monitoring and docs so your team can run it alone."
       }
     ]
   },
@@ -214,23 +213,22 @@
       "Endava",
       "Rootstrap"
     ],
-    "intro": "We are senior engineers with experience at companies like BBVA, Santander, ICBC, Endava and Rootstrap. We got together to build something of our own: an agile consultancy where the client talks directly to whoever solves the problem.",
     "principles": [
-      "Real seniority: we come from running critical systems in production.",
-      "We solve everything from complex architectures to products that start from zero.",
-      "A clear process, direct communication, no middlemen.",
-      "We help you find the right resource for your project."
+      "Real seniority: we ran critical systems in production.",
+      "From complex architectures to products from scratch.",
+      "Clear process and direct communication.",
+      "We find the right engineer for your project."
     ],
     "missionLabel": "Mission / Tonk Solutions",
-    "mission": "To be the engineering team our clients need, with the judgement to make good technical decisions, the experience to execute them and the responsibility to see them through.",
+    "mission": "To be the engineering team our clients need: judgment to decide, experience to execute and the responsibility to finish.",
     "pillars": [
       {
         "title": "Cloud Native",
-        "description": "Platforms on AWS, Google Cloud or Firebase: containerized, observable and ready to scale."
+        "description": "Containers, observability and scale on AWS, Google Cloud or Firebase."
       },
       {
         "title": "Core Banking",
-        "description": "Transactional systems where there is no room for error."
+        "description": "Transactional, where there is no room for error."
       },
       {
         "title": "Enterprise Integrations",
@@ -238,7 +236,7 @@
       },
       {
         "title": "Applied AI",
-        "description": "Automation with measurable results in the operation."
+        "description": "Automation with measurable results."
       }
     ]
   },
@@ -246,15 +244,15 @@
     "number": "08",
     "label": "Team",
     "meta": "3 co-founders",
-    "title": "The people who founded Tonk are the ones on your project.",
+    "title": "Tonk's founders run your project.",
     "linkedinLabel": "LinkedIn",
     "newTabHint": "opens in a new tab",
     "members": [
       {
         "name": "Matías Castillo",
-        "role": "Co-Founder · Financial Systems Lead",
+        "role": "Co-Founder · Financial Systems",
         "founder": true,
-        "bio": "App Owner at BBVA, in charge of critical financial systems handling millions of daily transactions. He understands what real technical responsibility means in environments with no margin for error.",
+        "bio": "App Owner at BBVA. Financial systems with millions of daily transactions.",
         "initials": "MC",
         "linkedin": "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/"
       },
@@ -262,15 +260,15 @@
         "name": "Nicolás Gómez",
         "role": "Co-Founder · Core Banking",
         "founder": true,
-        "bio": "A track record at Santander and ICBC building and evolving core banking products and highly critical transactional systems. A specialist in architectures that cannot fail.",
+        "bio": "Santander and ICBC. Core banking products and critical transactional systems.",
         "initials": "NG",
         "linkedin": "https://www.linkedin.com/in/nicolas-gomez-467b26141/"
       },
       {
         "name": "Rodrigo Hernandez",
-        "role": "Co-Founder · Platform Engineering",
+        "role": "Co-Founder · Platform",
         "founder": true,
-        "bio": "Experience building scalable cloud-native platforms. A reference in microservice architectures and distributed solutions.",
+        "bio": "Scalable cloud-native platforms and distributed microservice architectures.",
         "initials": "RH",
         "linkedin": "https://www.linkedin.com/in/rodrigoenzohernandez/"
       }
@@ -281,7 +279,7 @@
     "label": "Contact",
     "meta": "Buenos Aires · GMT−3",
     "title": "Have a project in mind?",
-    "description": "Whether you have something concrete to quote or you're exploring options, tell us what it's about.",
+    "description": "Tell us what it's about, whether it's concrete or you're still exploring.",
     "cta": "Message us on WhatsApp",
     "rows": [
       {
