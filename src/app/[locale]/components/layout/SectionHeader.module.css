@@ -19,7 +19,7 @@
   font-size: var(--t-detail);
   line-height: 1;
   letter-spacing: 0.02em;
-  color: var(--accent);
+  color: var(--muted);
 }
 
 .label {
