@@ -1,6 +1,6 @@
 import es from "../../../messages/es.json";
 import en from "../../../messages/en.json";
-import { routing } from "@/i18n/routing";
+import { locales } from "@/i18n/locales";
 import {
   buildLlmsFullTxt,
   buildLlmsLocaleContent,
@@ -16,7 +16,7 @@ export const dynamic = "force-static";
 const MESSAGES_BY_LOCALE: Record<string, LlmsMessages> = { es, en };
 
 export function GET() {
-  const contents = routing.locales.map((locale: string) =>
+  const contents = locales.map((locale) =>
     buildLlmsLocaleContent(locale, MESSAGES_BY_LOCALE[locale])
   );
 

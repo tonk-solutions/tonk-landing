@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import es from "../../../messages/es.json";
 import en from "../../../messages/en.json";
 import { SERVICES_CATALOG } from "../services/catalog";
-import { CONTACT_EMAIL, CONTACT_PHONE, SITE_NAME, SITE_URL, WHATSAPP_URL } from "../constants";
+import { SITE_NAME, SITE_URL } from "../constants";
 import {
   buildLlmsFullTxt,
   buildLlmsLocaleContent,
@@ -25,6 +25,26 @@ const llmsFullTxt = buildLlmsFullTxt(contents);
 
 function linksIn(body: string): string[] {
   return [...body.matchAll(/\]\(([^)]+)\)/g)].map((match) => match[1]);
+}
+
+/** Bloque de una sección `## heading`, sin la siguiente sección ni el otro idioma. */
+function sectionOf(body: string, heading: string): string {
+  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = new RegExp(`## ${escaped}\\n([\\s\\S]*?)(?:\\n## |\\n---|$)`, "u").exec(body);
+
+  if (!match) {
+    throw new Error(`missing section "${heading}"`);
+  }
+
+  return match[1];
+}
+
+function bulletsOf(block: string): string[] {
+  return block.split("\n").filter((line) => line.startsWith("- "));
+}
+
+function labelsOf(bullets: string[]): string[] {
+  return bullets.map((bullet) => bullet.replace(/^- \*\*(.+?):\*\*.*$/, "$1"));
 }
 
 describe("llms.txt (S1)", () => {
@@ -64,14 +84,26 @@ describe("llms.txt (S1)", () => {
     );
   });
 
-  it("publica los datos de contacto del locale por defecto", () => {
-    for (const row of es.contact.rows) {
-      expect(llmsTxt).toContain(`- **${row.label}:** ${row.value}`);
-    }
+  it("publica la línea de cabecera con el formato de S1", () => {
+    // Literales de la spec: la ubicación y el teléfono salen de `contact.rows`,
+    // no de `footer.location` ni de `CONTACT_PHONE`, que tienen otro formato.
+    expect(llmsTxt).toContain(
+      "Buenos Aires, Argentina · ES / EN · contact@tonksolutions.com.ar · +54 9 11 2390-8349"
+    );
+  });
 
-    expect(llmsTxt).toContain(CONTACT_EMAIL);
-    expect(llmsTxt).toContain(CONTACT_PHONE);
-    expect(llmsTxt).toContain(WHATSAPP_URL);
+  it("publica exactamente tres viñetas de contacto, sin duplicar WhatsApp", () => {
+    const bullets = bulletsOf(sectionOf(llmsTxt, es.contact.label));
+
+    expect(bullets).toHaveLength(3);
+    expect(bullets).toEqual([
+      "- **Correo:** contact@tonksolutions.com.ar",
+      "- **WhatsApp:** https://wa.me/5491123908349",
+      "- **Ubicación:** Buenos Aires, Argentina",
+    ]);
+
+    const labels = labelsOf(bullets);
+    expect(new Set(labels).size).toBe(labels.length);
   });
 
   it("lista al equipo con nombre y rol", () => {
@@ -139,6 +171,17 @@ describe("llms-full.txt (S2)", () => {
         expect(llmsFullTxt).toContain(`### ${member.name}`);
         expect(llmsFullTxt).toContain(member.linkedin);
       }
+    }
+  });
+
+  it("no repite labels en ninguna sección de contacto", () => {
+    for (const content of contents) {
+      const bullets = bulletsOf(sectionOf(llmsFullTxt, content.sections.contact));
+      const labels = labelsOf(bullets);
+
+      expect(bullets).toHaveLength(3);
+      expect(new Set(labels).size).toBe(3);
+      expect(bullets).toContain("- **WhatsApp:** https://wa.me/5491123908349");
     }
   });
 

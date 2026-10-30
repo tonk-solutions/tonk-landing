@@ -57,8 +57,7 @@ describe("robots.txt (S3)", () => {
     }
   });
 
-  it("sigue publicando el sitemap y el host canónico", () => {
+  it("sigue publicando el sitemap", () => {
     expect(result.sitemap).toBe(`${SITE_URL}/sitemap.xml`);
-    expect(result.host).toBe(SITE_URL);
   });
 });

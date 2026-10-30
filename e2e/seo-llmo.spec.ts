@@ -48,13 +48,16 @@ test.describe("head y datos estructurados", () => {
     await page.goto("/es");
 
     const ogImage = await page.locator('meta[property="og:image"]').getAttribute("content");
-    expect(ogImage).toBeTruthy();
+    expect(ogImage?.startsWith(SITE_URL)).toBe(true);
     await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
       "content",
       /Tonk Solutions/i
     );
 
-    const response = await page.request.get(ogImage as string);
+    // Ruta relativa a propósito: con la URL absoluta Playwright ignora
+    // `use.baseURL` y el 200 lo daría producción, no el build de esta ronda.
+    const { pathname, search } = new URL(ogImage as string);
+    const response = await page.request.get(`${pathname}${search}`);
     expect(response.status()).toBe(200);
   });
 
@@ -65,7 +68,9 @@ test.describe("head y datos estructurados", () => {
     expect(types).toContain("Organization");
     expect(types).toContain("WebSite");
     expect(types).toContain("ItemList");
-    expect(types).toEqual(expect.arrayContaining(["Person", "Person", "Person"]));
+
+    // `arrayContaining` colapsa duplicados: se cuentan los Person de verdad.
+    expect(types.filter((type) => type === "Person")).toHaveLength(3);
 
     const homePage = typesOf(await readGraph(page, "structured-data-home"));
     expect(homePage).toContain("WebPage");
@@ -84,6 +89,37 @@ test.describe("head y datos estructurados", () => {
     await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute(
       "href",
       `${SITE_URL}/es/services/enterprise-integrations`
+    );
+  });
+
+  test("el detalle no pierde la metadata social del layout", async ({ page }) => {
+    // Next reemplaza el objeto `openGraph` entero: si la página lo declara a mano
+    // en vez de con `buildOpenGraph`, estos tags desaparecen sin que nada falle.
+    await page.goto("/es/services/enterprise-integrations");
+
+    await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute(
+      "content",
+      "es_AR"
+    );
+    await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute(
+      "content",
+      "Tonk Solutions"
+    );
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      "content",
+      `${SITE_URL}/es/opengraph-image`
+    );
+    await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
+      "content",
+      "Integraciones Enterprise en LatAm"
+    );
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+      "content",
+      "summary_large_image"
+    );
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
+      "content",
+      `${SITE_URL}/es/opengraph-image`
     );
   });
 });

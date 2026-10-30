@@ -1,10 +1,4 @@
-import {
-  CONTACT_EMAIL,
-  CONTACT_PHONE,
-  SITE_NAME,
-  SITE_URL,
-  WHATSAPP_URL,
-} from "../constants";
+import { CONTACT_PHONE, SITE_NAME, SITE_URL, WHATSAPP_URL } from "../constants";
 import {
   SERVICES_CATALOG,
   pickServiceContent,
@@ -83,7 +77,6 @@ export interface LlmsMessages {
   };
   team: { label: string; members: LlmsMember[] };
   contact: { label: string; rows: LlmsLabeledValue[] };
-  footer: { location: string };
 }
 
 /** Contenido de un locale, ya resuelto contra el catálogo de servicios. */
@@ -91,6 +84,8 @@ export interface LlmsLocaleContent {
   locale: string;
   siteTitle: string;
   siteDescription: string;
+  email: string;
+  phone: string;
   location: string;
   hero: { title: string; lede: string };
   sections: {
@@ -121,8 +116,7 @@ export interface LlmsLocaleContent {
   contact: LlmsLabeledValue[];
 }
 
-/** Servicios del catálogo con el copy del locale, en el orden del catálogo. */
-export function resolveServices(messages: LlmsMessages): LlmsService[] {
+/** Servicios del catálogo con el copy del locale, en el orden del catálogo. */export function resolveServices(messages: LlmsMessages): LlmsService[] {
   const servicesByBranch = {
     craft: messages.services.craft.services,
     talent: messages.services.talent.services,
@@ -139,11 +133,15 @@ export function buildLlmsLocaleContent(
   locale: string,
   messages: LlmsMessages
 ): LlmsLocaleContent {
+  const contact = resolveContact(messages);
+
   return {
     locale,
     siteTitle: messages.seo.titleDefault,
     siteDescription: messages.seo.description,
-    location: messages.footer.location,
+    email: contact.email,
+    phone: contact.phone,
+    location: contact.location,
     hero: {
       title: `${messages.hero.titleLine1} ${messages.hero.titleLine2}`,
       lede: messages.hero.lede,
@@ -173,12 +171,55 @@ export function buildLlmsLocaleContent(
       pillars: messages.criterio.pillars,
     },
     team: messages.team.members,
-    contact: messages.contact.rows,
+    contact: contact.rows,
   };
 }
 
 function absolute(path: string): string {
   return `${SITE_URL}${path}`;
+}
+
+function digits(value: string): string {
+  return value.replace(/\D/g, "");
+}
+
+const CONTACT_PHONE_DIGITS = digits(CONTACT_PHONE);
+
+export interface LlmsContact {
+  /** Viñetas de S1: correo, WhatsApp con la URL de wa.me y ubicación. */
+  rows: LlmsLabeledValue[];
+  email: string;
+  phone: string;
+  location: string;
+}
+
+/**
+ * Los tres datos de contacto salen de `contact.rows` y se reconocen por valor, no
+ * por posición: el teléfono es la fila cuyos dígitos coinciden con `CONTACT_PHONE`,
+ * el correo la que tiene `@` y la ubicación la restante. La fila de WhatsApp se
+ * publica con la URL de `wa.me`, que es la que un modelo puede accionar, así que
+ * nunca aparecen dos viñetas con el mismo label.
+ */
+export function resolveContact(messages: LlmsMessages): LlmsContact {
+  const { rows } = messages.contact;
+  const emailRow = rows.find((row) => row.value.includes("@"));
+  const phoneRow = rows.find((row) => digits(row.value) === CONTACT_PHONE_DIGITS);
+  const locationRow = rows.find((row) => row !== emailRow && row !== phoneRow);
+
+  if (!emailRow || !phoneRow || !locationRow) {
+    throw new Error(
+      "llms.txt: contact.rows debe traer correo, teléfono y ubicación distinguibles"
+    );
+  }
+
+  return {
+    rows: rows.map((row) =>
+      row === phoneRow ? { label: row.label, value: WHATSAPP_URL } : row
+    ),
+    email: emailRow.value,
+    phone: phoneRow.value,
+    location: locationRow.value,
+  };
 }
 
 function localeLabel(locale: string): string {
@@ -207,8 +248,8 @@ export function buildLlmsTxt(
     [
       primary.location,
       contents.map((content) => localeLabel(content.locale)).join(" / "),
-      CONTACT_EMAIL,
-      CONTACT_PHONE,
+      primary.email,
+      primary.phone,
     ].join(" · "),
     "",
     "## Páginas",
@@ -228,7 +269,6 @@ export function buildLlmsTxt(
     `## ${primary.sections.contact}`,
     "",
     ...primary.contact.map((row) => `- **${row.label}:** ${row.value}`),
-    `- **WhatsApp:** ${WHATSAPP_URL}`,
     "",
     `## ${primary.sections.team}`,
     "",
@@ -324,7 +364,6 @@ function renderLocaleDocument(content: LlmsLocaleContent): string {
     `## ${sections.contact}`,
     "",
     ...content.contact.map((row) => `- **${row.label}:** ${row.value}`),
-    `- **WhatsApp:** ${WHATSAPP_URL}`,
     "",
   ];
 

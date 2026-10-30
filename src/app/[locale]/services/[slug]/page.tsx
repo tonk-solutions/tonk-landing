@@ -137,8 +137,10 @@ export default async function ServicePage({
   const serviceGraph = buildServicePageGraph({
     locale,
     slug,
-    title,
-    description,
+    pageName: title,
+    pageDescription: description,
+    serviceName: content.title,
+    serviceDescription: content.description,
     inLanguage: tSchema("inLanguage"),
     siteName: SITE_NAME,
     servicesLabel: tServices("label"),

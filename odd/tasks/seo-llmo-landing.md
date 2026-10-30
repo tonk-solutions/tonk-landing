@@ -41,6 +41,11 @@ Una línea por cada uno de los 7 servicios de `src/app/services/catalog.ts`, en 
 y con el locale por defecto. Todas las URLs son absolutas (`SITE_URL`). No se agrega copy nuevo: todo
 sale de `messages/{locale}.json`, `src/app/services/catalog.ts` y `src/app/constants.ts`. El archivo no
 menciona `SAP` (spec S3 del documento de ingeniería).
+La ubicación y el teléfono de la cabecera salen de `contact.rows` (se reconocen por valor: la fila con
+`@` es el correo, la que coincide con los dígitos de `CONTACT_PHONE` es el WhatsApp y la restante es la
+ubicación), no de `footer.location` ni de `CONTACT_PHONE` formateado, que publican otro texto. La fila
+de WhatsApp se emite una sola vez y con la URL de `wa.me`, así que `## Contacto` tiene exactamente tres
+viñetas con labels distintos.
 
 **S2 — `/llms-full.txt`.** `GET /llms-full.txt` responde 200 con `text/plain; charset=utf-8`.
 Markdown con el contenido completo de la landing, `es` primero y `en` después, separados por una línea
@@ -57,17 +62,22 @@ Mismo origen de contenido que S1; tampoco menciona `SAP`.
 `sitemap` y agrega grupos nombrados, todos con `allow: "/"` y sin `disallow`, para:
 `GPTBot`, `OAI-SearchBot`, `ChatGPT-User`, `ClaudeBot`, `Claude-User`, `Claude-SearchBot`,
 `PerplexityBot`, `Perplexity-User`, `Google-Extended`, `Applebot-Extended`, `Amazonbot`,
-`meta-externalagent`, `CCBot`, `cohere-ai`, `YouBot`, `Diffbot`. Ningún grupo puede bloquear una ruta.
+`meta-externalagent`, `CCBot`, `cohere-ai`, `YouBot`, `Diffbot`. Ningún grupo puede bloquear una ruta. El
+archivo no publica la directiva `Host`: espera un hostname desnudo y no aporta nada sobre `sitemap`.
 
 **S4 — Datos estructurados por página.** El `@graph` del layout (Organization + WebSite + ItemList de
-servicios) suma: `email` en la Organization, y un nodo `Person` por co-founder con `name`, `jobTitle`,
-`url` (LinkedIn de `team.members[i].linkedin`) y `worksFor` por `@id` a la Organization, más `founder` en la
-Organization referenciándolos por `@id`.
+servicios) suma: `email` en la Organization, y un nodo `Person` por miembro del equipo con `name`, `jobTitle`,
+`url` (LinkedIn de `team.members[i].linkedin`) y `worksFor` por `@id` a la Organization. `founder` solo
+referencia a quienes declaran `founder: true` en `messages` (hoy los tres co-founders), para no publicar un
+socio falso cuando la sección Equipo sume otro rol.
 La home agrega su propio `WebPage` (`@id` = `${SITE_URL}/${locale}#webpage`) con `name`, `description`,
 `url`, `inLanguage`, `isPartOf` al WebSite y `about` a la Organization.
-El detalle de servicio agrega `WebPage` + `Service` (`name`, `description`, `url`, `provider`, `areaServed`) +
-`BreadcrumbList` sitio → servicios → servicio, enlazados por `@id` (`mainEntity`, `breadcrumb`). El título y la
-descripción salen de la misma función que la metadata, así que no se pueden desincronizar.
+El detalle de servicio agrega `WebPage` + `Service` + `BreadcrumbList` sitio → servicios → servicio,
+enlazados por `@id` (`mainEntity`, `breadcrumb`). El `Service` del detalle y el del `ItemList` del layout
+comparten `@id` (`${SITE_URL}/{locale}/services/{slug}#service`) y el mismo `name`/`description` del
+catálogo, así que cada servicio es una sola entidad y no dos contradictorias; el `WebPage` sí usa el título
+y la descripción SEO de la página. Ambos salen de funciones que también alimentan la metadata, así que no se
+pueden desincronizar.
 Solo datos verificables: `constants.ts`, `services/catalog.ts` y `messages/{locale}.json`. Nada inventado
 (sin `aggregateRating`, sin `review`, sin `numberOfEmployees`, sin `priceRange`).
 
@@ -82,19 +92,22 @@ estático; su URL (`/{locale}/opengraph-image`, con o sin hash de build) respond
 **S6 — `sitemap.xml`.** Cada entrada lleva `lastModified` del build y `alternates.languages` con
 `x-default` apuntando al locale por defecto.
 
-**S7 — Checks.** Vitest cubre los generadores puros (`llmsTxt`, `llms-full.txt`, grafos JSON-LD por página) y
-`robots`. Playwright (`e2e/seo-llmo.spec.ts`) cubre lo servido: `canonical` y `hreflang` con `x-default`, la
-imagen social respondiendo 200, JSON-LD parseable con los `@type` esperados en home y en detalle, y
-`/llms.txt`, `/llms-full.txt`, `/robots.txt` y `/sitemap.xml`. `npm run build`, `npm run typecheck` y
-`npm run lint` en verde.
+**S7 — Checks.** Vitest cubre los generadores puros (`llmsTxt`, `llms-full.txt`, grafos JSON-LD por página),
+`robots`, `openGraph`, `alternates` y `sitemap`. Playwright (`e2e/seo-llmo.spec.ts`) cubre lo servido:
+`canonical` y `hreflang` con `x-default`, la imagen social pedida con ruta relativa (para que la resuelva
+`use.baseURL` y no producción) y respondiendo 200, JSON-LD parseable con los `@type` y la cantidad de `Person`
+esperados, la metadata social del detalle (`og:locale`, `og:site_name`, `og:image`, `og:image:alt`,
+`twitter:card`, `twitter:image`), y `/llms.txt`, `/llms-full.txt`, `/robots.txt` y `/sitemap.xml`. El
+`webServer` de Playwright deriva de la misma base que `use.baseURL` para que la suite no pueda correr contra
+otra aplicación. `npm run build`, `npm run typecheck` y `npm run lint` en verde.
 
 ## Tasks
 
 | ID | Specs | Ruta | Tarea | Commit |
 |---|---|---|---|---|
-| T1 | S1,S2,S3,S7 | inline | Generadores `llmsTxt`, rutas `/llms.txt` y `/llms-full.txt`, robots con crawlers de IA y tests unitarios | `82fecd3` `feat(seo): llms.txt, llms-full.txt y política de crawlers` |
-| T2 | S4,S7 | inline | Datos estructurados por página: `Person` del equipo, `WebPage`, `Service` y `BreadcrumbList`, con tests unitarios | `2e6f2f1` `feat(seo): datos estructurados por página y por servicio` |
-| T3 | S5,S6,S7 | inline | Cabecera (`x-default`, imágenes sociales con `alt` localizado), sitemap con `lastModified`, e2e y README | `8a70ae0` `feat(seo): cabecera, imágenes sociales y sitemap` |
+| T1 | S1,S2,S3,S7 | inline | Generadores `llmsTxt`, rutas `/llms.txt` y `/llms-full.txt`, robots con crawlers de IA y tests unitarios | `a20b340` `feat(seo): llms.txt, llms-full.txt y política de crawlers` |
+| T2 | S4,S7 | inline | Datos estructurados por página: `Person` del equipo, `WebPage`, `Service` y `BreadcrumbList`, con tests unitarios | `5f06f7b` `feat(seo): datos estructurados por página y por servicio` |
+| T3 | S5,S6,S7 | inline | Cabecera (`x-default`, imágenes sociales con `alt` localizado), sitemap con `lastModified`, e2e y README | `c6cdec6` `feat(seo): cabecera, imágenes sociales y sitemap` |
 
 ## Log
 
@@ -120,13 +133,13 @@ rechazó el launch (el texto de la tarea no llevaba el puntero `Spec: odd/tasks/
 con la instrucción explícita de no reintentar y escribir inline, así que T1, T2 y T3 se hicieron en el padre,
 de a una.
 
-**L6** (slice 1 — `82fecd3` `feat(seo): llms.txt, llms-full.txt y política de crawlers`):
+**L6** (slice 1 — `a20b340` `feat(seo): llms.txt, llms-full.txt y política de crawlers`):
 `src/app/seo/llmsTxt.ts` (módulo puro: adapta los mensajes crudos con `pickServiceContent` y renderiza los dos
 documentos), las dos rutas estáticas y `robots.ts` con 16 crawlers nombrados. El harness marcó el slice en 647
 líneas autoradas; queda registrado acá como límite. Verificación del slice: `npx vitest run` 26/26 en los dos
 archivos nuevos, `typecheck` y `lint` en 0.
 
-**L7** (slice 2 — `2e6f2f1` `feat(seo): datos estructurados por página y por servicio`):
+**L7** (slice 2 — `5f06f7b` `feat(seo): datos estructurados por página y por servicio`):
 `buildStructuredDataGraph` suma `email`, `founder` y los `Person`; se agregan `buildHomePageGraph` y
 `buildServicePageGraph`. El JSON-LD pasa a emitirse por un único componente (`seo/StructuredData.tsx`).
 **Corrección de spec**: S4 pedía `serviceType` en el `Service`, pero el único valor honesto disponible era el
@@ -156,7 +169,7 @@ corrieron contra otra app (`/llms.txt` devolvía 404). No se tocó ese proceso a
 en `:3100` (`npm run start -- -p 3100`) y la suite se corrió con
 `PLAYWRIGHT_BASE_URL=http://127.0.0.1:3100 npx playwright test`.
 
-**L11** (cierre — `8a70ae0` `feat(seo): cabecera, imágenes sociales y sitemap`): verificación final del árbol
+**L11** (cierre — `c6cdec6` `feat(seo): cabecera, imágenes sociales y sitemap`): verificación final del árbol
 completo, con los tres slices adentro:
 
 | Check | Resultado |
@@ -173,3 +186,42 @@ todos los grupos permiten `/` y ninguno bloquea. `Risk: none`.
 
 Pendiente de decisión del dueño (no bloquea): el `alt` de `og:image` de la home es el estático de
 `[locale]/opengraph-image.tsx`; si se quiere localizado hace falta `generateImageMetadata` en ese archivo.
+
+**L12** (ronda 1 de review y QA, nueve hallazgos aplicados — commit `fix(seo): hallazgos de review`):
+1. **Contacto duplicado en `/llms.txt` y `/llms-full.txt`.** Se emitían las tres filas de `contact.rows` y
+   además una viñeta de WhatsApp agregada a mano, así que el mismo label aparecía dos veces con valores
+   distintos. Ahora `resolveContact` reconoce las filas por valor (la del `@` es el correo, la que coincide en
+   dígitos con `CONTACT_PHONE` es WhatsApp, la restante es ubicación) y emite la de WhatsApp con `WHATSAPP_URL`:
+   tres viñetas, labels únicos.
+2. **Cabecera fuera de formato.** Salía de `footer.location` («Buenos Aires, AR») y de `CONTACT_PHONE`
+   («+54-9-11-2390-8349»). Ahora sale de las mismas filas de contacto, así que publica exactamente
+   `Buenos Aires, Argentina · ES / EN · contact@tonksolutions.com.ar · +54 9 11 2390-8349`.
+3. **`Host` inválido en `robots.txt`.** Emitía `Host: https://tonksolutions.com.ar`; la directiva espera un
+   hostname desnudo y S3 no la pide. Se eliminó.
+4. **Dos entidades `Service` contradictorias por página.** El `Service` del ItemList no tenía `@id` y el de la
+   página sí, y en `enterprise-integrations` además decían nombres distintos. Ahora los dos comparten
+   `@id` (`{url}#service`) y el mismo `name`/`description` del catálogo; el `WebPage` y el breadcrumb siguen
+   usando el título SEO de la página.
+5. **Playwright podía correr contra otra app.** `webServer.url` estaba fijo en `:3000` mientras `baseURL` salía
+   de `PLAYWRIGHT_BASE_URL`: con un `next-server` ajeno escuchando, reutilizaba ese y los tests iban a otro
+   lado. Ahora el `webServer` deriva del mismo origen que `baseURL` (`PLAYWRIGHT_PORT` para aislar el puerto).
+6. **El e2e de `og:image` validaba producción.** Pedía la URL absoluta, que Playwright resuelve sin mirar
+   `baseURL`. Ahora pide `pathname + search` contra el server bajo test y verifica aparte que la URL publicada
+   sea absoluta sobre `SITE_URL`.
+7. **`founder` declaraba a todo el equipo.** Se agregó `founder: true` a los co-founders en `messages` y la
+   Organization solo los referencia a ellos; el test cubre el caso de un miembro que no es socio.
+8. **La evidencia apuntaba a un commit huérfano.** El doc registraba `8a70ae0`, que quedó fuera de la rama
+   después del amend; ahora registra `c6cdec6`.
+9. **Checks faltantes.** `arrayContaining(["Person", "Person", "Person"])` colapsaba duplicados; ahora se
+   cuentan con `filter`. Se agregaron `openGraph.test.ts` (openGraph, twitter, alternates y sitemap) y el e2e
+   "el detalle no pierde la metadata social del layout" (`og:locale`, `og:site_name`, `og:image`,
+   `og:image:alt`, `twitter:card`, `twitter:image`).
+
+Para que `sitemap.ts` y `seo/alternates.ts` se puedan testear sin arrastrar React, la lista de idiomas se
+movió a `src/i18n/locales.ts`; `routing.ts` la consume y agrega la navegación de cliente.
+
+Evidencia servida (no solo en memoria): `/llms.txt` con la cabecera exacta y tres viñetas de contacto,
+`/robots.txt` sin `Host` y con los 16 grupos, y en `es/services/enterprise-integrations.html` un único
+`…/enterprise-integrations#service` con un solo `name` de servicio. Checks: `typecheck` 0 · `lint` 0 ·
+`vitest` **50/50** · `build` 0 desde `.next` limpio (dos veces seguidas) · `playwright` **57 pasan, 1 salteado**
+con `PLAYWRIGHT_PORT=3100`. `Risk: none`.
