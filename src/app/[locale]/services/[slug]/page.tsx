@@ -11,6 +11,8 @@ import { resolveRequestLocale } from "@/i18n/requestLocale";
 import { SITE_NAME, SITE_URL, WHATSAPP_URL } from "@/app/constants";
 import { buildServicePageGraph } from "@/app/seo/structuredData";
 import { StructuredData } from "@/app/seo/StructuredData";
+import { buildLanguageAlternates } from "@/app/seo/alternates";
+import { buildOpenGraph, buildTwitter } from "@/app/seo/openGraph";
 import {
   getServiceEntry,
   getServiceSlugs,
@@ -100,19 +102,16 @@ export async function generateMetadata({
     description,
     alternates: {
       canonical,
-      languages: {
-        es: `${SITE_URL}/es/services/${slug}`,
-        en: `${SITE_URL}/en/services/${slug}`,
-        "x-default": `${SITE_URL}/es/services/${slug}`,
-      },
+      languages: buildLanguageAlternates(`/services/${slug}`),
     },
-    openGraph: {
-      type: "website",
+    openGraph: buildOpenGraph({
+      locale,
       url: canonical,
-      siteName: SITE_NAME,
       title,
       description,
-    },
+      imageAlt: title,
+    }),
+    twitter: buildTwitter({ locale, title, description, imageAlt: title }),
   };
 }
 
