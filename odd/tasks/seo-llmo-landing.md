@@ -258,3 +258,25 @@ rehízo con `git rebase --onto origin/main 4778de1`, con la política **main gan
 posee** (`llms.txt/route.ts`, `structuredData.ts`, `structuredData.test.ts`, `layout.tsx`) y lo propio
 re-aplicado en el commit de consolidación. `messages/*.json` fusionó solo: los flags `founder: true` de esta
 rama conviven con el namespace `llms` de main.
+
+**L14** (consolidación — `refactor(seo): consolidar con la implementación de main`, más este commit de
+evidencia): quedó una sola implementación y se re-aplicó lo propio sobre ella.
+- `seo/llms.ts` es el único generador: `/llms.txt` y `/llms-full.txt` comparten `buildLlmsInput`, y se
+  borraron `seo/llmsTxt.ts` y `__tests__/llmsTxt.test.ts`.
+- Contacto desde `contact.rows`. Servido: `- Email:`, `- WhatsApp: +54 9 11 2390-8349
+  (https://wa.me/5491123908349)`, `- Ubicación: Buenos Aires, Argentina`. Tres viñetas, labels únicos.
+- `founder` filtra por el flag de `messages`, así que un rol que no es socio no se publica como fundador.
+- Re-aplicado sobre main: `email` en la Organization, `buildHomePageGraph`, `buildServicePageGraph` con el
+  `@id` del `Service` compartido con el `ItemList` (servido: un único
+  `…/enterprise-integrations#service`), `robots` con los 16 crawlers, `x-default` y `lastModified` en el
+  sitemap, `buildOpenGraph`/`buildTwitter`, `StructuredData` como único emisor de JSON-LD, y `AGENTS.md`
+  con su guard.
+- Sin copy nuevo: `/llms-full.txt` usa los labels que ya existen en `messages`; no se agregó el namespace
+  `llmsFull` que había inventado la primera versión.
+- e2e ajustados a la realidad consolidada: `og:image:alt` es el `alt` del brand kit de main y los founders
+  se cuentan dentro de la Organization, no como nodos sueltos.
+- Checks: `typecheck` 0 · `lint` 0 · `vitest` **65/65** en 7 archivos · `build` 0 · `playwright` **77
+  pasan, 1 salteado** con `PLAYWRIGHT_PORT=3100`. `Risk: none`.
+- **Pendiente del humano**: el harness bloquea `git push --force*` incluso con autorización explícita, así
+  que el `--force-with-lease` de esta rama lo corre el dueño. La rama remota sigue en `cb25b10` (serie
+  previa a la reescritura de autoría y al rebase).
