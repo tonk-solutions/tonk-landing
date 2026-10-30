@@ -136,8 +136,9 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       data-scroll-behavior="smooth"
+      className={`${geistSans.variable} ${geistMono.variable}`}
     >
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
         <script
           id="structured-data"
           type="application/ld+json"

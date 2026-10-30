@@ -63,7 +63,7 @@ export default async function EnterpriseIntegrationsLanding({
             href="/#s03"
             style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}
           >
-            <ArrowLeft size={16} color="#0891b2" />
+            <ArrowLeft size={16} color="#0a7a60" />
             <Text as="span" fontSize="sm" fontWeight="semibold" color="primary.600">
               {tDetail("backToServices")}
             </Text>
@@ -94,11 +94,11 @@ export default async function EnterpriseIntegrationsLanding({
               <Button
                 size="lg"
                 bg="primary.500"
-                color="white"
+                color="dark.900"
                 borderRadius="full"
                 px={8}
                 fontWeight="semibold"
-                _hover={{ bg: "primary.600" }}
+                _hover={{ bg: "primary.400" }}
               >
                 <Flex align="center" gap={2}>
                   <MessageCircle size={18} />
@@ -146,7 +146,7 @@ export default async function EnterpriseIntegrationsLanding({
               {problemBullets.map((bullet) => (
                 <Flex as="li" key={bullet} align="flex-start" gap={3}>
                   <Box mt="4px" flexShrink={0}>
-                    <XCircle size={18} color="#94a3b8" aria-hidden="true" />
+                    <XCircle size={18} color="#8a9099" aria-hidden="true" />
                   </Box>
                   <Text color="dark.600" lineHeight="1.7">
                     {bullet}
@@ -340,7 +340,7 @@ export default async function EnterpriseIntegrationsLanding({
           >
             {resultBullets.map((bullet) => (
               <Flex as="li" key={bullet} align="center" gap={3}>
-                <CheckCircle size={18} color="#06b6d4" aria-hidden="true" />
+                <CheckCircle size={18} color="#10b98f" aria-hidden="true" />
                 <Text color="dark.700" fontWeight="medium">
                   {bullet}
                 </Text>
@@ -431,11 +431,11 @@ export default async function EnterpriseIntegrationsLanding({
               <Button
                 size="lg"
                 bg="primary.500"
-                color="white"
+                color="dark.900"
                 borderRadius="full"
                 px={8}
                 fontWeight="semibold"
-                _hover={{ bg: "primary.600" }}
+                _hover={{ bg: "primary.400" }}
               >
                 <Flex align="center" gap={2}>
                   <MessageCircle size={18} />

@@ -1,11 +1,14 @@
+import { existsSync } from "node:fs";
 import { defineConfig, devices } from "@playwright/test";
 
 /**
- * e2e de la landing. Usa el Chromium del sistema (`/usr/bin/chromium`) para no
- * depender de la descarga de navegadores de Playwright; se puede sobreescribir con
- * `PLAYWRIGHT_CHROMIUM_PATH`.
+ * e2e de la landing. Usa el Chromium del sistema (`/usr/bin/chromium`) si existe, para no
+ * depender de la descarga de navegadores de Playwright; si no, el que instala Playwright.
+ * Se puede forzar uno con `PLAYWRIGHT_CHROMIUM_PATH`.
  */
-const chromiumPath = process.env.PLAYWRIGHT_CHROMIUM_PATH ?? "/usr/bin/chromium";
+const systemChromium = "/usr/bin/chromium";
+const chromiumPath =
+  process.env.PLAYWRIGHT_CHROMIUM_PATH ?? (existsSync(systemChromium) ? systemChromium : undefined);
 
 export default defineConfig({
   testDir: "./e2e",
