@@ -27,6 +27,20 @@
   --header: 64px;
   --sec-pad: clamp(72px, 10vh, 140px);
 
+  /*
+   * Escala tipográfica: cinco niveles con un escalón de ~1,7× entre el claim y el
+   * detalle. La jerarquía de la home sale de acá: los módulos toman estos valores
+   * en vez de declarar tamaños propios (spec S20).
+   */
+  --t-claim: clamp(26px, 2.6vw, 38px); /* claim único de cada sección */
+  --t-sub: clamp(18px, 1.5vw, 22px); /* título de item */
+  --t-body: 16px; /* línea de apoyo */
+  --t-detail: 14px; /* detalle subordinado */
+  --t-micro: 11px; /* labels mono */
+
+  /* Medida de línea: ningún párrafo visible pasa de acá (spec S24). */
+  --measure: 50ch;
+
   /* Tipografía: las variables las inyecta next/font en el layout */
   --sans: var(--font-geist-sans), ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
   --mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;

@@ -16,7 +16,7 @@
 
 .num {
   font-family: var(--mono);
-  font-size: 22px;
+  font-size: var(--t-detail);
   line-height: 1;
   letter-spacing: 0.02em;
   color: var(--accent);
@@ -24,7 +24,7 @@
 
 .label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: var(--t-micro);
   font-weight: 400;
   line-height: 1.4;
   text-transform: uppercase;
@@ -34,7 +34,7 @@
 
 .meta {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: var(--t-micro);
   line-height: 1.4;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -43,21 +43,22 @@
 }
 
 .title {
-  margin-top: clamp(40px, 6vh, 72px);
-  font-size: clamp(30px, 3.4vw, 52px);
-  line-height: 1.02;
+  margin-top: clamp(28px, 4vh, 44px);
+  font-size: var(--t-claim);
+  line-height: 1.06;
   letter-spacing: -0.02em;
   font-weight: 500;
-  max-width: 22ch;
+  max-width: 30ch;
+  text-wrap: balance;
 }
 
 .intro {
-  margin-top: 24px;
-  margin-bottom: clamp(40px, 6vh, 72px);
-  font-size: 19px;
-  line-height: 1.55;
+  margin-top: 20px;
+  margin-bottom: clamp(32px, 5vh, 56px);
+  font-size: var(--t-body);
+  line-height: 1.5;
   color: var(--body);
-  max-width: 62ch;
+  max-width: var(--measure);
 }
 
 @media (max-width: 767px) {
