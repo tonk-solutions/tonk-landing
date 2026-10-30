@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { HOME_SECTIONS } from "@/app/sections";
 import { resolveRequestLocale } from "@/i18n/requestLocale";
 import { WHATSAPP_URL } from "@/app/constants";
 import { buildHomePageGraph } from "@/app/seo/structuredData";
@@ -17,8 +18,6 @@ import { CriterioSection } from "./components/home/CriterioSection";
 import { TeamSection } from "./components/home/TeamSection";
 import { ContactSection } from "./components/home/ContactSection";
 
-const SECTION_NUMBERS = ["01", "02", "03", "04", "05", "06", "07", "08", "09"];
-
 /**
  * Home de Tonk: nueve secciones numeradas que se leen como el documento técnico
  * de la consultora. Todo es Server Component salvo el índice lateral, el CTA
@@ -27,6 +26,7 @@ const SECTION_NUMBERS = ["01", "02", "03", "04", "05", "06", "07", "08", "09"];
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const locale = resolveRequestLocale((await params).locale);
 
+  const t = await getTranslations();
   const tContact = await getTranslations("contact");
   const tSeo = await getTranslations({ locale, namespace: "seo" });
   const tSchema = await getTranslations({ locale, namespace: "schema" });
@@ -38,11 +38,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     inLanguage: tSchema("inLanguage"),
   });
 
+  // Número, ancla y nombre del índice salen de HOME_SECTIONS: el número de la
+  // cabecera y el del riel no pueden separarse aunque se reordenen secciones.
+  const sideIndexItems = HOME_SECTIONS.map(({ namespace, id }) => ({
+    number: t(`${namespace}.number`),
+    label: t(`${namespace}.indexLabel`),
+    href: `#${id}`,
+  }));
+
   return (
-    <>
+    <div className="home-shell">
       <StructuredData id="structured-data-home" data={webPageGraph} />
       <Header />
-      <SideIndex numbers={SECTION_NUMBERS} />
+      <SideIndex items={sideIndexItems} />
 
       <main id="main">
         <HeroSection />
@@ -58,6 +66,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
       <Footer />
       <MobileStickyCta label={tContact("cta")} href={WHATSAPP_URL} />
-    </>
+    </div>
   );
 }

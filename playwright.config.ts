@@ -21,9 +21,9 @@ const chromiumPath =
  */
 const baseURL =
   process.env.PLAYWRIGHT_BASE_URL ??
-  `http://127.0.0.1:${process.env.PLAYWRIGHT_PORT ?? "3000"}`;
+  `http://127.0.0.1:${process.env.PLAYWRIGHT_PORT ?? "3111"}`;
 const port =
-  baseURL.match(/:(\d+)\/?$/)?.[1] ?? process.env.PLAYWRIGHT_PORT ?? "3000";
+  baseURL.match(/:(\d+)\/?$/)?.[1] ?? process.env.PLAYWRIGHT_PORT ?? "3111";
 
 export default defineConfig({
   testDir: "./e2e",
@@ -54,6 +54,9 @@ export default defineConfig({
       },
     },
   ],
+  // El puerto por defecto es 3111 y no 3000 para no compartir origen con el
+  // `next-server` de otro worktree: si la suite apunta a un server ajeno, valida
+  // otra aplicación. Para correr contra un server ya levantado, PLAYWRIGHT_BASE_URL.
   webServer: {
     command: `npm run build && npm run start -- -p ${port}`,
     url: `${baseURL}/es`,

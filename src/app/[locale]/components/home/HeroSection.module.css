@@ -22,15 +22,15 @@
 
 .num {
   font-family: var(--mono);
-  font-size: 22px;
+  font-size: var(--t-detail);
   line-height: 1;
   letter-spacing: 0.02em;
-  color: var(--accent);
+  color: var(--muted);
 }
 
 .label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: var(--t-micro);
   font-weight: 400;
   line-height: 1.4;
   text-transform: uppercase;
@@ -70,11 +70,11 @@
 }
 
 .lede {
-  margin-top: clamp(28px, 4vh, 44px);
-  font-size: clamp(17px, 1.4vw, 20px);
-  line-height: 1.55;
+  margin-top: clamp(24px, 3.5vh, 36px);
+  font-size: var(--t-body);
+  line-height: 1.5;
   color: var(--body);
-  max-width: 62ch;
+  max-width: var(--measure);
 }
 
 .ctaRow {
@@ -137,7 +137,7 @@
 
 .meta li {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: var(--t-micro);
   letter-spacing: 0.14em;
   color: var(--muted);
   text-transform: uppercase;

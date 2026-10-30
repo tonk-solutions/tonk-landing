@@ -1,9 +1,16 @@
+/*
+ * El riel ocupa el gutter izquierdo de la home (`.home-shell` en globals.css).
+ * Su ancho sale de `--m`, la misma medida que separa el contenido del borde:
+ * si el gutter no alcanza para el nombre completo, el label recorta con
+ * ellipsis pero nunca invade el texto de la página.
+ */
 .rail {
   position: fixed;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 56px;
+  width: var(--m);
+  padding-inline: 8px;
   z-index: 40;
   display: none;
 }
@@ -22,23 +29,24 @@
 
 .item {
   display: flex;
-  align-items: center;
-  gap: 5px;
-  min-height: 28px;
-  padding-left: 8px;
+  align-items: baseline;
+  gap: 6px;
+  min-height: 26px;
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
+  font-size: var(--t-micro);
+  letter-spacing: 0.02em;
   color: var(--muted);
   transition: color 0.15s ease;
 }
 
-.item::before {
-  content: "";
-  width: 8px;
-  height: 1px;
-  background: transparent;
-  transition: background-color 0.15s ease;
+.num {
+  flex: none;
+}
+
+.label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .item:hover {
@@ -47,8 +55,11 @@
 
 .item[aria-current="true"] {
   color: var(--accent);
+  font-weight: 500;
 }
 
-.item[aria-current="true"]::before {
-  background: var(--accent);
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+  }
 }

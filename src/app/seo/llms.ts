@@ -89,7 +89,6 @@ export interface LlmsHeadings {
 }
 
 export interface LlmsCriterio {
-  intro: string;
   principles: string[];
   companies: string[];
   mission: string;
@@ -131,7 +130,6 @@ export interface LlmsMessages {
   process: { label: string; steps: LlmsStep[] };
   criterio: {
     label: string;
-    intro: string;
     principles: string[];
     companies: string[];
     evidenceLabel: string;
@@ -233,7 +231,6 @@ export function buildLlmsInput(messages: LlmsMessages): LlmsInput {
     diagnostic: messages.diagnostic.rows,
     process: messages.process.steps,
     criterio: {
-      intro: messages.criterio.intro,
       principles: messages.criterio.principles,
       companies: messages.criterio.companies,
       mission: messages.criterio.mission,
@@ -353,8 +350,6 @@ export function buildLlmsFullTxt(input: LlmsInput): string {
     ...input.process.map((step, index) => `${index + 1}. **${step.title}** — ${step.description}`),
     "",
     `## ${headings.criterio}`,
-    "",
-    input.criterio.intro,
     "",
     ...input.criterio.principles.map((principle) => `- ${principle}`),
     "",

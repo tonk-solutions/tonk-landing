@@ -27,6 +27,20 @@
   --header: 64px;
   --sec-pad: clamp(72px, 10vh, 140px);
 
+  /*
+   * La escala tipográfica es una escalera de cinco niveles y los módulos de la
+   * home toman sus tamaños de acá; ningún módulo declara tamaños propios para
+   * sus títulos (spec S20).
+   */
+  --t-claim: clamp(26px, 2.6vw, 38px); /* claim único de cada sección */
+  --t-sub: clamp(18px, 1.5vw, 22px); /* título de item */
+  --t-body: 16px; /* línea de apoyo */
+  --t-detail: 14px; /* detalle subordinado */
+  --t-micro: 11px; /* labels mono */
+
+  /* Medida de línea: ningún párrafo visible pasa de acá (spec S24). */
+  --measure: 50ch;
+
   /* Tipografía: las variables las inyecta next/font en el layout */
   --sans: var(--font-geist-sans), ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
   --mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
@@ -36,6 +50,18 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/*
+ * En la home el riel del índice vive en el margen izquierdo y necesita ancho
+ * propio: desde 1280px el gutter crece para que los nombres de sección se lean
+ * en reposo sin taparse con el contenido (spec S25). El gutter es simétrico, así
+ * que la página se lee como un documento con márgenes anchos.
+ */
+@media (min-width: 1280px) {
+  .home-shell {
+    --m: clamp(116px, 8.5vw, 124px);
+  }
 }
 
 html {

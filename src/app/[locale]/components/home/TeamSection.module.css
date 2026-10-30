@@ -21,7 +21,7 @@
 .num {
   grid-column: 1 / span 2;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: var(--t-detail);
   letter-spacing: 0.08em;
   color: var(--muted);
   padding-top: 8px;
@@ -32,7 +32,7 @@
 }
 
 .who h3 {
-  font-size: 26px;
+  font-size: var(--t-sub);
   line-height: 1.15;
   letter-spacing: -0.01em;
   font-weight: 500;
@@ -42,7 +42,7 @@
 .role {
   margin: 8px 0 0;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: var(--t-micro);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
@@ -54,10 +54,10 @@
 }
 
 .bioCol > p {
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: var(--t-body);
+  line-height: 1.5;
   color: var(--body);
-  max-width: 62ch;
+  max-width: var(--measure);
   margin: 0;
 }
 
@@ -65,7 +65,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-size: 14px;
+  font-size: var(--t-detail);
   font-weight: 500;
   color: var(--fg);
   margin-top: 6px;
@@ -149,6 +149,6 @@
   }
 
   .who h3 {
-    font-size: 22px;
+    font-size: var(--t-sub);
   }
 }
