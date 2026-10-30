@@ -2,6 +2,11 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  # next 16 exige >=20.9 y el vite de vitest 4 exige ^20.19 || >=22.12.
+  # El piso real está declarado en package.json > engines.
+  NODE_VERSION = "22"
+
 [functions]
   directory = "netlify/functions"
 
