@@ -15,7 +15,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: [["list"]],
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000",
+    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3111",
     trace: "on-first-retry",
   },
   projects: [
@@ -36,10 +36,14 @@ export default defineConfig({
       },
     },
   ],
+  // El e2e corre siempre contra un build propio en un puerto propio: con
+  // `reuseExistingServer` contra :3000 el resultado dependía de qué hubiera
+  // escuchando ahí (un server viejo podía dar verde o rojo sin relación con el
+  // código). Para correr contra un server ya levantado, PLAYWRIGHT_BASE_URL.
   webServer: {
-    command: "npm run build && npm run start",
-    url: "http://127.0.0.1:3000/es",
-    reuseExistingServer: !process.env.CI,
+    command: "npm run build && npx next start -p 3111",
+    url: "http://127.0.0.1:3111/es",
+    reuseExistingServer: false,
     timeout: 240_000,
   },
 });
