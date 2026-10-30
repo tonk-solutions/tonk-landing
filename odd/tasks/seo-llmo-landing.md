@@ -17,46 +17,53 @@ Formato exacto:
 
 Buenos Aires, Argentina · <locales en mayúsculas, ES / EN> · <contact@tonksolutions.com.ar> · <+54 9 11 2390-8349>
 
-## Páginas
+## Equipo fundador
 
-- [Tonk Solutions (es)](https://tonksolutions.com.ar/es): <seo.titleDefault de es>
-- [Tonk Solutions (en)](https://tonksolutions.com.ar/en): <seo.titleDefault de en>
+- <team.members[i].name> — <team.members[i].role> (<linkedin>)
+
+## Stack y plataformas
+
+<llms.cloudLabel>: <llms.cloud> · <integrations.platforms>
 
 ## Servicios
 
 - [<services.craft|talent.services[i].title>](https://tonksolutions.com.ar/es/services/<slug>): <…description>
 
+## Proyectos
+
+- <projects.items[i].name> — <…type>
+
 ## Contacto
 
-- Correo: <contact.rows[Correo]>
-- WhatsApp: https://wa.me/5491123908349
-- Ubicación: <contact.rows[Ubicación]>
+- <llms.emailLabel>: <contact.rows[Correo]>
+- <llms.whatsappLabel>: <contact.rows[WhatsApp]> (<WHATSAPP_URL>)
+- <llms.locationLabel>: <contact.rows[Ubicación]>
 
-## Equipo
+## Enlaces
 
-- <team.members[i].name> — <team.members[i].role>
+- <llms.homeEs>: https://tonksolutions.com.ar/es
+- <llms.homeEn>: https://tonksolutions.com.ar/en
 ```
 
 Una línea por cada uno de los 7 servicios de `src/app/services/catalog.ts`, en el orden del catálogo
 y con el locale por defecto. Todas las URLs son absolutas (`SITE_URL`). No se agrega copy nuevo: todo
 sale de `messages/{locale}.json`, `src/app/services/catalog.ts` y `src/app/constants.ts`. El archivo no
 menciona `SAP` (spec S3 del documento de ingeniería).
-La ubicación y el teléfono de la cabecera salen de `contact.rows` (se reconocen por valor: la fila con
+La ubicación y el teléfono salen de `contact.rows` (se reconocen por valor: la fila con
 `@` es el correo, la que coincide con los dígitos de `CONTACT_PHONE` es el WhatsApp y la restante es la
-ubicación), no de `footer.location` ni de `CONTACT_PHONE` formateado, que publican otro texto. La fila
-de WhatsApp se emite una sola vez y con la URL de `wa.me`, así que `## Contacto` tiene exactamente tres
-viñetas con labels distintos.
+ubicación), no de `footer.location` ni de `CONTACT_PHONE` formateado, que publican otro texto. La viñeta
+de WhatsApp lleva teléfono y URL de `wa.me` juntos, así que `## Contacto` tiene exactamente tres viñetas
+con labels distintos. La lista de founders sale de `team.members` filtrada por `founder: true`.
 
 **S2 — `/llms-full.txt`.** `GET /llms-full.txt` responde 200 con `text/plain; charset=utf-8`.
-Markdown con el contenido completo de la landing, `es` primero y `en` después, separados por una línea
-`---`. Por locale: `# <seo.titleDefault>`, blockquote con `seo.description`, hero (`hero.titleLine1` +
-`hero.titleLine2`, `hero.lede`), `## Integramos con` (las 8 plataformas de `integrations.platforms`),
-`## Servicios` (los 7 servicios con descripción y URL absoluta), `## Proyectos` (`projects.items[i]` con
-`name`, `type`, `description` y `stack`), `## Diagnóstico de integración` (las 6 filas `diagnostic.rows`
-como `- **label:** value`), `## Cómo trabajamos` (`process.steps[i]`), `## Criterio`
-(`criterio.intro`, `criterio.principles`, `criterio.companies`, `criterio.mission`, `criterio.pillars`),
-`## Equipo` (`team.members[i]` con `name`, `role`, `bio`, `linkedin`) y `## Contacto` (`contact.rows`).
-Mismo origen de contenido que S1; tampoco menciona `SAP`.
+Markdown de la landing completa para que un modelo no tenga que rastrear el sitio: `# <SITE_NAME>`,
+blockquote con `llms.intro`, hero (`hero.titleLine1` + `hero.titleLine2` y `hero.lede`) y luego
+`## Stack y plataformas`, `## Servicios` (los 7, con descripción y URL), `## Proyectos` (con tipo,
+descripción y stack), `## Diagnóstico de integración` (las 6 filas como `- **label:** value`),
+`## Cómo trabajamos` (etapas numeradas), `## Criterio` (intro, principios, empresas, misión y pilares),
+`## Equipo` (cada founder con rol, bio y LinkedIn), `## Contacto` y `## Enlaces`. Usa el mismo
+`buildLlmsInput` que `/llms.txt` y el mismo locale canónico (`es`), sin secciones inventadas: los
+títulos salen de los labels que ya existen en `messages`. Tampoco menciona `SAP`.
 
 **S3 — Política de crawlers.** `robots.ts` mantiene `userAgent: "*"` con `allow: "/"`, conserva
 `sitemap` y agrega grupos nombrados, todos con `allow: "/"` y sin `disallow`, para:
@@ -66,10 +73,10 @@ Mismo origen de contenido que S1; tampoco menciona `SAP`.
 archivo no publica la directiva `Host`: espera un hostname desnudo y no aporta nada sobre `sitemap`.
 
 **S4 — Datos estructurados por página.** El `@graph` del layout (Organization + WebSite + ItemList de
-servicios) suma: `email` en la Organization, y un nodo `Person` por miembro del equipo con `name`, `jobTitle`,
-`url` (LinkedIn de `team.members[i].linkedin`) y `worksFor` por `@id` a la Organization. `founder` solo
-referencia a quienes declaran `founder: true` en `messages` (hoy los tres co-founders), para no publicar un
-socio falso cuando la sección Equipo sume otro rol.
+servicios) suma: `email` en la Organization y `founder` como `Person` inline (`name`, `jobTitle`,
+`sameAs` al LinkedIn) derivados por `pickFounders`, que valida la forma de `team.members`. `founder`
+solo incluye a quienes declaran `founder: true` en `messages` (hoy los tres co-founders), para no
+publicar un socio falso cuando la sección Equipo sume otro rol.
 La home agrega su propio `WebPage` (`@id` = `${SITE_URL}/${locale}#webpage`) con `name`, `description`,
 `url`, `inLanguage`, `isPartOf` al WebSite y `about` a la Organization.
 El detalle de servicio agrega `WebPage` + `Service` + `BreadcrumbList` sitio → servicios → servicio,
@@ -92,22 +99,39 @@ estático; su URL (`/{locale}/opengraph-image`, con o sin hash de build) respond
 **S6 — `sitemap.xml`.** Cada entrada lleva `lastModified` del build y `alternates.languages` con
 `x-default` apuntando al locale por defecto.
 
-**S7 — Checks.** Vitest cubre los generadores puros (`llmsTxt`, `llms-full.txt`, grafos JSON-LD por página),
-`robots`, `openGraph`, `alternates` y `sitemap`. Playwright (`e2e/seo-llmo.spec.ts`) cubre lo servido:
+**S7 — Checks.** Vitest cubre los generadores puros (`seo/llms.ts`: `/llms.txt` y `/llms-full.txt` desde
+el mismo `buildLlmsInput`), los grafos JSON-LD por página, `robots`, `openGraph`, `alternates` y
+`sitemap`. Playwright (`e2e/seo-llmo.spec.ts`) cubre lo servido:
 `canonical` y `hreflang` con `x-default`, la imagen social pedida con ruta relativa (para que la resuelva
-`use.baseURL` y no producción) y respondiendo 200, JSON-LD parseable con los `@type` y la cantidad de `Person`
-esperados, la metadata social del detalle (`og:locale`, `og:site_name`, `og:image`, `og:image:alt`,
+`use.baseURL` y no producción) y respondiendo 200, JSON-LD parseable con los `@type` esperados, la
+metadata social del detalle (`og:locale`, `og:site_name`, `og:image`, `og:image:alt`,
 `twitter:card`, `twitter:image`), y `/llms.txt`, `/llms-full.txt`, `/robots.txt` y `/sitemap.xml`. El
 `webServer` de Playwright deriva de la misma base que `use.baseURL` para que la suite no pueda correr contra
 otra aplicación. `npm run build`, `npm run typecheck` y `npm run lint` en verde.
+
+**S8 — Consolidación con `main` (PR #35).** `main` ya trae `/llms.txt` (`src/app/seo/llms.ts` +
+`llms.txt/route.ts` + `llms.test.ts`) y founders inline en el JSON-LD, así que queda **una sola**
+implementación:
+- `/llms.txt` y `/llms-full.txt` salen de `seo/llms.ts` y del mismo `buildLlmsInput(messages)`: un solo
+  punto de cableado. Se borran `seo/llmsTxt.ts` y `__tests__/llmsTxt.test.ts`.
+- `Organization.founder` usa los `Person` inline de main filtrados por `founder: true`; no hay nodos
+  `Person` sueltos en el `@graph`.
+- Valores de contacto desde `contact.rows`; nunca `footer.location` ni `CONTACT_PHONE` formateado.
+- Se conserva lo que main no tenía: `email` en la Organization, `buildHomePageGraph`,
+  `buildServicePageGraph` con `@id` compartido, `robots` con crawlers de IA, `x-default` y
+  `lastModified` en el sitemap, `buildOpenGraph`/`buildTwitter`, `StructuredData` como único emisor de
+  JSON-LD, y `AGENTS.md` + guard de autoría.
+- Sin copy nuevo: los títulos de `/llms-full.txt` salen de labels que ya existen en `messages` (no se
+  agrega un namespace `llmsFull`).
 
 ## Tasks
 
 | ID | Specs | Ruta | Tarea | Commit |
 |---|---|---|---|---|
-| T1 | S1,S2,S3,S7 | inline | Generadores `llmsTxt`, rutas `/llms.txt` y `/llms-full.txt`, robots con crawlers de IA y tests unitarios | `ca681cd` `feat(seo): llms.txt, llms-full.txt y política de crawlers` |
-| T2 | S4,S7 | inline | Datos estructurados por página: `Person` del equipo, `WebPage`, `Service` y `BreadcrumbList`, con tests unitarios | `b483ff7` `feat(seo): datos estructurados por página y por servicio` |
-| T3 | S5,S6,S7 | inline | Cabecera (`x-default`, imágenes sociales con `alt` localizado), sitemap con `lastModified`, e2e y README | `8c3f8d2` `feat(seo): cabecera, imágenes sociales y sitemap` |
+| T1 | S1,S2,S3,S7 | inline | Generadores `llmsTxt`, rutas `/llms.txt` y `/llms-full.txt`, robots con crawlers de IA y tests unitarios | `363f385` `feat(seo): llms.txt, llms-full.txt y política de crawlers` |
+| T2 | S4,S7 | inline | Datos estructurados por página: `Person` del equipo, `WebPage`, `Service` y `BreadcrumbList`, con tests unitarios | `d5491cf` `feat(seo): datos estructurados por página y por servicio` |
+| T3 | S5,S6,S7 | inline | Cabecera (`x-default`, imágenes sociales con `alt` localizado), sitemap con `lastModified`, e2e y README | `d0c1141` `feat(seo): cabecera, imágenes sociales y sitemap` |
+| T4 | S8,S7 | inline | Consolidación con `main`: rebase sobre `origin/main`, una sola implementación de `/llms.txt` y `/llms-full.txt` sobre el mismo input, founders con flag y re-aplicación de lo propio | `refactor(seo): consolidar con la implementación de main` |
 
 ## Log
 
@@ -133,13 +157,13 @@ rechazó el launch (el texto de la tarea no llevaba el puntero `Spec: odd/tasks/
 con la instrucción explícita de no reintentar y escribir inline, así que T1, T2 y T3 se hicieron en el padre,
 de a una.
 
-**L6** (slice 1 — `ca681cd` `feat(seo): llms.txt, llms-full.txt y política de crawlers`):
+**L6** (slice 1 — `363f385` `feat(seo): llms.txt, llms-full.txt y política de crawlers`):
 `src/app/seo/llmsTxt.ts` (módulo puro: adapta los mensajes crudos con `pickServiceContent` y renderiza los dos
 documentos), las dos rutas estáticas y `robots.ts` con 16 crawlers nombrados. El harness marcó el slice en 647
 líneas autoradas; queda registrado acá como límite. Verificación del slice: `npx vitest run` 26/26 en los dos
 archivos nuevos, `typecheck` y `lint` en 0.
 
-**L7** (slice 2 — `b483ff7` `feat(seo): datos estructurados por página y por servicio`):
+**L7** (slice 2 — `d5491cf` `feat(seo): datos estructurados por página y por servicio`):
 `buildStructuredDataGraph` suma `email`, `founder` y los `Person`; se agregan `buildHomePageGraph` y
 `buildServicePageGraph`. El JSON-LD pasa a emitirse por un único componente (`seo/StructuredData.tsx`).
 **Corrección de spec**: S4 pedía `serviceType` en el `Service`, pero el único valor honesto disponible era el
@@ -169,7 +193,7 @@ corrieron contra otra app (`/llms.txt` devolvía 404). No se tocó ese proceso a
 en `:3100` (`npm run start -- -p 3100`) y la suite se corrió con
 `PLAYWRIGHT_BASE_URL=http://127.0.0.1:3100 npx playwright test`.
 
-**L11** (cierre — `8c3f8d2` `feat(seo): cabecera, imágenes sociales y sitemap`): verificación final del árbol
+**L11** (cierre — `d0c1141` `feat(seo): cabecera, imágenes sociales y sitemap`): verificación final del árbol
 completo, con los tres slices adentro:
 
 | Check | Resultado |
@@ -211,7 +235,7 @@ Pendiente de decisión del dueño (no bloquea): el `alt` de `og:image` de la hom
 7. **`founder` declaraba a todo el equipo.** Se agregó `founder: true` a los co-founders en `messages` y la
    Organization solo los referencia a ellos; el test cubre el caso de un miembro que no es socio.
 8. **La evidencia apuntaba a un commit huérfano.** El doc registraba `8a70ae0`, que quedó fuera de la rama
-   después del amend; ahora registra `8c3f8d2`.
+   después del amend; ahora registra `d0c1141`.
 9. **Checks faltantes.** `arrayContaining(["Person", "Person", "Person"])` colapsaba duplicados; ahora se
    cuentan con `filter`. Se agregaron `openGraph.test.ts` (openGraph, twitter, alternates y sitemap) y el e2e
    "el detalle no pierde la metadata social del layout" (`og:locale`, `og:site_name`, `og:image`,
@@ -225,3 +249,12 @@ Evidencia servida (no solo en memoria): `/llms.txt` con la cabecera exacta y tre
 `…/enterprise-integrations#service` con un solo `name` de servicio. Checks: `typecheck` 0 · `lint` 0 ·
 `vitest` **50/50** · `build` 0 desde `.next` limpio (dos veces seguidas) · `playwright` **57 pasan, 1 salteado**
 con `PLAYWRIGHT_PORT=3100`. `Risk: none`.
+
+**L13** (hallazgo: `origin/main` avanzó y solapa): al reescribir la autoría con `--reset-author`, `main` ya
+estaba en `9f01220` (PR #35 y #36) y **tenía** `src/app/llms.txt/route.ts`, `src/app/seo/llms.ts`, sus tests
+y founders en el JSON-LD: trabajo solapado con esta rama, en el mismo path. El primer rebase chocó y se
+abandonó sin pérdidas (la rama quedó intacta en su remoto y los artefactos del conflicto en `stash@{0}`); se
+rehízo con `git rebase --onto origin/main 4778de1`, con la política **main gana en los archivos que ya
+posee** (`llms.txt/route.ts`, `structuredData.ts`, `structuredData.test.ts`, `layout.tsx`) y lo propio
+re-aplicado en el commit de consolidación. `messages/*.json` fusionó solo: los flags `founder: true` de esta
+rama conviven con el namespace `llms` de main.

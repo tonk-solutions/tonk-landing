@@ -51,7 +51,7 @@ test.describe("head y datos estructurados", () => {
     expect(ogImage?.startsWith(SITE_URL)).toBe(true);
     await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
       "content",
-      /Tonk Solutions/i
+      /Tonk/,
     );
 
     // Ruta relativa a propósito: con la URL absoluta Playwright ignora
@@ -61,16 +61,22 @@ test.describe("head y datos estructurados", () => {
     expect(response.status()).toBe(200);
   });
 
-  test("la home publica Organization, WebSite, servicios y equipo", async ({ page }) => {
+  test("la home publica Organization, WebSite, servicios y los tres founders", async ({ page }) => {
     await page.goto("/es");
 
-    const types = typesOf(await readGraph(page, "structured-data"));
+    const graph = await readGraph(page, "structured-data");
+    const types = typesOf(graph);
     expect(types).toContain("Organization");
     expect(types).toContain("WebSite");
     expect(types).toContain("ItemList");
 
-    // `arrayContaining` colapsa duplicados: se cuentan los Person de verdad.
-    expect(types.filter((type) => type === "Person")).toHaveLength(3);
+    // Los founders van inline en la Organization, no como nodos sueltos del grafo.
+    const organization = graph["@graph"].find((node) => node["@type"] === "Organization");
+    const founders = organization?.founder as Array<{ "@type": string }> | undefined;
+
+    expect(founders).toHaveLength(3);
+    expect(founders?.every((person) => person["@type"] === "Person")).toBe(true);
+    expect(organization?.email).toBe("contact@tonksolutions.com.ar");
 
     const homePage = typesOf(await readGraph(page, "structured-data-home"));
     expect(homePage).toContain("WebPage");

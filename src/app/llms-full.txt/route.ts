@@ -1,26 +1,16 @@
-import es from "../../../messages/es.json";
-import en from "../../../messages/en.json";
-import { locales } from "@/i18n/locales";
-import {
-  buildLlmsFullTxt,
-  buildLlmsLocaleContent,
-  type LlmsMessages,
-} from "../seo/llmsTxt";
+import messages from "../../../messages/es.json";
+import { buildLlmsFullTxt, buildLlmsInput } from "../seo/llms";
 
-/**
- * `/llms-full.txt` — la landing completa en Markdown, un bloque por idioma
- * (spec S2). Mismo origen de contenido que `/llms.txt`.
- */
 export const dynamic = "force-static";
 
-const MESSAGES_BY_LOCALE: Record<string, LlmsMessages> = { es, en };
-
+/**
+ * `/llms-full.txt` — la landing completa en Markdown para que un modelo no tenga
+ * que rastrear el sitio. Mismo cableado que `/llms.txt`: `buildLlmsInput` es el
+ * único punto de traducción messages → builder, así los dos archivos no pueden
+ * desincronizarse.
+ */
 export function GET() {
-  const contents = locales.map((locale) =>
-    buildLlmsLocaleContent(locale, MESSAGES_BY_LOCALE[locale])
-  );
-
-  return new Response(buildLlmsFullTxt(contents), {
+  return new Response(buildLlmsFullTxt(buildLlmsInput(messages)), {
     headers: { "content-type": "text/plain; charset=utf-8" },
   });
 }

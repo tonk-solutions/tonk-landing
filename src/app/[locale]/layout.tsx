@@ -7,6 +7,9 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { resolveRequestLocale } from '@/i18n/requestLocale';
 import { buildStructuredDataGraph, pickFounders } from '../seo/structuredData';
+import { StructuredData } from '../seo/StructuredData';
+import { buildLanguageAlternates } from '../seo/alternates';
+import { buildOpenGraph, buildTwitter } from '../seo/openGraph';
 import type { ServiceContent } from '../services/catalog';
 
 const geistSans = Geist({
@@ -36,11 +39,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const keywords = t.raw('keywords') as string[];
   const ogTitle = t('ogTitle');
   const twitterTitle = t('twitterTitle');
-  const localeMap: Record<string, string> = {
-    es: "es_AR",
-    en: "en_US"
-  };
-  const ogLocale = localeMap[locale] || "es_AR";
+  const ogImageAlt = t('ogImageAlt');
+  const canonical = `${siteUrl}/${locale}`;
 
   return {
     metadataBase: new URL(siteUrl),
@@ -64,25 +64,22 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "max-snippet": -1,
       },
     },
-    openGraph: {
-      type: "website",
-      locale: ogLocale,
-      url: `${siteUrl}/${locale}`,
-      siteName,
+    openGraph: buildOpenGraph({
+      locale,
+      url: canonical,
       title: ogTitle,
       description,
-    },
-    twitter: {
-      card: "summary_large_image",
+      imageAlt: ogImageAlt,
+    }),
+    twitter: buildTwitter({
+      locale,
       title: twitterTitle,
       description,
-    },
+      imageAlt: ogImageAlt,
+    }),
     alternates: {
-      canonical: `${siteUrl}/${locale}`,
-      languages: {
-        'es': `${siteUrl}/es`,
-        'en': `${siteUrl}/en`,
-      },
+      canonical,
+      languages: buildLanguageAlternates(""),
     },
     category: "technology",
   };
@@ -139,11 +136,7 @@ export default async function LocaleLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body>
-        <script
-          id="structured-data"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredDataGraph) }}
-        />
+        <StructuredData id="structured-data" data={structuredDataGraph} />
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

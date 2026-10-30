@@ -10,6 +10,8 @@ export interface FounderInfo {
   name: string;
   role: string;
   linkedin: string;
+  /** Solo los co-founders se publican como `Organization.founder`. */
+  founder: boolean;
 }
 
 export interface OrganizationInfo {
@@ -51,7 +53,7 @@ export function pickFounders(members: unknown): FounderInfo[] {
   }
 
   return members.map((member, index) => {
-    const { name, role, linkedin } = (member ?? {}) as Partial<FounderInfo>;
+    const { name, role, linkedin, founder } = (member ?? {}) as Partial<FounderInfo>;
 
     if (
       typeof name !== "string" ||
@@ -66,7 +68,7 @@ export function pickFounders(members: unknown): FounderInfo[] {
       );
     }
 
-    return { name, role, linkedin };
+    return { name, role, linkedin, founder: founder === true };
   });
 }
 
@@ -130,12 +132,15 @@ export function buildStructuredDataGraph(input: StructuredDataInput) {
     sameAs: [input.organization.linkedinUrl, input.organization.instagramUrl].filter(Boolean),
     knowsAbout: KNOWS_ABOUT,
     slogan: input.organization.slogan,
-    founder: input.organization.founders.map((founder) => ({
-      "@type": "Person",
-      name: founder.name,
-      jobTitle: founder.role,
-      sameAs: [founder.linkedin],
-    })),
+    email: CONTACT_EMAIL,
+    founder: input.organization.founders
+      .filter((founder) => founder.founder)
+      .map((founder) => ({
+        "@type": "Person",
+        name: founder.name,
+        jobTitle: founder.role,
+        sameAs: [founder.linkedin],
+      })),
   };
 
   const websiteNode = {
@@ -157,12 +162,13 @@ export function buildStructuredDataGraph(input: StructuredDataInput) {
       const content = pickServiceContent(input.servicesList.servicesByBranch, entry);
       return {
         "@type": "Service",
+        "@id": serviceNodeId(input.locale, entry.slug),
         position: index + 1,
         name: content.title,
         description: content.description,
         provider: { "@id": ORGANIZATION_ID },
         areaServed: "Latin America",
-        url: `${SITE_URL}/${input.locale}/services/${entry.slug}`,
+        url: servicePageUrl(input.locale, entry.slug),
       };
     }),
   };
@@ -170,5 +176,124 @@ export function buildStructuredDataGraph(input: StructuredDataInput) {
   return {
     "@context": "https://schema.org",
     "@graph": [organizationNode, websiteNode, servicesListNode],
+  };
+}
+
+function servicePageUrl(locale: string, slug: string): string {
+  return `${SITE_URL}/${locale}/services/${slug}`;
+}
+
+/**
+ * Id compartido por el `Service` del ItemList y el `Service` de la página de
+ * detalle: para un consumidor son la misma entidad, no dos.
+ */
+function serviceNodeId(locale: string, slug: string): string {
+  return `${servicePageUrl(locale, slug)}#service`;
+}
+
+interface WebPageInput {
+  pageUrl: string;
+  name: string;
+  description: string;
+  inLanguage: string;
+}
+
+function buildWebPageNode(input: WebPageInput) {
+  return {
+    "@type": "WebPage",
+    "@id": `${input.pageUrl}#webpage`,
+    url: input.pageUrl,
+    name: input.name,
+    description: input.description,
+    inLanguage: input.inLanguage,
+    isPartOf: { "@id": WEBSITE_ID },
+    about: { "@id": ORGANIZATION_ID },
+  };
+}
+
+/**
+ * Grafo de la home: solo el `WebPage` propio. La Organization, el WebSite y los
+ * founders ya viajan en el grafo del layout y se enlazan por `@id`.
+ */
+export function buildHomePageGraph(input: {
+  locale: string;
+  name: string;
+  description: string;
+  inLanguage: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      buildWebPageNode({
+        pageUrl: `${SITE_URL}/${input.locale}`,
+        name: input.name,
+        description: input.description,
+        inLanguage: input.inLanguage,
+      }),
+    ],
+  };
+}
+
+/**
+ * Grafo del detalle de servicio: `WebPage` + `Service` + `BreadcrumbList`
+ * enlazados por `@id` al grafo del layout. El `Service` usa el nombre del
+ * catálogo —el mismo del ItemList, para no publicar dos entidades
+ * contradictorias— y el `WebPage` usa el título SEO de la página.
+ */
+export function buildServicePageGraph(input: {
+  locale: string;
+  slug: string;
+  pageName: string;
+  pageDescription: string;
+  serviceName: string;
+  serviceDescription: string;
+  inLanguage: string;
+  siteName: string;
+  servicesLabel: string;
+}) {
+  const pageUrl = servicePageUrl(input.locale, input.slug);
+  const homeUrl = `${SITE_URL}/${input.locale}`;
+  const serviceId = serviceNodeId(input.locale, input.slug);
+  const breadcrumbId = `${pageUrl}#breadcrumb`;
+
+  const webPage = {
+    ...buildWebPageNode({
+      pageUrl,
+      name: input.pageName,
+      description: input.pageDescription,
+      inLanguage: input.inLanguage,
+    }),
+    breadcrumb: { "@id": breadcrumbId },
+    mainEntity: { "@id": serviceId },
+  };
+
+  const service = {
+    "@type": "Service",
+    "@id": serviceId,
+    name: input.serviceName,
+    description: input.serviceDescription,
+    url: pageUrl,
+    provider: { "@id": ORGANIZATION_ID },
+    areaServed: "Latin America",
+  };
+
+  const breadcrumb = {
+    "@type": "BreadcrumbList",
+    "@id": breadcrumbId,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: input.siteName, item: homeUrl },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: input.servicesLabel,
+        item: `${homeUrl}#s03`,
+      },
+      { "@type": "ListItem", position: 3, name: input.pageName, item: pageUrl },
+    ],
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [webPage, service, breadcrumb],
   };
 }

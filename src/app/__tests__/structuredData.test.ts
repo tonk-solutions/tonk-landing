@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildStructuredDataGraph, pickFounders } from "../seo/structuredData";
+import { buildHomePageGraph, buildServicePageGraph, buildStructuredDataGraph, pickFounders } from "../seo/structuredData";
 import messages from "../../../messages/es.json";
 
 interface PersonNode {
@@ -120,5 +120,86 @@ describe("pickFounders", () => {
 
   it("falla si team.members no es un array", () => {
     expect(() => pickFounders({})).toThrow(/tiene que ser un array/);
+  });
+});
+
+/**
+ * Los grafos por página se enlazan al del layout por `@id`: si esa referencia se
+ * rompe, cada página publica entidades sueltas y el servicio aparece dos veces.
+ */
+describe("grafos por página", () => {
+  interface Node {
+    "@type": string;
+    "@id"?: string;
+    [key: string]: unknown;
+  }
+
+  function nodes(graph: unknown): Node[] {
+    return (graph as { "@graph": Node[] })["@graph"];
+  }
+
+  function first(graph: unknown, type: string): Node {
+    const node = nodes(graph).find((item) => item["@type"] === type);
+
+    if (!node) {
+      throw new Error(`falta el nodo ${type}`);
+    }
+
+    return node;
+  }
+
+  const siteGraph = buildStructuredDataGraph(BASE_INPUT);
+  const webSite = first(siteGraph, "WebSite");
+  const pageUrl = "https://tonksolutions.com.ar/es/services/enterprise-integrations";
+
+  it("la home publica su WebPage colgado del WebSite", () => {
+    const webPage = first(
+      buildHomePageGraph({
+        locale: "es",
+        name: "Tonk Solutions",
+        description: "Consultora de ingeniería de software senior.",
+        inLanguage: "es-AR",
+      }),
+      "WebPage",
+    );
+
+    expect(webPage["@id"]).toBe("https://tonksolutions.com.ar/es#webpage");
+    expect(webPage.isPartOf).toEqual({ "@id": webSite["@id"] });
+  });
+
+  const detail = buildServicePageGraph({
+    locale: "es",
+    slug: "enterprise-integrations",
+    pageName: "Integraciones Enterprise en LatAm",
+    pageDescription: "Integraciones enterprise complejas para empresas de la región.",
+    serviceName: "Integraciones y Sistemas Enterprise",
+    serviceDescription: "Conectamos sistemas que no hablan entre sí.",
+    inLanguage: "es-AR",
+    siteName: "Tonk Solutions",
+    servicesLabel: "Servicios",
+  });
+
+  it("el Service del detalle comparte @id y nombre con el del ItemList", () => {
+    const service = first(detail, "Service");
+    const entries = first(siteGraph, "ItemList").itemListElement as Node[];
+    const entry = entries.find((item) => item.url === service.url);
+
+    expect(service["@id"]).toBe(`${pageUrl}#service`);
+    expect(service["@id"]).toBe(entry?.["@id"]);
+    expect(service.name).toBe(entry?.name);
+  });
+
+  it("el breadcrumb va sitio > servicios > página y el WebPage apunta al Service", () => {
+    const items = first(detail, "BreadcrumbList").itemListElement as Node[];
+    const webPage = first(detail, "WebPage");
+    const service = first(detail, "Service");
+
+    expect(items.map((item) => item.name)).toEqual([
+      "Tonk Solutions",
+      "Servicios",
+      "Integraciones Enterprise en LatAm",
+    ]);
+    expect(items.map((item) => item.position)).toEqual([1, 2, 3]);
+    expect(webPage.mainEntity).toEqual({ "@id": service["@id"] });
   });
 });
