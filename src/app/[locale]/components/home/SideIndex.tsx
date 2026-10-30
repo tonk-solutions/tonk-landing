@@ -4,22 +4,27 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import styles from "./SideIndex.module.css";
 
+type SideIndexItem = {
+  number: string;
+  label: string;
+};
+
 type SideIndexProps = {
-  /** Números visibles: 01 a 09. */
-  numbers: string[];
+  /** Número y nombre visible de cada sección, en orden. */
+  items: SideIndexItem[];
 };
 
 /**
  * Índice lateral de secciones. Marca con `aria-current` la sección visible y
  * aparece solo desde 1280px, donde hay margen suficiente para el riel.
  */
-export function SideIndex({ numbers }: SideIndexProps) {
+export function SideIndex({ items }: SideIndexProps) {
   const [active, setActive] = useState(0);
   const tA11y = useTranslations("a11y");
 
   useEffect(() => {
-    const sections = numbers
-      .map((_, index) => document.getElementById(`s${String(index + 1).padStart(2, "0")}`))
+    const sections = items
+      .map(({ number }) => document.getElementById(`s${number}`))
       .filter((section): section is HTMLElement => section !== null);
 
     if (sections.length === 0 || typeof IntersectionObserver === "undefined") return;
@@ -39,20 +44,21 @@ export function SideIndex({ numbers }: SideIndexProps) {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, [numbers]);
+  }, [items]);
 
   return (
     <nav className={styles.rail} aria-label={tA11y("sideIndex")}>
       <ol className={styles.list}>
-        {numbers.map((number, index) => (
+        {items.map(({ number, label }, index) => (
           <li key={number}>
             <a
               className={styles.item}
-              href={`#s${String(index + 1).padStart(2, "0")}`}
+              href={`#s${number}`}
               aria-current={index === active ? "true" : undefined}
             >
               <span className="sr-only">{tA11y("sectionPrefix")}</span>
               {number}
+              <span className={styles.label}>{label}</span>
             </a>
           </li>
         ))}

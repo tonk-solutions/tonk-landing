@@ -17,7 +17,17 @@ import { CriterioSection } from "./components/home/CriterioSection";
 import { TeamSection } from "./components/home/TeamSection";
 import { ContactSection } from "./components/home/ContactSection";
 
-const SECTION_NUMBERS = ["01", "02", "03", "04", "05", "06", "07", "08", "09"];
+const SECTION_NAMESPACES = [
+  "hero",
+  "integrations",
+  "services",
+  "projects",
+  "diagnostic",
+  "process",
+  "criterio",
+  "team",
+  "contact",
+] as const;
 
 /**
  * Home de Tonk: nueve secciones numeradas que se leen como el documento técnico
@@ -27,6 +37,7 @@ const SECTION_NUMBERS = ["01", "02", "03", "04", "05", "06", "07", "08", "09"];
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const locale = resolveRequestLocale((await params).locale);
 
+  const t = await getTranslations();
   const tContact = await getTranslations("contact");
   const tSeo = await getTranslations({ locale, namespace: "seo" });
   const tSchema = await getTranslations({ locale, namespace: "schema" });
@@ -38,11 +49,18 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     inLanguage: tSchema("inLanguage"),
   });
 
+  // El índice necesita número y label de cada sección; los labels ya viven en
+  // los namespaces de i18n, así que los derivamos del mismo mensaje raíz.
+  const sideIndexItems = SECTION_NAMESPACES.map((namespace, index) => ({
+    number: String(index + 1).padStart(2, "0"),
+    label: t(`${namespace}.label`),
+  }));
+
   return (
     <>
       <StructuredData id="structured-data-home" data={webPageGraph} />
       <Header />
-      <SideIndex numbers={SECTION_NUMBERS} />
+      <SideIndex items={sideIndexItems} />
 
       <main id="main">
         <HeroSection />
