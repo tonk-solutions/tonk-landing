@@ -47,14 +47,14 @@ para mantenerlas queda documentado.
 | ID | Specs | Ruta | Tarea | Commit |
 |---|---|---|---|---|
 | T1 | S4 | inline | Baseline en `9f01220`: `npm ci`, `npm audit`, `npm ls --all`, typecheck, lint, tests, build y e2e | — |
-| T2 | S1,S2,S3 | inline | Subir dependencias directas (`next`, `sharp`, `next-intl`, `vitest`) y refrescar transitivos con `npm update` | `fix(deps): cerrar las 75 alertas de Dependabot` |
-| T3 | S7 | inline | `allowScripts` a las versiones resueltas | idem T2 |
+| T2 | S1,S2,S3 | inline | Subir dependencias directas (`next`, `sharp`, `next-intl`, `vitest`) y refrescar transitivos con `npm update` | `6b65f92` |
+| T3 | S7 | inline | `allowScripts` a las versiones resueltas | `6b65f92` |
 | T4 | S1,S4,S5 | inline | Verificación de la ronda 0: alerta por alerta, `npm audit`, typecheck, lint, tests, build y e2e | — |
-| T5 | S2 | inline | Fijar `yaml` 2.x como devDependency: el árbol quedaba inválido con yaml 1.10.3 en la raíz | ronda 1 |
-| T6 | S6 | inline | Declarar el piso de Node: `engines.node`, `.nvmrc`, `NODE_VERSION` en `netlify.toml` y requisito en `SETUP.md` | ronda 1 |
-| T7 | S7 | inline | `allowScripts` por nombre, sin la entrada muerta de `sharp`, con `fsevents` incluido y el procedimiento documentado | ronda 1 |
-| T8 | S5 | inline | Re-verificar la instalación limpia por el camino real (`npm ci` sin flags) y corregir la evidencia | ronda 1 |
-| T9 | S2 | inline | Sacar el alias `@data` de `vitest.config.ts` (apunta a un `./data` inexistente) | ronda 1 |
+| T5 | S2 | inline | Fijar `yaml` 2.x como devDependency: el árbol quedaba inválido con yaml 1.10.3 en la raíz | `d77f505` |
+| T6 | S6 | inline | Declarar el piso de Node: `engines.node`, `.nvmrc`, `NODE_VERSION` en `netlify.toml` y requisito en `SETUP.md` | `d77f505` |
+| T7 | S7 | inline | `allowScripts` por nombre, sin la entrada muerta de `sharp`, con `fsevents` incluido y el procedimiento documentado | `d77f505` |
+| T8 | S5 | inline | Re-verificar la instalación limpia por el camino real (`npm ci` sin flags) y corregir la evidencia | `d77f505` |
+| T9 | S2 | inline | Sacar el alias `@data` de `vitest.config.ts` (apunta a un `./data` inexistente) | `d77f505` |
 
 ## Log
 
@@ -82,10 +82,12 @@ typecheck 0 · lint 0 · `vitest` 35/35 · build 26 páginas estáticas / 23 rut
 e2e **59 pasan, 1 salteado** (el nav de escritorio en el proyecto mobile, salteado a
 propósito).
 El puerto 3000 estaba ocupado por un `next start` del clon principal
-(`~/Desarrollo/Tonk/Tools/tonk-landing`, 9 h de vida), y Playwright lo reusa por
-`reuseExistingServer`, así que los e2e se corren contra un `next start` propio en 3210-3213
-con `PLAYWRIGHT_BASE_URL`. Sin eso, 16 tests fallan por servir un build viejo del clon
-principal: no es un defecto del repo.
+(`~/Desarrollo/Tonk/Tools/tonk-landing`, 9 h de vida), y Playwright lo reusaba por
+`reuseExistingServer`, con lo que la suite validaba ese build viejo: 16 tests fallaban por
+eso y no por el repo. En su momento se rodeó levantando un `next start` propio en
+3210-3213 con `PLAYWRIGHT_BASE_URL`; desde el rebase sobre `b5f9202` el
+`playwright.config.ts` de `main` deriva `baseURL` y `webServer.url` del mismo origen, así
+que alcanza con `PLAYWRIGHT_PORT=<puerto libre>` (ver L10).
 
 **L5** (evidencia, cambio):
 - `next` `^16.1.6` → `^16.4.3` (resuelto 16.4.3). Arrastra `postcss` anidado de
@@ -148,7 +150,7 @@ cinco corridas posteriores (serial `--workers=1` 8/8, paralelo ×2, frío y cali
   `git archive 9f01220` + `npm ci`).
 - `npm install-scripts ls`: sin scripts pendientes de revisión.
 - typecheck 0 · lint 0 · `vitest` 35/35 · build 26 páginas / 23 rutas · e2e **59 pasan,
-  1 salteado** contra `next start` propio en 3213, igual que el base.
+  1 salteado** contra un `next start` propio en 3213, igual que el base de ese momento.
 
 **L9** (fragilidad conocida, no corregida en esta ronda): `e2e/landing.spec.ts:88` hace
 click sobre `#s03 button[aria-expanded]` inmediatamente después del `goto`, sin ninguna
@@ -156,3 +158,20 @@ señal de hidratación, y `playwright.config.ts` deja `workers` indefinido fuera
 que en una máquina cargada el click puede llegar antes de que React enganche el handler
 (es el flake de L6). No es regresión de esta ronda. Si se quiere cerrar: esperar una señal
 de hidratación antes del primer click y acotar los workers en local.
+
+**L10** (rebase sobre el `main` nuevo y evidencia final):
+- `main` avanzó durante la ronda: `9f01220` → `b5f9202` (PR #37 de SEO/LLMO, más
+  `e95239f`, el guard de autoría). La rama se rebaseó sobre ese base y el contenido de los
+  dos commits no cambió. Hashes finales: **`6b65f92`** (upgrade) y **`d77f505`**
+  (correcciones de la ronda 1); los intermedios quedaron inalcanzables.
+- Re-verificación completa sobre el base nuevo: `npm install` no modifica el lockfile ·
+  `npm ls --all` 0 · `npm audit` 0 · alerta por alerta 0 de 75 · typecheck 0 · lint 0 ·
+  `vitest` **65/65** en 7 archivos (el base nuevo suma `scripts/check-authors.test.mjs` y
+  los tests de SEO) · build OK · e2e **77 pasan, 1 salteado**.
+- El `playwright.config.ts` del `main` nuevo deriva `baseURL` y `webServer.url` del mismo
+  origen y acepta `PLAYWRIGHT_PORT`, así que el rodeo manual de L4 quedó obsoleto: los e2e
+  corren con `PLAYWRIGHT_PORT=3214` sin tocar el `next start` del clon principal.
+- **Autoría** (regla de `AGENTS.md`, nueva en `main`): autor
+  `Rodrigo Hernandez <39744836+rodrigoenzohernandez@users.noreply.github.com>` fijado con
+  `--author` commit por commit, sin tocar `git config`; el committer queda en la
+  configuración del clon. `npm run check:authors` → "2 commit(s) con la autoría correcta."
