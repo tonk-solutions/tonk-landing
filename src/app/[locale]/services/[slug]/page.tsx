@@ -9,6 +9,10 @@ import EnterpriseIntegrationsLanding from "./EnterpriseIntegrationsLanding";
 import { Link as LocaleLink, routing } from "@/i18n/routing";
 import { resolveRequestLocale } from "@/i18n/requestLocale";
 import { SITE_NAME, SITE_URL, WHATSAPP_URL } from "@/app/constants";
+import { buildServicePageGraph } from "@/app/seo/structuredData";
+import { StructuredData } from "@/app/seo/StructuredData";
+import { buildLanguageAlternates } from "@/app/seo/alternates";
+import { buildOpenGraph, buildTwitter } from "@/app/seo/openGraph";
 import {
   getServiceEntry,
   getServiceSlugs,
@@ -55,6 +59,27 @@ async function resolveServiceContent(locale: string, slug: string) {
   return { entry, content: pickServiceContent(servicesByBranch, entry) };
 }
 
+/**
+ * Título y descripción SEO del detalle. La landing de integraciones enterprise
+ * tiene copy propio, así que la metadata y el JSON-LD leen de la misma fuente y
+ * no se pueden desincronizar.
+ */
+async function resolveServiceSeo(locale: string, slug: string, content: ServiceContent) {
+  if (slug !== ENTERPRISE_INTEGRATIONS_SLUG) {
+    return { title: content.title, description: content.description };
+  }
+
+  const tLandingMeta = await getTranslations({
+    locale,
+    namespace: "landing.enterpriseIntegrations.meta",
+  });
+
+  return {
+    title: tLandingMeta("title"),
+    description: tLandingMeta("description"),
+  };
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -70,37 +95,23 @@ export async function generateMetadata({
 
   const { content } = resolved;
   const canonical = `${SITE_URL}/${locale}/services/${slug}`;
-
-  let title = content.title;
-  let description = content.description;
-
-  if (slug === ENTERPRISE_INTEGRATIONS_SLUG) {
-    const tLandingMeta = await getTranslations({
-      locale,
-      namespace: "landing.enterpriseIntegrations.meta",
-    });
-    title = tLandingMeta("title");
-    description = tLandingMeta("description");
-  }
+  const { title, description } = await resolveServiceSeo(locale, slug, content);
 
   return {
     title,
     description,
     alternates: {
       canonical,
-      languages: {
-        es: `${SITE_URL}/es/services/${slug}`,
-        en: `${SITE_URL}/en/services/${slug}`,
-        "x-default": `${SITE_URL}/es/services/${slug}`,
-      },
+      languages: buildLanguageAlternates(`/services/${slug}`),
     },
-    openGraph: {
-      type: "website",
+    openGraph: buildOpenGraph({
+      locale,
       url: canonical,
-      siteName: SITE_NAME,
       title,
       description,
-    },
+      imageAlt: title,
+    }),
+    twitter: buildTwitter({ locale, title, description, imageAlt: title }),
   };
 }
 
@@ -118,11 +129,29 @@ export default async function ServicePage({
     notFound();
   }
 
+  const { content } = resolved;
+  const { title, description } = await resolveServiceSeo(locale, slug, content);
+  const tSchema = await getTranslations({ locale, namespace: "schema" });
+  const tServices = await getTranslations({ locale, namespace: "services" });
+
+  const serviceGraph = buildServicePageGraph({
+    locale,
+    slug,
+    pageName: title,
+    pageDescription: description,
+    serviceName: content.title,
+    serviceDescription: content.description,
+    inLanguage: tSchema("inLanguage"),
+    siteName: SITE_NAME,
+    servicesLabel: tServices("label"),
+  });
+
   if (slug === ENTERPRISE_INTEGRATIONS_SLUG) {
     return (
       <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
         <Header />
         <main id="main" role="main" style={{ width: "100%" }}>
+          <StructuredData id="structured-data-service" data={serviceGraph} />
           <EnterpriseIntegrationsLanding locale={locale} />
         </main>
         <Footer />
@@ -130,7 +159,6 @@ export default async function ServicePage({
     );
   }
 
-  const { content } = resolved;
   const tDetail = await getTranslations({ locale, namespace: "services.detail" });
   const ServiceIcon = iconMap[content.icon] || Code;
 
@@ -138,6 +166,7 @@ export default async function ServicePage({
     <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
       <Header />
       <main id="main" role="main" style={{ width: "100%" }}>
+        <StructuredData id="structured-data-service" data={serviceGraph} />
         <Box
           as="section"
           pt={{ base: 28, md: 36 }}

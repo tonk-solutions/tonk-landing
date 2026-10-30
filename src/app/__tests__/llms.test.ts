@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildLlmsInput, buildLlmsTxt } from "../seo/llms";
+import { buildLlmsFullTxt, buildLlmsInput, buildLlmsTxt } from "../seo/llms";
 import messages from "../../../messages/es.json";
 
 /**
@@ -51,12 +51,27 @@ describe("buildLlmsTxt", () => {
     expect(text).toContain("ARCA");
   });
 
-  it("etiqueta el contacto con las cadenas de los mensajes y resuelve la URL del sitio", () => {
+  it("toma los datos de contacto de contact.rows, no de footer.location ni CONTACT_PHONE", () => {
     expect(text).toContain("- Email: contact@tonksolutions.com.ar");
-    expect(text).toContain("- WhatsApp: +54-9-11-2390-8349");
-    expect(text).toContain("- Ubicación: Buenos Aires, AR");
+    expect(text).toContain(
+      "- WhatsApp: +54 9 11 2390-8349 (https://wa.me/5491123908349)",
+    );
+    expect(text).toContain("- Ubicación: Buenos Aires, Argentina");
+    // Las otras dos fuentes del mismo dato tienen otro formato: si alguna vuelve
+    // a colarse, el archivo publica dos versiones del mismo hecho.
+    expect(text).not.toContain("Buenos Aires, AR");
+    expect(text).not.toContain("+54-9-11-2390-8349");
     expect(text).toContain("https://tonksolutions.com.ar/en");
     expect(text).not.toContain("{url}");
+  });
+
+  it("publica exactamente tres líneas de contacto con labels distintos", () => {
+    const block = text.split(`## ${messages.llms.contactHeading}`)[1].split("\n## ")[0];
+    const lines = block.split("\n").filter((line) => line.startsWith("- "));
+    const labels = lines.map((line) => line.replace(/^- ([^:]+):.*$/, "$1"));
+
+    expect(lines).toHaveLength(3);
+    expect(new Set(labels).size).toBe(3);
   });
 
   it("no contiene Ignacio ni Sileo", () => {
@@ -70,5 +85,73 @@ describe("buildLlmsTxt", () => {
     expect(text).toContain("## Proyectos");
     expect(text).toContain("## Contacto");
     expect(text).toContain("## Enlaces");
+  });
+});
+
+/**
+ * `/llms-full.txt` sale del mismo `buildLlmsInput`, así que hereda el contacto de
+ * `contact.rows` y no puede publicar un dato distinto al de `/llms.txt`.
+ */
+describe("buildLlmsFullTxt", () => {
+  const full = buildLlmsFullTxt(buildLlmsInput(messages));
+  const branches = [...messages.services.craft.services, ...messages.services.talent.services];
+
+  it("arranca con el título, el resumen y el hero", () => {
+    expect(full.startsWith("# Tonk Solutions")).toBe(true);
+    expect(full).toContain(`> ${messages.llms.intro}`);
+    expect(full).toContain(`${messages.hero.titleLine1} ${messages.hero.titleLine2}`);
+    expect(full).toContain(messages.hero.lede);
+  });
+
+  it("publica todas las secciones de la landing", () => {
+    for (const heading of [
+      messages.llms.stackHeading,
+      messages.llms.servicesHeading,
+      messages.llms.projectsHeading,
+      messages.diagnostic.label,
+      messages.process.label,
+      messages.criterio.label,
+      messages.team.label,
+      messages.llms.contactHeading,
+      messages.llms.linksHeading,
+    ]) {
+      expect(full).toContain(`## ${heading}`);
+    }
+  });
+
+  it("incluye cada servicio, proyecto, etapa y fila del diagnóstico", () => {
+    for (const service of branches) {
+      expect(full).toContain(`### ${service.title}`);
+      expect(full).toContain(service.description);
+    }
+
+    for (const project of messages.projects.items) {
+      expect(full).toContain(`### ${project.name}`);
+      expect(full).toContain(project.stack);
+    }
+
+    messages.process.steps.forEach((step, index) => {
+      expect(full).toContain(`${index + 1}. **${step.title}** — ${step.description}`);
+    });
+
+    for (const row of messages.diagnostic.rows) {
+      expect(full).toContain(`- **${row.label}:** ${row.value}`);
+    }
+  });
+
+  it("publica a los founders con su bio y su LinkedIn", () => {
+    for (const member of messages.team.members) {
+      expect(full).toContain(`### ${member.name}`);
+      expect(full).toContain(member.bio);
+      expect(full).toContain(member.linkedin);
+    }
+  });
+
+  it("hereda el contacto de contact.rows y no deja placeholders", () => {
+    expect(full).toContain("- **Ubicación:** Buenos Aires, Argentina");
+    expect(full).toContain("- **WhatsApp:** https://wa.me/5491123908349");
+    expect(full).not.toContain("Buenos Aires, AR");
+    expect(full).not.toContain("{url}");
+    expect(full).not.toMatch(/\bSAP\b/i);
   });
 });

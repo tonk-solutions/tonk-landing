@@ -10,6 +10,21 @@ const systemChromium = "/usr/bin/chromium";
 const chromiumPath =
   process.env.PLAYWRIGHT_CHROMIUM_PATH ?? (existsSync(systemChromium) ? systemChromium : undefined);
 
+/**
+ * `baseURL` y el `webServer` salen del mismo origen. Si divergen, Playwright
+ * reutiliza un server (o levanta uno) y los tests pegan contra otro: con un
+ * `next-server` ajeno escuchando en el puerto, la suite valida otra aplicación.
+ *
+ * - `PLAYWRIGHT_BASE_URL` apunta la suite a un origen ya existente.
+ * - `PLAYWRIGHT_PORT` levanta este build en un puerto propio (útil cuando el
+ *   3000 está ocupado por otro worktree).
+ */
+const baseURL =
+  process.env.PLAYWRIGHT_BASE_URL ??
+  `http://127.0.0.1:${process.env.PLAYWRIGHT_PORT ?? "3000"}`;
+const port =
+  baseURL.match(/:(\d+)\/?$/)?.[1] ?? process.env.PLAYWRIGHT_PORT ?? "3000";
+
 export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
@@ -18,7 +33,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: [["list"]],
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000",
+    baseURL,
     trace: "on-first-retry",
   },
   projects: [
@@ -40,8 +55,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run build && npm run start",
-    url: "http://127.0.0.1:3000/es",
+    command: `npm run build && npm run start -- -p ${port}`,
+    url: `${baseURL}/es`,
     reuseExistingServer: !process.env.CI,
     timeout: 240_000,
   },

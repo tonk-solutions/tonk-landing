@@ -1,0 +1,7 @@
+#!/bin/sh
+# Regla de AGENTS.md: sobre main, el commit va a nombre de Rodrigo Hernandez.
+# Se fija por commit con `--author`, así que la config del clon no se toca.
+branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || exit 0
+[ "$branch" = "main" ] || exit 0
+
+exec node scripts/check-authors.mjs --author-ident

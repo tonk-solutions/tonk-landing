@@ -51,9 +51,46 @@ Abrir [http://localhost:3000](http://localhost:3000) en el navegador para ver el
 └── package.json          # Dependencias y scripts
 ```
 
+## SEO y LLMO
+
+Todo lo que leen buscadores y modelos se genera en build desde `messages/*.json`,
+`src/app/services/catalog.ts` y `src/app/constants.ts`: no hay copy duplicado ni
+archivos mantenidos a mano.
+
+| Superficie | Ruta | Código |
+|---|---|---|
+| Metadata por idioma (canonical, `hreflang` + `x-default`, Open Graph y Twitter) | todas | `src/app/[locale]/layout.tsx`, `src/app/seo/openGraph.ts`, `src/app/seo/alternates.ts` |
+| Datos estructurados: Organization, WebSite, servicios y equipo | todas | `src/app/[locale]/layout.tsx` |
+| `WebPage` de la home | `/{locale}` | `src/app/[locale]/page.tsx` |
+| `WebPage` + `Service` + `BreadcrumbList` del detalle | `/{locale}/services/{slug}` | `src/app/[locale]/services/[slug]/page.tsx` |
+| `robots.txt` con la política de crawlers de IA | `/robots.txt` | `src/app/robots.ts` |
+| `sitemap.xml` con `lastmod` y `x-default` | `/sitemap.xml` | `src/app/sitemap.ts` |
+| Índice curado para modelos | `/llms.txt` | `src/app/llms.txt/route.ts` |
+| Contenido completo en Markdown (es y en) | `/llms-full.txt` | `src/app/llms-full.txt/route.ts` |
+| Imagen social por idioma | `/{locale}/opengraph-image` | `src/app/[locale]/opengraph-image.tsx` |
+
+El JSON-LD se emite siempre con `<StructuredData>`, el único componente que usa
+`dangerouslySetInnerHTML` porque el payload es JSON propio y nunca entrada de
+usuario.
+
+Verificación:
+
+```bash
+npx vitest run        # generadores de llms.txt, llms-full.txt, JSON-LD y robots
+npm run build         # prerenderiza llms.txt, robots.txt y sitemap.xml
+npx playwright test   # head y artefactos realmente servidos (e2e/seo-llmo.spec.ts)
+```
+
 ## Rendimiento e imágenes
 
 El build usa el optimizador de `next/image` (Sharp) para avatares y assets locales. Si despliegas en un entorno sin runtime de Node para optimización (p. ej. export estático puro), puede ser necesario volver a `images: { unoptimized: true }` en `next.config.js` o servir tamaños fijos vía CDN.
+
+## Reglas del repositorio
+
+La autoría de los commits y PRs que llegan a `main` está fijada en
+[`AGENTS.md`](./AGENTS.md): va a nombre de Rodrigo Hernandez por el deploy de Netlify.
+Se activa una vez por clon con `npm run setup:hooks`, y se verifica con
+`npm run check:authors`.
 
 ## Contacto
 

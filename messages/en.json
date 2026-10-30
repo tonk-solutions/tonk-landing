@@ -253,6 +253,7 @@
       {
         "name": "Matías Castillo",
         "role": "Co-Founder · Financial Systems Lead",
+        "founder": true,
         "bio": "App Owner at BBVA, in charge of critical financial systems handling millions of daily transactions. He understands what real technical responsibility means in environments with no margin for error.",
         "initials": "MC",
         "linkedin": "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/"
@@ -260,6 +261,7 @@
       {
         "name": "Nicolás Gómez",
         "role": "Co-Founder · Core Banking",
+        "founder": true,
         "bio": "A track record at Santander and ICBC building and evolving core banking products and highly critical transactional systems. A specialist in architectures that cannot fail.",
         "initials": "NG",
         "linkedin": "https://www.linkedin.com/in/nicolas-gomez-467b26141/"
@@ -267,6 +269,7 @@
       {
         "name": "Rodrigo Hernandez",
         "role": "Co-Founder · Platform Engineering",
+        "founder": true,
         "bio": "Experience building scalable cloud-native platforms. A reference in microservice architectures and distributed solutions.",
         "initials": "RH",
         "linkedin": "https://www.linkedin.com/in/rodrigoenzohernandez/"
