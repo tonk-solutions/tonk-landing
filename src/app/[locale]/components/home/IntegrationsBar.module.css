@@ -27,10 +27,10 @@
 
 .num {
   font-family: var(--mono);
-  font-size: 22px;
+  font-size: var(--t-detail);
   line-height: 1;
   letter-spacing: 0.02em;
-  color: var(--accent);
+  color: var(--muted);
   vertical-align: -2px;
 }
 
