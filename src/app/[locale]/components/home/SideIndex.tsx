@@ -5,18 +5,23 @@ import { useTranslations } from "next-intl";
 import styles from "./SideIndex.module.css";
 
 type SideIndexItem = {
+  /** Número de dos dígitos, tomado de `messages.*.number`. */
   number: string;
+  /** Nombre corto de la sección para el riel (`messages.*.indexLabel`). */
   label: string;
+  /** Ancla de la sección, con el `#`. */
+  href: string;
 };
 
 type SideIndexProps = {
-  /** Número y nombre visible de cada sección, en orden. */
   items: SideIndexItem[];
 };
 
 /**
- * Índice lateral de secciones. Marca con `aria-current` la sección visible y
- * aparece solo desde 1280px, donde hay margen suficiente para el riel.
+ * Índice lateral: el nombre de cada sección se lee en reposo, no hace falta
+ * pasar el mouse. Desde 1280px la home reserva un gutter más ancho
+ * (`.home-shell` en globals.css) para que el riel no se superponga al
+ * contenido. Marca con `aria-current` la sección visible.
  */
 export function SideIndex({ items }: SideIndexProps) {
   const [active, setActive] = useState(0);
@@ -24,7 +29,7 @@ export function SideIndex({ items }: SideIndexProps) {
 
   useEffect(() => {
     const sections = items
-      .map(({ number }) => document.getElementById(`s${number}`))
+      .map(({ href }) => document.getElementById(href.slice(1)))
       .filter((section): section is HTMLElement => section !== null);
 
     if (sections.length === 0 || typeof IntersectionObserver === "undefined") return;
@@ -49,16 +54,16 @@ export function SideIndex({ items }: SideIndexProps) {
   return (
     <nav className={styles.rail} aria-label={tA11y("sideIndex")}>
       <ol className={styles.list}>
-        {items.map(({ number, label }, index) => (
-          <li key={number}>
+        {items.map((item, index) => (
+          <li key={item.href}>
             <a
               className={styles.item}
-              href={`#s${number}`}
+              href={item.href}
               aria-current={index === active ? "true" : undefined}
             >
               <span className="sr-only">{tA11y("sectionPrefix")}</span>
-              {number}
-              <span className={styles.label}>{label}</span>
+              <span className={styles.num}>{item.number}</span>
+              <span className={styles.label}>{item.label}</span>
             </a>
           </li>
         ))}

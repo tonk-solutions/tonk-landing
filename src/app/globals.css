@@ -28,9 +28,9 @@
   --sec-pad: clamp(72px, 10vh, 140px);
 
   /*
-   * Escala tipográfica: cinco niveles con un escalón de ~1,7× entre el claim y el
-   * detalle. La jerarquía de la home sale de acá: los módulos toman estos valores
-   * en vez de declarar tamaños propios (spec S20).
+   * La escala tipográfica es una escalera de cinco niveles y los módulos de la
+   * home toman sus tamaños de acá; ningún módulo declara tamaños propios para
+   * sus títulos (spec S20).
    */
   --t-claim: clamp(26px, 2.6vw, 38px); /* claim único de cada sección */
   --t-sub: clamp(18px, 1.5vw, 22px); /* título de item */
@@ -50,6 +50,18 @@
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/*
+ * En la home el riel del índice vive en el margen izquierdo y necesita ancho
+ * propio: desde 1280px el gutter crece para que los nombres de sección se lean
+ * en reposo sin taparse con el contenido (spec S25). El gutter es simétrico, así
+ * que la página se lee como un documento con márgenes anchos.
+ */
+@media (min-width: 1280px) {
+  .home-shell {
+    --m: clamp(116px, 8.5vw, 124px);
+  }
 }
 
 html {
