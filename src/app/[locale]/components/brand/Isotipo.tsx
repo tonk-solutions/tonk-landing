@@ -9,8 +9,9 @@ type IsotipoProps = {
 };
 
 /**
- * Isotipo de tres nodos: barra con un nodo en cada extremo, vástago central y nodo
- * inferior en menta. Es la marca de Tonk; no se deforma ni se recolorea.
+ * Isotipo oficial del brand kit: una T de barra recta (`M5 9.5H27`, vástago hasta 20, trazo 5,
+ * extremos rectos) con un único nodo menta debajo. Es la marca de Tonk; no se deforma ni se
+ * recolorea. Geometría idéntica a `icono/B2-T-nodo-raiz-*.svg`.
  */
 export function Isotipo({ size = 28, className, decorative = true }: IsotipoProps) {
   const classes = [styles.isotipo, className].filter(Boolean).join(" ");
@@ -26,12 +27,8 @@ export function Isotipo({ size = 28, className, decorative = true }: IsotipoProp
       aria-label={decorative ? undefined : "Tonk"}
       focusable="false"
     >
-      <g fill="none" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round">
-        <path d="M6 9.5H26M16 9.5V20" />
-      </g>
-      <circle cx="5" cy="9.5" r="4.2" fill="currentColor" />
-      <circle cx="27" cy="9.5" r="4.2" fill="currentColor" />
-      <circle cx="16" cy="25.5" r="4.2" fill="var(--accent)" />
+      <path d="M5 9.5H27M16 9.5V20" fill="none" stroke="currentColor" strokeWidth="5" />
+      <circle cx="16" cy="25.5" r="3.5" fill="var(--accent)" />
     </svg>
   );
 }

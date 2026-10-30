@@ -32,7 +32,7 @@ export async function Footer() {
               href="/#s01"
               aria-label={tA11y("homeLinkFooter")}
             >
-              <BrandLockup variant="stacked" size="md" markSize={32} />
+              <BrandLockup variant="stacked" markSize={56} />
             </Link>
             <p>{tFooter("tagline")}</p>
           </div>
