@@ -43,7 +43,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const ogLocale = localeMap[locale] || "es_AR";
 
   return {
-    metadataBase: new URL(siteUrl),
+    // Next acepta la cadena y resuelve la base: un `new URL()` acá solo podía
+    // fallar por una constante literal, así que la validación vive en Next.
+    metadataBase: siteUrl,
     title: {
       default: titleDefault,
       template: titleTemplate,
@@ -130,17 +132,23 @@ export default async function LocaleLayout({
     },
   });
 
+  // JSON-LD va dentro de un <script>: se escapa "<" para que ningún texto del catálogo
+  // pueda cerrar la etiqueta. El grafo se arma en el servidor desde messages/*.json.
+  const structuredData = JSON.stringify(structuredDataGraph).replace(/</g, "\\u003c");
+
   return (
     <html
       lang={locale}
       data-scroll-behavior="smooth"
+      className={`${geistSans.variable} ${geistMono.variable}`}
     >
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
         <script
           id="structured-data"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredDataGraph) }}
-        />
+        >
+          {structuredData}
+        </script>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
