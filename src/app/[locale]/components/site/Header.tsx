@@ -33,7 +33,7 @@ export async function Header() {
             href="/#s01"
             aria-label={tA11y("homeLink")}
           >
-            <BrandLockup variant="horizontal" size="md" markSize={28} />
+            <BrandLockup variant="horizontal" markSize={32} />
           </Link>
 
           <MobileMenu items={navLinks} />

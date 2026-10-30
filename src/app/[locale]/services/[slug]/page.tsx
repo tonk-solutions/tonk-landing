@@ -151,7 +151,7 @@ export default async function ServicePage({
               href="/#s03"
               style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}
             >
-              <ArrowLeft size={16} color="#0891b2" />
+              <ArrowLeft size={16} color="#0a7a60" />
               <Text as="span" fontSize="sm" fontWeight="semibold" color="primary.600">
                 {tDetail("backToServices")}
               </Text>
@@ -164,10 +164,10 @@ export default async function ServicePage({
                 borderRadius="xl"
                 justify="center"
                 align="center"
-                background="linear-gradient(135deg, #06b6d4, #2563eb)"
+                bg="primary.500"
                 flexShrink={0}
               >
-                <ServiceIcon size={36} color="#ffffff" />
+                <ServiceIcon size={36} color="#17191c" />
               </Flex>
               <Heading as="h1" fontSize="clamp(1.8rem, 4vw + 1rem, 2.75rem)" color="dark.900" lineHeight="1.2">
                 {content.title}
@@ -195,11 +195,11 @@ export default async function ServicePage({
                 <Button
                   size="lg"
                   bg="primary.500"
-                  color="white"
+                  color="dark.900"
                   borderRadius="full"
                   px={8}
                   fontWeight="semibold"
-                  _hover={{ bg: "primary.600" }}
+                  _hover={{ bg: "primary.400" }}
                 >
                   <Flex align="center" gap={2}>
                     <MessageCircle size={18} />

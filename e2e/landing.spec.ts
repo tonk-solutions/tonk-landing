@@ -74,12 +74,12 @@ test.describe("estructura y contenido", () => {
 });
 
 test.describe("marca", () => {
-  test("el header muestra el isotipo y el wordmark sin SOLUTIONS", async ({ page }) => {
+  test("el header muestra el lockup oficial (isotipo de un nodo y wordmark) sin SOLUTIONS", async ({ page }) => {
     await page.goto("/es");
     const header = page.locator("header").first();
 
-    await expect(header.locator("svg circle")).toHaveCount(3);
-    await expect(header).toContainText("tonk");
+    await expect(header.locator("svg circle")).toHaveCount(1);
+    await expect(header.getByRole("img", { name: "Tonk" })).toBeVisible();
     await expect(header).not.toContainText("SOLUTIONS");
   });
 });
