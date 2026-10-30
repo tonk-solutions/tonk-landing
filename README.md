@@ -89,6 +89,8 @@ El build usa el optimizador de `next/image` (Sharp) para avatares y assets local
 
 La autoría de los commits y PRs que llegan a `main` está fijada en
 [`AGENTS.md`](./AGENTS.md): va a nombre de Rodrigo Hernandez por el deploy de Netlify.
+Se activa una vez por clon con `npm run setup:hooks`, y se verifica con
+`npm run check:authors`.
 
 ## Contacto
 

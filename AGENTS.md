@@ -49,11 +49,40 @@ eso la autoría se fija con `--author`, commit por commit.
 
 ```bash
 git log --format='%an <%ae>' origin/main..HEAD | sort -u
+npm run check:authors
 ```
 
 Todo lo que no sea la identidad de arriba se reescribe antes del merge. Después de
 un rebase o un amend, actualizá los hashes que cites en documentos: un hash
 reescrito deja la evidencia apuntando a commits inalcanzables.
+
+## Cómo se hace cumplir
+
+El guard está versionado en `.githooks/` y la lógica vive en
+`scripts/check-authors.mjs`, que es la misma que corre el comando manual.
+
+| Hook | Cuándo bloquea |
+|---|---|
+| `pre-commit` | Commiteás estando en `main` y la autoría que se va a registrar (`--author` o la config) no es la de Rodrigo. |
+| `pre-push` | Empujás commits nuevos a `refs/heads/main` con otra autoría, por ejemplo después de mergear localmente una rama con commits ajenos. |
+
+Se activan una vez por clon (los hooks no viajan con el repo):
+
+```bash
+npm run setup:hooks
+```
+
+`core.hooksPath` es relativo al toplevel de cada worktree, así que la regla cubre
+todos tus worktrees de este clon sin configuración extra.
+
+Límites conocidos, para no confiar de más en el guard:
+
+- GitHub no ejecuta hooks locales: el squash merge de un PR cuyo autor no sea
+  Rodrigo no lo detecta el guard. Para ese caso manda la regla de PRs.
+- La primera publicación de `main` en un remoto no tiene rango contra el cual
+  comparar, así que el `pre-push` avisa y deja pasar.
+- Un clon sin `npm run setup:hooks` no está protegido. Verificá con
+  `git config --get core.hooksPath`.
 
 ## Contexto del proyecto
 

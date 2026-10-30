@@ -105,9 +105,9 @@ otra aplicación. `npm run build`, `npm run typecheck` y `npm run lint` en verde
 
 | ID | Specs | Ruta | Tarea | Commit |
 |---|---|---|---|---|
-| T1 | S1,S2,S3,S7 | inline | Generadores `llmsTxt`, rutas `/llms.txt` y `/llms-full.txt`, robots con crawlers de IA y tests unitarios | `a20b340` `feat(seo): llms.txt, llms-full.txt y política de crawlers` |
-| T2 | S4,S7 | inline | Datos estructurados por página: `Person` del equipo, `WebPage`, `Service` y `BreadcrumbList`, con tests unitarios | `5f06f7b` `feat(seo): datos estructurados por página y por servicio` |
-| T3 | S5,S6,S7 | inline | Cabecera (`x-default`, imágenes sociales con `alt` localizado), sitemap con `lastModified`, e2e y README | `c6cdec6` `feat(seo): cabecera, imágenes sociales y sitemap` |
+| T1 | S1,S2,S3,S7 | inline | Generadores `llmsTxt`, rutas `/llms.txt` y `/llms-full.txt`, robots con crawlers de IA y tests unitarios | `ca681cd` `feat(seo): llms.txt, llms-full.txt y política de crawlers` |
+| T2 | S4,S7 | inline | Datos estructurados por página: `Person` del equipo, `WebPage`, `Service` y `BreadcrumbList`, con tests unitarios | `b483ff7` `feat(seo): datos estructurados por página y por servicio` |
+| T3 | S5,S6,S7 | inline | Cabecera (`x-default`, imágenes sociales con `alt` localizado), sitemap con `lastModified`, e2e y README | `8c3f8d2` `feat(seo): cabecera, imágenes sociales y sitemap` |
 
 ## Log
 
@@ -133,13 +133,13 @@ rechazó el launch (el texto de la tarea no llevaba el puntero `Spec: odd/tasks/
 con la instrucción explícita de no reintentar y escribir inline, así que T1, T2 y T3 se hicieron en el padre,
 de a una.
 
-**L6** (slice 1 — `a20b340` `feat(seo): llms.txt, llms-full.txt y política de crawlers`):
+**L6** (slice 1 — `ca681cd` `feat(seo): llms.txt, llms-full.txt y política de crawlers`):
 `src/app/seo/llmsTxt.ts` (módulo puro: adapta los mensajes crudos con `pickServiceContent` y renderiza los dos
 documentos), las dos rutas estáticas y `robots.ts` con 16 crawlers nombrados. El harness marcó el slice en 647
 líneas autoradas; queda registrado acá como límite. Verificación del slice: `npx vitest run` 26/26 en los dos
 archivos nuevos, `typecheck` y `lint` en 0.
 
-**L7** (slice 2 — `5f06f7b` `feat(seo): datos estructurados por página y por servicio`):
+**L7** (slice 2 — `b483ff7` `feat(seo): datos estructurados por página y por servicio`):
 `buildStructuredDataGraph` suma `email`, `founder` y los `Person`; se agregan `buildHomePageGraph` y
 `buildServicePageGraph`. El JSON-LD pasa a emitirse por un único componente (`seo/StructuredData.tsx`).
 **Corrección de spec**: S4 pedía `serviceType` en el `Service`, pero el único valor honesto disponible era el
@@ -169,7 +169,7 @@ corrieron contra otra app (`/llms.txt` devolvía 404). No se tocó ese proceso a
 en `:3100` (`npm run start -- -p 3100`) y la suite se corrió con
 `PLAYWRIGHT_BASE_URL=http://127.0.0.1:3100 npx playwright test`.
 
-**L11** (cierre — `c6cdec6` `feat(seo): cabecera, imágenes sociales y sitemap`): verificación final del árbol
+**L11** (cierre — `8c3f8d2` `feat(seo): cabecera, imágenes sociales y sitemap`): verificación final del árbol
 completo, con los tres slices adentro:
 
 | Check | Resultado |
@@ -211,7 +211,7 @@ Pendiente de decisión del dueño (no bloquea): el `alt` de `og:image` de la hom
 7. **`founder` declaraba a todo el equipo.** Se agregó `founder: true` a los co-founders en `messages` y la
    Organization solo los referencia a ellos; el test cubre el caso de un miembro que no es socio.
 8. **La evidencia apuntaba a un commit huérfano.** El doc registraba `8a70ae0`, que quedó fuera de la rama
-   después del amend; ahora registra `c6cdec6`.
+   después del amend; ahora registra `8c3f8d2`.
 9. **Checks faltantes.** `arrayContaining(["Person", "Person", "Person"])` colapsaba duplicados; ahora se
    cuentan con `filter`. Se agregaron `openGraph.test.ts` (openGraph, twitter, alternates y sitemap) y el e2e
    "el detalle no pierde la metadata social del layout" (`og:locale`, `og:site_name`, `og:image`,
