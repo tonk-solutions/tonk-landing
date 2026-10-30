@@ -46,11 +46,26 @@ src/
 
 ## Installation & Running
 
+### Requisitos
+
+- **Node.js** `^20.19.0 || >=22.12.0`. Es el `engines` de `package.json`: `next` 16 pide
+  `>=20.9` y el Vite que trae `vitest` 4 pide `^20.19 || >=22.12`. `.nvmrc` fija la 22 y
+  `netlify.toml` fija `NODE_VERSION = "22"`. Con una versión menor el build falla con un
+  error de engine en vez de un mensaje claro.
+
 ### Install Dependencies
 
 ```bash
 npm install
 ```
+
+Con **npm 12** los scripts de instalación de dependencias están bloqueados por defecto:
+`allowScripts` en `package.json` es la lista de los que pueden correr. Las entradas van
+por nombre (`"@swc/core": true`), no por versión, para que sobrevivan a los bumps. Si
+`npm install` avisa que salteó scripts, revisalos y aprobalos con
+`npm install-scripts approve <pkg> --no-allow-scripts-pin`; `npm install-scripts ls`
+lista los pendientes y `npm install-scripts prune` borra las entradas que ya no
+corresponden a ningún paquete con scripts.
 
 ### Development Server
 
