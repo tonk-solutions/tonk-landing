@@ -22,6 +22,12 @@ type Messages = {
   };
 };
 
+type HeroMessages = {
+  hero: {
+    tagline: string;
+  };
+};
+
 const locales: Array<{ name: "es" | "en"; messages: Messages }> = [
   { name: "es", messages: es as Messages },
   { name: "en", messages: en as Messages },
@@ -85,6 +91,23 @@ describe("messages key parity", () => {
     // The accessibility copy lives in its own namespace so the client provider
     // can ship it without the server-only blocks.
     expect(Object.keys(es)).toContain("a11y");
+  });
+});
+
+describe("hero tagline", () => {
+  it.each([
+    {
+      name: "es" as const,
+      messages: es as HeroMessages,
+      tagline: "Integramos lo que tenés. Construimos lo que falta",
+    },
+    {
+      name: "en" as const,
+      messages: en as HeroMessages,
+      tagline: "We integrate what you have. We build what's missing",
+    },
+  ])("ships the $name tagline verbatim", ({ messages, tagline }) => {
+    expect(messages.hero.tagline).toBe(tagline);
   });
 });
 

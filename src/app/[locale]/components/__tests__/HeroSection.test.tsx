@@ -180,6 +180,40 @@ describe("hero copy", () => {
   );
 });
 
+describe("hero tagline", () => {
+  it.each(Object.keys(MESSAGES) as TestLocale[])(
+    "renders the %s tagline right under the title",
+    async (locale) => {
+      intl.locale = locale;
+      renderWithTheme(await HeroSection());
+
+      const tagline = screen.getByTestId("hero-tagline");
+      const heading = screen.getByRole("heading", { level: 1 });
+
+      expect(tagline.tagName).toBe("P");
+      expect(tagline.textContent).toBe(MESSAGES[locale].hero.tagline);
+      // Immediately after the h1 and inside the first fade block.
+      expect(heading.nextElementSibling).toBe(tagline);
+      expect(tagline.closest(".hero-fade-block-1")).not.toBeNull();
+    }
+  );
+
+  it("paints the tagline with the foreground token, never the mint accent", async () => {
+    intl.locale = "es";
+    renderWithTheme(await HeroSection());
+
+    const css = styleText();
+    const rule = baseRuleOf(css, emotionClassOf(screen.getByTestId("hero-tagline")));
+
+    expect(rule).toContain("color:var(--chakra-colors-brand-fg)");
+    expect(rule).not.toContain("accent");
+    expect(rule).toContain("font-weight:var(--chakra-font-weights-medium)");
+    expect(rule).toContain("font-size:clamp(1.25rem, 2.5vw + 0.5rem, 1.75rem)");
+    expect(rule).toContain("line-height:1.3");
+    expect(rule).toContain("letter-spacing:var(--chakra-letter-spacings-tight)");
+  });
+});
+
 describe("HeroDecor", () => {
   it("renders the decoration as a single screen-reader hidden layer", () => {
     renderWithTheme(<HeroDecor />);
