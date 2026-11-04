@@ -27,3 +27,13 @@
     margin-inline: -12px;
   }
 }
+
+/*
+ * Desde 1280px el riel del índice ocupa el gutter izquierdo: la hoja deja de
+ * invadirlo para no quedar debajo del índice (spec S28).
+ */
+@media (min-width: 1280px) {
+  .surfaceBlock {
+    margin-inline: 0;
+  }
+}

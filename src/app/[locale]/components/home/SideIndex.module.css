@@ -2,7 +2,9 @@
  * El riel ocupa el gutter izquierdo de la home (`.home-shell` en globals.css).
  * Su ancho sale de `--m`, la misma medida que separa el contenido del borde:
  * si el gutter no alcanza para el nombre completo, el label recorta con
- * ellipsis pero nunca invade el texto de la página.
+ * ellipsis pero nunca invade el texto de la página. La superficie del
+ * diagnóstico deja de invadir el gutter desde 1280px (Section.module.css) para
+ * no quedar debajo del riel.
  */
 .rail {
   position: fixed;
@@ -10,7 +12,7 @@
   top: 50%;
   transform: translateY(-50%);
   width: var(--m);
-  padding-inline: 8px;
+  padding-inline: 12px 8px;
   z-index: 40;
   display: none;
 }
@@ -29,14 +31,18 @@
 
 .item {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 6px;
-  min-height: 26px;
+  min-height: 34px;
+  padding-inline: 6px;
+  border-radius: 2px;
   font-family: var(--mono);
-  font-size: var(--t-micro);
+  font-size: var(--t-detail);
   letter-spacing: 0.02em;
   color: var(--muted);
-  transition: color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .num {
@@ -49,13 +55,23 @@
   text-overflow: ellipsis;
 }
 
+/*
+ * El hover tiene que verse en cualquier item, incluido el activo: si se declara
+ * solo como color, la regla de `aria-current` lo pisa y en la sección activa el
+ * mouse no produce ninguna señal (spec S31).
+ */
 .item:hover {
   color: var(--fg);
+  background: color-mix(in srgb, var(--fg) 6%, transparent);
 }
 
 .item[aria-current="true"] {
   color: var(--accent);
   font-weight: 500;
+}
+
+.item[aria-current="true"]:hover {
+  background: var(--accent-subtle);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,5 +1,8 @@
 import { expect, test } from "@playwright/test";
 
+/** El riel del índice. Se nombra una sola vez: también se usa dentro de `page.evaluate`. */
+const RAIL = 'nav[aria-label="Índice de secciones"]';
+
 /**
  * Cubre las specs del port (odd/tasks/landing-documento-ingenieria.md) sobre la
  * página renderizada. Cada bloque referencia la spec que protege.
@@ -252,6 +255,106 @@ test.describe("navegación e interacción", () => {
     await page.goto("/es");
 
     await expect(page.getByRole("navigation", { name: "Índice de secciones" })).toBeHidden();
+  });
+
+  test("el índice marca la sección que se está leyendo, no la anterior", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    // Sin scroll suave: el índice tiene que resolverse en el mismo scroll.
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/es");
+
+    const current = () =>
+      page.evaluate(
+        (selector) =>
+          document.querySelector(`${selector} a[aria-current="true"]`)?.getAttribute("href"),
+        RAIL,
+      );
+
+    for (const id of ["s05", "s07", "s03"]) {
+      await page.evaluate((sectionId) => {
+        document.getElementById(sectionId)!.scrollIntoView({ block: "start" });
+      }, id);
+
+      await expect.poll(current, { timeout: 5_000 }).toBe(`#${id}`);
+      await expect(page.locator(`${RAIL} a[aria-current="true"]`)).toHaveCount(1);
+    }
+
+    // Al pie de página la última sección puede no llegar nunca a la línea de lectura.
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect.poll(current, { timeout: 5_000 }).toBe("#s09");
+  });
+
+  // S28/S29: el riel tiene que leerse entero y no pisar la hoja del diagnóstico.
+  // El ancho del riel sale del gutter de `.home-shell`, así que el test fija el valor
+  // de cada corte: sin eso, volver al gutter de la r2 (116-124px) recorta los nombres
+  // sin que la suite lo vea.
+  for (const { width, gutter } of [
+    { width: 1280, gutter: 160 },
+    { width: 1440, gutter: 160 },
+    { width: 1680, gutter: 176 },
+  ]) {
+    test(`el índice se lee entero y no pisa la hoja del diagnóstico a ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/es");
+
+      const rail = page.getByRole("navigation", { name: "Índice de secciones" });
+      await expect(rail).toBeVisible();
+      await expect(rail.locator("a")).toHaveCount(9);
+
+      const geometry = await page.evaluate((selector) => {
+        const items = [...document.querySelectorAll(`${selector} a`)].map((anchor) => {
+          const label = anchor.lastElementChild as HTMLElement;
+          const style = getComputedStyle(anchor);
+
+          return {
+            fontSize: style.fontSize,
+            minHeight: style.minHeight,
+            truncated: label.scrollWidth > label.clientWidth + 1,
+            right: anchor.getBoundingClientRect().right,
+          };
+        });
+
+        // La hoja del diagnóstico es el `SurfaceBlock` que envuelve al `dl`.
+        const sheet = document.querySelector("#s05 dl")!.parentElement!.getBoundingClientRect();
+
+        return {
+          items,
+          sheetLeft: sheet.left,
+          railWidth: document.querySelector(selector)!.getBoundingClientRect().width,
+        };
+      }, RAIL);
+
+      expect(geometry.railWidth).toBe(gutter);
+      expect(geometry.items).toHaveLength(9);
+
+      for (const item of geometry.items) {
+        expect(item.fontSize).toBe("14px");
+        expect(item.minHeight).toBe("34px");
+        expect(item.truncated).toBe(false);
+      }
+
+      // El riel no puede ser más ancho que el gutter ni meterse debajo de la hoja.
+      expect(geometry.sheetLeft).toBeGreaterThan(Math.max(...geometry.items.map((item) => item.right)));
+    });
+  }
+
+  test("el índice responde al hover también en la sección activa", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/es");
+    await page.evaluate(() => document.getElementById("s05")!.scrollIntoView({ block: "start" }));
+
+    const active = page.locator(`${RAIL} a[aria-current="true"]`);
+    await expect(active).toHaveCount(1);
+
+    const background = () => active.evaluate((element) => getComputedStyle(element).backgroundColor);
+    const idle = await background();
+    const box = await active.boundingBox();
+
+    expect(box).not.toBeNull();
+    await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+
+    await expect.poll(background, { timeout: 5_000 }).not.toBe(idle);
   });
 
   test("el CTA fijo mobile aparece después del hero y no tapa el contacto", async ({ page }) => {

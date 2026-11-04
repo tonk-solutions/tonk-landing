@@ -55,12 +55,12 @@
 /*
  * En la home el riel del índice vive en el margen izquierdo y necesita ancho
  * propio: desde 1280px el gutter crece para que los nombres de sección se lean
- * en reposo sin taparse con el contenido (spec S25). El gutter es simétrico, así
- * que la página se lee como un documento con márgenes anchos.
+ * en reposo, a `--t-detail`, sin taparse con el contenido (spec S29). El gutter
+ * es simétrico, así que la página se lee como un documento con márgenes anchos.
  */
 @media (min-width: 1280px) {
   .home-shell {
-    --m: clamp(116px, 8.5vw, 124px);
+    --m: clamp(160px, 11vw, 176px);
   }
 }
 
