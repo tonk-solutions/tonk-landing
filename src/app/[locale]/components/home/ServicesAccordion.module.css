@@ -157,6 +157,27 @@
   color: var(--fg);
 }
 
+/*
+ * Link a la landing del servicio. Misma caja que `.link` (alto de control,
+ * tamaño y peso de texto) pero con el subrayado en el propio texto y color
+ * `--fg`, para que el CTA de WhatsApp siga siendo la única acción destacada
+ * del panel.
+ */
+.detailsLink {
+  display: flex;
+  gap: 6px;
+  width: fit-content;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 .link span {
   border-bottom: 1px solid var(--border-strong);
   padding-bottom: 3px;

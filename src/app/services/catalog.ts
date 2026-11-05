@@ -8,6 +8,8 @@
  * describes which entry that is, so translators keep owning the wording.
  */
 
+import type { ServiceGroup } from "@/app/[locale]/components/home/ServicesAccordion";
+
 export type ServiceBranch = "craft" | "talent";
 
 export interface ServiceCatalogEntry {
@@ -82,4 +84,59 @@ export function pickServiceContent(
   }
 
   return content;
+}
+
+/** Accordion group as it arrives from the messages: no detail href yet. */
+export interface ServiceGroupContent {
+  label: string;
+  subtitle: string;
+  services: ServiceContent[];
+}
+
+/**
+ * Adds the detail landing href to every service of one accordion group.
+ *
+ * The slug comes from `SERVICES_CATALOG` (branch + `messageIndex`), never from
+ * the translated copy, so the URL is identical in both locales. Pure on
+ * purpose: the server section and the tests must derive the links the same way.
+ */
+function withGroupHrefs(
+  locale: string,
+  group: ServiceGroupContent,
+  branch: ServiceBranch
+): ServiceGroup {
+  return {
+    ...group,
+    services: group.services.map((service, messageIndex) => {
+      const entry = SERVICES_CATALOG.find(
+        (candidate) =>
+          candidate.branch === branch && candidate.messageIndex === messageIndex
+      );
+
+      // A message without a catalog entry would render a broken link, so it
+      // fails loudly here, like `pickServiceContent` does on the detail page.
+      if (!entry) {
+        throw new Error(
+          `Missing catalog entry for services.${branch}.services[${messageIndex}]`
+        );
+      }
+
+      return { ...service, href: `/${locale}/services/${entry.slug}` };
+    }),
+  };
+}
+
+/**
+ * Builds the two accordion groups the home renders, each service linked to its
+ * `/[locale]/services/[slug]` landing.
+ */
+export function withServiceHrefs(
+  locale: string,
+  craft: ServiceGroupContent,
+  talent: ServiceGroupContent
+): { craft: ServiceGroup; talent: ServiceGroup } {
+  return {
+    craft: withGroupHrefs(locale, craft, "craft"),
+    talent: withGroupHrefs(locale, talent, "talent"),
+  };
 }

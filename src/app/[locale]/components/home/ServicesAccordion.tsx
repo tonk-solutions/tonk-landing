@@ -8,9 +8,12 @@ interface ServiceItem {
   title: string;
   description: string;
   icon: string;
+  /** Landing de detalle: `/[locale]/services/[slug]` (TL-42). */
+  href: string;
 }
 
-interface ServiceGroup {
+/** Grupo del acordeón con cada servicio linkeado a su landing de detalle. */
+export interface ServiceGroup {
   label: string;
   subtitle: string;
   services: ServiceItem[];
@@ -20,6 +23,8 @@ interface ServicesAccordionProps {
   craft: ServiceGroup;
   talent: ServiceGroup;
   cta: string;
+  /** Texto del link a la landing de detalle de cada servicio. */
+  viewDetails: string;
 }
 
 const ICONS: Record<string, React.ReactNode> = {
@@ -98,12 +103,14 @@ function ServiceGroupAccordion({
   openIndex,
   setOpenIndex,
   cta,
+  viewDetails,
 }: {
   group: ServiceGroup;
   baseIndex: number;
   openIndex: number;
   setOpenIndex: (index: number) => void;
   cta: string;
+  viewDetails: string;
 }) {
   return (
     <div className={styles.group}>
@@ -147,6 +154,21 @@ function ServiceGroupAccordion({
               >
                 <div className={styles.panelInner}>
                   <p className={styles.description}>{service.description}</p>
+                  {/*
+                   * Link crawlable a la landing del servicio. Se renderiza
+                   * siempre, aunque el panel esté cerrado (`hidden`): el
+                   * crawler tiene que verlo sin ejecutar JavaScript.
+                   *
+                   * El ojo lee sólo el texto de acción; el nombre accesible
+                   * suma el título del servicio para que, entre varios links
+                   * iguales, un lector de pantalla sepa a cuál va cada uno. La
+                   * flecha es decorativa.
+                   */}
+                  <a className={styles.detailsLink} href={service.href}>
+                    {viewDetails}
+                    <span className="sr-only">: {service.title}</span>
+                    <span aria-hidden="true">→</span>
+                  </a>
                   <a
                     className={styles.link}
                     href={WHATSAPP_URL}
@@ -169,6 +191,7 @@ export function ServicesAccordion({
   craft,
   talent,
   cta,
+  viewDetails,
 }: ServicesAccordionProps) {
   const [openIndex, setOpenIndex] = useState(0);
 
@@ -180,6 +203,7 @@ export function ServicesAccordion({
         openIndex={openIndex}
         setOpenIndex={setOpenIndex}
         cta={cta}
+        viewDetails={viewDetails}
       />
       <ServiceGroupAccordion
         group={talent}
@@ -187,6 +211,7 @@ export function ServicesAccordion({
         openIndex={openIndex}
         setOpenIndex={setOpenIndex}
         cta={cta}
+        viewDetails={viewDetails}
       />
     </div>
   );
