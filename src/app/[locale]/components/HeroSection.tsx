@@ -82,6 +82,22 @@ const HeroSection = async () => {
                   {t("titleHighlight")}
                 </Text>
               </Heading>
+              {/*
+                The tagline sits right under the title, in the same fade block.
+                It keeps the foreground token (no mint) and its size is a
+                `clamp`, so it never outweighs the heading on a phone.
+              */}
+              <Text
+                as="p"
+                data-testid="hero-tagline"
+                color="brand.fg"
+                fontWeight="medium"
+                fontSize="clamp(1.25rem, 2.5vw + 0.5rem, 1.75rem)"
+                lineHeight="1.3"
+                letterSpacing="tight"
+              >
+                {t("tagline")}
+              </Text>
             </Box>
 
             <Box className="hero-fade-block-2">
