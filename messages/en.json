@@ -308,6 +308,8 @@
   "footer": {
     "tagline": "Senior software engineering. Enterprise integrations, no middlemen.",
     "navLabel": "Navigation",
+    "serviceEnterprise": "Enterprise integrations",
+    "serviceGreenfield": "Greenfield products",
     "location": "Buenos Aires, AR",
     "copyright": "© {year} Tonk Solutions",
     "legal": "All rights reserved"

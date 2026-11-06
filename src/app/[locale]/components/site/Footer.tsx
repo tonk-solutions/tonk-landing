@@ -16,6 +16,15 @@ export async function Footer() {
 
   const sitemap = [
     { href: "/#s03", label: tNav("services") },
+    // TL-42: links crawlables a las landings de servicio desde el footer.
+    {
+      href: "/services/enterprise-integrations",
+      label: tFooter("serviceEnterprise"),
+    },
+    {
+      href: "/services/digital-product-development",
+      label: tFooter("serviceGreenfield"),
+    },
     { href: "/#s06", label: tNav("process") },
     { href: "/#s07", label: tCriterio("label") },
     { href: "/#s08", label: tNav("team") },
