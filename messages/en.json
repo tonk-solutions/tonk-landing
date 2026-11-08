@@ -78,7 +78,7 @@
         },
         {
           "title": "Products from Scratch (Greenfield)",
-          "description": "Platforms, apps and internal systems built to fit. The projects in section 04 came from here.",
+          "description": "Platforms, apps and internal systems built to fit, from an idea that is not closed yet.",
           "icon": "Code"
         },
         {
@@ -358,7 +358,11 @@
     "emailLabel": "Email",
     "whatsappLabel": "WhatsApp",
     "locationLabel": "Location",
-    "cloud": ["AWS", "Google Cloud", "Firebase"],
+    "cloud": [
+      "AWS",
+      "Google Cloud",
+      "Firebase"
+    ],
     "homeEs": "Home in Spanish",
     "homeEn": "Home in English"
   },
@@ -470,6 +474,124 @@
         "description": "Tell us about your project and we'll put together a tailored proposal.",
         "button": "Request an integration diagnostic",
         "whatsappText": "Hi, I'd like to request an integration diagnostic."
+      }
+    },
+    "digitalProductDevelopment": {
+      "meta": {
+        "title": "Digital product from an open idea",
+        "description": "Digital product development for someone who has an idea and not a closed specification: who it is for, what is needed to start, how an MVP is bounded and how assumptions are tested."
+      },
+      "newTabHint": "opens in a new tab",
+      "hero": {
+        "kicker": "Digital product development",
+        "title": "You have an idea and don't know how to carry it out",
+        "paragraphs": [
+          "This digital product development service is for someone who already has an idea and does not yet have a closed specification, a formed team or a plan to build it. The work starts by sorting out the problem. It does not start by demanding a document that does not exist yet.",
+          "You talk with the person who will build it. You do not need to arrive with finished screens, a chosen architecture or a closed scope. You do need to be able to discuss which problem you want to address, who the product would be for and which constraints you already know."
+        ],
+        "cta": "Let's talk about your idea",
+        "whatsappText": "Hi, I have a product idea and I want to talk about how to carry it out."
+      },
+      "audience": {
+        "title": "Who digital product development is for",
+        "paragraphs": [
+          "Tonk's digital product development is for people or teams who want their own platform, application or internal system. The starting point can be a new idea, an operational need or a process that today is handled with spreadsheets, messages or manual work.",
+          "It is also for someone who already tried to explain the idea and got stuck because every conversation asked for more definition than they had. In this service the definition is built by talking: with what is already known and with what is written down as still open."
+        ],
+        "items": [
+          {
+            "title": "Someone who holds the problem and can decide",
+            "text": "There needs to be a person who can describe the situation, choose what to cut when the first slice cannot hold everything and answer questions about use. They do not need to know how to write a technical specification."
+          },
+          {
+            "title": "Someone who will use the product",
+            "text": "You need to be able to name the people it is for, even in broad terms: an internal team, the customers of your own service or someone who solves the task another way today."
+          },
+          {
+            "title": "Someone who wants to build, not only describe",
+            "text": "The work of this service reaches a usable slice of the product. It is not a standalone report or a list of options with no build. If you only want an opinion without making the product, this is not the service."
+          }
+        ]
+      },
+      "minimum": {
+        "title": "What is enough to start, without a closed specification",
+        "paragraphs": [
+          "Digital product development does not ask for a closed specification before the conversation. Four pieces are enough, and any of them can arrive incomplete. What is not defined is written down as open and worked on later. It is not filled in with an assumption presented as a fact.",
+          "If one piece is missing, the conversation can still start. The first result of that conversation is a written note of what was understood and what is still undefined."
+        ],
+        "items": [
+          {
+            "title": "The problem",
+            "text": "What hurts today, when it shows up and what people do to get by. A concrete description is enough. An exhaustive inventory of features is not a requirement to start."
+          },
+          {
+            "title": "The people it is for",
+            "text": "Who would use the product and in what situation. If there are several profiles, it is enough to name the first one that matters and to say that the others are not defined yet."
+          },
+          {
+            "title": "The idea or the goal",
+            "text": "What you imagine existing, even as a draft. It can be a flow, a sentence or the story of a day of use. It does not have to be a design or a list of screens."
+          },
+          {
+            "title": "The known constraints",
+            "text": "Data that cannot be moved, tools that must stay, languages, people who are available or a limit that already exists. If there is no known constraint yet, saying so is also valid information."
+          }
+        ]
+      },
+      "scope": {
+        "title": "How scope and the MVP are bounded",
+        "paragraphs": [
+          "In digital product development the scope is not closed on the first day. It is bounded once the problem can be told and it is possible to say what goes into a first slice and what stays out. That first slice is the MVP: the minimum that lets someone use the product to look at an assumption, not the complete version of the idea.",
+          "Cutting is part of the work. If the idea includes several profiles, several screens or connections to other systems, the shortest path that still shows whether the problem is well understood is the one that gets chosen. What stays out does not disappear: it is named so it does not slip into the first slice without a decision.",
+          "The MVP boundary is an agreement from that conversation. This page does not decide in advance how many features fit, and it does not promise that the first slice will cover the whole idea."
+        ]
+      },
+      "validation": {
+        "title": "How assumption testing is set up",
+        "paragraphs": [
+          "Validation, in this digital product development service, is a reading of assumptions. Each important assumption is written so it can be looked at later: what we believe happens, what we would observe if that were true and what observation would make us change our mind.",
+          "That reading is done with the slice that was built. It is not a promise that the product will work in the market, that it will gain users or that it will hit a number. Those consequences cannot be assured before anyone looks.",
+          "What can be observed depends on what the slice includes. That is why the MVP and the validation are defined together. The service does not claim you will learn something the slice cannot show. If an assumption cannot be checked with what was agreed, that is said before it is built."
+        ]
+      },
+      "stages": {
+        "title": "Development stages and what is agreed in each one",
+        "intro": "These stages describe the order in which a digital product is defined and built while the idea is still open. The deliverable of each stage is what the parties seek to agree, not a commitment this page has already closed. There is no timeline, price or standard contract here.",
+        "steps": [
+          {
+            "title": "Sort out the problem",
+            "text": "The problem, the people who live with it, the idea and the known constraints are discussed. The deliverable the parties seek to agree is a shared account: what was understood and what is still open. It is not a closed specification or a complete build plan."
+          },
+          {
+            "title": "Bound the first slice",
+            "text": "The conversation decides what goes into the MVP, what stays out and which assumptions that slice can check. The deliverable the parties seek to agree is that boundary, written so the build can proceed without scope being added along the way."
+          },
+          {
+            "title": "Build the agreed slice",
+            "text": "What stayed inside that boundary is developed, up to an increment that can be used to look at the problem. The deliverable the parties seek to agree is that usable increment, not the complete system the original idea described."
+          },
+          {
+            "title": "Read what could be observed",
+            "text": "With the usable slice, the assumptions are revisited. The deliverable the parties seek to agree is a reading: what could be seen and which decision stays open, whether to continue, adjust the slice or stop. It is not a guaranteed business result."
+          }
+        ]
+      },
+      "limits": {
+        "title": "Limits of the service and later support",
+        "paragraphs": [
+          "Digital product development covers the shared definition and the build of the first slice that was agreed. Starting the conversation does not, by itself, include the complete product, connections to other systems that were left outside the slice, or continuous operation of the system.",
+          "Later support is not confirmed as an included part of this service. If, after the first slice, help is needed to adjust, operate or extend it, that is discussed as a separate agreement: what it covers and through which channel. Until that agreement exists, support is not described as included and no conditions, timelines or prices are set.",
+          "Commercial results, a launch date and a guarantee that the idea is viable are not promised either. Viability is what the validation tries to look at, and the reading can conclude that it is better not to continue."
+        ]
+      },
+      "cta": {
+        "title": "The next step is to talk about the idea",
+        "paragraphs": [
+          "If you have an idea and do not know how to carry it out, the next step is a conversation, not a specification. Write to us on the WhatsApp Tonk already uses for contact. Tell us the problem, who the product would be for and which constraints you already know. That is enough to start sorting out the first slice.",
+          "You do not need to attach a closed document. If something is still undefined, say so: in this conversation what is open is information too."
+        ],
+        "button": "Write about your product idea",
+        "whatsappText": "Hi, I want to talk about a digital product idea and how to bound a first slice."
       }
     }
   },
