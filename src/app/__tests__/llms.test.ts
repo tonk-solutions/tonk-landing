@@ -43,10 +43,10 @@ describe("buildLlmsTxt", () => {
     );
   });
 
-  it("lista los proyectos sin nombres comerciales no autorizados", () => {
-    expect(text).toContain("Producto greenfield 01");
-    expect(text).toContain("Producto greenfield 02");
-    expect(text).not.toMatch(/Konekta|Clank|DUCE|BBVA|Santander|ICBC|Endava|Rootstrap/i);
+  it("describe el trabajo greenfield sin fichas de caso", () => {
+    expect(text).toContain(messages.projects.intro);
+    expect(text).not.toMatch(/Producto greenfield|Greenfield product|Konekta|\bClank\b|\bDUCE\b|BBVA|Santander|\bICBC\b|Endava|Rootstrap/i);
+    expect(text).not.toMatch(/no se publican|Stack no publicado|Stack not published/i);
   });
 
   it("menciona AWS, Google Cloud, Firebase y ARCA", () => {
@@ -130,10 +130,9 @@ describe("buildLlmsFullTxt", () => {
       expect(full).toContain(service.description);
     }
 
-    for (const project of messages.projects.items) {
-      expect(full).toContain(`### ${project.name}`);
-      expect(full).toContain(project.stack);
-    }
+    expect(messages.projects.items).toEqual([]);
+    expect(full).toContain(messages.projects.intro);
+    expect(full).not.toMatch(/### Producto greenfield|### Greenfield product/);
 
     messages.process.steps.forEach((step, index) => {
       expect(full).toContain(`${index + 1}. **${step.title}** — ${step.description}`);
@@ -156,8 +155,7 @@ describe("buildLlmsFullTxt", () => {
     expect(full).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
     expect(full).not.toMatch(/millones|millions/i);
     expect(full).not.toMatch(/Konekta|\bClank\b|BBVA|Santander|\bICBC\b|Endava|Rootstrap/i);
-    expect(full).toContain(messages.criterio.evidenceLabel);
-    expect(full).not.toContain(`**${messages.criterio.evidenceLabel}:**`);
+    expect(full).not.toContain(messages.criterio.evidenceLabel);
   });
 
   it("hereda el contacto de contact.rows y no deja placeholders", () => {

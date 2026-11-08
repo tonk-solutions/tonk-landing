@@ -33,15 +33,25 @@ test.describe("estructura y contenido", () => {
     expect(body).not.toMatch(/\bSAP\b/i);
   });
 
-  test("los proyectos greenfield no publican nombres comerciales ni DUCE", async ({ page }) => {
+  test("los proyectos greenfield no publican fichas ni nombres comerciales", async ({ page }) => {
     await page.goto("/es");
     const projects = page.locator("#s04");
 
-    await expect(projects).toContainText("Producto greenfield 01");
-    await expect(projects).toContainText("Producto greenfield 02");
+    await expect(projects).toContainText("Proyectos greenfield.");
+    await expect(projects).toContainText("Arquitectura, backend, frontend y producción");
+    await expect(projects.getByRole("heading", { level: 3 })).toHaveCount(0);
+    await expect(projects).not.toContainText("Producto greenfield");
     await expect(projects).not.toContainText("DUCE");
     await expect(projects).not.toContainText("Konekta");
     await expect(projects).not.toContainText("Clank");
+    await expect(page.locator("#s07")).not.toContainText("Experiencia previa, no clientes de Tonk");
+
+    await page.goto("/en");
+    const projectsEn = page.locator("#s04");
+    await expect(projectsEn).toContainText("Greenfield projects.");
+    await expect(projectsEn.getByRole("heading", { level: 3 })).toHaveCount(0);
+    await expect(projectsEn).not.toContainText("Greenfield product");
+    await expect(page.locator("#s07")).not.toContainText("Prior experience, not Tonk clients");
   });
 
   test("solo Rodrigo es vocero y los otros founders conservan nombre sin LinkedIn", async ({ page }) => {

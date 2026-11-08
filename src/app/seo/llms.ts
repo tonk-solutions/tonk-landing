@@ -110,6 +110,7 @@ export interface LlmsInput {
   founders: LlmsFounder[];
   services: LlmsService[];
   projects: LlmsProject[];
+  projectsIntro: string;
   integrations: string[];
   hero: { title: string; lede: string };
   diagnostic: LlmsLabeledValue[];
@@ -129,7 +130,7 @@ export interface LlmsMessages {
     craft: { services: ServiceContent[] };
     talent: { services: ServiceContent[] };
   };
-  projects: { items: LlmsProject[] };
+  projects: { intro: string; items: LlmsProject[] };
   integrations: { platforms: string[] };
   diagnostic: { label: string; rows: LlmsLabeledValue[] };
   process: { label: string; steps: LlmsStep[] };
@@ -228,6 +229,7 @@ export function buildLlmsInput(messages: LlmsMessages): LlmsInput {
     founders: messages.team.members.filter((member) => member.founder),
     services,
     projects: messages.projects.items,
+    projectsIntro: messages.projects.intro,
     integrations: messages.integrations.platforms,
     hero: {
       title: `${messages.hero.titleLine1} ${messages.hero.titleLine2}`,
@@ -266,9 +268,8 @@ export function buildLlmsTxt(input: LlmsInput): string {
   const servicesList = input.services
     .map((service) => `- [${service.title}](${service.url}): ${service.description}`)
     .join("\n");
-  const projectsList = joinList(
-    input.projects.map((project) => `${project.name} — ${project.type}`),
-  );
+  const projectLines = input.projects.map((project) => `- ${project.name} — ${project.type}`);
+  const projectsBlock = [input.projectsIntro, ...projectLines].filter(Boolean).join("\n");
   const integrationsList = joinList(input.integrations);
 
   return `# ${input.siteName}
@@ -295,7 +296,7 @@ ${servicesList}
 
 ## ${input.copy.projectsHeading}
 
-${projectsList}
+${projectsBlock}
 
 ## ${input.copy.contactHeading}
 
@@ -345,6 +346,8 @@ export function buildLlmsFullTxt(input: LlmsInput): string {
     ]),
     `## ${copy.projectsHeading}`,
     "",
+    input.projectsIntro,
+    "",
     ...input.projects.flatMap((project) => [
       `### ${project.name}`,
       "",
@@ -367,10 +370,9 @@ export function buildLlmsFullTxt(input: LlmsInput): string {
     "",
     ...input.criterio.principles.map((principle) => `- ${principle}`),
     "",
-    input.criterio.companies.length > 0
-      ? `**${headings.evidenceLabel}:** ${input.criterio.companies.join(", ")}`
-      : `**${headings.evidenceLabel}**`,
-    "",
+    ...(input.criterio.companies.length > 0
+      ? [`**${headings.evidenceLabel}:** ${input.criterio.companies.join(", ")}`, ""]
+      : []),
     `**${headings.missionLabel}:** ${input.criterio.mission}`,
     "",
     ...input.criterio.pillars.flatMap((pillar) => [

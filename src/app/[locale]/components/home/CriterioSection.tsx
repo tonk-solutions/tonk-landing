@@ -30,17 +30,21 @@ export async function CriterioSection() {
           title={t("title")}
           titleId="t07"
         />
-        <div className={styles.evidenceStrip}>
-          <span className={styles.evidenceLabel}>{t("evidenceLabel")}</span>
-          {companies.length > 0 ? (
+        {companies.length > 0 ? (
+          <div className={styles.evidenceStrip}>
+            <span className={styles.evidenceLabel}>{t("evidenceLabel")}</span>
             <ul className={styles.companies}>
               {companies.map((company) => (
                 <li key={company}>{company}</li>
               ))}
             </ul>
-          ) : null}
-        </div>
-        <Container grid padded={false} className={styles.crit}>
+          </div>
+        ) : null}
+        <Container
+          grid
+          padded={false}
+          className={companies.length > 0 ? styles.crit : `${styles.crit} ${styles.critLead}`}
+        >
           <div className={styles.left}>
             <blockquote className={styles.mission}>
               <p>{t("mission")}</p>

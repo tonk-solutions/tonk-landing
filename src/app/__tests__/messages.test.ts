@@ -43,17 +43,15 @@ describe("contenido del rediseño", () => {
     expect(enTexts).not.toMatch(/\bSAP\b/i);
   });
 
-  it("no publica DUCE ni los nombres de producto sin autorización", () => {
+  it("no publica DUCE ni fichas de caso sin contenido útil", () => {
     expect(esTexts).not.toMatch(/\bDUCE\b/i);
     expect(enTexts).not.toMatch(/\bDUCE\b/i);
-    expect(es.projects.items.map((item) => item.name)).toEqual([
-      "Producto greenfield 01",
-      "Producto greenfield 02",
-    ]);
-    expect(en.projects.items.map((item) => item.name)).toEqual([
-      "Greenfield product 01",
-      "Greenfield product 02",
-    ]);
+    expect(es.projects.items).toEqual([]);
+    expect(en.projects.items).toEqual([]);
+    expect(es.projects.intro.trim().length).toBeGreaterThan(0);
+    expect(en.projects.intro.trim().length).toBeGreaterThan(0);
+    const projects = [...texts(es.projects), ...texts(en.projects)].join("\n");
+    expect(projects).not.toMatch(/Producto greenfield|Greenfield product|no se publican|not published|Stack no publicado|Stack not published/i);
   });
 
   it("solo Rodrigo es vocero y no hay sección de comentarios", () => {

@@ -126,24 +126,9 @@
     "number": "04",
     "label": "Proyectos",
     "indexLabel": "Proyectos",
-    "meta": "2 productos · greenfield",
     "title": "Proyectos greenfield.",
     "intro": "Arquitectura, backend, frontend y producción, con el mismo equipo que después lo mantiene.",
-    "scope": "Producto completo",
-    "items": [
-      {
-        "name": "Producto greenfield 01",
-        "type": "App mobile",
-        "description": "No se publican el nombre del producto ni el del contratante.",
-        "stack": "Stack no publicado"
-      },
-      {
-        "name": "Producto greenfield 02",
-        "type": "Plataforma web",
-        "description": "No se publican el nombre del producto ni el del contratante.",
-        "stack": "Stack no publicado"
-      }
-    ]
+    "items": []
   },
   "diagnostic": {
     "number": "05",
