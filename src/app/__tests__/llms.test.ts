@@ -43,9 +43,10 @@ describe("buildLlmsTxt", () => {
     );
   });
 
-  it("lista los proyectos", () => {
-    expect(text).toContain("Konekta");
-    expect(text).toContain("Clank");
+  it("lista los proyectos sin nombres comerciales no autorizados", () => {
+    expect(text).toContain("Producto greenfield 01");
+    expect(text).toContain("Producto greenfield 02");
+    expect(text).not.toMatch(/Konekta|Clank|DUCE|BBVA|Santander|ICBC|Endava|Rootstrap/i);
   });
 
   it("menciona AWS, Google Cloud, Firebase y ARCA", () => {
@@ -154,6 +155,9 @@ describe("buildLlmsFullTxt", () => {
     expect(full).toContain(messages.team.spokespersonLabel);
     expect(full).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
     expect(full).not.toMatch(/millones|millions/i);
+    expect(full).not.toMatch(/Konekta|\bClank\b|BBVA|Santander|\bICBC\b|Endava|Rootstrap/i);
+    expect(full).toContain(messages.criterio.evidenceLabel);
+    expect(full).not.toContain(`**${messages.criterio.evidenceLabel}:**`);
   });
 
   it("hereda el contacto de contact.rows y no deja placeholders", () => {

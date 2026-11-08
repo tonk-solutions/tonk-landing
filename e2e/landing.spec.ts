@@ -33,13 +33,15 @@ test.describe("estructura y contenido", () => {
     expect(body).not.toMatch(/\bSAP\b/i);
   });
 
-  test("los proyectos son Konekta y Clank, sin DUCE", async ({ page }) => {
+  test("los proyectos greenfield no publican nombres comerciales ni DUCE", async ({ page }) => {
     await page.goto("/es");
     const projects = page.locator("#s04");
 
-    await expect(projects).toContainText("Konekta");
-    await expect(projects).toContainText("Clank");
+    await expect(projects).toContainText("Producto greenfield 01");
+    await expect(projects).toContainText("Producto greenfield 02");
     await expect(projects).not.toContainText("DUCE");
+    await expect(projects).not.toContainText("Konekta");
+    await expect(projects).not.toContainText("Clank");
   });
 
   test("solo Rodrigo es vocero y los otros founders conservan nombre sin LinkedIn", async ({ page }) => {
@@ -59,6 +61,7 @@ test.describe("estructura y contenido", () => {
     const html = await page.content();
     expect(html).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
     expect(html).not.toMatch(/millones/i);
+    expect(html).not.toMatch(/BBVA|Santander|\bICBC\b|Endava|Rootstrap|Konekta|\bClank\b|\bDUCE\b/i);
     expect(html).not.toMatch(/comentarios de clientes/i);
 
     await page.goto("/en");
@@ -69,6 +72,7 @@ test.describe("estructura y contenido", () => {
     await expect(teamEn.getByText("Spokesperson", { exact: true })).toHaveCount(1);
     await expect(teamEn.locator('a[href*="linkedin.com"]')).toHaveCount(1);
     expect(await page.content()).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
+    expect(await page.content()).not.toMatch(/BBVA|Santander|\bICBC\b|Endava|Rootstrap|Konekta|\bClank\b|\bDUCE\b/i);
   });
 
   test("el diagnóstico respeta las seis filas", async ({ page }) => {

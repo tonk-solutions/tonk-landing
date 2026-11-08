@@ -43,10 +43,17 @@ describe("contenido del rediseño", () => {
     expect(enTexts).not.toMatch(/\bSAP\b/i);
   });
 
-  it("no menciona DUCE: el producto se llama Konekta", () => {
-    expect(esTexts).not.toMatch(/DUCE/i);
-    expect(es.projects.items[0].name).toBe("Konekta");
-    expect(en.projects.items[0].name).toBe("Konekta");
+  it("no publica DUCE ni los nombres de producto sin autorización", () => {
+    expect(esTexts).not.toMatch(/\bDUCE\b/i);
+    expect(enTexts).not.toMatch(/\bDUCE\b/i);
+    expect(es.projects.items.map((item) => item.name)).toEqual([
+      "Producto greenfield 01",
+      "Producto greenfield 02",
+    ]);
+    expect(en.projects.items.map((item) => item.name)).toEqual([
+      "Greenfield product 01",
+      "Greenfield product 02",
+    ]);
   });
 
   it("solo Rodrigo es vocero y no hay sección de comentarios", () => {
@@ -71,9 +78,6 @@ describe("contenido del rediseño", () => {
       expect(rodrigo.name).toBe("Rodrigo Hernandez");
       expect(matias).not.toHaveProperty("linkedin");
       expect(nicolas).not.toHaveProperty("linkedin");
-      expect(matias.bio).toMatch(/BBVA/);
-      expect(nicolas.bio).toMatch(/Santander/);
-      expect(nicolas.bio).toMatch(/ICBC/);
       expect(matias.bio).toMatch(/previa|Prior/);
       expect(nicolas.bio).toMatch(/previa|Prior/);
       expect(matias.bio).toMatch(/No es un cliente de Tonk|Not a Tonk client/);
@@ -83,6 +87,21 @@ describe("contenido del rediseño", () => {
     const blob = [...texts(es.team), ...texts(en.team)].join("\n");
     expect(blob).not.toMatch(/millones|millions/i);
     expect(blob).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
+  });
+
+  it("home, greenfield y criterio no nombran identificadores sin autorización", () => {
+    const identifiers = /BBVA|Santander|\bICBC\b|Endava|Rootstrap|Konekta|\bClank\b|\bDUCE\b/i;
+
+    for (const messages of [es, en]) {
+      const blob = texts({
+        team: messages.team,
+        projects: messages.projects,
+        criterio: messages.criterio,
+        llms: messages.llms,
+      }).join("\n");
+
+      expect(blob).not.toMatch(identifiers);
+    }
   });
 });
 
@@ -211,7 +230,8 @@ describe("mejoras de la landing (odd/tasks/landing-mejoras.md)", () => {
   it("S2: no menciona Accenture en ningún idioma", () => {
     expect(esTexts).not.toMatch(/Accenture/i);
     expect(enTexts).not.toMatch(/Accenture/i);
-    expect(es.criterio.companies).toEqual(["BBVA", "Santander", "ICBC", "Endava", "Rootstrap"]);
+    expect(es.criterio.companies).toEqual([]);
+    expect(en.criterio.companies).toEqual([]);
   });
 
   it("S3: AWS, Google Cloud y Firebase están en las dos descripciones del stack", () => {

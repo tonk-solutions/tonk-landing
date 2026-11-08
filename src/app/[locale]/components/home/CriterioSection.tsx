@@ -32,11 +32,13 @@ export async function CriterioSection() {
         />
         <div className={styles.evidenceStrip}>
           <span className={styles.evidenceLabel}>{t("evidenceLabel")}</span>
-          <ul className={styles.companies}>
-            {companies.map((company) => (
-              <li key={company}>{company}</li>
-            ))}
-          </ul>
+          {companies.length > 0 ? (
+            <ul className={styles.companies}>
+              {companies.map((company) => (
+                <li key={company}>{company}</li>
+              ))}
+            </ul>
+          ) : null}
         </div>
         <Container grid padded={false} className={styles.crit}>
           <div className={styles.left}>

@@ -132,16 +132,16 @@
     "scope": "Producto completo",
     "items": [
       {
-        "name": "Konekta",
-        "type": "App mobile · iOS + Android",
-        "description": "Directorio de oficios para inquilinos y clientes de una inmobiliaria, con reseñas. Menos consultas operativas, un canal propio.",
-        "stack": "React Native · Expo · Firebase Auth · PostgreSQL · Data Connect"
+        "name": "Producto greenfield 01",
+        "type": "App mobile",
+        "description": "No se publican el nombre del producto ni el del contratante.",
+        "stack": "Stack no publicado"
       },
       {
-        "name": "Clank",
-        "type": "Plataforma web · Créditos",
-        "description": "Reemplazó la operatoria en Excel: alta de créditos, cobranzas y conciliación, con roles por tipo de usuario.",
-        "stack": "NestJS · Prisma · PostgreSQL · Next.js · Playwright"
+        "name": "Producto greenfield 02",
+        "type": "Plataforma web",
+        "description": "No se publican el nombre del producto ni el del contratante.",
+        "stack": "Stack no publicado"
       }
     ]
   },
@@ -212,14 +212,8 @@
     "indexLabel": "Criterio",
     "meta": "4 principios · 4 pilares",
     "title": "Criterio que viene de operar sistemas críticos.",
-    "evidenceLabel": "Dónde operó el equipo",
-    "companies": [
-      "BBVA",
-      "Santander",
-      "ICBC",
-      "Endava",
-      "Rootstrap"
-    ],
+    "evidenceLabel": "Experiencia previa, no clientes de Tonk",
+    "companies": [],
     "principles": [
       "Operamos sistemas críticos en producción.",
       "De sistemas complejos a producto de cero.",
@@ -261,14 +255,14 @@
         "name": "Matías Castillo",
         "role": "Cofundador · Sistemas Financieros",
         "founder": true,
-        "bio": "Experiencia previa como App Owner en BBVA, en sistemas financieros. No es un cliente de Tonk.",
+        "bio": "Experiencia laboral previa en sistemas financieros. No es un cliente de Tonk.",
         "initials": "MC"
       },
       {
         "name": "Nicolás Gómez",
         "role": "Cofundador · Core Banking",
         "founder": true,
-        "bio": "Experiencia previa en Santander e ICBC, en productos de banca core. No es un cliente de Tonk.",
+        "bio": "Experiencia laboral previa en banca core. No es un cliente de Tonk.",
         "initials": "NG"
       },
       {

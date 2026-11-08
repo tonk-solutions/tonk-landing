@@ -99,6 +99,12 @@ export default async function LocaleLayout({
   const locale = resolveRequestLocale((await params).locale);
 
   const messages = await getMessages();
+  // El cliente solo traduce nav y a11y. El catálogo completo no viaja en el HTML
+  // de cada página: ahí iban textos de otras landings que esta vista no muestra.
+  const clientMessages = {
+    nav: messages.nav,
+    a11y: messages.a11y,
+  };
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
   const tSchema = await getTranslations({ locale, namespace: 'schema' });
   const tServices = await getTranslations({ locale, namespace: 'services' });
@@ -137,7 +143,7 @@ export default async function LocaleLayout({
     >
       <body>
         <StructuredData id="structured-data" data={structuredDataGraph} />
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={clientMessages}>
           {children}
         </NextIntlClientProvider>
       </body>

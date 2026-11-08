@@ -367,7 +367,9 @@ export function buildLlmsFullTxt(input: LlmsInput): string {
     "",
     ...input.criterio.principles.map((principle) => `- ${principle}`),
     "",
-    `**${headings.evidenceLabel}:** ${input.criterio.companies.join(", ")}`,
+    input.criterio.companies.length > 0
+      ? `**${headings.evidenceLabel}:** ${input.criterio.companies.join(", ")}`
+      : `**${headings.evidenceLabel}**`,
     "",
     `**${headings.missionLabel}:** ${input.criterio.mission}`,
     "",
