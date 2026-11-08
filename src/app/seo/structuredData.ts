@@ -9,9 +9,15 @@ import {
 export interface FounderInfo {
   name: string;
   role: string;
-  linkedin: string;
+  /**
+   * Solo el vocero público tiene perfil personal. Ausente en el resto de los
+   * founders: no se emite `sameAs` vacío.
+   */
+  linkedin?: string;
   /** Solo los co-founders se publican como `Organization.founder`. */
   founder: boolean;
+  /** Una sola persona puede figurar como vocero público. */
+  spokesperson: boolean;
 }
 
 export interface OrganizationInfo {
@@ -53,22 +59,32 @@ export function pickFounders(members: unknown): FounderInfo[] {
   }
 
   return members.map((member, index) => {
-    const { name, role, linkedin, founder } = (member ?? {}) as Partial<FounderInfo>;
+    const { name, role, linkedin, founder, spokesperson } = (member ?? {}) as Partial<FounderInfo>;
+    const isSpokesperson = spokesperson === true;
 
-    if (
-      typeof name !== "string" ||
-      !name.trim() ||
-      typeof role !== "string" ||
-      !role.trim() ||
-      typeof linkedin !== "string" ||
-      !/^https?:\/\//.test(linkedin)
-    ) {
+    if (typeof name !== "string" || !name.trim() || typeof role !== "string" || !role.trim()) {
+      throw new Error(`team.members[${index}] necesita name y role válidos para el JSON-LD`);
+    }
+
+    if (linkedin !== undefined && (typeof linkedin !== "string" || !/^https?:\/\//.test(linkedin))) {
+      throw new Error(`team.members[${index}] tiene un linkedin inválido`);
+    }
+
+    // La política pública es empresa + un vocero. Un perfil personal en otra
+    // tarjeta no se publica en silencio: rompe el render.
+    if (linkedin && !isSpokesperson) {
       throw new Error(
-        `team.members[${index}] necesita name, role y linkedin válidos para el JSON-LD`,
+        `team.members[${index}] no puede publicar LinkedIn si no es el vocero`,
       );
     }
 
-    return { name, role, linkedin, founder: founder === true };
+    return {
+      name,
+      role,
+      ...(linkedin ? { linkedin } : {}),
+      founder: founder === true,
+      spokesperson: isSpokesperson,
+    };
   });
 }
 
@@ -139,7 +155,7 @@ export function buildStructuredDataGraph(input: StructuredDataInput) {
         "@type": "Person",
         name: founder.name,
         jobTitle: founder.role,
-        sameAs: [founder.linkedin],
+        ...(founder.linkedin ? { sameAs: [founder.linkedin] } : {}),
       })),
   };
 

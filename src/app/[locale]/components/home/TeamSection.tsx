@@ -9,7 +9,8 @@ interface TeamMember {
   role: string;
   bio: string;
   initials: string;
-  linkedin: string;
+  linkedin?: string;
+  spokesperson?: boolean;
 }
 
 export async function TeamSection() {
@@ -35,18 +36,23 @@ export async function TeamSection() {
               <div className={styles.who}>
                 <h3>{member.name}</h3>
                 <p className={styles.role}>{member.role}</p>
+                {member.spokesperson ? (
+                  <p className={styles.spokesperson}>{t("spokespersonLabel")}</p>
+                ) : null}
               </div>
               <div className={styles.bioCol}>
                 <p>{member.bio}</p>
-                <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.link}
-                >
-                  <span>{t("linkedinLabel")}</span>
-                  <span className="sr-only">{t("newTabHint")}</span>
-                </a>
+                {member.linkedin ? (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.link}
+                  >
+                    <span>{t("linkedinLabel")}</span>
+                    <span className="sr-only"> {t("newTabHint")}</span>
+                  </a>
+                ) : null}
               </div>
               <span className={styles.monogram} aria-hidden="true">
                 {member.initials}

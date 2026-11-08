@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import { SITE_NAME, SITE_URL } from "../constants";
+import { COMPANY_LINKEDIN_URL, SITE_NAME, SITE_URL } from "../constants";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
@@ -112,7 +112,7 @@ export default async function LocaleLayout({
       foundingDate: "2026",
       addressLocality: "Buenos Aires",
       addressCountry: "AR",
-      linkedinUrl: "https://www.linkedin.com/company/tonk-solutions",
+      linkedinUrl: COMPANY_LINKEDIN_URL,
       instagramUrl: "https://www.instagram.com/tonk_solutions",
       founders: pickFounders(tTeam.raw('members')),
     },

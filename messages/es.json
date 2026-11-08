@@ -255,27 +255,27 @@
     "title": "Los que fundaron Tonk atienden tu proyecto.",
     "linkedinLabel": "LinkedIn",
     "newTabHint": "abre en una pestaña nueva",
+    "spokespersonLabel": "Vocero",
     "members": [
       {
         "name": "Matías Castillo",
         "role": "Cofundador · Sistemas Financieros",
         "founder": true,
-        "bio": "App Owner en BBVA. Sistemas financieros con millones de transacciones diarias.",
-        "initials": "MC",
-        "linkedin": "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/"
+        "bio": "Experiencia previa como App Owner en BBVA, en sistemas financieros. No es un cliente de Tonk.",
+        "initials": "MC"
       },
       {
         "name": "Nicolás Gómez",
         "role": "Cofundador · Core Banking",
         "founder": true,
-        "bio": "Santander e ICBC. Productos bancarios core y sistemas transaccionales críticos.",
-        "initials": "NG",
-        "linkedin": "https://www.linkedin.com/in/nicolas-gomez-467b26141/"
+        "bio": "Experiencia previa en Santander e ICBC, en productos de banca core. No es un cliente de Tonk.",
+        "initials": "NG"
       },
       {
         "name": "Rodrigo Hernandez",
         "role": "Cofundador · Plataforma",
         "founder": true,
+        "spokesperson": true,
         "bio": "Plataformas cloud-native escalables y arquitecturas de microservicios distribuidas.",
         "initials": "RH",
         "linkedin": "https://www.linkedin.com/in/rodrigoenzohernandez/"
@@ -364,7 +364,8 @@
       "Firebase"
     ],
     "homeEs": "Home en español",
-    "homeEn": "Home en inglés"
+    "homeEn": "Home en inglés",
+    "companyLinkedinLabel": "LinkedIn de la empresa"
   },
   "landing": {
     "enterpriseIntegrations": {

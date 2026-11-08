@@ -49,11 +49,40 @@ describe("contenido del rediseño", () => {
     expect(en.projects.items[0].name).toBe("Konekta");
   });
 
-  it("no tiene etiquetas de vocero ni sección de comentarios", () => {
-    for (const text of [...texts(es), ...texts(en)]) {
-      expect(text).not.toMatch(/vocero|spokesperson/i);
+  it("solo Rodrigo es vocero y no hay sección de comentarios", () => {
+    for (const messages of [es, en]) {
+      const spokespersons = messages.team.members.filter((member) => member.spokesperson === true);
+
+      expect(spokespersons.map((member) => member.name)).toEqual(["Rodrigo Hernandez"]);
+      expect("linkedin" in spokespersons[0]).toBe(true);
     }
+
+    expect(es.team.spokespersonLabel).toBe("Vocero");
+    expect(en.team.spokespersonLabel).toBe("Spokesperson");
     expect(Object.keys(es)).not.toContain("comments");
+  });
+
+  it("separa la experiencia previa de los clientes de Tonk y no publica perfiles ajenos", () => {
+    for (const messages of [es, en]) {
+      const [matias, nicolas, rodrigo] = messages.team.members;
+
+      expect(matias.name).toBe("Matías Castillo");
+      expect(nicolas.name).toBe("Nicolás Gómez");
+      expect(rodrigo.name).toBe("Rodrigo Hernandez");
+      expect(matias).not.toHaveProperty("linkedin");
+      expect(nicolas).not.toHaveProperty("linkedin");
+      expect(matias.bio).toMatch(/BBVA/);
+      expect(nicolas.bio).toMatch(/Santander/);
+      expect(nicolas.bio).toMatch(/ICBC/);
+      expect(matias.bio).toMatch(/previa|Prior/);
+      expect(nicolas.bio).toMatch(/previa|Prior/);
+      expect(matias.bio).toMatch(/No es un cliente de Tonk|Not a Tonk client/);
+      expect(nicolas.bio).toMatch(/No es un cliente de Tonk|Not a Tonk client/);
+    }
+
+    const blob = [...texts(es.team), ...texts(en.team)].join("\n");
+    expect(blob).not.toMatch(/millones|millions/i);
+    expect(blob).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
   });
 });
 

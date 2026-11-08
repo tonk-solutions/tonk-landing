@@ -27,6 +27,10 @@ describe("buildLlmsTxt", () => {
     expect(text).toContain("Matías Castillo");
     expect(text).toContain("Nicolás Gómez");
     expect(text).toContain("Rodrigo Hernandez");
+    expect(text).toContain("https://www.linkedin.com/company/tonk-solutions");
+    expect(text).toContain("https://www.linkedin.com/in/rodrigoenzohernandez/");
+    expect(text).toContain(messages.team.spokespersonLabel);
+    expect(text).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
     expect(text).not.toMatch(/nómina|fuentes desactualizadas|outdated sources/i);
   });
 
@@ -139,12 +143,17 @@ describe("buildLlmsFullTxt", () => {
     }
   });
 
-  it("publica a los founders con su bio y su LinkedIn", () => {
+  it("publica a los founders con su bio y solo el LinkedIn autorizado", () => {
     for (const member of messages.team.members) {
       expect(full).toContain(`### ${member.name}`);
       expect(full).toContain(member.bio);
-      expect(full).toContain(member.linkedin);
+      if ("linkedin" in member && member.linkedin) expect(full).toContain(member.linkedin);
     }
+
+    expect(full).toContain("https://www.linkedin.com/company/tonk-solutions");
+    expect(full).toContain(messages.team.spokespersonLabel);
+    expect(full).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
+    expect(full).not.toMatch(/millones|millions/i);
   });
 
   it("hereda el contacto de contact.rows y no deja placeholders", () => {

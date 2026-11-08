@@ -42,12 +42,33 @@ test.describe("estructura y contenido", () => {
     await expect(projects).not.toContainText("DUCE");
   });
 
-  test("no hay etiquetas de vocero ni sección de comentarios", async ({ page }) => {
+  test("solo Rodrigo es vocero y los otros founders conservan nombre sin LinkedIn", async ({ page }) => {
     await page.goto("/es");
-    const body = await page.locator("body").innerText();
+    const team = page.locator("#s08");
 
-    expect(body).not.toMatch(/vocero/i);
-    expect(body).not.toMatch(/comentarios de clientes/i);
+    await expect(team.getByRole("heading", { name: "Matías Castillo" })).toBeVisible();
+    await expect(team.getByRole("heading", { name: "Nicolás Gómez" })).toBeVisible();
+    await expect(team.getByRole("heading", { name: "Rodrigo Hernandez" })).toBeVisible();
+    await expect(team.getByText("Vocero", { exact: true })).toHaveCount(1);
+    await expect(team.locator('a[href*="linkedin.com"]')).toHaveCount(1);
+    await expect(team.locator('a[href*="linkedin.com"]')).toHaveAttribute(
+      "href",
+      "https://www.linkedin.com/in/rodrigoenzohernandez/",
+    );
+
+    const html = await page.content();
+    expect(html).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
+    expect(html).not.toMatch(/millones/i);
+    expect(html).not.toMatch(/comentarios de clientes/i);
+
+    await page.goto("/en");
+    const teamEn = page.locator("#s08");
+    await expect(teamEn.getByRole("heading", { name: "Matías Castillo" })).toBeVisible();
+    await expect(teamEn.getByRole("heading", { name: "Nicolás Gómez" })).toBeVisible();
+    await expect(teamEn.getByRole("heading", { name: "Rodrigo Hernandez" })).toBeVisible();
+    await expect(teamEn.getByText("Spokesperson", { exact: true })).toHaveCount(1);
+    await expect(teamEn.locator('a[href*="linkedin.com"]')).toHaveCount(1);
+    expect(await page.content()).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
   });
 
   test("el diagnóstico respeta las seis filas", async ({ page }) => {
@@ -477,7 +498,7 @@ test.describe("datos estructurados", () => {
   // Cierra el cableado real de layout.tsx: el unit test usa pickFounders, este
   // mira el JSON-LD tal como lo sirve el HTML.
   for (const locale of ["es", "en"]) {
-    test(`el JSON-LD de /${locale} declara los tres co-founders con LinkedIn`, async ({ page }) => {
+    test(`el JSON-LD de /${locale} conserva los tres founders y solo el LinkedIn del vocero`, async ({ page }) => {
       await page.goto(`/${locale}`);
 
       const raw = await page.locator("script#structured-data").textContent();
@@ -485,7 +506,7 @@ test.describe("datos estructurados", () => {
         "@graph": { "@type": string; founder?: unknown[]; knowsAbout?: string[] }[];
       };
       const organization = graph["@graph"].find((node) => node["@type"] === "Organization") as {
-        founder: { name: string; sameAs: string[] }[];
+        founder: { name: string; sameAs?: string[] }[];
         knowsAbout: string[];
       };
 
@@ -494,7 +515,12 @@ test.describe("datos estructurados", () => {
         "Nicolás Gómez",
         "Rodrigo Hernandez",
       ]);
-      expect(organization.founder.every((person) => Array.isArray(person.sameAs))).toBe(true);
+      const withProfile = organization.founder.filter((person) => person.sameAs);
+      expect(withProfile.map((person) => person.name)).toEqual(["Rodrigo Hernandez"]);
+      expect(withProfile[0]?.sameAs).toEqual([
+        "https://www.linkedin.com/in/rodrigoenzohernandez/",
+      ]);
+      expect(raw).not.toMatch(/linkedin\.com\/in\/matias|linkedin\.com\/in\/nicolas/i);
       expect(organization.knowsAbout).toEqual(
         expect.arrayContaining(["AWS", "Google Cloud", "Firebase"]),
       );

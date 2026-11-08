@@ -8,7 +8,7 @@
  * blockquote, secciones H2 con enlaces) y el locale canónico es el por defecto.
  */
 
-import { CONTACT_PHONE, SITE_NAME, SITE_URL, WHATSAPP_URL } from "../constants";
+import { COMPANY_LINKEDIN_URL, CONTACT_PHONE, SITE_NAME, SITE_URL, WHATSAPP_URL } from "../constants";
 import {
   SERVICES_CATALOG,
   pickServiceContent,
@@ -22,10 +22,12 @@ const LLMS_LOCALE = "es";
 export interface LlmsFounder {
   name: string;
   role: string;
-  linkedin: string;
   bio: string;
+  /** Solo el vocero. Los demás founders no llevan perfil personal. */
+  linkedin?: string;
   /** Solo los co-founders entran en la sección de equipo fundador. */
   founder?: boolean;
+  spokesperson?: boolean;
 }
 
 export interface LlmsService {
@@ -73,6 +75,7 @@ export interface LlmsCopy {
   cloud: string[];
   homeEs: string;
   homeEn: string;
+  companyLinkedinLabel: string;
 }
 
 /**
@@ -113,13 +116,15 @@ export interface LlmsInput {
   process: LlmsStep[];
   criterio: LlmsCriterio;
   contactRows: LlmsLabeledValue[];
+  spokespersonLabel: string;
+  companyLinkedinUrl: string;
 }
 
 /** Subconjunto de `messages/{locale}.json` que alimenta los dos artefactos. */
 export interface LlmsMessages {
   hero: { titleLine1: string; titleLine2: string; lede: string };
   llms: LlmsCopy;
-  team: { label: string; members: LlmsFounder[] };
+  team: { label: string; spokespersonLabel: string; members: LlmsFounder[] };
   services: {
     craft: { services: ServiceContent[] };
     talent: { services: ServiceContent[] };
@@ -237,7 +242,15 @@ export function buildLlmsInput(messages: LlmsMessages): LlmsInput {
       pillars: messages.criterio.pillars,
     },
     contactRows: contact.rows,
+    spokespersonLabel: messages.team.spokespersonLabel,
+    companyLinkedinUrl: COMPANY_LINKEDIN_URL,
   };
+}
+
+function founderLine(founder: LlmsFounder, spokespersonLabel: string): string {
+  const voice = founder.spokesperson ? ` — ${spokespersonLabel}` : "";
+  const link = founder.linkedin ? ` (${founder.linkedin})` : "";
+  return `- ${founder.name} — ${founder.role}${voice}${link}`;
 }
 
 function joinList(items: string[]): string {
@@ -245,9 +258,10 @@ function joinList(items: string[]): string {
 }
 
 export function buildLlmsTxt(input: LlmsInput): string {
-  const foundersList = input.founders
-    .map((founder) => `- ${founder.name} — ${founder.role} (${founder.linkedin})`)
-    .join("\n");
+  const foundersList = [
+    `- ${input.copy.companyLinkedinLabel}: ${input.companyLinkedinUrl}`,
+    ...input.founders.map((founder) => founderLine(founder, input.spokespersonLabel)),
+  ].join("\n");
 
   const servicesList = input.services
     .map((service) => `- [${service.title}](${service.url}): ${service.description}`)
@@ -368,13 +382,14 @@ export function buildLlmsFullTxt(input: LlmsInput): string {
     ...input.founders.flatMap((founder) => [
       `### ${founder.name}`,
       "",
-      `**${founder.role}**`,
+      `**${founder.role}**${founder.spokesperson ? ` — ${input.spokespersonLabel}` : ""}`,
       "",
       founder.bio,
       "",
-      founder.linkedin,
-      "",
+      ...(founder.linkedin ? [founder.linkedin, ""] : []),
     ]),
+    `**${input.copy.companyLinkedinLabel}:** ${input.companyLinkedinUrl}`,
+    "",
     `## ${copy.contactHeading}`,
     "",
     ...input.contactRows.map((row) => `- **${row.label}:** ${row.value}`),
