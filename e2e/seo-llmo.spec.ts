@@ -170,6 +170,24 @@ test.describe("artefactos para modelos y crawlers", () => {
     expect(body).toContain("Sitemap:");
   });
 
+  test("el Link HTTP de x-default coincide con el hreflang del HTML", async ({ request }) => {
+    for (const path of ["/es", "/en", "/es/services/digital-product-development", "/en/services/enterprise-integrations"]) {
+      const response = await request.get(path);
+      expect(response.status()).toBe(200);
+
+      const html = await response.text();
+      const tags = html.match(/<link\b[^>]*rel="alternate"[^>]*>/g) ?? [];
+      const xDefault = tags.find((tag) => /hreflang="x-default"/i.test(tag));
+      const href = xDefault?.match(/href="([^"]+)"/)?.[1];
+
+      expect(href, path).toBeTruthy();
+      expect(response.headers()["link"] ?? "", path).toContain(
+        `<${href}>; rel="alternate"; hreflang="x-default"`,
+      );
+      expect(href, path).not.toBe(`${SITE_URL}${path.replace(/^\/(es|en)/, "") || "/"}`);
+    }
+  });
+
   test("sitemap.xml declara x-default en cada entrada", async ({ request }) => {
     const response = await request.get("/sitemap.xml");
 

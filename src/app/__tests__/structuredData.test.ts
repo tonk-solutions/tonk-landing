@@ -6,7 +6,7 @@ interface PersonNode {
   "@type": "Person";
   name: string;
   jobTitle: string;
-  sameAs: string[];
+  sameAs?: string[];
 }
 
 interface OrganizationNode {
@@ -78,14 +78,20 @@ describe("buildStructuredDataGraph", () => {
     );
   });
 
-  it("sameAs de cada founder es un array, igual que el del Organization", () => {
+  it("solo el vocero publica sameAs; el resto conserva el nombre sin perfil personal", () => {
     const organization = organizationOf(BASE_INPUT);
+    const withProfile = organization.founder.filter((person) => person.sameAs);
 
-    for (const person of organization.founder) {
-      expect(Array.isArray(person.sameAs)).toBe(true);
-      expect(person.sameAs).toHaveLength(1);
-      expect(person.sameAs[0]).toMatch(/^https:\/\/www\.linkedin\.com\//);
-    }
+    expect(withProfile).toHaveLength(1);
+    expect(withProfile[0]?.name).toBe("Rodrigo Hernandez");
+    expect(withProfile[0]?.sameAs).toEqual([
+      "https://www.linkedin.com/in/rodrigoenzohernandez/",
+    ]);
+
+    const json = JSON.stringify(buildStructuredDataGraph(BASE_INPUT));
+    expect(json).toContain("https://www.linkedin.com/company/tonk-solutions");
+    expect(json).not.toMatch(/linkedin\.com\/in\/matias/i);
+    expect(json).not.toMatch(/linkedin\.com\/in\/nicolas/i);
   });
 
   it("no menciona a Ignacio Sileo en el grafo serializado", () => {
@@ -105,17 +111,37 @@ describe("buildStructuredDataGraph", () => {
 });
 
 describe("pickFounders", () => {
-  it("deriva los tres co-founders con LinkedIn desde team.members", () => {
+  it("deriva los tres co-founders y deja el LinkedIn solo en el vocero", () => {
     const founders = pickFounders(messages.team.members);
 
     expect(founders).toHaveLength(3);
-    expect(founders.every((founder) => founder.linkedin.startsWith("https://"))).toBe(true);
+    expect(founders.filter((founder) => founder.spokesperson)).toEqual([
+      expect.objectContaining({
+        name: "Rodrigo Hernandez",
+        linkedin: "https://www.linkedin.com/in/rodrigoenzohernandez/",
+      }),
+    ]);
+    expect(founders.filter((founder) => founder.linkedin)).toHaveLength(1);
   });
 
-  it("falla si un miembro no trae LinkedIn, en vez de emitir undefined", () => {
-    expect(() => pickFounders([{ name: "Alguien", role: "Co-Founder" }])).toThrow(
-      /team\.members\[0\] necesita name, role y linkedin/,
-    );
+  it("acepta un founder sin LinkedIn y rechaza un perfil personal fuera del vocero", () => {
+    expect(pickFounders([{ name: "Alguien", role: "Cofundador", founder: true }])).toEqual([
+      { name: "Alguien", role: "Cofundador", founder: true, spokesperson: false },
+    ]);
+
+    expect(() =>
+      pickFounders([
+        {
+          name: "Alguien",
+          role: "Cofundador",
+          linkedin: "https://www.linkedin.com/in/ejemplo",
+        },
+      ]),
+    ).toThrow(/no puede publicar LinkedIn/);
+
+    expect(() =>
+      pickFounders([{ name: "Alguien", role: "Cofundador", linkedin: "no-es-url", spokesperson: true }]),
+    ).toThrow(/linkedin inválido/);
   });
 
   it("falla si team.members no es un array", () => {

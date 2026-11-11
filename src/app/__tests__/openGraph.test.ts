@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { SITE_NAME, SITE_URL } from "../constants";
 import { defaultLocale, locales } from "@/i18n/locales";
 import { SERVICES_CATALOG } from "../services/catalog";
-import { buildLanguageAlternates } from "../seo/alternates";
+import { buildAlternateLinkHeader, buildLanguageAlternates } from "../seo/alternates";
 import { buildOpenGraph, buildTwitter, ogImageUrl, ogLocale } from "../seo/openGraph";
 import sitemap from "../sitemap";
 
@@ -69,6 +69,18 @@ describe("alternates (S5, S6)", () => {
       en: `${SITE_URL}/en`,
       "x-default": `${SITE_URL}/${defaultLocale}`,
     });
+  });
+
+  it("el Link HTTP de x-default usa el locale por defecto, no la ruta sin idioma", () => {
+    const home = buildAlternateLinkHeader("/en");
+    const service = buildAlternateLinkHeader("/en/services/digital-product-development");
+
+    expect(home).toContain(`<${SITE_URL}/es>; rel="alternate"; hreflang="x-default"`);
+    expect(home).not.toContain(`<${SITE_URL}/>; rel="alternate"; hreflang="x-default"`);
+    expect(service).toContain(
+      `<${SITE_URL}/es/services/digital-product-development>; rel="alternate"; hreflang="x-default"`,
+    );
+    expect(service).not.toContain(`<${SITE_URL}/services/digital-product-development>`);
   });
 
   it("respeta la ruta que recibe", () => {

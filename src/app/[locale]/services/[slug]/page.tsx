@@ -6,6 +6,7 @@ import { ArrowLeft, MessageCircle, Code, Cloud, FileText, BrainCircuit, Users, S
 import { Header } from "../../components/site/Header";
 import { Footer } from "../../components/site/Footer";
 import EnterpriseIntegrationsLanding from "./EnterpriseIntegrationsLanding";
+import DigitalProductLanding from "./DigitalProductLanding";
 import { Link as LocaleLink, routing } from "@/i18n/routing";
 import { resolveRequestLocale } from "@/i18n/requestLocale";
 import { SITE_NAME, SITE_URL, WHATSAPP_URL } from "@/app/constants";
@@ -37,6 +38,7 @@ interface ServicePageParams {
 
 /** Slug whose page renders the dedicated conversion landing instead of the minimal layout. */
 const ENTERPRISE_INTEGRATIONS_SLUG = "enterprise-integrations";
+const DIGITAL_PRODUCT_SLUG = "digital-product-development";
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -65,13 +67,20 @@ async function resolveServiceContent(locale: string, slug: string) {
  * no se pueden desincronizar.
  */
 async function resolveServiceSeo(locale: string, slug: string, content: ServiceContent) {
-  if (slug !== ENTERPRISE_INTEGRATIONS_SLUG) {
+  const landingNamespace =
+    slug === ENTERPRISE_INTEGRATIONS_SLUG
+      ? "landing.enterpriseIntegrations.meta"
+      : slug === DIGITAL_PRODUCT_SLUG
+        ? "landing.digitalProductDevelopment.meta"
+        : null;
+
+  if (!landingNamespace) {
     return { title: content.title, description: content.description };
   }
 
   const tLandingMeta = await getTranslations({
     locale,
-    namespace: "landing.enterpriseIntegrations.meta",
+    namespace: landingNamespace,
   });
 
   return {
@@ -146,13 +155,17 @@ export default async function ServicePage({
     servicesLabel: tServices("label"),
   });
 
-  if (slug === ENTERPRISE_INTEGRATIONS_SLUG) {
+  if (slug === ENTERPRISE_INTEGRATIONS_SLUG || slug === DIGITAL_PRODUCT_SLUG) {
     return (
       <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
         <Header />
         <main id="main" role="main" style={{ width: "100%" }}>
           <StructuredData id="structured-data-service" data={serviceGraph} />
-          <EnterpriseIntegrationsLanding locale={locale} />
+          {slug === ENTERPRISE_INTEGRATIONS_SLUG ? (
+            <EnterpriseIntegrationsLanding locale={locale} />
+          ) : (
+            <DigitalProductLanding locale={locale} />
+          )}
         </main>
         <Footer />
       </div>

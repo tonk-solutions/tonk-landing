@@ -78,7 +78,7 @@
         },
         {
           "title": "Productos desde Cero (Greenfield)",
-          "description": "Plataformas, apps y sistemas internos a medida. Los proyectos de la sección 04 salieron de acá.",
+          "description": "Plataformas, apps y sistemas internos a medida, desde una idea que todavía no está cerrada.",
           "icon": "Code"
         },
         {
@@ -126,24 +126,9 @@
     "number": "04",
     "label": "Proyectos",
     "indexLabel": "Proyectos",
-    "meta": "2 productos · greenfield",
     "title": "Proyectos greenfield.",
     "intro": "Arquitectura, backend, frontend y producción, con el mismo equipo que después lo mantiene.",
-    "scope": "Producto completo",
-    "items": [
-      {
-        "name": "Konekta",
-        "type": "App mobile · iOS + Android",
-        "description": "Directorio de oficios para inquilinos y clientes de una inmobiliaria, con reseñas. Menos consultas operativas, un canal propio.",
-        "stack": "React Native · Expo · Firebase Auth · PostgreSQL · Data Connect"
-      },
-      {
-        "name": "Clank",
-        "type": "Plataforma web · Créditos",
-        "description": "Reemplazó la operatoria en Excel: alta de créditos, cobranzas y conciliación, con roles por tipo de usuario.",
-        "stack": "NestJS · Prisma · PostgreSQL · Next.js · Playwright"
-      }
-    ]
+    "items": []
   },
   "diagnostic": {
     "number": "05",
@@ -212,14 +197,8 @@
     "indexLabel": "Criterio",
     "meta": "4 principios · 4 pilares",
     "title": "Criterio que viene de operar sistemas críticos.",
-    "evidenceLabel": "Dónde operó el equipo",
-    "companies": [
-      "BBVA",
-      "Santander",
-      "ICBC",
-      "Endava",
-      "Rootstrap"
-    ],
+    "evidenceLabel": "Experiencia previa, no clientes de Tonk",
+    "companies": [],
     "principles": [
       "Operamos sistemas críticos en producción.",
       "De sistemas complejos a producto de cero.",
@@ -255,27 +234,27 @@
     "title": "Los que fundaron Tonk atienden tu proyecto.",
     "linkedinLabel": "LinkedIn",
     "newTabHint": "abre en una pestaña nueva",
+    "spokespersonLabel": "Vocero",
     "members": [
       {
         "name": "Matías Castillo",
         "role": "Cofundador · Sistemas Financieros",
         "founder": true,
-        "bio": "App Owner en BBVA. Sistemas financieros con millones de transacciones diarias.",
-        "initials": "MC",
-        "linkedin": "https://www.linkedin.com/in/matias-agustin-castillo-98b332115/"
+        "bio": "Experiencia laboral previa en sistemas financieros. No es un cliente de Tonk.",
+        "initials": "MC"
       },
       {
         "name": "Nicolás Gómez",
         "role": "Cofundador · Core Banking",
         "founder": true,
-        "bio": "Santander e ICBC. Productos bancarios core y sistemas transaccionales críticos.",
-        "initials": "NG",
-        "linkedin": "https://www.linkedin.com/in/nicolas-gomez-467b26141/"
+        "bio": "Experiencia laboral previa en banca core. No es un cliente de Tonk.",
+        "initials": "NG"
       },
       {
         "name": "Rodrigo Hernandez",
         "role": "Cofundador · Plataforma",
         "founder": true,
+        "spokesperson": true,
         "bio": "Plataformas cloud-native escalables y arquitecturas de microservicios distribuidas.",
         "initials": "RH",
         "linkedin": "https://www.linkedin.com/in/rodrigoenzohernandez/"
@@ -358,9 +337,14 @@
     "emailLabel": "Email",
     "whatsappLabel": "WhatsApp",
     "locationLabel": "Ubicación",
-    "cloud": ["AWS", "Google Cloud", "Firebase"],
+    "cloud": [
+      "AWS",
+      "Google Cloud",
+      "Firebase"
+    ],
     "homeEs": "Home en español",
-    "homeEn": "Home en inglés"
+    "homeEn": "Home en inglés",
+    "companyLinkedinLabel": "LinkedIn de la empresa"
   },
   "landing": {
     "enterpriseIntegrations": {
@@ -470,6 +454,124 @@
         "description": "Contanos sobre tu proyecto y armamos una propuesta a medida.",
         "button": "Solicitar diagnóstico de integración",
         "whatsappText": "Hola, quiero solicitar un diagnóstico de integración."
+      }
+    },
+    "digitalProductDevelopment": {
+      "meta": {
+        "title": "Producto digital desde una idea abierta",
+        "description": "Desarrollo de producto digital para quien tiene una idea y no una especificación cerrada: para quién es, qué hace falta para empezar, cómo se acota un MVP y cómo se validan supuestos."
+      },
+      "newTabHint": "abre en una pestaña nueva",
+      "hero": {
+        "kicker": "Desarrollo de producto digital",
+        "title": "Tenés una idea y no sabés cómo llevarla a cabo",
+        "paragraphs": [
+          "Este servicio de desarrollo de producto digital es para quien ya tiene una idea y todavía no tiene una especificación cerrada, un equipo armado o un plan para construirla. El trabajo empieza por ordenar el problema. No empieza por exigir un documento que todavía no existe.",
+          "Hablás con la persona que va a construir. No hace falta llegar con pantallas terminadas, una arquitectura elegida ni un alcance cerrado. Sí hace falta poder conversar qué problema querés atender, para quién sería el producto y qué restricciones ya conocés."
+        ],
+        "cta": "Conversemos sobre tu idea",
+        "whatsappText": "Hola, tengo una idea de producto y quiero conversar cómo llevarla a cabo."
+      },
+      "audience": {
+        "title": "Para quién es el desarrollo de producto digital",
+        "paragraphs": [
+          "El desarrollo de producto digital de Tonk es para personas o equipos que quieren una plataforma, una aplicación o un sistema interno propio. El punto de partida puede ser una idea nueva, una necesidad de operación o un proceso que hoy se resuelve con planillas, mensajes o trabajo manual.",
+          "También es para quien ya intentó explicar la idea y se trabó porque cada conversación pedía más definición de la que tenía. En este servicio la definición se construye conversando: con lo que ya se sabe y con lo que se anota como abierto."
+        ],
+        "items": [
+          {
+            "title": "Quien tiene el problema y puede decidir",
+            "text": "Hace falta una persona que describa la situación, elija qué recortar cuando el primer corte no entre todo y responda dudas de uso. No hace falta que sepa escribir una especificación técnica."
+          },
+          {
+            "title": "Quien va a usar el producto",
+            "text": "Hace falta poder nombrar a los destinatarios, aunque sea en términos amplios: un equipo interno, los clientes de un servicio propio o alguien que hoy resuelve la tarea de otra forma."
+          },
+          {
+            "title": "Quien busca construir, no solo describir",
+            "text": "El trabajo de este servicio llega a un corte usable del producto. No es un informe suelto ni una lista de opciones sin construcción. Si solo se busca una opinión sin hacer el producto, este no es el servicio."
+          }
+        ]
+      },
+      "minimum": {
+        "title": "Qué alcanza para empezar, sin especificación cerrada",
+        "paragraphs": [
+          "Para el desarrollo de producto digital no pedimos una especificación cerrada antes de conversar. Alcanza con cuatro piezas, y cualquiera puede llegar incompleta. Lo que no esté definido se anota como abierto y se trabaja después. No se completa con un supuesto presentado como si fuera un hecho.",
+          "Si falta una pieza, la conversación igual puede empezar. El primer resultado de esa conversación es dejar escrito qué se entendió y qué sigue sin definir."
+        ],
+        "items": [
+          {
+            "title": "El problema",
+            "text": "Qué duele hoy, en qué momento aparece y qué se hace para salir del paso. Una descripción concreta alcanza. Un inventario exhaustivo de funciones no es requisito para empezar."
+          },
+          {
+            "title": "Los destinatarios",
+            "text": "Quién usaría el producto y en qué situación. Si hay varios perfiles, alcanza con nombrar el primero que importa y decir que los demás todavía no están definidos."
+          },
+          {
+            "title": "La idea o el objetivo",
+            "text": "Qué te imaginás que exista, aunque sea en borrador. Puede ser un flujo, una frase o el relato de un día de uso. No tiene que ser un diseño ni una lista de pantallas."
+          },
+          {
+            "title": "Las restricciones conocidas",
+            "text": "Datos que no se pueden mover, herramientas que hay que conservar, idiomas, personas disponibles o un límite que ya exista. Si todavía no hay ninguna restricción conocida, decirlo también es información válida."
+          }
+        ]
+      },
+      "scope": {
+        "title": "Cómo se delimita el alcance y el MVP",
+        "paragraphs": [
+          "En el desarrollo de producto digital el alcance no se cierra el primer día. Se delimita cuando el problema ya se puede contar y se puede decir qué entra en un primer corte y qué queda afuera. Ese primer corte es el MVP: lo mínimo que permite usar el producto para mirar un supuesto, no la versión completa de la idea.",
+          "Recortar es parte del trabajo. Si la idea incluye varios perfiles, varias pantallas o conexiones con otros sistemas, se elige el camino más corto que igual deja ver si el problema está bien entendido. Lo que queda afuera no desaparece: queda nombrado para que no se cuele en el primer corte sin una decisión.",
+          "La frontera del MVP es un acuerdo de esa conversación. Esta página no fija de antemano cuántas funciones entran ni promete que el primer corte cubra la idea entera."
+        ]
+      },
+      "validation": {
+        "title": "Cómo se plantea la validación de supuestos",
+        "paragraphs": [
+          "La validación, en este servicio de desarrollo de producto digital, es una lectura de supuestos. Cada supuesto importante se escribe de una forma que después se pueda mirar: qué creemos que pasa, qué observaríamos si eso fuera cierto y qué observación nos haría cambiar de idea.",
+          "Esa lectura se hace con el corte construido. No es una promesa de que el producto va a funcionar en el mercado, de que va a conseguir usuarios ni de que va a cumplir una cifra. Esas consecuencias no se pueden asegurar antes de mirar.",
+          "Lo que se puede observar depende de lo que el corte incluye. Por eso el MVP y la validación se definen juntos. No se afirma que se va a aprender algo que el corte no permite ver. Si un supuesto no se puede comprobar con lo acordado, se dice antes de construirlo."
+        ]
+      },
+      "stages": {
+        "title": "Etapas del desarrollo y qué se acuerda en cada una",
+        "intro": "Estas etapas describen el orden en el que se define y se construye un producto digital cuando la idea todavía está abierta. El entregable de cada etapa es lo que las partes buscan acordar, no un compromiso ya cerrado por esta página. No hay aquí un plazo, un precio ni un contrato tipo.",
+        "steps": [
+          {
+            "title": "Ordenar el problema",
+            "text": "Se conversan el problema, las personas que lo usan, la idea y las restricciones conocidas. El entregable que se busca acordar es un relato compartido: qué se entendió y qué sigue abierto. No es una especificación cerrada ni un plan de construcción completo."
+          },
+          {
+            "title": "Delimitar el primer corte",
+            "text": "Se decide qué entra en el MVP, qué queda afuera y qué supuestos ese corte puede comprobar. El entregable que se busca acordar es esa frontera, escrita para poder construir sin ir sumando alcance en el camino."
+          },
+          {
+            "title": "Construir el corte acordado",
+            "text": "Se desarrolla lo que quedó adentro de esa frontera, hasta un incremento que se puede usar para mirar el problema. El entregable que se busca acordar es ese incremento usable, no el sistema completo que describía la idea original."
+          },
+          {
+            "title": "Leer lo que se pudo observar",
+            "text": "Con el corte usable se vuelve a los supuestos. El entregable que se busca acordar es una lectura: qué se pudo ver y qué decisión queda abierta, sea seguir, ajustar el corte o frenar. No es un resultado de negocio garantizado."
+          }
+        ]
+      },
+      "limits": {
+        "title": "Límites del servicio y soporte posterior",
+        "paragraphs": [
+          "El desarrollo de producto digital cubre la definición compartida y la construcción del primer corte que se haya acordado. Empezar la conversación no incluye, por sí solo, el producto completo, las conexiones con otros sistemas que hayan quedado fuera del corte, ni la operación continua del sistema.",
+          "El soporte posterior no está confirmado como parte incluida de este servicio. Si después del primer corte hace falta acompañamiento para ajustar, operar o ampliar, eso se conversa como un acuerdo distinto: qué cubre y por qué canal. Hasta que ese acuerdo exista, no se afirma que el soporte esté incluido y no se fijan condiciones, plazos ni precios.",
+          "Tampoco se prometen resultados comerciales, una fecha de salida ni una garantía de que la idea sea viable. La viabilidad es lo que la validación busca mirar, y la lectura puede concluir que conviene no seguir."
+        ]
+      },
+      "cta": {
+        "title": "El siguiente paso es conversar la idea",
+        "paragraphs": [
+          "Si tenés una idea y no sabés cómo llevarla a cabo, el paso siguiente es una conversación, no una especificación. Escribinos por el WhatsApp que ya usa Tonk para contacto. Contanos el problema, para quién sería el producto y qué restricciones ya conocés. Con eso alcanza para empezar a ordenar el primer corte.",
+          "No hace falta adjuntar un documento cerrado. Si algo todavía no está definido, decilo: en esta conversación lo abierto también es información."
+        ],
+        "button": "Escribir sobre tu idea de producto",
+        "whatsappText": "Hola, quiero conversar una idea de producto digital y cómo acotar un primer corte."
       }
     }
   },

@@ -51,6 +51,10 @@
   align-items: start;
 }
 
+.critLead {
+  margin-top: clamp(40px, 6vh, 72px);
+}
+
 .left {
   grid-column: 1 / span 7;
 }
