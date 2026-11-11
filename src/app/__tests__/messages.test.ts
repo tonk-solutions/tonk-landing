@@ -276,3 +276,53 @@ describe("mejoras de la landing (odd/tasks/landing-mejoras.md)", () => {
     expect(en.llms).not.toHaveProperty("foundersNote");
   });
 });
+
+/**
+ * Residual de TL-23. La paridad de claves es/en ya la cubre
+ * «paridad de mensajes es/en». Acá queda lo que ese PR todavía no tenía en main:
+ * formas de tú prohibidas, y que «Nuestros Servicios» no entre al catálogo inglés.
+ *
+ * Decisión de etiquetas: el rediseño ya traduce la rama con `craft.label` y
+ * `talent.label` («Grupo A / Craft» / «Group A / Craft», «Grupo B / Talent» /
+ * «Group B / Talent»). `services.panelTitle` no existe y el título hardcodeado
+ * del panel viejo tampoco. No se vuelven a «Desarrollo de software» / «Talento IT».
+ */
+describe("voseo y servicios (TL-23)", () => {
+  const BANNED_TU_FORMS = [
+    "Síguenos",
+    "Hablas",
+    "Cuéntanos",
+    "Necesitas",
+    "Encuentras",
+    "Tienes",
+    "Puedes",
+    "Quieres",
+    "Escríbenos",
+    "Contáctanos",
+  ];
+
+  it("no deja formas verbales de tú en es.json", () => {
+    const violations = texts(es).flatMap((text) =>
+      BANNED_TU_FORMS.filter((word) =>
+        new RegExp(`(?<!\\p{L})${word}(?!\\p{L})`, "iu").test(text),
+      ).map((word) => `"${word}" in: ${text}`),
+    );
+
+    expect(violations).toEqual([]);
+  });
+
+  it("no filtra «Nuestros Servicios» al catálogo en inglés", () => {
+    expect(JSON.stringify(en)).not.toContain("Nuestros Servicios");
+  });
+
+  it("conserva las etiquetas de rama del rediseño, traducidas, sin panelTitle", () => {
+    expect(es.services.craft.label).toBe("Grupo A / Craft");
+    expect(es.services.talent.label).toBe("Grupo B / Talent");
+    expect(en.services.craft.label).toBe("Group A / Craft");
+    expect(en.services.talent.label).toBe("Group B / Talent");
+    expect(es.services.label).toBe("Servicios");
+    expect(en.services.label).toBe("Services");
+    expect(es.services).not.toHaveProperty("panelTitle");
+    expect(en.services).not.toHaveProperty("panelTitle");
+  });
+});
