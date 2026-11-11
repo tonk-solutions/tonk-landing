@@ -87,3 +87,11 @@ Límites conocidos, para no confiar de más en el guard:
 ## Contexto del proyecto
 
 Build, rutas y estructura: [`README.md`](./README.md).
+
+## Skills de agentes
+
+Los skills de terceros viven en `.agents/skills/`. Antes de aplicar `seo-nextjs`, leé [`.agents/skills/seo-nextjs/PROJECT.md`](./.agents/skills/seo-nextjs/PROJECT.md). Esas notas son locales y no forman parte del skill upstream:
+
+- Este sitio usa Next.js App Router en `src/app/[locale]/`, más next-intl. No hay un directorio `app/` en la raíz. `test -d app` no debe tratarse como Pages Router.
+- No reemplaces ni reescribas de forma casual el schema, hreflang, x-default, sitemap/robots, llms, ni el copy de fundador/identidad ya reconciliado en el repo.
+- Semrush MCP es opcional y se omite salvo que ya esté conectado.
