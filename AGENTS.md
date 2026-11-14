@@ -95,3 +95,13 @@ Los skills de terceros viven en `.agents/skills/`. Antes de aplicar `seo-nextjs`
 - Este sitio usa Next.js App Router en `src/app/[locale]/`, más next-intl. No hay un directorio `app/` en la raíz. `test -d app` no debe tratarse como Pages Router.
 - No reemplaces ni reescribas de forma casual el schema, hreflang, x-default, sitemap/robots, llms, ni el copy de fundador/identidad ya reconciliado en el repo.
 - Semrush MCP es opcional y se omite salvo que ya esté conectado.
+
+## modern-web-guidance
+
+Notas locales para [`.agents/skills/modern-web-guidance`](./.agents/skills/modern-web-guidance/SKILL.md). No forman parte del skill upstream:
+
+- El App Router está en `src/app/[locale]/` con next-intl.
+- El stack usa Chakra UI v3 + Emotion y Framer Motion. Las sugerencias de modernización (`legacy-scan`) son propuestas a revisar, no cambios automáticos.
+- No reemplaces componentes de Chakra ni animaciones sin una historia de Jira TL.
+- No cambies headers de seguridad fuera de TL-43.
+- Usá Baseline como criterio de compatibilidad.
