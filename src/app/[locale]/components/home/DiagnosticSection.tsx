@@ -42,13 +42,10 @@ export async function DiagnosticSection() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-describedby="diagnostic-new-tab"
             >
               {t("cta")}
+              <span className="sr-only"> {tA11y("newTabHint")}</span>
             </a>
-            <span id="diagnostic-new-tab" className="sr-only">
-              {tA11y("newTabHint")}
-            </span>
             <span className={styles.note}>{t("note")}</span>
           </div>
         </SurfaceBlock>

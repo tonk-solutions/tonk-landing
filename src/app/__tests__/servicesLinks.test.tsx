@@ -121,8 +121,14 @@ describe("acordeón de servicios", () => {
     for (const link of whatsappLinks) {
       expect(link).toHaveAttribute("target", "_blank");
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
-      expect(link).toHaveAccessibleName(`${es.services.cta} →`);
-      expect(link).toHaveAccessibleDescription(es.a11y.newTabHint);
+      // El nombre arranca con el texto del CTA y suma el aviso; la flecha es
+      // decorativa y no forma parte de lo que se verifica.
+      expect(link).toHaveAccessibleName(
+        expect.stringMatching(
+          new RegExp(`^${es.services.cta}.*${es.a11y.newTabHint}$`),
+        ),
+      );
+      expect(link).not.toHaveAttribute("aria-describedby");
     }
   });
 });

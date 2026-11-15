@@ -233,7 +233,6 @@
     "meta": "3 co-founders",
     "title": "Los que fundaron Tonk atienden tu proyecto.",
     "linkedinLabel": "LinkedIn",
-    "newTabHint": "abre en una pestaña nueva",
     "spokespersonLabel": "Vocero",
     "members": [
       {
@@ -461,7 +460,6 @@
         "title": "Producto digital desde una idea abierta",
         "description": "Desarrollo de producto digital para quien tiene una idea y no una especificación cerrada: para quién es, qué hace falta para empezar, cómo se acota un MVP y cómo se validan supuestos."
       },
-      "newTabHint": "abre en una pestaña nueva",
       "hero": {
         "kicker": "Desarrollo de producto digital",
         "title": "Tenés una idea y no sabés cómo llevarla a cabo",

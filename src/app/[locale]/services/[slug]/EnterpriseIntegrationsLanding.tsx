@@ -89,7 +89,6 @@ export default async function EnterpriseIntegrationsLanding({
               href={heroWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-describedby="enterprise-hero-new-tab"
               _hover={{ textDecoration: "none" }}
               display="inline-block"
             >
@@ -107,10 +106,8 @@ export default async function EnterpriseIntegrationsLanding({
                   <Text>{t("hero.cta")}</Text>
                 </Flex>
               </Button>
+              <span className="sr-only"> {tA11y("newTabHint")}</span>
             </ChakraLink>
-            <span id="enterprise-hero-new-tab" className="sr-only">
-              {tA11y("newTabHint")}
-            </span>
           </Box>
         </Container>
       </Box>
@@ -430,7 +427,6 @@ export default async function EnterpriseIntegrationsLanding({
               href={ctaWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-describedby="enterprise-cta-new-tab"
               _hover={{ textDecoration: "none" }}
               display="inline-block"
             >
@@ -447,11 +443,9 @@ export default async function EnterpriseIntegrationsLanding({
                   <MessageCircle size={18} aria-hidden="true" />
                   <Text>{t("cta.button")}</Text>
                 </Flex>
-                </Button>
+              </Button>
+              <span className="sr-only"> {tA11y("newTabHint")}</span>
             </ChakraLink>
-            <span id="enterprise-cta-new-tab" className="sr-only">
-              {tA11y("newTabHint")}
-            </span>
           </Box>
         </Container>
       </Box>

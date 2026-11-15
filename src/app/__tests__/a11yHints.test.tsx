@@ -1,83 +1,142 @@
-import fs from "node:fs";
-import path from "node:path";
 import { render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
-import es from "../../../messages/es.json";
-import en from "../../../messages/en.json";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { MESSAGES, type TestLocale } from "../../test/intl";
 import { WHATSAPP_URL } from "../constants";
+import { Providers } from "../[locale]/providers";
 import { ContactSection } from "../[locale]/components/home/ContactSection";
 import { DiagnosticSection } from "../[locale]/components/home/DiagnosticSection";
+import { TeamSection } from "../[locale]/components/home/TeamSection";
+import DigitalProductLanding from "../[locale]/services/[slug]/DigitalProductLanding";
+import EnterpriseIntegrationsLanding from "../[locale]/services/[slug]/EnterpriseIntegrationsLanding";
+import ServicePage from "../[locale]/services/[slug]/page";
+
+const state = vi.hoisted(() => ({ locale: "es" as "es" | "en" }));
 
 vi.mock("next-intl/server", async () => {
-  const { default: messages } = await import("../../../messages/es.json");
-
-  function resolve(root: unknown, key: string): unknown {
-    return key.split(".").reduce<unknown>((acc, part) => {
-      if (acc && typeof acc === "object") return (acc as Record<string, unknown>)[part];
-      return undefined;
-    }, root);
-  }
-
+  const { createGetTranslations } = await import("../../test/intl");
   return {
-    getTranslations: async (namespace: string) => {
-      const root = resolve(messages, namespace);
-      return Object.assign((key: string) => resolve(root, key) as string, {
-        raw: (key: string) => resolve(root, key),
-      });
-    },
+    getTranslations: createGetTranslations(() => state.locale as TestLocale),
+    setRequestLocale: () => {},
   };
 });
 
-const HOME = path.resolve(__dirname, "../[locale]/page.tsx");
-const SERVICE = path.resolve(__dirname, "../[locale]/services/[slug]/page.tsx");
+vi.mock("@/i18n/routing", () => ({
+  routing: { locales: ["es", "en"], defaultLocale: "es" },
+  Link: ({ href, children, ...rest }: { href: string; children?: React.ReactNode }) => (
+    <a href={href} {...rest}>
+      {children}
+    </a>
+  ),
+}));
 
-function mainTags(file: string): string[] {
-  return fs.readFileSync(file, "utf8").match(/<main\b[^>]*>/g) ?? [];
+vi.mock("../[locale]/components/site/Header", () => ({ Header: () => null }));
+vi.mock("../[locale]/components/site/Footer", () => ({ Footer: () => null }));
+
+const LOCALES = ["es", "en"] as const;
+
+const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/**
+ * Nombre accesible esperado: arranca con el texto visible (WCAG 2.5.3) y cierra
+ * con el aviso. El espacio entre ambos no se exige: lo normaliza el cálculo del
+ * nombre, no el markup.
+ */
+function nameWithHint(visible: string, hint: string) {
+  return expect.stringMatching(new RegExp(`^${escape(visible)}\\s*${escape(hint)}$`));
 }
 
-describe("destino del skip link", () => {
-  it.each([
-    ["home", HOME],
-    ["detalle de servicio", SERVICE],
-  ])("%s hace focusable el main sin sumarlo al tab order", (_label, file) => {
-    const tags = mainTags(file);
+/** Links que el DOM marca como `target="_blank"`: son los que tienen que avisar. */
+function newTabLinks(container: HTMLElement): HTMLAnchorElement[] {
+  return Array.from(container.querySelectorAll<HTMLAnchorElement>('a[target="_blank"]'));
+}
 
-    expect(tags.length).toBeGreaterThan(0);
-    for (const tag of tags) {
-      expect(tag).toContain('id="main"');
-      expect(tag).toContain("tabIndex={-1}");
-      expect(tag).not.toMatch(/\brole=/);
+describe.each(LOCALES)("links que abren otra pestaña (%s)", (locale) => {
+  const messages = MESSAGES[locale];
+  const hint = messages.a11y.newTabHint;
+
+  beforeEach(() => {
+    state.locale = locale;
+  });
+
+  it("el aviso sale del idioma activo", () => {
+    expect(hint).not.toBe(MESSAGES[locale === "es" ? "en" : "es"].a11y.newTabHint);
+  });
+
+  it("contacto: el aviso suma al nombre accesible sin cambiar el texto visible", async () => {
+    const { getByRole } = render(await ContactSection());
+    const link = getByRole("link", { name: new RegExp(`^${escape(messages.contact.cta)}`) });
+
+    expect(link).toHaveAttribute("href", WHATSAPP_URL);
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(link).toHaveAccessibleName(nameWithHint(messages.contact.cta, hint));
+    expect(link).not.toHaveAttribute("aria-describedby");
+    expect(link.firstChild).toHaveTextContent(messages.contact.cta);
+  });
+
+  it("diagnóstico: el aviso suma al nombre accesible", async () => {
+    const { getByRole } = render(await DiagnosticSection());
+    const link = getByRole("link", { name: new RegExp(`^${escape(messages.diagnostic.cta)}`) });
+
+    expect(link).toHaveAttribute("href", WHATSAPP_URL);
+    expect(link).toHaveAccessibleName(nameWithHint(messages.diagnostic.cta, hint));
+    expect(link).not.toHaveAttribute("aria-describedby");
+  });
+
+  it("equipo: cada LinkedIn nombra la pestaña nueva", async () => {
+    const { container } = render(await TeamSection());
+    const links = newTabLinks(container);
+    const expected = messages.team.members.filter((member) => "linkedin" in member);
+
+    expect(links.length).toBeGreaterThan(0);
+    expect(links).toHaveLength(expected.length);
+    for (const link of links) {
+      expect(link).toHaveAccessibleName(nameWithHint(messages.team.linkedinLabel, hint));
     }
+  });
+
+  it("producto digital: los dos CTAs nombran la pestaña nueva", async () => {
+    const copy = messages.landing.digitalProductDevelopment;
+    const { container } = render(await DigitalProductLanding({ locale }));
+    const links = newTabLinks(container);
+
+    expect(links.map((link) => link.getAttribute("href"))).toEqual([
+      expect.stringContaining(WHATSAPP_URL),
+      expect.stringContaining(WHATSAPP_URL),
+    ]);
+    expect(links[0]).toHaveAccessibleName(nameWithHint(copy.hero.cta, hint));
+    expect(links[1]).toHaveAccessibleName(nameWithHint(copy.cta.button, hint));
+  });
+
+  it("enterprise: hero y CTA final nombran la pestaña nueva", async () => {
+    const copy = messages.landing.enterpriseIntegrations;
+    const { container } = render(
+      <Providers>{await EnterpriseIntegrationsLanding({ locale })}</Providers>,
+    );
+    const links = newTabLinks(container);
+
+    expect(links).toHaveLength(2);
+    expect(links[0]).toHaveAccessibleName(nameWithHint(copy.hero.cta, hint));
+    expect(links[1]).toHaveAccessibleName(nameWithHint(copy.cta.button, hint));
+    for (const link of links) expect(link).not.toHaveAttribute("aria-describedby");
+  });
+
+  it("detalle de servicio: el CTA nombra la pestaña nueva", async () => {
+    const page = await ServicePage({ params: Promise.resolve({ locale, slug: "applied-ai" }) });
+    const { container } = render(<Providers>{page}</Providers>);
+    const links = newTabLinks(container);
+
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveAttribute("href", WHATSAPP_URL);
+    expect(links[0]).toHaveAccessibleName(nameWithHint(messages.services.detail.ctaButton, hint));
+    expect(links[0]).not.toHaveAttribute("aria-describedby");
   });
 });
 
-describe("links que abren otra pestaña", () => {
-  it.each([
-    ["es", es.a11y.newTabHint],
-    ["en", en.a11y.newTabHint],
-  ])("%s reutiliza el aviso que ya existe en el sitio", (locale, hint) => {
-    expect(hint).toBe(locale === "es" ? "abre en una pestaña nueva" : "opens in a new tab");
-  });
+describe("una sola key para el aviso de pestaña nueva", () => {
+  it.each(LOCALES)("%s no duplica el aviso fuera de a11y", (locale) => {
+    const { team, landing } = MESSAGES[locale];
 
-  it("el CTA de contacto nombra la pestaña nueva sin cambiar el texto visible", async () => {
-    const { getByRole } = render(await ContactSection());
-    const link = getByRole("link", { name: es.contact.cta });
-
-    expect(link).toHaveAttribute("href", WHATSAPP_URL);
-    expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAttribute("rel", "noopener noreferrer");
-    expect(link).toHaveAccessibleName(es.contact.cta);
-    expect(link).toHaveAccessibleDescription(es.a11y.newTabHint);
-    expect(link).toHaveTextContent(es.contact.cta);
-  });
-
-  it("el CTA de diagnóstico nombra la pestaña nueva sin cambiar el texto visible", async () => {
-    const { getByRole } = render(await DiagnosticSection());
-    const link = getByRole("link", { name: es.diagnostic.cta });
-
-    expect(link).toHaveAttribute("href", WHATSAPP_URL);
-    expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAccessibleName(es.diagnostic.cta);
-    expect(link).toHaveAccessibleDescription(es.a11y.newTabHint);
+    expect(team).not.toHaveProperty("newTabHint");
+    expect(landing.digitalProductDevelopment).not.toHaveProperty("newTabHint");
   });
 });

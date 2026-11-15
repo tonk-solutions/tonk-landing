@@ -232,7 +232,6 @@ export default async function ServicePage({
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-describedby="service-detail-new-tab"
                 _hover={{ textDecoration: "none" }}
                 display="inline-block"
               >
@@ -250,10 +249,8 @@ export default async function ServicePage({
                     <Text>{tDetail("ctaButton")}</Text>
                   </Flex>
                 </Button>
+                <span className="sr-only"> {tA11y("newTabHint")}</span>
               </ChakraLink>
-              <span id="service-detail-new-tab" className="sr-only">
-                {tA11y("newTabHint")}
-              </span>
             </Box>
           </Container>
         </Box>

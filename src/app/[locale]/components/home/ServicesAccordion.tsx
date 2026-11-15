@@ -178,13 +178,10 @@ function ServiceGroupAccordion({
                     href={WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-describedby={`service-whatsapp-hint-${globalIndex}`}
                   >
                     <span>{cta} →</span>
+                    <span className="sr-only"> {newTabHint}</span>
                   </a>
-                  <span id={`service-whatsapp-hint-${globalIndex}`} className="sr-only">
-                    {newTabHint}
-                  </span>
                 </div>
               </div>
             </li>
