@@ -7,6 +7,7 @@ import { ServicesAccordion } from "./ServicesAccordion";
 
 export async function ServicesSection() {
   const t = await getTranslations("services");
+  const tA11y = await getTranslations("a11y");
   const locale = await getLocale();
   const { craft, talent } = withServiceHrefs(
     locale,
@@ -29,6 +30,7 @@ export async function ServicesSection() {
           talent={talent}
           cta={t("cta")}
           viewDetails={t("viewDetails")}
+          newTabHint={tA11y("newTabHint")}
         />
       </Container>
     </Section>

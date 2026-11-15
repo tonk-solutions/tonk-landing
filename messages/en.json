@@ -582,6 +582,7 @@
     "language": "Language",
     "sideIndex": "Section index",
     "sectionPrefix": "Section ",
-    "heroMeta": "Practice facts"
+    "heroMeta": "Practice facts",
+    "newTabHint": "opens in a new tab"
   }
 }

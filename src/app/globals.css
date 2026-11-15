@@ -68,6 +68,15 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: var(--header);
+
+  /*
+   * Scrollbar estándar. Los colores son los de la paleta aprobada; `thin` se
+   * acerca al ancho de 10px del fallback. `scrollbar-color` no tiene hover.
+   */
+  --scrollbar-thumb: var(--border-strong);
+  --scrollbar-track: var(--bg);
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -131,6 +140,14 @@ a {
   border-radius: 2px;
 }
 
+/*
+ * El skip link mueve el foco a `<main tabindex="-1">`. No es un control: el
+ * anillo global dibujaría un recuadro alrededor de toda la página.
+ */
+main:focus {
+  outline: none;
+}
+
 a,
 button,
 [tabindex] {
@@ -142,21 +159,27 @@ button,
   color: var(--bg);
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
+/*
+ * Fallback para navegadores sin `scrollbar-color` (Baseline recién disponible).
+ * En los que sí lo tienen, estas reglas no aplican: conviven mal con el estándar.
+ */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
 
-::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: 0;
-}
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 0;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted);
+  }
 }
 
 /* Helper para lectores de pantalla */

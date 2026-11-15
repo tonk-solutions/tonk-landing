@@ -13,6 +13,7 @@ interface DiagnosticRow {
 
 export async function DiagnosticSection() {
   const t = await getTranslations("diagnostic");
+  const tA11y = await getTranslations("a11y");
   const rows = t.raw("rows") as DiagnosticRow[];
 
   return (
@@ -41,9 +42,13 @@ export async function DiagnosticSection() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
+              aria-describedby="diagnostic-new-tab"
             >
               {t("cta")}
             </a>
+            <span id="diagnostic-new-tab" className="sr-only">
+              {tA11y("newTabHint")}
+            </span>
             <span className={styles.note}>{t("note")}</span>
           </div>
         </SurfaceBlock>

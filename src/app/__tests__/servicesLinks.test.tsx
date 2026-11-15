@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import en from "../../../messages/en.json";
 import es from "../../../messages/es.json";
 import { ServicesAccordion } from "../[locale]/components/home/ServicesAccordion";
+import { WHATSAPP_URL } from "../constants";
 import { SERVICES_CATALOG, withServiceHrefs } from "../services/catalog";
 
 /**
@@ -41,6 +42,7 @@ function renderAccordion() {
       talent={talent}
       cta={es.services.cta}
       viewDetails={VIEW_DETAILS}
+      newTabHint={es.a11y.newTabHint}
     />,
   );
 }
@@ -107,5 +109,20 @@ describe("acordeón de servicios", () => {
     expect(
       secondPanel?.querySelector('a[href="/es/services/digital-product-development"]'),
     ).not.toBeNull();
+  });
+
+  it("avisa en el nombre accesible que el WhatsApp abre otra pestaña", () => {
+    const { container } = renderAccordion();
+    const whatsappLinks = container.querySelectorAll<HTMLAnchorElement>(
+      `a[href="${WHATSAPP_URL}"]`,
+    );
+
+    expect(whatsappLinks).toHaveLength(SERVICES_CATALOG.length);
+    for (const link of whatsappLinks) {
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
+      expect(link).toHaveAccessibleName(`${es.services.cta} →`);
+      expect(link).toHaveAccessibleDescription(es.a11y.newTabHint);
+    }
   });
 });

@@ -582,6 +582,7 @@
     "language": "Idioma",
     "sideIndex": "Índice de secciones",
     "sectionPrefix": "Sección ",
-    "heroMeta": "Datos del estudio"
+    "heroMeta": "Datos del estudio",
+    "newTabHint": "abre en una pestaña nueva"
   }
 }

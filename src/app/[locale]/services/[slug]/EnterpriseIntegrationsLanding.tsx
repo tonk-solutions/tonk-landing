@@ -36,6 +36,7 @@ export default async function EnterpriseIntegrationsLanding({
     namespace: "landing.enterpriseIntegrations",
   });
   const tDetail = await getTranslations({ locale, namespace: "services.detail" });
+  const tA11y = await getTranslations({ locale, namespace: "a11y" });
 
   const heroWhatsAppUrl = `${WHATSAPP_URL}?text=${encodeURIComponent(t("hero.whatsappText"))}`;
   const ctaWhatsAppUrl = `${WHATSAPP_URL}?text=${encodeURIComponent(t("cta.whatsappText"))}`;
@@ -63,7 +64,7 @@ export default async function EnterpriseIntegrationsLanding({
             href="/#s03"
             style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}
           >
-            <ArrowLeft size={16} color="#0a7a60" />
+            <ArrowLeft size={16} color="#0a7a60" aria-hidden="true" />
             <Text as="span" fontSize="sm" fontWeight="semibold" color="primary.600">
               {tDetail("backToServices")}
             </Text>
@@ -88,6 +89,7 @@ export default async function EnterpriseIntegrationsLanding({
               href={heroWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
+              aria-describedby="enterprise-hero-new-tab"
               _hover={{ textDecoration: "none" }}
               display="inline-block"
             >
@@ -101,11 +103,14 @@ export default async function EnterpriseIntegrationsLanding({
                 _hover={{ bg: "primary.400" }}
               >
                 <Flex align="center" gap={2}>
-                  <MessageCircle size={18} />
+                  <MessageCircle size={18} aria-hidden="true" />
                   <Text>{t("hero.cta")}</Text>
                 </Flex>
               </Button>
             </ChakraLink>
+            <span id="enterprise-hero-new-tab" className="sr-only">
+              {tA11y("newTabHint")}
+            </span>
           </Box>
         </Container>
       </Box>
@@ -425,6 +430,7 @@ export default async function EnterpriseIntegrationsLanding({
               href={ctaWhatsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
+              aria-describedby="enterprise-cta-new-tab"
               _hover={{ textDecoration: "none" }}
               display="inline-block"
             >
@@ -438,11 +444,14 @@ export default async function EnterpriseIntegrationsLanding({
                 _hover={{ bg: "primary.400" }}
               >
                 <Flex align="center" gap={2}>
-                  <MessageCircle size={18} />
+                  <MessageCircle size={18} aria-hidden="true" />
                   <Text>{t("cta.button")}</Text>
                 </Flex>
-              </Button>
+                </Button>
             </ChakraLink>
+            <span id="enterprise-cta-new-tab" className="sr-only">
+              {tA11y("newTabHint")}
+            </span>
           </Box>
         </Container>
       </Box>

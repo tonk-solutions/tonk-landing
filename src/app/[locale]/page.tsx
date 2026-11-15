@@ -52,7 +52,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Header />
       <SideIndex items={sideIndexItems} />
 
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <HeroSection />
         <IntegrationsBar />
         <ServicesSection />
