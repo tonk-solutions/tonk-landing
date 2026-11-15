@@ -159,7 +159,7 @@ export default async function ServicePage({
     return (
       <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
         <Header />
-        <main id="main" role="main" style={{ width: "100%" }}>
+        <main id="main" tabIndex={-1} style={{ width: "100%" }}>
           <StructuredData id="structured-data-service" data={serviceGraph} />
           {slug === ENTERPRISE_INTEGRATIONS_SLUG ? (
             <EnterpriseIntegrationsLanding locale={locale} />
@@ -173,12 +173,13 @@ export default async function ServicePage({
   }
 
   const tDetail = await getTranslations({ locale, namespace: "services.detail" });
+  const tA11y = await getTranslations({ locale, namespace: "a11y" });
   const ServiceIcon = iconMap[content.icon] || Code;
 
   return (
     <div style={{ minHeight: "100vh", width: "100%", overflow: "hidden" }}>
       <Header />
-      <main id="main" role="main" style={{ width: "100%" }}>
+      <main id="main" tabIndex={-1} style={{ width: "100%" }}>
         <StructuredData id="structured-data-service" data={serviceGraph} />
         <Box
           as="section"
@@ -193,7 +194,7 @@ export default async function ServicePage({
               href="/#s03"
               style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "24px" }}
             >
-              <ArrowLeft size={16} color="#0a7a60" />
+              <ArrowLeft size={16} color="#0a7a60" aria-hidden="true" />
               <Text as="span" fontSize="sm" fontWeight="semibold" color="primary.600">
                 {tDetail("backToServices")}
               </Text>
@@ -244,10 +245,11 @@ export default async function ServicePage({
                   _hover={{ bg: "primary.400" }}
                 >
                   <Flex align="center" gap={2}>
-                    <MessageCircle size={18} />
+                    <MessageCircle size={18} aria-hidden="true" />
                     <Text>{tDetail("ctaButton")}</Text>
                   </Flex>
                 </Button>
+                <span className="sr-only"> {tA11y("newTabHint")}</span>
               </ChakraLink>
             </Box>
           </Container>

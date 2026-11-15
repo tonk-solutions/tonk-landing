@@ -12,6 +12,7 @@ interface ContactRow {
 
 export async function ContactSection() {
   const t = await getTranslations("contact");
+  const tA11y = await getTranslations("a11y");
   const rows = t.raw("rows") as ContactRow[];
 
   return (
@@ -34,6 +35,7 @@ export async function ContactSection() {
               className={styles.btn}
             >
               {t("cta")}
+              <span className="sr-only"> {tA11y("newTabHint")}</span>
             </a>
           </div>
           <dl className={styles.dataRows}>

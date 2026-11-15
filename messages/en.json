@@ -233,7 +233,6 @@
     "meta": "3 co-founders",
     "title": "Tonk's founders run your project.",
     "linkedinLabel": "LinkedIn",
-    "newTabHint": "opens in a new tab",
     "spokespersonLabel": "Spokesperson",
     "members": [
       {
@@ -461,7 +460,6 @@
         "title": "Digital product from an open idea",
         "description": "Digital product development for someone who has an idea and not a closed specification: who it is for, what is needed to start, how an MVP is bounded and how assumptions are tested."
       },
-      "newTabHint": "opens in a new tab",
       "hero": {
         "kicker": "Digital product development",
         "title": "You have an idea and don't know how to carry it out",
@@ -582,6 +580,7 @@
     "language": "Language",
     "sideIndex": "Section index",
     "sectionPrefix": "Section ",
-    "heroMeta": "Practice facts"
+    "heroMeta": "Practice facts",
+    "newTabHint": "opens in a new tab"
   }
 }

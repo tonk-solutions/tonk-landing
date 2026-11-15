@@ -15,6 +15,7 @@ interface TeamMember {
 
 export async function TeamSection() {
   const t = await getTranslations("team");
+  const tA11y = await getTranslations("a11y");
   const members = t.raw("members") as TeamMember[];
 
   return (
@@ -50,7 +51,7 @@ export async function TeamSection() {
                     className={styles.link}
                   >
                     <span>{t("linkedinLabel")}</span>
-                    <span className="sr-only"> {t("newTabHint")}</span>
+                    <span className="sr-only"> {tA11y("newTabHint")}</span>
                   </a>
                 ) : null}
               </div>

@@ -24,6 +24,7 @@ export default async function DigitalProductLanding({ locale }: DigitalProductLa
     namespace: "landing.digitalProductDevelopment",
   });
   const tDetail = await getTranslations({ locale, namespace: "services.detail" });
+  const tA11y = await getTranslations({ locale, namespace: "a11y" });
 
   const heroParagraphs = t.raw("hero.paragraphs") as string[];
   const audienceParagraphs = t.raw("audience.paragraphs") as string[];
@@ -51,7 +52,7 @@ export default async function DigitalProductLanding({ locale }: DigitalProductLa
           <ContactLink
             href={whatsappHref(t("hero.whatsappText"))}
             label={t("hero.cta")}
-            hint={t("newTabHint")}
+            hint={tA11y("newTabHint")}
           />
         </header>
 
@@ -130,7 +131,7 @@ export default async function DigitalProductLanding({ locale }: DigitalProductLa
           <ContactLink
             href={whatsappHref(t("cta.whatsappText"))}
             label={t("cta.button")}
-            hint={t("newTabHint")}
+            hint={tA11y("newTabHint")}
           />
         </section>
       </Container>

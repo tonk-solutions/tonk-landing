@@ -25,6 +25,8 @@ interface ServicesAccordionProps {
   cta: string;
   /** Texto del link a la landing de detalle de cada servicio. */
   viewDetails: string;
+  /** Aviso para lectores de pantalla: el CTA de WhatsApp abre otra pestaña. */
+  newTabHint: string;
 }
 
 const ICONS: Record<string, React.ReactNode> = {
@@ -104,6 +106,7 @@ function ServiceGroupAccordion({
   setOpenIndex,
   cta,
   viewDetails,
+  newTabHint,
 }: {
   group: ServiceGroup;
   baseIndex: number;
@@ -111,6 +114,7 @@ function ServiceGroupAccordion({
   setOpenIndex: (index: number) => void;
   cta: string;
   viewDetails: string;
+  newTabHint: string;
 }) {
   return (
     <div className={styles.group}>
@@ -176,6 +180,7 @@ function ServiceGroupAccordion({
                     rel="noopener noreferrer"
                   >
                     <span>{cta} →</span>
+                    <span className="sr-only"> {newTabHint}</span>
                   </a>
                 </div>
               </div>
@@ -192,6 +197,7 @@ export function ServicesAccordion({
   talent,
   cta,
   viewDetails,
+  newTabHint,
 }: ServicesAccordionProps) {
   const [openIndex, setOpenIndex] = useState(0);
 
@@ -204,6 +210,7 @@ export function ServicesAccordion({
         setOpenIndex={setOpenIndex}
         cta={cta}
         viewDetails={viewDetails}
+        newTabHint={newTabHint}
       />
       <ServiceGroupAccordion
         group={talent}
@@ -212,6 +219,7 @@ export function ServicesAccordion({
         setOpenIndex={setOpenIndex}
         cta={cta}
         viewDetails={viewDetails}
+        newTabHint={newTabHint}
       />
     </div>
   );
